@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roy Okola Otieno | Portfolio</title>
+  <meta name="description" content="Roy Okola Otieno — Engineer, Entrepreneur, Clean Mobility Advocate. Projects: SafariCharge, solar cooling, solarized irrigation, biogas, EV charging." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --accent:#00796b;
+      --accent-2:#00a86b;
+      --muted:#f0f4f8;
+      --glass: rgba(255,255,255,0.08);
+      --text:#102027;
+      --gold:#ffcc00;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{height:100%;margin:0;font-family:'Montserrat',sans-serif;color:var(--text);background:linear-gradient(180deg,#eef6f9 0%, #f8fbfd 100%);overflow-x:hidden}
+
+    /* Custom cursor */
+    body{cursor:none}
+    .cursor{position:fixed;width:20px;height:20px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s ease;mix-blend-mode:difference}
+    .cursor-follower{position:fixed;width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.3s ease;opacity:0.5}
+
+    /* HERO / LIVE WALLPAPER */
+    .hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .bg-video, .bg-slideshow{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;z-index:0}
+
+    /* Enhanced slideshow with parallax effect */
+    .bg-slideshow{display:grid;grid-template-columns:1fr;grid-auto-rows:1fr}
+    .bg-slide{background-size:cover;background-position:center;opacity:0;transform:scale(1.1) translateZ(0);animation:slideShowEnhanced 24s ease-in-out infinite;will-change:transform,opacity}
+    .bg-slide:nth-child(1){animation-delay:0s}
+    .bg-slide:nth-child(2){animation-delay:8s}
+    .bg-slide:nth-child(3){animation-delay:16s}
+    
+    @keyframes slideShowEnhanced{
+      0%{opacity:0;transform:scale(1.1) rotate(0.5deg)}
+      8%{opacity:1;transform:scale(1.05) rotate(0deg)}
+      25%{opacity:1;transform:scale(1) rotate(-0.2deg)}
+      33%{opacity:0;transform:scale(0.95) rotate(-0.5deg)}
+      100%{opacity:0;transform:scale(0.95) rotate(-0.5deg)}
+    }
+
+    /* Floating particles */
+    .particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+    .particle{position:absolute;width:4px;height:4px;background:rgba(255,255,255,0.6);border-radius:50%;animation:float 15s infinite linear}
+    
+    @keyframes float{
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+      10%{opacity:1}
+      90%{opacity:1}
+      100%{transform:translateY(-100px) rotate(360deg);opacity:0}
+    }
+
+    /* Dynamic gradient overlay */
+    .overlay{position:relative;z-index:2;background:linear-gradient(135deg, rgba(0,121,107,0.85), rgba(0,168,107,0.7), rgba(255,204,0,0.8));padding:3rem 2.5rem;border-radius:20px;text-align:center;color:white;max-width:1000px;margin:2rem;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:heroFloat 6s ease-in-out infinite;transform-style:preserve-3d}
+    
+    @keyframes heroFloat{
+      0%,100%{transform:translateY(0px) rotateX(0deg)}
+      50%{transform:translateY(-10px) rotateX(1deg)}
+    }
+    
+    .overlay h1{font-size:clamp(2.5rem,5vw,4.5rem);margin:0 0 .5rem;letter-spacing:1px;font-weight:800;text-shadow:2px 2px 4px rgba(0,0,0,0.3);animation:textGlow 3s ease-in-out infinite alternate}
+    .overlay p{margin:0 0 2rem;font-size:clamp(1.1rem,2vw,1.4rem);font-weight:300;opacity:0.95}
+
+    @keyframes textGlow{
+      0%{text-shadow:2px 2px 4px rgba(0,0,0,0.3)}
+      100%{text-shadow:2px 2px 20px rgba(255,204,0,0.4), 0 0 30px rgba(255,255,255,0.2)}
+    }
+
+    /* Enhanced CTA button */
+    .cta{display:inline-block;background:linear-gradient(135deg, var(--gold), #ff9500);color:#000;padding:1rem 2rem;font-weight:700;border-radius:50px;text-decoration:none;box-shadow:0 10px 30px rgba(255,204,0,0.4);transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);position:relative;overflow:hidden;font-size:1.1rem}
+    
+    .cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);transition:left 0.5s}
+    .cta:hover::before{left:100%}
+    .cta:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 20px 50px rgba(255,204,0,0.6)}
+
+    /* Enhanced navbar with glassmorphism */
+    .navbar{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);display:flex;justify-content:center;gap:20px;padding:1rem 2rem;border-radius:50px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.1);animation:navSlideDown 1s ease-out 0.5s both}
+    
+    @keyframes navSlideDown{
+      0%{transform:translateX(-50%) translateY(-100px);opacity:0}
+      100%{transform:translateX(-50%) translateY(0);opacity:1}
+    }
+    
+    .navbar a{color:var(--accent);text-decoration:none;font-weight:600;padding:.6rem 1rem;border-radius:25px;transition:all .3s ease;position:relative;overflow:hidden}
+    .navbar a::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:linear-gradient(135deg, var(--accent), var(--accent-2));transition:width 0.3s ease;z-index:-1;border-radius:25px}
+    .navbar a:hover::before{width:100%}
+    .navbar a:hover{color:white;transform:translateY(-2px)}
+
+    /* Enhanced sections with stagger animations */
+    .section{padding:4rem 2rem;max-width:1200px;margin:2rem auto;background:transparent;opacity:0;transform:translateY(50px);transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)}
+    .section.visible{opacity:1;transform:translateY(0)}
+    
+    /* Special styling for skills section - make it larger */
+    .section#skills{max-width:1400px;padding:5rem 2rem}
+    
+    h2{margin:0 0 2rem;font-size:2.5rem;color:var(--text);text-align:center;position:relative;font-weight:700}
+    h2::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:linear-gradient(135deg, var(--accent), var(--gold));border-radius:2px}
+
+    /* Enhanced card grid with hover effects */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem}
+    .card{background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,255,255,0.8));padding:2rem;border-radius:20px;box-shadow:0 10px 40px rgba(16,32,39,0.1);transition:all .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(10px)}
+    
+    .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, var(--gradient-1), var(--gradient-2));opacity:0;transition:opacity 0.3s ease;z-index:-1}
+    .card:nth-child(2)::before{background:var(--gradient-2)}
+    .card:nth-child(3)::before{background:var(--gradient-3)}
+    .card:nth-child(4)::before{background:linear-gradient(135deg, #fa709a 0%, #fee140 100%)}
+    
+    .card h3{margin:.5rem 0 1rem;font-size:1.4rem;font-weight:700;transition:color 0.3s ease}
+    .card p{margin:0;font-size:1rem;color:#33414a;line-height:1.6;transition:color 0.3s ease}
+    .card:hover{transform:translateY(-15px) rotateX(5deg);box-shadow:0 30px 80px rgba(16,32,39,0.2)}
+    .card:hover::before{opacity:0.1}
+    .card:hover h3, .card:hover p{color:var(--text)}
+
+    /* Enhanced and enlarged skill section */
+    .skills-box{display:flex;gap:4rem;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:3rem}
+    .skills-chart-container{position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,255,255,0.7));border-radius:30px;padding:3rem;box-shadow:0 20px 60px rgba(16,32,39,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.3)}
+    #skillsChart{width:600px;height:600px;background:transparent;animation:chartFloat 4s ease-in-out infinite;filter:drop-shadow(0 10px 30px rgba(0,121,107,0.2))}
+    
+    @keyframes chartFloat{
+      0%,100%{transform:translateY(0px) scale(1)}
+      50%{transform:translateY(-8px) scale(1.02)}
+    }
+
+    .skills-text{flex:1;min-width:350px;padding:2rem}
+    .skills-text h3{font-size:1.8rem;color:var(--accent);margin-bottom:1.5rem;font-weight:700}
+    .skills-text p{font-size:1.2rem;line-height:1.8;margin-bottom:2rem;color:var(--text)}
+
+    /* Enhanced experience list */
+    ul.clean{padding-left:0;color:#2b3b3f;list-style:none}
+    ul.clean li{margin:1rem 0;padding:1rem;background:rgba(255,255,255,0.6);border-radius:15px;border-left:4px solid var(--accent);transition:all 0.3s ease;backdrop-filter:blur(10px)}
+    ul.clean li:hover{transform:translateX(10px);box-shadow:0 10px 30px rgba(0,121,107,0.1)}
+
+    /* Enhanced badges */
+    .badge{display:inline-block;background:linear-gradient(135deg, rgba(0,121,107,0.1), rgba(0,168,107,0.2));color:var(--accent);padding:.4rem .8rem;border-radius:20px;font-weight:700;margin-right:.6rem;border:1px solid rgba(0,121,107,0.3);animation:badgePulse 2s ease-in-out infinite}
+    
+    @keyframes badgePulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.05)}
+    }
+
+    /* Enhanced contact form */
+    form{max-width:700px;margin:auto;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,255,255,0.7));padding:2rem;border-radius:20px;box-shadow:0 20px 60px rgba(16,32,39,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.3)}
+    input,textarea{width:100%;padding:1rem;margin:.8rem 0;border-radius:15px;border:2px solid transparent;font-size:1rem;background:rgba(255,255,255,0.8);transition:all 0.3s ease;backdrop-filter:blur(10px)}
+    input:focus,textarea:focus{outline:none;border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,121,107,0.2)}
+    button{background:linear-gradient(135deg, var(--accent), var(--accent-2));color:#fff;padding:1rem 2rem;border-radius:50px;border:none;font-weight:700;cursor:pointer;transition:all 0.3s ease;font-size:1.1rem}
+    button:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,121,107,0.4)}
+
+    /* Enhanced footer */
+    footer{text-align:center;padding:2rem;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-top-left-radius:30px;border-top-right-radius:30px;margin-top:3rem;position:relative;overflow:hidden}
+    footer::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');opacity:0.3}
+
+    /* Enhanced sun animation */
+    .sun{width:100px;height:100px;margin:20px auto 0;display:block;filter:drop-shadow(0 0 20px rgba(255,208,130,0.6))}
+    .sun .rays{transform-origin:50% 50%;animation:spinGlow 20s linear infinite}
+    .sun circle{animation:sunPulse 4s ease-in-out infinite}
+    
+    @keyframes spinGlow{
+      0%{transform:rotate(0) scale(1)}
+      50%{transform:rotate(180deg) scale(1.1)}
+      100%{transform:rotate(360deg) scale(1)}
+    }
+    
+    @keyframes sunPulse{
+      0%,100%{r:18}
+      50%{r:20}
+    }
+
+    /* Loading animation */
+    .loader{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, var(--accent), var(--accent-2));z-index:10000;display:flex;align-items:center;justify-content:center;transition:opacity 0.5s ease}
+    .loader-content{text-align:center;color:white}
+    .loader-spinner{width:60px;height:60px;border:4px solid rgba(255,255,255,0.3);border-top:4px solid white;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+
+    /* Responsive tweaks */
+    @media (max-width:768px){
+      .overlay{padding:2rem 1.5rem;margin:1rem}
+      .navbar{top:10px;padding:0.8rem 1.5rem;gap:15px}
+      .hero{height:80vh}
+      .section{padding:3rem 1rem}
+      .section#skills{padding:4rem 1rem}
+      .card-grid{grid-template-columns:1fr;gap:1.5rem}
+      .skills-box{flex-direction:column;gap:2rem}
+      .skills-chart-container{padding:2rem}
+      #skillsChart{width:400px;height:400px}
+      .skills-text{min-width:auto;padding:1rem}
+      .skills-text h3{font-size:1.5rem}
+      .skills-text p{font-size:1.1rem}
+      body{cursor:auto}
+      .cursor, .cursor-follower{display:none}
+    }
+
+    @media (max-width:480px){
+      #skillsChart{width:320px;height:320px}
+      .skills-chart-container{padding:1.5rem}
+    }
+
+    /* Scroll progress bar */
+    .progress-bar{position:fixed;top:0;left:0;width:0%;height:4px;background:linear-gradient(90deg, var(--accent), var(--gold));z-index:1001;transition:width 0.1s ease}
+
+    /* Reveal animations with stagger */
+    .reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal:nth-child(1){transition-delay:0.1s}
+    .reveal:nth-child(2){transition-delay:0.2s}
+    .reveal:nth-child(3){transition-delay:0.3s}
+    .reveal:nth-child(4){transition-delay:0.4s}
+  </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <h2>Loading Portfolio...</h2>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="navbar">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#contact">Contact</a>
+    <a href="#" id="downloadBtn">Download CV</a>
+  </nav>
+
+  <header class="hero">
+    <!-- Enhanced video background -->
+    <video class="bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=compress&cs=tinysrgb&w=1600">
+      <source src="https://cdn.coverr.co/videos/coverr-solar-panels-and-sunset-1621?token=eyJhbGciOiJIUzI1NiJ9" type="video/mp4">
+    </video>
+
+    <div class="bg-slideshow" aria-hidden="true">
+      <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=compress&cs=tinysrgb&w=1600')"></div>
+      <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=compress&cs=tinysrgb&w=1600')"></div>
+      <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=compress&cs=tinysrgb&w=1600')"></div>
+    </div>
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="overlay">
+      <h1>Roy Okola Otieno</h1>
+      <p>Engineer | Entrepreneur | Clean Mobility Advocate</p>
+      <a href="#projects" class="cta">Explore My Work</a>
+
+      <!-- Enhanced animated sun -->
+      <svg class="sun" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <radialGradient id="g" cx="50%" cy="40%">
+            <stop offset="0%" stop-color="#ffe082" />
+            <stop offset="50%" stop-color="#ffcc02" />
+            <stop offset="100%" stop-color="#ff8a65" />
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="42" r="18" fill="url(#g)" />
+        <g class="rays" stroke="#ffd54f" stroke-width="3" stroke-linecap="round">
+          <line x1="50" y1="3" x2="50" y2="18" />
+          <line x1="50" y1="82" x2="50" y2="97" />
+          <line x1="3" y1="50" x2="18" y2="50" />
+          <line x1="82" y1="50" x2="97" y2="50" />
+          <line x1="17" y1="17" x2="28" y2="28" />
+          <line x1="72" y1="72" x2="83" y2="83" />
+          <line x1="72" y1="28" x2="83" y2="17" />
+          <line x1="17" y1="83" x2="28" y2="72" />
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="section reveal">
+      <h2>About Me</h2>
+      <p style="font-size:1.1rem;line-height:1.8;text-align:center;max-width:800px;margin:0 auto">I'm a purpose-driven engineer and MBA candidate passionate about Africa's clean energy transition. With hands-on experience in solar PV, EV charging, and biogas systems, I bridge technical innovation with policy advocacy and entrepreneurship.</p>
+    </section>
+
+    <section id="projects" class="section reveal">
+      <h2>Projects</h2>
+      <div class="card-grid">
+        <div class="card reveal">
+          <h3><a href="https://safaricharge.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">SafariCharge Ltd</a></h3>
+          <p><span class="badge">Founder</span> Building smart EV charging hubs powered by solar microgrids and second-life batteries. Piloted 2 sites and partnered with local malls for deployment.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Solar Cooling System</h3>
+          <p>Designed an evaporative cooling unit that extended tomato shelf life by <strong>7 days</strong> in off-grid areas — improving postharvest incomes for smallholders.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Solarized Borehole Irrigation</h3>
+          <p>Engineered off-grid solar pumping systems for smallholder farmers in semi-arid regions — implemented 10+ pilot installations.</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Biogas for Schools</h3>
+          <p>Partnered with local schools to pilot biogas digesters that produced clean cooking gas and organic fertilizer from organic waste.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section reveal">
+      <h2>Experience</h2>
+      <ul class="clean">
+        <li class="reveal"><strong>Roam Electric Ltd</strong> – Junior Sales Consultant (2025–Present) — supporting fleet electrification pilots and B2B sales.</li>
+        <li class="reveal"><strong>EVChaja</strong> – Strategy & Operations Consultant (2025) — commercial model design for public chargers.</li>
+        <li class="reveal"><strong>Frisco Engineering</strong> – Technical Sales Intern (2024) — supported solar PV pre-sales & site assessments.</li>
+        <li class="reveal"><strong>HomeBiogas Kenya</strong> – Technical Sales Intern (2023–2024) — customer installations, training and support.</li>
+        <li class="reveal"><strong>Farmers Choice Ltd</strong> – Production Intern (2021–2022) — process improvement & quality control.</li>
+      </ul>
+    </section>
+
+    <section id="skills" class="section reveal">
+      <h2>Skills & Expertise</h2>
+      <div class="skills-box">
+        <div class="skills-chart-container">
+          <canvas id="skillsChart" width="600" height="600" aria-label="Radar chart showing skills"></canvas>
+        </div>
+        <div class="skills-text">
+          <h3>Technical Expertise</h3>
+          <p><strong>Engineering:</strong> Solar PV system design, off-grid energy storage solutions, EV charging infrastructure architecture, irrigation pump selection and optimization.</p>
+          <p><strong>Business Development:</strong> Strategic sales planning, project finance modeling, stakeholder engagement, policy advocacy, and community outreach programs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="leadership" class="section reveal">
+      <h2>Leadership & Engagement</h2>
+      <ul class="clean">
+        <li class="reveal">Member – World Youth Parliament for Water</li>
+        <li class="reveal">Community Trainer – Solar irrigation & circular economy workshops</li>
+        <li class="reveal">Student Leader – JKUAT Engineering Outreach</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <h2>Contact</h2>
+      <form id="contactForm">
+        <input id="name" type="text" placeholder="Your Name" required />
+        <input id="email" type="email" placeholder="Your Email" required />
+        <textarea id="message" placeholder="Your Message" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Roy Okola Otieno — All rights reserved.</p>
+  </footer>
+
+  <!-- External libs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Loading screen
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1500);
+    });
+
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursorFollower');
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.1;
+      followerY += (mouseY - followerY) * 0.1;
+      cursorFollower.style.left = followerX + 'px';
+      cursorFollower.style.top = followerY + 'px';
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Cursor interactions
+    document.querySelectorAll('a, button, .card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(1.5)';
+        cursorFollower.style.transform = 'scale(1.5)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        cursorFollower.style.transform = 'scale(1)';
+      });
+    });
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Create floating particles
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particles.appendChild(particle);
+      }
+    }
+    createParticles();
+
+    // Enhanced reveal on scroll with stagger
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => obs.observe(el));
+
+    // Enhanced and enlarged chart with better styling
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    const skillsChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Solar PV Design', 'EV Charging Systems', 'Sales Strategy', 'Policy Advocacy', 'Project Management', 'Community Engagement'],
+        datasets: [{
+          label: "Roy's Skills",
+          data: [9, 8, 9, 7, 8, 10],
+          backgroundColor: 'rgba(0,121,107,0.2)',
+          borderColor: '#00796b',
+          borderWidth: 4,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#00796b',
+          pointBorderWidth: 4,
+          pointRadius: 8,
+          pointHoverRadius: 12
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        elements: { 
+          line: { tension: 0.3 }
+        },
+        scales: {
+          r: {
+            angleLines: { 
+              display: true,
+              color: 'rgba(0,121,107,0.3)',
+              lineWidth: 2
+            },
+            grid: {
+              color: 'rgba(0,121,107,0.2)',
+              lineWidth: 2
+            },
+            pointLabels: {
+              font: {
+                size: 14,
+                weight: 'bold'
+              },
+              color: '#102027'
+            },
+            ticks: {
+              display: false,
+              stepSize: 2,
+              max: 10
+            },
+            suggestedMin: 0,
+            suggestedMax: 10
+          }
+        },
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(0,121,107,0.9)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#00796b',
+            borderWidth: 2
+          }
+        },
+        animation: {
+          duration: 2500,
+          easing: 'easeInOutQuart'
+        }
+      }
+    });
+
+    // Contact form with enhanced feedback
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      
+      if (!name || !email || !msg) {
+        alert('Please complete all fields.');
+        return;
+      }
+      
+      const button = this.querySelector('button');
+      const originalText = button.textContent;
+      button.textContent = 'Sending...';
+      button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)';
+      
+      setTimeout(() => {
+        alert(`Thanks ${name}! I'll get back to you soon.`);
+        this.reset();
+        button.textContent = originalText;
+        button.style.background = 'linear-gradient(135deg, var(--accent), var(--accent-2))';
+      }, 1500);
+    });
+
+    // CV download with animation
+    document.getElementById('downloadBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+        // Replace with actual CV URL
+        const cvUrl = 'mailto:roy@example.com?subject=CV Request';
+        window.open(cvUrl, '_blank');
+      }, 150);
+    });
+
+    // Parallax effect for hero
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      const overlay = document.querySelector('.overlay');
+      
+      if (hero && overlay) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        overlay.style.transform = `translateY(${scrolled * 0.3}px)`;
+      }
+    });
+
+    // Enhanced mobile optimization
+    function handleMobileOptimizations() {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const bgVideo = document.querySelector('.bg-video');
+        if (bgVideo) {
+          bgVideo.pause();
+          bgVideo.style.display = 'none';
+        }
+        
+        // Reduce particles on mobile
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach((particle, index) => {
+          if (index > 5) particle.remove();
+        });
+      }
+    }
+    
+    handleMobileOptimizations();
+    window.addEventListener('resize', handleMobileOptimizations);
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('.navbar a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Keyboard accessibility
+    document.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() === 'c' && !e.ctrlKey) {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Add dynamic background color change based on scroll
+    window.addEventListener('scroll', () => {
+      const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      const hue = Math.floor(scrollPercent * 60 + 180); // Blue to green range
+      document.body.style.background = `linear-gradient(180deg, hsl(${hue}, 30%, 95%) 0%, hsl(${hue}, 20%, 98%) 100%)`;
+    });
+  </script>
+</body>
+</html>
