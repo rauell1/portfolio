@@ -34,6 +34,7 @@ out
 .env
 .env.local
 .env.*.local
+env.txt
 
 # logs
 npm-debug.log*
@@ -45,3 +46,6 @@ yarn-debug.log*
 #upload/download logs
 upload
 download
+
+dist
+build
