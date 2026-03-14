@@ -1,0 +1,126 @@
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { MapPin, GraduationCap, Zap, Leaf } from "lucide-react";
+import headshot from "@/assets/headshot.jpg";
+
+const highlights = [
+  {
+    icon: MapPin,
+    title: "Based in",
+    value: "Nairobi, Kenya",
+  },
+  {
+    icon: GraduationCap,
+    title: "Education",
+    value: "MBA Candidate & BSc. Engineering",
+  },
+  {
+    icon: Zap,
+    title: "Focus",
+    value: "Clean Energy & E-Mobility",
+  },
+  {
+    icon: Leaf,
+    title: "Mission",
+    value: "Sustainable Africa",
+  },
+];
+
+export const About = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section id="about" className="py-32 px-6 relative" ref={ref}>
+      <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left side - Text content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="text-primary font-medium mb-4 block">About Me</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+              Powering Africa's <span className="gradient-text">Clean Future</span>
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              I'm a renewable-energy and e-mobility specialist with hands-on experience in distributed 
+              energy infrastructure, EV-charging technology, and battery-swap system deployment across East Africa.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              My expertise spans technical operations, system-uptime management, feasibility analysis, 
+              and cross-functional coordination with contractors, utilities, and regulatory agencies. 
+              I'm passionate about delivering practical solutions that enhance infrastructure reliability 
+              and accelerate the transition to sustainable energy.
+            </p>
+
+            {/* Highlights grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {highlights.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-colors"
+                >
+                  <item.icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
+                  <p className="text-sm font-medium">{item.value}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right side - Professional headshot */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="relative aspect-square max-w-md mx-auto">
+              {/* Decorative rings */}
+              <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-glow" />
+              <div className="absolute inset-4 rounded-full border border-primary/15" />
+              <div className="absolute inset-8 rounded-full border border-primary/10" />
+              
+              {/* Headshot */}
+              <div className="absolute inset-12 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl">
+                <img 
+                  src={headshot} 
+                  alt="Roy Otieno - Clean Energy Engineer"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Orbiting elements */}
+              <motion.div
+                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                style={{ transformOrigin: "center 200px" }}
+              >
+                <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                style={{ transformOrigin: "center 200px" }}
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/15 border border-primary/20 flex items-center justify-center">
+                  <Leaf className="w-4 h-4 text-primary" />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};

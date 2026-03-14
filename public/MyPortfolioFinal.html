@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roy Okola Otieno | Engineer, Entrepreneur, Clean Mobility Advocate</title>
+  <meta name="description" content="Roy Okola Otieno — Engineer, Entrepreneur, Clean Mobility Advocate. Founder of SafariCharge, with expertise in solar PV, EV charging, and sustainable energy solutions for Africa." />
+  <meta name="author" content="Roy Okola Otieno" />
+  <meta name="keywords" content="Roy Okola Otieno, SafariCharge, Clean Energy, EV Charging, Solar PV, Kenya, Africa, Sustainable Energy, Engineer, Entrepreneur" />
+  <meta property="og:title" content="Roy Okola Otieno | Engineer & Clean Mobility Advocate" />
+  <meta property="og:description" content="Purpose-driven engineer passionate about Africa's clean energy transition. Founder of SafariCharge, expert in solar PV and EV charging infrastructure." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://royokola.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: 174 100% 29%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 153 100% 33%;
+      --secondary-foreground: 0 0% 100%;
+      --gold: 48 100% 50%;
+      --gold-dark: 40 100% 45%;
+      --background: 180 25% 97%;
+      --foreground: 200 50% 10%;
+      --muted: 180 15% 90%;
+      --muted-foreground: 200 30% 40%;
+      --accent: 174 80% 25%;
+      --accent-foreground: 0 0% 100%;
+      --card: 0 0% 100%;
+      --card-foreground: 200 50% 10%;
+      --border: 180 20% 85%;
+      --ring: 174 100% 29%;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, hsl(180, 25%, 97%) 0%, hsl(180, 20%, 95%) 100%);
+      color: hsl(200, 50%, 10%);
+      overflow-x: hidden;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, hsl(174, 100%, 29%), hsl(48, 100%, 50%));
+      z-index: 1001;
+      transition: width 0.1s ease;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      display: flex;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .navbar a {
+      color: hsl(174, 100%, 29%);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .navbar a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, hsl(174, 100%, 29%), hsl(153, 100%, 33%));
+      border-radius: 25px;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .navbar a:hover::before { transform: scale(1); }
+    .navbar a:hover { color: white; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80') center/cover;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,121,107,0.7), rgba(0,168,107,0.6));
+    }
+
+    /* Floating particles */
+    .particles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 48px 40px;
+      max-width: 900px;
+      margin: 16px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(0,121,107,0.85), rgba(0,168,107,0.7), rgba(255,204,0,0.8));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: rgba(255,255,255,0.95);
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, hsl(48, 100%, 50%), hsl(40, 100%, 45%));
+      color: hsl(200, 50%, 10%);
+      padding: 16px 32px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255, 204, 0, 0.6);
+    }
+
+    /* Sun Animation */
+    .sun-container {
+      margin-top: 24px;
+    }
+    .sun {
+      width: 96px;
+      height: 96px;
+      filter: drop-shadow(0 0 20px rgba(255, 208, 130, 0.6));
+    }
+    .sun-rays {
+      animation: spinSun 20s linear infinite;
+      transform-origin: 50px 50px;
+    }
+    @keyframes spinSun {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Sections */
+    .section {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 64px;
+      height: 4px;
+      background: linear-gradient(90deg, hsl(174, 100%, 29%), hsl(48, 100%, 50%));
+      border-radius: 2px;
+    }
+
+    /* About */
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      color: hsl(200, 30%, 40%);
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(16,32,39,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: all 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 30px 80px rgba(16,32,39,0.2);
+    }
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: hsl(200, 50%, 10%);
+    }
+    .card p {
+      color: hsl(200, 30%, 40%);
+      line-height: 1.6;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(0,121,107,0.1), rgba(0,168,107,0.2));
+      color: hsl(174, 100%, 29%);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-right: 8px;
+      border: 1px solid rgba(0,121,107,0.3);
+    }
+
+    /* Experience list */
+    .exp-list {
+      list-style: none;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .exp-list li {
+      padding: 20px 24px;
+      margin: 16px 0;
+      background: rgba(255,255,255,0.6);
+      border-radius: 15px;
+      border-left: 4px solid hsl(174, 100%, 29%);
+      transition: all 0.3s ease;
+    }
+    .exp-list li:hover {
+      transform: translateX(10px);
+      box-shadow: 0 10px 30px rgba(0,121,107,0.1);
+    }
+
+    /* Skills */
+    .skills-container {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    .skills-chart-box {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      border-radius: 30px;
+      padding: 48px;
+      box-shadow: 0 20px 60px rgba(16,32,39,0.1);
+    }
+    #skillsChart {
+      width: 500px;
+      height: 500px;
+    }
+    .skills-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    .skills-text h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      color: hsl(174, 100%, 29%);
+      margin-bottom: 24px;
+    }
+    .skills-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+      color: hsl(200, 30%, 40%);
+    }
+
+    /* Contact */
+    .contact-form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(16,32,39,0.1);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 16px;
+      margin: 12px 0;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.8);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: hsl(174, 100%, 29%);
+      box-shadow: 0 10px 30px rgba(0,121,107,0.2);
+    }
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      min-width: 200px;
+      padding: 16px 24px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, hsl(174, 100%, 29%), hsl(153, 100%, 33%));
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0,121,107,0.4);
+    }
+    .btn-call {
+      background: linear-gradient(135deg, hsl(153, 100%, 33%), hsl(140, 80%, 35%));
+      color: white;
+    }
+    .btn-call:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0,168,107,0.4);
+    }
+    .contact-info {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .contact-info a {
+      color: hsl(174, 100%, 29%);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: white;
+      background: linear-gradient(135deg, hsl(174, 100%, 29%), hsl(153, 100%, 33%));
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      margin-top: 48px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        top: 10px;
+        padding: 8px 16px;
+        gap: 4px;
+        flex-wrap: wrap;
+        max-width: 95%;
+      }
+      .navbar a {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+      .hero-content {
+        padding: 32px 24px;
+        margin: 8px;
+      }
+      .skills-container {
+        flex-direction: column;
+      }
+      #skillsChart {
+        width: 320px;
+        height: 320px;
+      }
+      .skills-chart-box {
+        padding: 24px;
+      }
+      .btn-group {
+        flex-direction: column;
+      }
+      .btn {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#contact">Contact</a>
+    <a href="Roy_Otieno_CV.pdf" download id="downloadBtn">Download CV</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content">
+      <h1>Roy Okola Otieno</h1>
+      <p>Engineer | Entrepreneur | Clean Mobility Advocate</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:24px;">
+        <a href="#projects" class="cta-btn">Explore My Work</a>
+        <a href="Roy_Otieno_CV.pdf" download class="btn btn-primary" style="padding:16px 32px;font-size:1.1rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          Download CV
+        </a>
+        <a href="#contact" class="btn btn-call" style="padding:16px 32px;font-size:1.1rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          Contact Me
+        </a>
+      </div>
+      
+      <!-- Sun Animation -->
+      <div class="sun-container">
+        <svg class="sun" viewBox="0 0 100 100">
+          <defs>
+            <radialGradient id="sunGradient" cx="50%" cy="40%">
+              <stop offset="0%" stop-color="#ffe082" />
+              <stop offset="50%" stop-color="#ffcc02" />
+              <stop offset="100%" stop-color="#ff8a65" />
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <circle cx="50" cy="50" r="18" fill="url(#sunGradient)" filter="url(#glow)" />
+          <g class="sun-rays" stroke="#ffd54f" stroke-width="3" stroke-linecap="round">
+            <line x1="50" y1="10" x2="50" y2="22" />
+            <line x1="50" y1="78" x2="50" y2="90" />
+            <line x1="10" y1="50" x2="22" y2="50" />
+            <line x1="78" y1="50" x2="90" y2="50" />
+            <line x1="21" y1="21" x2="30" y2="30" />
+            <line x1="70" y1="70" x2="79" y2="79" />
+            <line x1="70" y1="30" x2="79" y2="21" />
+            <line x1="21" y1="79" x2="30" y2="70" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <!-- About -->
+    <section id="about" class="section">
+      <h2>About Me</h2>
+      <p class="about-text">I'm a purpose-driven engineer and MBA candidate passionate about Africa's clean energy transition. With hands-on experience in solar PV, EV charging, and biogas systems, I bridge technical innovation with policy advocacy and entrepreneurship.</p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="https://safaricharge.com" target="_blank" style="color:inherit;text-decoration:none">SafariCharge Ltd</a></h3>
+          <p><span class="badge">Founder</span> Building smart EV charging hubs powered by solar microgrids and second-life batteries. Piloted 2 sites and partnered with local malls for deployment.</p>
+        </div>
+        <div class="card">
+          <h3>Solar Cooling System</h3>
+          <p>Designed an evaporative cooling unit that extended tomato shelf life by <strong>7 days</strong> in off-grid areas — improving postharvest incomes for smallholders.</p>
+        </div>
+        <div class="card">
+          <h3>Solarized Borehole Irrigation</h3>
+          <p>Engineered off-grid solar pumping systems for smallholder farmers in semi-arid regions — implemented 10+ pilot installations.</p>
+        </div>
+        <div class="card">
+          <h3>Biogas for Schools</h3>
+          <p>Partnered with local schools to pilot biogas digesters that produced clean cooking gas and organic fertilizer from organic waste.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+      <ul class="exp-list">
+        <li><strong>Roam Electric Ltd</strong> – Junior Sales Consultant (2025–Present) — supporting fleet electrification pilots and B2B sales.</li>
+        <li><strong>EVChaja</strong> – Strategy & Operations Consultant (2025) — commercial model design for public chargers.</li>
+        <li><strong>Frisco Engineering</strong> – Technical Sales Intern (2024) — supported solar PV pre-sales & site assessments.</li>
+        <li><strong>HomeBiogas Kenya</strong> – Technical Sales Intern (2023–2024) — customer installations, training and support.</li>
+        <li><strong>Farmers Choice Ltd</strong> – Production Intern (2021–2022) — process improvement & quality control.</li>
+      </ul>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="section">
+      <h2>Skills & Expertise</h2>
+      <div class="skills-container">
+        <div class="skills-chart-box">
+          <canvas id="skillsChart"></canvas>
+        </div>
+        <div class="skills-text">
+          <h3>Technical Expertise</h3>
+          <p><strong>Engineering:</strong> Solar PV system design, off-grid energy storage solutions, EV charging infrastructure architecture, irrigation pump selection and optimization.</p>
+          <p><strong>Business Development:</strong> Strategic sales planning, project finance modeling, stakeholder engagement, policy advocacy, and community outreach programs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership -->
+    <section id="leadership" class="section">
+      <h2>Leadership & Engagement</h2>
+      <ul class="exp-list">
+        <li>Member – World Youth Parliament for Water</li>
+        <li>Community Trainer – Solar irrigation & circular economy workshops</li>
+        <li>Student Leader – JKUAT Engineering Outreach</li>
+      </ul>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <form class="contact-form" id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <textarea id="message" placeholder="Your Message" rows="6" required></textarea>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+            Send Message
+          </button>
+          <a href="tel:+254726683835" class="btn btn-call">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Call Now
+          </a>
+        </div>
+        <div class="contact-info">
+          <p>📧 <a href="mailto:royokola3@gmail.com">royokola3@gmail.com</a> | 📱 <a href="tel:+254726683835">+254 726 683 835</a></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Roy Okola Otieno — All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Create particles
+    const particles = document.getElementById('particles');
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 15 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particles.appendChild(particle);
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Skills Chart
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Solar PV Design', 'EV Charging Systems', 'Sales Strategy', 'Policy Advocacy', 'Project Management', 'Community Engagement'],
+        datasets: [{
+          label: "Roy's Skills",
+          data: [9, 8, 9, 7, 8, 10],
+          backgroundColor: 'rgba(0,121,107,0.2)',
+          borderColor: '#00796b',
+          borderWidth: 3,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#00796b',
+          pointBorderWidth: 3,
+          pointRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          r: {
+            angleLines: { color: 'rgba(0,121,107,0.3)' },
+            grid: { color: 'rgba(0,121,107,0.2)' },
+            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#102027' },
+            ticks: { display: false },
+            suggestedMin: 0,
+            suggestedMax: 10
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      if (name) {
+        alert(`Thanks ${name}! I'll get back to you soon.`);
+        this.reset();
+      }
+    });
+  </script>
+</body>
+</html>
