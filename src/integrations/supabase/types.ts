@@ -89,6 +89,7 @@ export type Database = {
           images: string[] | null
           location: string | null
           project_type: string
+          slug: string | null
           title: string
           updated_at: string
         }
@@ -100,6 +101,7 @@ export type Database = {
           images?: string[] | null
           location?: string | null
           project_type?: string
+          slug?: string | null
           title: string
           updated_at?: string
         }
@@ -111,6 +113,7 @@ export type Database = {
           images?: string[] | null
           location?: string | null
           project_type?: string
+          slug?: string | null
           title?: string
           updated_at?: string
         }

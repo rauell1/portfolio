@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   ArrowLeft, Save, Eye, Loader2, Image, Tag, 
-  Calendar, FileText 
+  Calendar, FileText, Upload
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,13 +21,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Category values match the slugified keys used in Blog.tsx / BlogPost.tsx display logic
 const categories = [
-  "Renewable Energy",
-  "E-Mobility",
-  "Sustainability",
-  "Climate Tech",
-  "AgriTech",
-  "Clean Energy Policy",
+  { value: "renewable-energy", label: "Renewable Energy" },
+  { value: "ev-mobility", label: "E-Mobility / EV" },
+  { value: "sustainability", label: "Sustainability" },
+  { value: "climate-tech", label: "Climate Tech" },
+  { value: "agritech", label: "AgriTech" },
+  { value: "clean-energy-policy", label: "Clean Energy Policy" },
 ];
 
 const AdminPostEditor = () => {
@@ -36,18 +37,21 @@ const AdminPostEditor = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
+  const coverImageInputRef = useRef<HTMLInputElement>(null);
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
   const [post, setPost] = useState({
     title: "",
     slug: "",
     excerpt: "",
     content: "",
-    category: "Sustainability",
+    category: "sustainability",
     cover_image: "",
     tags: [] as string[],
     published: false,
+    published_at: null as string | null,
   });
   const [tagInput, setTagInput] = useState("");
 
@@ -88,6 +92,7 @@ const AdminPostEditor = () => {
         cover_image: data.cover_image || "",
         tags: data.tags || [],
         published: data.published,
+        published_at: data.published_at || null,
       });
     }
     setLoading(false);
@@ -146,7 +151,10 @@ const AdminPostEditor = () => {
       cover_image: post.cover_image || null,
       tags: post.tags.length > 0 ? post.tags : null,
       published: publish ? true : post.published,
-      published_at: publish ? new Date().toISOString() : null,
+      // Only stamp published_at when first publishing; preserve the date on all other saves
+      published_at: publish
+        ? post.published_at || new Date().toISOString()
+        : post.published_at,
     };
 
     let result;
@@ -175,6 +183,43 @@ const AdminPostEditor = () => {
       navigate("/admin/dashboard");
     }
     setSaving(false);
+  };
+
+  const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !supabase) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      toast({ title: "Error", description: "Only JPEG, PNG, WebP, and GIF images are allowed", variant: "destructive" });
+      if (coverImageInputRef.current) coverImageInputRef.current.value = "";
+      return;
+    }
+
+    setUploadingCover(true);
+    try {
+      const fileExt = file.name.split(".").pop()?.toLowerCase() || "jpg";
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("blog-covers")
+        .upload(fileName, file, { contentType: file.type });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("blog-covers")
+        .getPublicUrl(fileName);
+
+      setPost((prev) => ({ ...prev, cover_image: publicUrl }));
+      toast({ title: "Success", description: "Cover image uploaded" });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Failed to upload image";
+      toast({ title: "Error", description: message, variant: "destructive" });
+    } finally {
+      setUploadingCover(false);
+      if (coverImageInputRef.current) coverImageInputRef.current.value = "";
+    }
   };
 
   if (authLoading || loading) {
@@ -313,8 +358,8 @@ const AdminPostEditor = () => {
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                    <SelectItem key={cat.value} value={cat.value}>
+                      {cat.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -332,6 +377,27 @@ const AdminPostEditor = () => {
                 value={post.cover_image}
                 onChange={(e) => setPost({ ...post, cover_image: e.target.value })}
               />
+              <input
+                ref={coverImageInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleCoverImageUpload}
+                className="hidden"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => coverImageInputRef.current?.click()}
+                disabled={uploadingCover}
+              >
+                {uploadingCover ? (
+                  <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Uploading...</>
+                ) : (
+                  <><Upload className="w-4 h-4 mr-2" />Upload Image</>
+                )}
+              </Button>
               {post.cover_image && (
                 <img
                   src={post.cover_image}

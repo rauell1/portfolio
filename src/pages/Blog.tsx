@@ -7,7 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { STATIC_BLOG_POSTS, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
+import { STATIC_BLOG_POSTS } from "@/data/blogPosts";
 
 interface BlogPost {
   id: string;
@@ -66,19 +66,21 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("*")
+        .select("id, title, slug, excerpt, cover_image, category, tags, published_at, created_at")
         .eq("published", true)
-        .order("published_at", { ascending: false });
+        .order("published_at", { ascending: false })
+        .limit(100);
 
       const dbPosts = data || [];
-      // For the three pillar slugs, always use static post so cover_image and content are always set (no icon placeholders).
-      const dbExceptStatic = dbPosts.filter((p) => !STATIC_BLOG_SLUGS.has(p.slug));
-      const merged = [...dbExceptStatic, ...STATIC_BLOG_POSTS].sort((a, b) => {
+      // DB is authoritative: only fall back to static for posts not yet in the database
+      const dbSlugs = new Set(dbPosts.map((p) => p.slug));
+      const staticFallbacks = STATIC_BLOG_POSTS.filter((p) => !dbSlugs.has(p.slug));
+      const merged = [...dbPosts, ...staticFallbacks].sort((a, b) => {
         const dateA = a.published_at ? new Date(a.published_at).getTime() : 0;
         const dateB = b.published_at ? new Date(b.published_at).getTime() : 0;
         return dateB - dateA;
       });
-      setPosts(merged);
+      setPosts(merged as typeof posts);
     } catch (err) {
       console.error("Error fetching posts:", err);
       setPosts(STATIC_BLOG_POSTS);
