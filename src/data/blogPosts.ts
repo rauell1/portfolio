@@ -7,9 +7,10 @@
 const U = (id: string, w = 1200, q = 85) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
 
-// Local images: BasiGo buses and Roam bikes (user-provided, in public/images)
+// Local images: BasiGo buses, charging station, and Roam bikes (user-provided, in public/images)
 const LOCAL_IMAGES = {
-  basigoBuses: "/images/basigo-buses.jpeg",     // BasiGo buses (Africa50)
+  basigoBuses: "/images/basigo-buses.jpeg",      // BasiGo buses parked (Africa50)
+  basigoCharging: "/images/basigo-charging.png", // BasiGo buses at charging stations
   roamElectric: "/images/roam-electric.webp",    // Roam electric bikes (Greenspoon, CIO Africa)
 };
 
@@ -20,11 +21,13 @@ const PLACEHOLDER_IMAGES = {
   circular: U("1771172195332-3bc9ded9f3b5"),
 };
 
-// EV article: local authentic images for intro and practice; Unsplash for fleet/charging slot.
+// EV article: local charging image for intro; Unsplash for practical, fleet, design, and renewable slots.
 const EV_ARTICLE_IMAGES = {
-  evIntro: LOCAL_IMAGES.basigoBuses,         // First image: BasiGo electric bus lineup
-  evPractice: LOCAL_IMAGES.roamElectric,     // Kenya and West Africa electric mobility (Roam bikes)
-  evFleet: U("1619642751034-765dfdf7c58e", 1000), // Public and fleet charging hub
+  evIntro: LOCAL_IMAGES.basigoCharging,                    // Intro: BasiGo electric buses at charging stations
+  evPractice: U("1545324418-cc1a3fa10c00", 1000),          // Importance: EV charging station in urban use
+  evFleet: U("1619642751034-765dfdf7c58e", 1000),          // Models: public and fleet charging hub
+  evDesign: U("1593941707882-a5b6d85b4930", 1000),         // Design: EV charging connector and equipment
+  evRenewable: U("1624555130405-28f3e36e0f38", 1000),      // Renewable: solar canopy EV charging
 };
 
 const IN_ARTICLE_IMAGES = {
@@ -131,13 +134,13 @@ The future of solar energy in East Africa is promising. With continued investmen
 
 Electric mobility is gaining momentum across Africa as cities seek cleaner transportation alternatives and reduced dependence on fossil fuels. Electric two-wheelers, three-wheelers, and buses are increasingly visible in urban transport systems, driven by lower operating costs, policy incentives, and growing awareness of air quality and climate impacts. However, the transition to electric mobility depends heavily on the availability of reliable charging infrastructure. Without it, range anxiety and practical constraints limit adoption. Developing efficient charging networks requires careful planning, technological innovation, and strategic deployment in high-demand locations.
 
-![Electric vehicle and charging: BasiGo electric bus lineup](${IN_ARTICLE_IMAGES.evIntro})
+![BasiGo electric buses charging at a dedicated depot in Nairobi, Kenya](${IN_ARTICLE_IMAGES.evIntro})
 
 ## The Importance of Charging Infrastructure
 
 For electric vehicles to operate effectively, drivers must have access to convenient and reliable charging stations. This is true for cars and buses, and equally for the electric motorcycles and tuk-tuks that dominate urban mobility in many African cities. Without adequate charging infrastructure, EV adoption can be slowed by concerns such as limited driving range, uncertainty about charging availability, and the time required to recharge. Charging networks must therefore be designed to support growing EV fleets while ensuring accessibility (location and hours), reliability (uptime and power quality), and affordability (pricing that supports both operators and users). In practice, this means a mix of fast charging for en-route top-ups and slower or overnight charging at homes, depots, and workplaces.
 
-![EV charging in practice: Kenya and West Africa electric mobility](${IN_ARTICLE_IMAGES.evPractice})
+![EV charging station providing reliable access for electric vehicle users](${IN_ARTICLE_IMAGES.evPractice})
 
 ## Charging Infrastructure Models
 
@@ -149,7 +152,7 @@ Fleet Charging refers to dedicated infrastructure for commercial fleets: buses, 
 
 Distributed Charging Networks consist of smaller charging points deployed across cities to ensure that riders are never far from a charge. This model is particularly effective for electric motorcycles and other light EVs that have smaller batteries and shorter ranges. Distributed networks can be built through partnerships with shops, fuel stations, and property owners, spreading cost and increasing coverage.
 
-![Public and fleet charging: BasiGo charging hub](${IN_ARTICLE_IMAGES.evFleet})
+![Public and fleet charging hub showing multiple EV charging stations](${IN_ARTICLE_IMAGES.evFleet})
 
 ## Infrastructure Design Considerations
 
@@ -157,11 +160,15 @@ Designing charging infrastructure requires careful analysis of several factors. 
 
 Advanced charging systems often include connectivity features that allow operators to monitor performance remotely, manage access and payments, and perform diagnostics. This reduces the cost of operations and improves reliability. Software and data also enable dynamic pricing, demand management, and integration with renewable generation or grid services.
 
+![EV charging connector and smart charging equipment](${IN_ARTICLE_IMAGES.evDesign})
+
 ## The Role of Renewable Energy
 
 Integrating renewable energy with charging infrastructure can reduce operational costs and environmental impact. In areas where grid power is expensive or carbon-intensive, solar-powered charging can lower both cost and emissions. Solar-powered charging stations are becoming increasingly viable as photovoltaic technology becomes more affordable and as battery storage allows solar to be used when the sun is not shining. Hybrid systems that combine solar, storage, and grid connection can optimize for cost, reliability, and sustainability.
 
 This combination of renewable energy and electric mobility represents an important step toward sustainable transportation systems. It also aligns with the priorities of many development and climate finance institutions, which are looking to support integrated solutions that advance both clean energy and clean mobility.
+
+![Solar-powered EV charging canopy combining clean energy and electric mobility](${IN_ARTICLE_IMAGES.evRenewable})
 
 ## Conclusion
 
