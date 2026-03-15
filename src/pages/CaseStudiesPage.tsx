@@ -9,13 +9,13 @@ import {
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-// Case study images: your 2 local images used once each; Unsplash for EV charging slot.
+// Case study images: local images from public/images/
 const CASE_STUDY_IMAGES = {
   solarMicrogrid: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80",  // Solar
-  roamPoint: "/images/roam-electric.webp",        // Roam Electric bikes – EV charging (once)
-  siteFeasibility: "/images/basigo-buses.jpeg",   // Your BasiGo buses (once) – EV infrastructure
+  roamPoint: "/images/roam-electric.webp",        // Roam Electric bikes – EV charging
+  siteFeasibility: "/images/basigo-buses.jpeg",   // BasiGo buses – EV infrastructure
   solarColdStorage: "https://images.unsplash.com/photo-1698752822107-69f8973936e4?w=800&q=80", // Solar, different from above
-  energyDemand: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",    // EV charging station analysis
+  energyDemand: "/images/basigo-charging.png",    // BasiGo charging infrastructure
 };
 
 interface Metric {
