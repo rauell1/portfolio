@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, Sun, Moon, BookOpen, LayoutDashboard, LogOut } from "lucide-react";
+import { Menu, X, FileText, BookOpen, LayoutDashboard, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useTheme } from "./ThemeProvider";
 import { useAuth } from "@/hooks/useAuth";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { href: "#about", label: "About" },
@@ -19,7 +19,6 @@ export const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
-  const { theme, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const isAdmin = user?.email === "royokola3@gmail.com";
 
@@ -132,37 +131,13 @@ export const Navbar = () => {
               )}
 
               <li className="ml-2">
-                <motion.button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                >
-                  {theme === "dark" ? (
-                    <Sun className="w-5 h-5 text-primary" />
-                  ) : (
-                    <Moon className="w-5 h-5 text-primary" />
-                  )}
-                </motion.button>
+                <ThemeToggle />
               </li>
             </ul>
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
-              <motion.button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5 text-primary" />
-                ) : (
-                  <Moon className="w-5 h-5 text-primary" />
-                )}
-              </motion.button>
+              <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-foreground"
