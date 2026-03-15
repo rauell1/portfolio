@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin } from "lucide-react";
+import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin, Globe } from "lucide-react";
 
 interface Project {
   id: string;
@@ -82,6 +82,16 @@ const projects: Project[] = [
     icon: BarChart3,
     gradient: "from-indigo-500 to-blue-400",
     tags: ["Data Analysis", "Mobility", "Performance Tracking"],
+  },
+  {
+    id: "roam-energy-page",
+    title: "Roam Energy Marketing Site",
+    category: "Web Development",
+    description: "Multi-page static marketing website for Roam Energy, showcasing solar products, real deployment projects, and sustainable energy solutions across Africa.",
+    longDescription: "Designed and built a responsive, multi-page static marketing site for Roam Energy using HTML, Tailwind CSS, and vanilla JavaScript. The site features an interactive product catalogue (solar panels, inverters, batteries), real-world project galleries including safari lodge and commercial deployments, smooth AOS scroll animations, a Swiper carousel, and a fully mobile-friendly layout — supporting Roam Energy's brand presence and customer acquisition.",
+    icon: Globe,
+    gradient: "from-orange-600 to-amber-500",
+    tags: ["HTML/CSS", "Tailwind CSS", "JavaScript", "AOS"],
   },
 ];
 
