@@ -115,16 +115,20 @@
     color-scheme: light;
   }
 
-  /* Smooth theme switching */
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Smooth theme switching — limit to html/body only to avoid jank on
+     low-end Android devices caused by animating every DOM element. */
   html,
-  body,
-  body * {
+  body {
     transition-property: background-color, border-color, color;
     transition-duration: 0.2s;
     transition-timing-function: ease;
   }
 
-  /* Exclude animated elements from the theme transition to avoid interfering with their own animations */
+  /* Ensure animated elements use their own transitions, not the theme-switching ones */
   [class*="animate-"],
   [class*="motion"],
   .btn-glow,

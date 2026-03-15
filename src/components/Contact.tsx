@@ -174,7 +174,7 @@ export const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                   placeholder="Your name"
                 />
                 {fieldErrors.name && <p className="text-red-500 text-sm mt-1">{fieldErrors.name}</p>}
@@ -187,7 +187,7 @@ export const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.email ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.email ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                   placeholder="your@email.com"
                 />
                 {fieldErrors.email && <p className="text-red-500 text-sm mt-1">{fieldErrors.email}</p>}
@@ -202,7 +202,7 @@ export const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.subject ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.subject ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                 placeholder="What's this about?"
               />
               {fieldErrors.subject && <p className="text-red-500 text-sm mt-1">{fieldErrors.subject}</p>}
@@ -216,7 +216,7 @@ export const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.message ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none`}
+                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.message ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors resize-none`}
                 placeholder="Tell me about your project..."
               />
               {fieldErrors.message && <p className="text-red-500 text-sm mt-1">{fieldErrors.message}</p>}
