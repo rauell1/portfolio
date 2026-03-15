@@ -12,10 +12,10 @@ import { Footer } from "@/components/Footer";
 // Case study images: your 3 images used once each; no repeat on this page. All EV/mobility = EV only.
 const CASE_STUDY_IMAGES = {
   solarMicrogrid: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80",  // Solar
-  roamPoint: "/images/basigo-charging.png",       // Your BasiGo EV charging (once)
+  roamPoint: "/images/roam-electric.webp",        // Roam Electric bikes – EV charging (once)
   siteFeasibility: "/images/basigo-buses.jpeg",   // Your BasiGo buses (once) – EV infrastructure
   solarColdStorage: "https://images.unsplash.com/photo-1698752822107-69f8973936e4?w=800&q=80", // Solar, different from above
-  energyDemand: "/images/roam-electric.webp",     // Your Roam electric bikes (once)
+  energyDemand: "/images/basigo-charging.png",    // EV charging station analysis (once)
 };
 
 interface Metric {
