@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "royokola3@gmail.com";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -149,6 +150,56 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log("Welcome email sent successfully:", emailResponse);
+
+    // Send admin notification to royokola3@gmail.com
+    const adminNotificationResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "Roy Otieno <onboarding@resend.dev>",
+        to: [ADMIN_EMAIL],
+        subject: "New Newsletter Subscriber 📬",
+        html: `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <body style="margin: 0; padding: 0; background-color: #080808; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+              <div style="background: linear-gradient(135deg, rgba(37, 146, 189, 0.1), rgba(37, 146, 189, 0.05)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px;">
+                <h1 style="color: #ffffff; font-size: 24px; margin-bottom: 20px; text-align: center;">
+                  New Newsletter Subscriber 📬
+                </h1>
+                <p style="color: #a0a0a0; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                  A new subscriber has joined your Clean Energy Insights newsletter:
+                </p>
+                <div style="background: rgba(37, 146, 189, 0.1); border: 1px solid rgba(37, 146, 189, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                  <p style="color: #2592bd; font-size: 18px; font-weight: 600; margin: 0;">${email}</p>
+                </div>
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+                <p style="color: #666; font-size: 14px; text-align: center;">
+                  Roy Otieno | Clean Energy Engineer & E-Mobility Specialist<br>
+                  Nairobi, Kenya
+                </p>
+              </div>
+            </div>
+          </body>
+          </html>
+        `,
+      }),
+    });
+
+    if (!adminNotificationResponse.ok) {
+      const adminErrorData = await adminNotificationResponse.json().catch(() => ({}));
+      console.error(`Failed to send admin notification email: status=${adminNotificationResponse.status}`, adminErrorData);
+    } else {
+      console.log("Admin notification email sent successfully");
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
