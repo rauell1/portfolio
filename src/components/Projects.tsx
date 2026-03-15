@@ -195,7 +195,7 @@ export const Projects = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+            className="fixed inset-0 z-50 p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
             onClick={closeModal}
           >
             <motion.div
@@ -203,7 +203,7 @@ export const Projects = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-card rounded-2xl border border-border overflow-hidden my-8"
+              className="relative w-full max-w-2xl bg-card rounded-2xl border border-border overflow-hidden my-8 mx-auto"
             >
               {/* Header - image or gradient */}
               {selectedProject.images && selectedProject.images.length > 0 ? (

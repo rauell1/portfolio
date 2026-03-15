@@ -61,7 +61,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider>
         <AuthProvider>
           <TooltipProvider>
             <Toaster />

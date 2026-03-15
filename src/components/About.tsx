@@ -97,9 +97,9 @@ export const About = () => {
                 />
               </div>
 
-              {/* Orbiting elements */}
+              {/* Orbiting elements — hidden on mobile to avoid overflow and reduce GPU load */}
               <motion.div
-                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 style={{ transformOrigin: "center 200px" }}
@@ -110,7 +110,7 @@ export const About = () => {
               </motion.div>
 
               <motion.div
-                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                 style={{ transformOrigin: "center 200px" }}
