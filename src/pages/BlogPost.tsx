@@ -42,6 +42,8 @@ function ArticleImage({ src, alt, className }: { src: string; alt: string; class
       src={src}
       alt={alt}
       className={className}
+      loading="lazy"
+      decoding="async"
       onError={() => setFailed(true)}
     />
   );
@@ -226,6 +228,8 @@ const BlogPostPage = () => {
                 src={post.cover_image}
                 alt=""
                 className="w-full aspect-[21/9] sm:aspect-[2/1] object-cover"
+                loading="eager"
+                decoding="async"
                 onError={() => setCoverImageFailed(true)}
               />
             ) : (

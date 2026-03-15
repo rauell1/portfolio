@@ -237,6 +237,8 @@ const Blog = () => {
                             src={post.cover_image!}
                             alt=""
                             className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                            decoding="async"
                             onError={() => setFailedCoverIds((prev) => new Set(prev).add(post.id))}
                           />
                         ) : (

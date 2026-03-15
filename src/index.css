@@ -297,3 +297,34 @@
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
 }
+
+/* ============================================================
+   Performance: respect user's reduced-motion preference.
+   Disables or simplifies all animations for users who request
+   reduced motion (accessibility + battery/CPU savings).
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Performance: optimize will-change usage.
+   Only promote layers for elements that actually animate,
+   using contain to limit layout recalculations.
+   ============================================================ */
+.btn-glow {
+  will-change: transform, box-shadow;
+  contain: layout style;
+}
+
+.card-hover {
+  will-change: transform;
+  contain: layout style;
+}

@@ -303,7 +303,7 @@ const CaseStudiesPage = () => {
                 <div className="grid md:grid-cols-2 gap-0">
                   {flagshipStudy.image && (
                     <div className="relative h-64 md:h-auto md:min-h-[320px]">
-                      <img src={flagshipStudy.image} alt={flagshipStudy.title} className="w-full h-full object-cover" />
+                      <img src={flagshipStudy.image} alt={flagshipStudy.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40" />
                       <div className="absolute top-4 left-4">
                         <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full">
@@ -369,7 +369,7 @@ const CaseStudiesPage = () => {
                 >
                   {study.image ? (
                     <div className="h-48 relative">
-                      <img src={study.image} alt={study.title} className="w-full h-full object-cover" />
+                      <img src={study.image} alt={study.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                       <div className="absolute inset-0 bg-gradient-to-t from-card via-black/30 to-transparent" />
                       <div className="absolute top-4 right-4 p-2 rounded-lg bg-white/20 backdrop-blur-sm">
                         <study.icon className="w-5 h-5 text-white" />

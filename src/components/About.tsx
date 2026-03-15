@@ -92,6 +92,8 @@ export const About = () => {
                   src={headshot} 
                   alt="Roy Otieno - Clean Energy Engineer"
                   className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
 
