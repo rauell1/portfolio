@@ -128,7 +128,7 @@ export const CaseStudies = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-3 mt-auto">
                     {study.metrics.map((metric) => (
-                      <div key={metric.label} className="bg-white/5 rounded-lg p-3 text-center">
+                      <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-3 text-center">
                         <p className="text-lg font-bold text-primary">{metric.value}</p>
                         <p className="text-xs text-muted-foreground">{metric.label}</p>
                       </div>

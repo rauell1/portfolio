@@ -110,6 +110,23 @@
     scroll-behavior: smooth;
   }
 
+  /* Smooth theme switching */
+  html,
+  body,
+  body * {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+  }
+
+  /* Exclude animated elements from the theme transition to avoid interfering with their own animations */
+  [class*="animate-"],
+  [class*="motion"],
+  .btn-glow,
+  .card-hover {
+    transition-property: transform, box-shadow, opacity;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;

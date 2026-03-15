@@ -77,7 +77,7 @@ export const Hero = () => {
               e.preventDefault();
               document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-8 py-4 font-semibold rounded-xl border border-white/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+            className="px-8 py-4 font-semibold rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           >
             Let's Connect
           </a>
@@ -88,7 +88,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="grid grid-cols-3 gap-8 mt-20 max-w-2xl mx-auto"
+          className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 sm:mt-20 max-w-2xl mx-auto"
         >
           {[
             { value: "10+", label: "Solar Projects" },

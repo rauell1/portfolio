@@ -181,7 +181,7 @@ const ResumePage = () => {
       <ParticleBackground />
       
       {/* Header */}
-      <header className="relative z-10 py-8 px-6 border-b border-white/5">
+      <header className="relative z-10 py-8 px-6 border-b border-border">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <Link 
             to="/" 
@@ -400,7 +400,7 @@ const ResumePage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="bg-white/5 rounded-xl p-5"
+                  className="bg-black/5 dark:bg-white/5 rounded-xl p-5"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 rounded-lg bg-primary/10">

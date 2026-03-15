@@ -26,7 +26,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-8 px-6 border-t border-white/5">
+    <footer className="relative py-8 px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Logo and Name */}
@@ -68,7 +68,7 @@ export const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all duration-300"
+                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-primary/20 hover:text-primary transition-all duration-300"
                   aria-label={social.label}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -76,10 +76,10 @@ export const Footer = () => {
                   <social.icon className="w-4 h-4" />
                 </motion.a>
               ))}
-              <div className="w-px h-4 bg-white/10" />
+              <div className="w-px h-4 bg-border" />
               <Link 
                 to="/admin"
-                className="p-2 rounded-lg bg-white/5 hover:bg-primary/20 text-muted-foreground/60 hover:text-primary transition-all duration-300 flex items-center gap-1"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-primary/20 text-muted-foreground/60 hover:text-primary transition-all duration-300 flex items-center gap-1"
               >
                 <Lock className="w-4 h-4" />
               </Link>

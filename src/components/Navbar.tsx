@@ -56,7 +56,7 @@ export const Navbar = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/80 backdrop-blur-xl border-b border-white/5" : ""
+          scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -134,7 +134,7 @@ export const Navbar = () => {
               <li className="ml-2">
                 <motion.button
                   onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -152,7 +152,7 @@ export const Navbar = () => {
             <div className="flex items-center gap-2 md:hidden">
               <motion.button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -180,14 +180,14 @@ export const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-background/95 backdrop-blur-xl border-b border-white/5"
+              className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
             >
               <div className="px-6 py-4 space-y-2">
                 {navItems.map((item) => (
                   <button
                     key={item.href}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-lg transition-colors"
+                    className="block w-full text-left px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                   >
                     {item.label}
                   </button>
@@ -196,7 +196,7 @@ export const Navbar = () => {
                   <Link
                     to="/blog"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-lg transition-colors"
+                    className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                   >
                     <BookOpen className="w-4 h-4" />
                     Blog
@@ -205,7 +205,7 @@ export const Navbar = () => {
                 <Link
                   to="/resume"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-lg transition-colors"
+                  className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                 >
                   <FileText className="w-4 h-4" />
                   Resume
@@ -214,18 +214,18 @@ export const Navbar = () => {
                 {/* Admin mobile buttons */}
                 {isAdmin && (
                   <>
-                    <div className="border-t border-white/10 my-2" />
+                    <div className="border-t border-border my-2" />
                     <Link
                       to="/admin/dashboard"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-primary hover:bg-white/5 rounded-lg transition-colors"
+                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-primary hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       Dashboard
                     </Link>
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-destructive hover:bg-white/5 rounded-lg transition-colors"
+                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-destructive hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       Logout
