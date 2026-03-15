@@ -61,7 +61,7 @@ const AnimatedProgressBar = ({ skill, index, isInView }: { skill: typeof skills[
         <span className="font-medium text-sm">{skill.name}</span>
         <span className="text-primary text-sm font-bold">{skill.level}%</span>
       </div>
-      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div className="h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full relative"
           style={{ width: `${width}%` }}
@@ -92,7 +92,7 @@ export const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-24 px-6 relative" ref={ref}>
+    <section id="skills" className="py-16 sm:py-20 lg:py-24 px-6 relative" ref={ref}>
       {/* Floating animated energy icons */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {energyIcons.map((item, index) => (

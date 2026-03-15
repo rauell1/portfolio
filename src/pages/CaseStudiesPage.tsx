@@ -324,7 +324,7 @@ const CaseStudiesPage = () => {
                     <p className="text-muted-foreground text-sm mb-4">{flagshipStudy.subtitle}</p>
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       {flagshipStudy.metrics.slice(0, 4).map((m) => (
-                        <div key={m.label} className="bg-white/5 rounded-lg p-2 text-center">
+                        <div key={m.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-2 text-center">
                           <p className="text-sm font-bold text-primary">{m.value}</p>
                           <p className="text-xs text-muted-foreground">{m.label}</p>
                         </div>
@@ -408,7 +408,7 @@ const CaseStudiesPage = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-auto">
                       {study.metrics.slice(0, 2).map((metric) => (
-                        <div key={metric.label} className="bg-white/5 rounded-lg p-3 text-center">
+                        <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-3 text-center">
                           <p className="text-lg font-bold text-primary">{metric.value}</p>
                           <p className="text-xs text-muted-foreground">{metric.label}</p>
                         </div>
@@ -441,7 +441,7 @@ const CaseStudiesPage = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[90vh] sm:max-h-[85vh] flex flex-col bg-card rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden shadow-2xl my-4 sm:my-8"
+              className="relative w-full max-w-3xl max-h-[90vh] sm:max-h-[85vh] flex flex-col bg-card rounded-xl sm:rounded-2xl border border-border overflow-hidden shadow-2xl my-4 sm:my-8"
             >
               {/* Header: fixed height, no scroll */}
               {selectedStudy.image ? (
@@ -454,7 +454,7 @@ const CaseStudiesPage = () => {
                       loading="eager"
                     />
                   </div>
-                  <div className="bg-card px-4 py-3 sm:px-6 sm:py-4 border-b border-white/10 flex items-start justify-between gap-3">
+                  <div className="bg-card px-4 py-3 sm:px-6 sm:py-4 border-b border-border flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <div className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-gradient-to-br ${selectedStudy.gradient} shrink-0`}>
                         <selectedStudy.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -535,9 +535,9 @@ const CaseStudiesPage = () => {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 border-t border-white/10">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 border-t border-border">
                   {selectedStudy.metrics.map((metric) => (
-                    <div key={metric.label} className="bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                    <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
                       <metric.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary mx-auto mb-1.5 sm:mb-2" />
                       <p className="text-lg sm:text-2xl font-bold text-foreground">{metric.value}</p>
                       <p className="text-xs text-muted-foreground mt-0.5 sm:mt-1">{metric.label}</p>
@@ -546,7 +546,7 @@ const CaseStudiesPage = () => {
                 </div>
 
                 {selectedStudy.pdfDownload && (
-                  <div className="mt-5 sm:mt-6 pt-4 border-t border-white/10">
+                  <div className="mt-5 sm:mt-6 pt-4 border-t border-border">
                     <a
                       href={selectedStudy.pdfDownload}
                       target="_blank"

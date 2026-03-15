@@ -504,7 +504,7 @@ const Projects = () => {
         <DialogContent className={selectedProject && isRoamPoint(selectedProject) ? "max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" : "max-w-2xl max-h-[90vh] overflow-y-auto"}>
           {selectedProject && isRoamPoint(selectedProject) ? (
             /* Roam Point full case study */
-            <div className="divide-y divide-white/10 bg-background">
+            <div className="divide-y divide-border bg-background">
               {/* Hero image */}
               {selectedProject.images?.[0] && (
                 <div className="h-48 sm:h-52 w-full overflow-hidden rounded-t-lg">
@@ -559,7 +559,7 @@ const Projects = () => {
 
               {/* Photo gallery */}
               {selectedProject.images && selectedProject.images.length > 1 && (
-                <div className="px-6 py-8 sm:px-8 border-t border-white/10">
+                <div className="px-6 py-8 sm:px-8 border-t border-border">
                   <h3 className="text-lg font-display font-semibold text-primary mb-4">Gallery</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {selectedProject.images.map((img, index) => (
@@ -567,7 +567,7 @@ const Projects = () => {
                         key={index}
                         src={img}
                         alt={`Roam Point charging infrastructure ${index + 1}`}
-                        className="w-full h-36 object-cover rounded-lg border border-white/10"
+                        className="w-full h-36 object-cover rounded-lg border border-border"
                         loading="lazy"
                         decoding="async"
                       />

@@ -42,7 +42,7 @@ export const Leadership = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="leadership" className="py-24 px-6 relative" ref={ref}>
+    <section id="leadership" className="py-16 sm:py-20 lg:py-24 px-6 relative" ref={ref}>
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -106,7 +106,7 @@ export const Leadership = () => {
                     <h3 className="font-display font-bold text-lg group-hover:text-primary transition-colors">
                       {item.title}
                     </h3>
-                    <span className="text-xs text-muted-foreground bg-white/5 px-2 py-1 rounded-full whitespace-nowrap">
+                    <span className="text-xs text-muted-foreground bg-black/5 dark:bg-white/5 px-2 py-1 rounded-full whitespace-nowrap">
                       {item.year}
                     </span>
                   </div>

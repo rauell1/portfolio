@@ -32,7 +32,7 @@ function ArticleImage({ src, alt, className }: { src: string; alt: string; class
   const [failed, setFailed] = useState(false);
   if (failed) {
     return (
-      <div className={`rounded-xl border border-white/10 bg-muted/20 flex items-center justify-center ${className || ""}`} style={{ minHeight: 240 }}>
+      <div className={`rounded-xl border border-border bg-muted/20 flex items-center justify-center ${className || ""}`} style={{ minHeight: 240 }}>
         <span className="text-sm text-muted-foreground">Image unavailable</span>
       </div>
     );
@@ -176,7 +176,7 @@ const BlogPostPage = () => {
               <ArticleImage
                 src={imgMatch[2]}
                 alt={imgMatch[1] || ""}
-                className="w-full rounded-xl border border-white/10 object-cover max-h-[420px]"
+                className="w-full rounded-xl border border-border object-cover max-h-[420px]"
               />
               {imgMatch[1] && (
                 <figcaption className="text-sm text-muted-foreground mt-2 text-center">
@@ -221,7 +221,7 @@ const BlogPostPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="rounded-2xl overflow-hidden border border-white/10 mb-8 shadow-xl"
+            className="rounded-2xl overflow-hidden border border-border mb-8 shadow-xl"
           >
             {post.cover_image && !coverImageFailed ? (
               <img
@@ -277,7 +277,7 @@ const BlogPostPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="prose prose-invert max-w-none"
+            className="prose dark:prose-invert max-w-none"
           >
             {renderContent(post.content)}
           </motion.div>
@@ -288,12 +288,12 @@ const BlogPostPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex gap-2 flex-wrap mt-8 pt-8 border-t border-white/10"
+              className="flex gap-2 flex-wrap mt-8 pt-8 border-t border-border"
             >
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-white/5 text-sm text-muted-foreground flex items-center gap-1"
+                  className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 text-sm text-muted-foreground flex items-center gap-1"
                 >
                   <Tag className="w-3 h-3" />
                   {tag}
@@ -311,14 +311,14 @@ const BlogPostPage = () => {
           >
             <button
               onClick={sharePost}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             >
               <Share2 className="w-4 h-4" />
               Share this article
             </button>
             <button
               onClick={copyPostLink}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             >
               {linkCopied ? (
                 <>

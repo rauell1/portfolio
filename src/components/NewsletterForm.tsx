@@ -76,7 +76,7 @@ export const NewsletterForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            className="w-full pl-12 pr-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border border-input focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
             required
           />
         </div>

@@ -117,7 +117,7 @@ export const Projects = () => {
   };
 
   return (
-    <section id="work" className="py-32 px-6 relative" ref={ref}>
+    <section id="work" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -160,7 +160,7 @@ export const Projects = () => {
                         Founder
                       </span>
                     )}
-                    <span className="text-xs font-medium text-muted-foreground bg-white/5 px-3 py-1 rounded-full">
+                    <span className="text-xs font-medium text-muted-foreground bg-black/5 dark:bg-white/5 px-3 py-1 rounded-full">
                       {project.category}
                     </span>
                   </div>
@@ -177,7 +177,7 @@ export const Projects = () => {
 
                 <div className="flex flex-wrap gap-2">
                   {project.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="text-xs px-2 py-1 rounded-md bg-white/5 text-muted-foreground">
+                    <span key={tag} className="text-xs px-2 py-1 rounded-md bg-black/5 dark:bg-white/5 text-muted-foreground">
                       {tag}
                     </span>
                   ))}
@@ -203,7 +203,7 @@ export const Projects = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-card rounded-2xl border border-white/10 overflow-hidden my-8"
+              className="relative w-full max-w-2xl bg-card rounded-2xl border border-border overflow-hidden my-8"
             >
               {/* Header - image or gradient */}
               {selectedProject.images && selectedProject.images.length > 0 ? (
@@ -290,7 +290,7 @@ export const Projects = () => {
                 {selectedProject.specs && (
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                     {selectedProject.specs.map((spec) => (
-                      <div key={spec.label} className="bg-white/5 rounded-lg p-3 text-center">
+                      <div key={spec.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-3 text-center">
                         <p className="text-lg font-bold text-primary">{spec.value}</p>
                         <p className="text-xs text-muted-foreground">{spec.label}</p>
                       </div>
@@ -306,7 +306,7 @@ export const Projects = () => {
                         key={i}
                         src={img}
                         alt={`${selectedProject.title} ${i + 1}`}
-                        className="w-full h-20 object-cover rounded-lg border border-white/10 hover:border-primary/50 transition-colors cursor-pointer"
+                        className="w-full h-20 object-cover rounded-lg border border-border hover:border-primary/50 transition-colors cursor-pointer"
                         loading="lazy"
                         decoding="async"
                       />
@@ -327,7 +327,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="flex items-center gap-3">
                     {selectedProject.pdfDownload && (
                       <a
@@ -345,7 +345,7 @@ export const Projects = () => {
                         href={selectedProject.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg font-medium hover:bg-white/10 transition-colors text-sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-black/5 dark:bg-white/5 rounded-lg font-medium hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-sm"
                       >
                         <ExternalLink className="w-4 h-4" />
                         Visit Project
@@ -357,7 +357,7 @@ export const Projects = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => navigate("prev")}
-                      className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                      className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -366,7 +366,7 @@ export const Projects = () => {
                     </span>
                     <button
                       onClick={() => navigate("next")}
-                      className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                      className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>

@@ -131,7 +131,7 @@ const Blog = () => {
               {BLOG_PILLARS.map((pillar, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 text-center sm:text-left"
+                  className="rounded-2xl border border-border bg-gradient-to-b from-black/5 dark:from-white/5 to-transparent p-6 text-center sm:text-left"
                 >
                   <div className="inline-flex p-3 rounded-xl bg-primary/10 mb-4">
                     <pillar.icon className="w-8 h-8 text-primary" />
@@ -158,7 +158,7 @@ const Blog = () => {
                   placeholder="Search articles..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border border-input focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                 />
               </div>
               <div className="flex gap-2 flex-wrap">
@@ -167,7 +167,7 @@ const Blog = () => {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     !selectedCategory
                       ? "bg-primary text-primary-foreground"
-                      : "bg-white/5 hover:bg-white/10"
+                      : "bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10"
                   }`}
                 >
                   All
@@ -181,7 +181,7 @@ const Blog = () => {
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
                         selectedCategory === cat
                           ? "bg-primary text-primary-foreground"
-                          : "bg-white/5 hover:bg-white/10"
+                          : "bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -198,9 +198,9 @@ const Blog = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
-                  <div className="h-48 bg-white/10 rounded-xl mb-4" />
-                  <div className="h-6 bg-white/10 rounded mb-2" />
-                  <div className="h-4 bg-white/10 rounded w-3/4" />
+                  <div className="h-48 bg-black/10 dark:bg-white/10 rounded-xl mb-4" />
+                  <div className="h-6 bg-black/10 dark:bg-white/10 rounded mb-2" />
+                  <div className="h-4 bg-black/10 dark:bg-white/10 rounded w-3/4" />
                 </div>
               ))}
             </div>
@@ -228,7 +228,7 @@ const Blog = () => {
                   >
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="block rounded-2xl overflow-hidden border border-white/10 bg-card hover:border-primary/30 transition-all duration-300 group"
+                      className="block rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/30 transition-all duration-300 group"
                     >
                       {/* Cover image – centered with consistent aspect ratio */}
                       <div className="relative overflow-hidden bg-muted/30 flex items-center justify-center aspect-[4/3] w-full">
@@ -273,7 +273,7 @@ const Blog = () => {
                             ))}
                           </div>
                         )}
-                        <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                        <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                           <span className="text-xs text-primary font-medium group-hover:underline">Read article</span>
                           <button
                             onClick={(e) => copyPostLink(e, post.slug)}
@@ -297,7 +297,7 @@ const Blog = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-2xl border border-white/10 bg-card p-8 md:p-10 text-center"
+            className="rounded-2xl border border-border bg-card p-8 md:p-10 text-center"
           >
             <h2 className="text-2xl font-display font-bold mb-3">
               Stay Updated on <span className="gradient-text">Clean Energy</span>

@@ -108,13 +108,13 @@ export const Testimonials = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => navigate("prev")}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => navigate("next")}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
@@ -155,7 +155,7 @@ export const Testimonials = () => {
                   className={`w-2 h-2 rounded-full transition-all ${
                     index === currentIndex
                       ? "bg-primary w-6"
-                      : "bg-white/20 hover:bg-white/40"
+                      : "bg-black/10 dark:bg-white/20 hover:bg-black/20 dark:hover:bg-white/40"
                   }`}
                 />
               ))}
@@ -175,7 +175,7 @@ export const Testimonials = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                 onClick={() => setCurrentIndex(testimonials.findIndex(t => t.id === testimonial.id))}
-                className="glass-card rounded-xl p-6 cursor-pointer hover:bg-white/5 transition-colors"
+                className="glass-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
                   "{testimonial.content}"

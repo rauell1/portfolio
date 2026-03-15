@@ -83,7 +83,7 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-32 px-6 relative" ref={ref}>
+    <section id="contact" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -120,7 +120,7 @@ export const Contact = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors group"
                   >
                     <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                       <item.icon className="w-5 h-5 text-primary" />
@@ -149,7 +149,7 @@ export const Contact = () => {
               </a>
               <a
                 href="mailto:royokola3@gmail.com"
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 border border-white/20 hover:border-primary/50 rounded-xl font-semibold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 border border-border hover:border-primary/50 rounded-xl font-semibold transition-colors"
               >
                 <Mail className="w-5 h-5" />
                 Send Email
@@ -174,7 +174,7 @@ export const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-white/10'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
                   placeholder="Your name"
                 />
                 {fieldErrors.name && <p className="text-red-500 text-sm mt-1">{fieldErrors.name}</p>}
@@ -187,7 +187,7 @@ export const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${fieldErrors.email ? 'border-red-500' : 'border-white/10'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.email ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
                   placeholder="your@email.com"
                 />
                 {fieldErrors.email && <p className="text-red-500 text-sm mt-1">{fieldErrors.email}</p>}
@@ -202,7 +202,7 @@ export const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${fieldErrors.subject ? 'border-red-500' : 'border-white/10'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+                className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.subject ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
                 placeholder="What's this about?"
               />
               {fieldErrors.subject && <p className="text-red-500 text-sm mt-1">{fieldErrors.subject}</p>}
@@ -216,7 +216,7 @@ export const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${fieldErrors.message ? 'border-red-500' : 'border-white/10'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none`}
+                className={`w-full px-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border ${fieldErrors.message ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none`}
                 placeholder="Tell me about your project..."
               />
               {fieldErrors.message && <p className="text-red-500 text-sm mt-1">{fieldErrors.message}</p>}
