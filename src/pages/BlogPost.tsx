@@ -7,7 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { getStaticPostBySlug } from "@/data/blogPosts";
+import { getStaticPostBySlug, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
 
 interface BlogPost {
   id: string;
@@ -64,7 +64,13 @@ const BlogPostPage = () => {
       setLoading(false);
       return;
     }
-    // Always try DB first — admin edits in the backend take priority over static content
+    // For static pillar posts, always use static content so images and formatting are always correct
+    const staticPost = getStaticPostBySlug(slug);
+    if (STATIC_BLOG_SLUGS.has(slug) && staticPost) {
+      setPost(staticPost);
+      setLoading(false);
+      return;
+    }
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -74,15 +80,11 @@ const BlogPostPage = () => {
 
     if (data) {
       setPost(data);
+    } else if (staticPost) {
+      setPost(staticPost);
     } else {
-      // Fall back to static post if not found in DB (or not yet published there)
-      const staticPost = getStaticPostBySlug(slug);
-      if (staticPost) {
-        setPost(staticPost);
-      } else {
-        if (error) console.error("Error fetching post:", error);
-        navigate("/blog");
-      }
+      if (error) console.error("Error fetching post:", error);
+      navigate("/blog");
     }
     setLoading(false);
   };

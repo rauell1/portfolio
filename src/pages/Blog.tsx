@@ -7,7 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { STATIC_BLOG_POSTS } from "@/data/blogPosts";
+import { STATIC_BLOG_POSTS, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
 
 interface BlogPost {
   id: string;
@@ -72,10 +72,9 @@ const Blog = () => {
         .limit(100);
 
       const dbPosts = data || [];
-      // DB is authoritative: only fall back to static for posts not yet in the database
-      const dbSlugs = new Set(dbPosts.map((p) => p.slug));
-      const staticFallbacks = STATIC_BLOG_POSTS.filter((p) => !dbSlugs.has(p.slug));
-      const merged = [...dbPosts, ...staticFallbacks].sort((a, b) => {
+      // For the three pillar slugs, always use static post so cover_image and content are always set (no icon placeholders).
+      const dbExceptStatic = dbPosts.filter((p) => !STATIC_BLOG_SLUGS.has(p.slug));
+      const merged = [...dbExceptStatic, ...STATIC_BLOG_POSTS].sort((a, b) => {
         const dateA = a.published_at ? new Date(a.published_at).getTime() : 0;
         const dateB = b.published_at ? new Date(b.published_at).getTime() : 0;
         return dateB - dateA;
