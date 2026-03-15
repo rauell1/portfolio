@@ -157,7 +157,7 @@
   }
 
   .light .glass {
-    @apply bg-black/5 border-black/10;
+    @apply bg-white/70 border-black/10;
   }
 
   .glass-card {
@@ -165,7 +165,7 @@
   }
 
   .light .glass-card {
-    @apply bg-white/80 border-black/5;
+    @apply bg-white border-black/10 shadow-md;
   }
 
   .gradient-text {
@@ -221,6 +221,10 @@
   .card-hover:hover {
     @apply -translate-y-2;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px hsla(197, 68%, 44%, 0.2);
+  }
+
+  .light .card-hover:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px hsla(197, 68%, 44%, 0.15);
   }
 
   .section-heading {

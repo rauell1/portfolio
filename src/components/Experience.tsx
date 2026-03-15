@@ -152,7 +152,7 @@ export const Experience = () => {
                         <h3 className="text-xl font-display font-bold">{exp.company}</h3>
                       )}
                       {exp.isFounder && (
-                        <span className="px-2 py-0.5 text-xs font-medium bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1 shadow-[0_0_12px_-2px_rgba(245,158,11,0.5)] animate-pulse">
+                        <span className="px-2 py-0.5 text-xs font-medium bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1 shadow-[0_0_12px_-2px_rgba(245,158,11,0.5)] animate-pulse">
                           <Award className="w-3 h-3" />
                           Founder
                         </span>
