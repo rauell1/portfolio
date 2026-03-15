@@ -1,10 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin, Crown } from "lucide-react";
-import roamCharger1 from "@/assets/roam-charger-1.jpeg";
-import roamCharger2 from "@/assets/roam-charger-2.jpeg";
-import roamCharger3 from "@/assets/roam-charger-3.jpeg";
-import roamCharger4 from "@/assets/roam-charger-4.jpeg";
+import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin } from "lucide-react";
 
 interface Project {
   id: string;
@@ -26,27 +22,6 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "roam-point",
-    title: "Roam Point EV Charging Network",
-    category: "EV Infrastructure",
-    description: "Product ownership and deployment of distributed fast charging infrastructure for electric motorcycles across Nairobi.",
-    longDescription: "Roam Point is a distributed EV charging infrastructure solution designed to accelerate electric motorcycle adoption across African cities by providing accessible and high-speed charging hubs. The system enables riders to recharge quickly while allowing businesses and landowners to host charging infrastructure and generate revenue through energy sales. The charging network supports Roam electric motorcycles and interoperable electric mobility platforms.",
-    role: "Product Owner – Roam Point Charging Infrastructure",
-    icon: Zap,
-    link: "https://roam-electric.com",
-    gradient: "from-amber-500 to-orange-600",
-    tags: ["EV Infrastructure", "Clean Mobility", "Charging Networks", "Energy Systems", "Product Ownership"],
-    isFlagship: true,
-    images: [roamCharger1, roamCharger2, roamCharger3, roamCharger4],
-    specs: [
-      { label: "Output", value: "6.6 kW DC" },
-      { label: "Efficiency", value: "94%" },
-      { label: "Connectivity", value: "4G & WiFi" },
-      { label: "Range/min", value: "2–3 km" },
-    ],
-    pdfDownload: "/Roam_Point_Partnership_Opportunity.pdf",
-  },
-  {
     id: "safaricharge",
     title: "SafariCharge Ltd",
     category: "E-Mobility",
@@ -62,7 +37,7 @@ const projects: Project[] = [
     id: "ev-hubs",
     title: "EV Charging Hub Expansion",
     category: "Infrastructure",
-    description: "Contributed to feasibility studies and proposed 10+ hub sites across Nairobi.",
+    description: "Collaborated with Roam Electric & EVChaja to identify optimal locations for EV charging infrastructure, integrating solar power and second-life batteries to support Nairobi's growing e-mobility ecosystem.",
     longDescription: "Collaborated with Roam Electric & EVChaja to identify optimal locations for EV charging infrastructure, integrating solar power and second-life batteries to support Nairobi's growing e-mobility ecosystem.",
     icon: Battery,
     gradient: "from-purple-500 to-pink-500",
@@ -110,20 +85,15 @@ const projects: Project[] = [
   },
 ];
 
-const flagship = projects[0];
-const otherProjects = projects.slice(1);
-
 export const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeImage, setActiveImage] = useState(0);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
     setCurrentIndex(projects.findIndex(p => p.id === project.id));
-    setActiveImage(0);
   };
 
   const closeModal = () => setSelectedProject(null);
@@ -134,7 +104,6 @@ export const Projects = () => {
       : (currentIndex + 1) % projects.length;
     setCurrentIndex(newIndex);
     setSelectedProject(projects[newIndex]);
-    setActiveImage(0);
   };
 
   return (
@@ -156,108 +125,9 @@ export const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Flagship Project */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          onClick={() => openModal(flagship)}
-          className="group relative glass-card rounded-2xl overflow-hidden cursor-pointer card-hover mb-10 border border-amber-500/20"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-600/5" />
-          <div className="relative z-10 grid md:grid-cols-2 gap-0">
-            {/* Image gallery */}
-            <div className="relative h-64 md:h-auto md:min-h-[360px] overflow-hidden">
-              <img
-                src={flagship.images?.[activeImage] || roamCharger1}
-                alt="Roam Point EV Charger"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              {/* Image dots */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {flagship.images?.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={(e) => { e.stopPropagation(); setActiveImage(i); }}
-                    className={`w-2 h-2 rounded-full transition-all ${i === activeImage ? "bg-white w-6" : "bg-white/50"}`}
-                  />
-                ))}
-              </div>
-              <div className="absolute top-4 left-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full">
-                  <Crown className="w-3 h-3" />
-                  Flagship Project
-                </span>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 md:p-8 flex flex-col justify-center">
-              <span className="text-xs font-medium text-muted-foreground bg-white/5 px-3 py-1 rounded-full self-start mb-3">
-                {flagship.category}
-              </span>
-              <h3 className="text-2xl md:text-3xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
-                {flagship.title}
-              </h3>
-              <p className="text-sm text-amber-400/80 font-medium mb-3">{flagship.role}</p>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                {flagship.description}
-              </p>
-
-              {/* Specs */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-                {flagship.specs?.map((spec) => (
-                  <div key={spec.label} className="bg-white/5 rounded-lg p-3 text-center">
-                    <p className="text-lg font-bold text-primary">{spec.value}</p>
-                    <p className="text-xs text-muted-foreground">{spec.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-5">
-                {flagship.tags.slice(0, 4).map((tag) => (
-                  <span key={tag} className="text-xs px-2 py-1 rounded-md bg-amber-500/10 text-amber-400/80 border border-amber-500/20">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center gap-3">
-                {flagship.pdfDownload && (
-                  <a
-                    href={flagship.pdfDownload}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-2 text-xs px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    Partnership Deck
-                  </a>
-                )}
-                {flagship.link && (
-                  <a
-                    href={flagship.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-2 text-xs px-4 py-2 bg-white/5 rounded-lg font-medium hover:bg-white/10 transition-colors"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    Roam Electric
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {otherProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}

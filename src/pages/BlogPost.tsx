@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind, Link2, Check } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { getStaticPostBySlug, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
 
 interface BlogPost {
   id: string;
@@ -27,17 +28,48 @@ const categoryIcons: Record<string, React.ElementType> = {
   "sustainability": Wind,
 };
 
+function ArticleImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className={`rounded-xl border border-white/10 bg-muted/20 flex items-center justify-center ${className || ""}`} style={{ minHeight: 240 }}>
+        <span className="text-sm text-muted-foreground">Image unavailable</span>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [coverImageFailed, setCoverImageFailed] = useState(false);
 
   useEffect(() => {
     fetchPost();
   }, [slug]);
 
   const fetchPost = async () => {
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+    const staticPost = getStaticPostBySlug(slug);
+    if (STATIC_BLOG_SLUGS.has(slug) && staticPost) {
+      setPost(staticPost);
+      setLoading(false);
+      return;
+    }
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -45,11 +77,13 @@ const BlogPostPage = () => {
       .eq("published", true)
       .maybeSingle();
 
-    if (error || !data) {
-      console.error("Error fetching post:", error);
-      navigate("/blog");
-    } else {
+    if (data) {
       setPost(data);
+    } else if (staticPost) {
+      setPost(staticPost);
+    } else {
+      if (error) console.error("Error fetching post:", error);
+      navigate("/blog");
     }
     setLoading(false);
   };
@@ -61,8 +95,15 @@ const BlogPostPage = () => {
         url: window.location.href,
       });
     } else {
-      navigator.clipboard.writeText(window.location.href);
+      copyPostLink();
     }
+  };
+
+  const copyPostLink = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    });
   };
 
   if (loading) {
@@ -79,32 +120,75 @@ const BlogPostPage = () => {
 
   const Icon = categoryIcons[post.category] || Leaf;
 
-  // Parse markdown-like content (basic)
+  // Parse markdown-like content: headings, lists, images, paragraphs. Supports ![alt](url) with any url (https or /path).
   const renderContent = (content: string) => {
-    return content.split("\n\n").map((paragraph, index) => {
-      if (paragraph.startsWith("## ")) {
-        return (
-          <h2 key={index} className="text-2xl font-display font-bold mt-8 mb-4 text-primary">
-            {paragraph.replace("## ", "")}
+    if (!content || typeof content !== "string") return null;
+    const normalized = content.replace(/\\n/g, "\n").trim();
+    const imageRegex = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+    const blocks = normalized.split(/\n\n+/);
+    const out: React.ReactNode[] = [];
+    let key = 0;
+    for (const block of blocks) {
+      const trimmed = block.trim();
+      if (!trimmed) continue;
+      if (trimmed.startsWith("## ")) {
+        out.push(
+          <h2 key={key++} className="text-2xl font-display font-bold mt-10 mb-4 text-primary">
+            {trimmed.replace("## ", "")}
           </h2>
         );
+        continue;
       }
-      if (paragraph.startsWith("- ")) {
-        const items = paragraph.split("\n").filter((item) => item.startsWith("- "));
-        return (
-          <ul key={index} className="list-disc list-inside space-y-2 my-4 text-muted-foreground">
+      if (trimmed.startsWith("- ")) {
+        const items = trimmed.split("\n").filter((item) => item.startsWith("- "));
+        out.push(
+          <ul key={key++} className="list-disc list-inside space-y-2 my-4 text-muted-foreground">
             {items.map((item, i) => (
               <li key={i}>{item.replace("- ", "")}</li>
             ))}
           </ul>
         );
+        continue;
       }
-      return (
-        <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-          {paragraph}
-        </p>
-      );
-    });
+      // Block may be a single image, multiple image lines, or paragraph(s). Process line by line.
+      const lines = trimmed.split("\n");
+      let paraLines: string[] = [];
+      const flushPara = () => {
+        if (paraLines.length) {
+          out.push(
+            <p key={key++} className="text-muted-foreground leading-relaxed mb-4">
+              {paraLines.join("\n")}
+            </p>
+          );
+          paraLines = [];
+        }
+      };
+      for (const line of lines) {
+        const lineTrim = line.trim();
+        const imgMatch = lineTrim.match(imageRegex);
+        if (imgMatch) {
+          flushPara();
+          out.push(
+            <figure key={key++} className="my-8">
+              <ArticleImage
+                src={imgMatch[2]}
+                alt={imgMatch[1] || ""}
+                className="w-full rounded-xl border border-white/10 object-cover max-h-[420px]"
+              />
+              {imgMatch[1] && (
+                <figcaption className="text-sm text-muted-foreground mt-2 text-center">
+                  {imgMatch[1]}
+                </figcaption>
+              )}
+            </figure>
+          );
+        } else if (lineTrim) {
+          paraLines.push(lineTrim);
+        }
+      }
+      flushPara();
+    }
+    return out;
   };
 
   return (
@@ -112,37 +196,58 @@ const BlogPostPage = () => {
       <ParticleBackground />
       <Navbar />
 
-      <main className="relative z-10 pt-24 pb-12 px-6">
-        <article className="max-w-3xl mx-auto">
-          {/* Back Link */}
+      <main className="relative z-10 pt-20 pb-12 px-4 sm:px-6">
+        <article className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6"
           >
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
             </Link>
           </motion.div>
 
-          {/* Header */}
-          <motion.header
+          {/* Cover image first (hero) */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="rounded-2xl overflow-hidden border border-white/10 mb-8 shadow-xl"
+          >
+            {post.cover_image && !coverImageFailed ? (
+              <img
+                src={post.cover_image}
+                alt=""
+                className="w-full aspect-[21/9] sm:aspect-[2/1] object-cover"
+                onError={() => setCoverImageFailed(true)}
+              />
+            ) : (
+              <div className="w-full aspect-[21/9] sm:aspect-[2/1] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <Icon className="w-20 h-20 text-primary/40" />
+              </div>
+            )}
+          </motion.div>
+
+          {/* Title and meta */}
+          <motion.header
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-8"
           >
-            <div className="flex items-center gap-4 mb-4">
-              <span className="px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="px-3 py-1.5 rounded-lg bg-primary/15 text-primary text-sm font-medium flex items-center gap-2 border border-primary/20">
                 <Icon className="w-4 h-4" />
                 {post.category.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
               </span>
               {post.published_at && (
-                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <span className="text-sm text-muted-foreground flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {new Date(post.published_at).toLocaleDateString("en-US", {
                     year: "numeric",
@@ -152,23 +257,15 @@ const BlogPostPage = () => {
                 </span>
               )}
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground leading-tight mb-4">
               {post.title}
             </h1>
             {post.excerpt && (
-              <p className="text-xl text-muted-foreground">{post.excerpt}</p>
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+                {post.excerpt}
+              </p>
             )}
           </motion.header>
-
-          {/* Cover Image or Icon */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card rounded-2xl h-64 flex items-center justify-center mb-8"
-          >
-            <Icon className="w-24 h-24 text-primary/50" />
-          </motion.div>
 
           {/* Content */}
           <motion.div
@@ -200,12 +297,12 @@ const BlogPostPage = () => {
             </motion.div>
           )}
 
-          {/* Share */}
+          {/* Share & Copy link */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8"
+            className="mt-8 flex flex-wrap gap-3"
           >
             <button
               onClick={sharePost}
@@ -213,6 +310,22 @@ const BlogPostPage = () => {
             >
               <Share2 className="w-4 h-4" />
               Share this article
+            </button>
+            <button
+              onClick={copyPostLink}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              {linkCopied ? (
+                <>
+                  <Check className="w-4 h-4 text-green-500" />
+                  Link copied!
+                </>
+              ) : (
+                <>
+                  <Link2 className="w-4 h-4" />
+                  Copy link
+                </>
+              )}
             </button>
           </motion.div>
 

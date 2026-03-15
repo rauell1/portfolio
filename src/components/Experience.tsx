@@ -18,7 +18,7 @@ const experiences: Experience[] = [
     company: "SafariCharge",
     role: "Founder",
     location: "Nairobi, Kenya",
-    period: "2024 – Present",
+    period: "2024 - Present",
     description: [
       "Founded an EV charging infrastructure startup focused on expanding access to sustainable mobility across East Africa",
       "Leading strategic partnerships and market development for EV charging solutions",
@@ -31,7 +31,7 @@ const experiences: Experience[] = [
     company: "Roam Electric Ltd",
     role: "Junior Sales Consultant",
     location: "Nairobi, Kenya",
-    period: "Jun 2025 – Present",
+    period: "Jun 2025 - Present",
     description: [
       "Increased sales pipeline opportunities by 25% through targeted promotion of solar equipment and EV charging hubs across Nairobi and Kiambu counties",
       "Generated over KES 10 million in monthly sales by cultivating strong relationships with EPCs, transport operators, and energy distributors",
@@ -42,7 +42,7 @@ const experiences: Experience[] = [
     company: "EVChaja",
     role: "Business Strategy & Operations Consultant",
     location: "Remote - Nairobi",
-    period: "Jan 2025 – Jun 2025",
+    period: "Jan 2025 - Jun 2025",
     description: [
       "Delivered market intelligence reports that shaped EV charging hub expansion, contributing to 3 investment-ready projects",
       "Engaged with regulators and NGOs (EPRA, EMAK) to influence policy discussions, securing compliance for proposed projects",
@@ -54,7 +54,7 @@ const experiences: Experience[] = [
     company: "Frisco Engineering Limited",
     role: "Technical Sales Engineer Intern",
     location: "Nairobi, Kenya",
-    period: "Feb 2024 – Jul 2024",
+    period: "Feb 2024 - Jul 2024",
     description: [
       "Designed and sized 10+ solar PV backup systems worth KES 3M+, closing multiple agricultural and residential sales",
       "Conducted 15+ energy audits and feasibility studies, providing clients with evidence-based investment decisions",
@@ -66,7 +66,7 @@ const experiences: Experience[] = [
     company: "HomeBiogas Kenya",
     role: "Technical Sales Engineer Intern",
     location: "Nairobi, Kenya",
-    period: "Jan 2023 – Feb 2024",
+    period: "Jan 2023 - Feb 2024",
     description: [
       "Supported the installation of 10+ household biogas systems, reducing reliance on biomass and LPG fuels",
       "Led community engagement sessions that cut system failures by 30% through effective after-sales training",
@@ -78,7 +78,7 @@ const experiences: Experience[] = [
     company: "Farmers Choice Limited",
     role: "Production Intern",
     location: "Nairobi, Kenya",
-    period: "Dec 2021 – Mar 2022",
+    period: "Dec 2021 - Mar 2022",
     description: [
       "Conducted energy and water efficiency audits, identifying opportunities for 10% reduction in resource use",
       "Developed sustainability reports highlighting waste reduction and energy efficiency initiatives",

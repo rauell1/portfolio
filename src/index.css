@@ -118,6 +118,15 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
   }
+
+  /* Justify paragraph body text app-wide (main, article, and content-body wrappers) */
+  main p,
+  article p,
+  .content-body p,
+  .content-body .leading-relaxed.whitespace-pre-line {
+    text-align: justify;
+    text-justify: inter-word;
+  }
 }
 
 @layer components {

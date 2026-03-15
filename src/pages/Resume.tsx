@@ -12,7 +12,7 @@ const experiences = [
     company: "Roam Electric Ltd",
     role: "Junior Sales Consultant",
     location: "Nairobi, Kenya",
-    period: "Jun 2025 – Present",
+    period: "Jun 2025 - Present",
     achievements: [
       "Increased sales pipeline opportunities by 25% through targeted promotion of solar equipment and EV charging hubs across Nairobi and Kiambu counties",
       "Generated over KES 10 million in monthly sales by cultivating strong relationships with EPCs, transport operators, and energy distributors",
@@ -22,7 +22,7 @@ const experiences = [
     company: "EVChaja",
     role: "Business Strategy & Operations Consultant",
     location: "Remote - Nairobi",
-    period: "Jan 2025 – Jun 2025",
+    period: "Jan 2025 - Jun 2025",
     achievements: [
       "Delivered market intelligence reports that shaped EV charging hub expansion, contributing to 3 investment-ready projects",
       "Engaged with regulators and NGOs (EPRA, EMAK) to influence policy discussions, securing compliance for proposed projects",
@@ -33,7 +33,7 @@ const experiences = [
     company: "Frisco Engineering Limited",
     role: "Technical Sales Engineer Intern",
     location: "Nairobi, Kenya",
-    period: "Feb 2024 – Jul 2024",
+    period: "Feb 2024 - Jul 2024",
     achievements: [
       "Designed and sized 10+ solar PV backup systems worth KES 3M+, closing multiple agricultural and residential sales",
       "Conducted 15+ energy audits and feasibility studies, providing clients with evidence-based investment decisions",
@@ -44,7 +44,7 @@ const experiences = [
     company: "HomeBiogas Kenya",
     role: "Technical Sales Engineer Intern",
     location: "Nairobi, Kenya",
-    period: "Jan 2023 – Feb 2024",
+    period: "Jan 2023 - Feb 2024",
     achievements: [
       "Supported the installation of 10+ household biogas systems, reducing reliance on biomass and LPG fuels",
       "Led community engagement sessions that cut system failures by 30% through effective after-sales training",
@@ -55,7 +55,7 @@ const experiences = [
     company: "Farmers Choice Limited",
     role: "Production Intern",
     location: "Nairobi, Kenya",
-    period: "Dec 2021 – Mar 2022",
+    period: "Dec 2021 - Mar 2022",
     achievements: [
       "Conducted energy and water efficiency audits, identifying opportunities for 10% reduction in resource use",
       "Developed sustainability reports highlighting waste reduction and energy efficiency initiatives",
@@ -76,14 +76,14 @@ const education = [
     institution: "University of East London (via Unicaf)",
     degree: "Master of Business Administration (MBA)",
     location: "London, UK",
-    period: "Sept 2025 – Current",
+    period: "Sept 2025 - Current",
   },
   {
     institution: "Jomo Kenyatta University of Agriculture and Technology",
     degree: "BSc. Agricultural and Biosystems Engineering",
     details: "Second Class Honors, Upper Division",
     location: "Juja, Kenya",
-    period: "Sept 2018 – Dec 2023",
+    period: "Sept 2018 - Dec 2023",
   },
 ];
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { 
   ArrowLeft, Plus, Image, Calendar, MapPin, 
-  Edit, Trash2, Loader2, Upload
+  Edit, Trash2, Loader2, Upload, Zap, Map, Users, Target, Cpu, Layout
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -38,7 +38,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 interface Project {
   id: string;
   title: string;
@@ -49,6 +48,74 @@ interface Project {
   completed_at: string | null;
   created_at: string;
 }
+
+const ROAM_POINT_PROJECT: Project = {
+  id: "roam-point",
+  title: "Roam Point EV Charging Infrastructure",
+  description: "Roam Point is a distributed EV charging infrastructure solution designed to accelerate electric motorcycle adoption across African cities by providing accessible and high-speed charging hubs.",
+  location: "Nairobi, Kenya",
+  project_type: "ev",
+  images: ["/images/basigo-charging.png", "/images/roam-electric.webp", "/images/basigo-buses.jpeg"],
+  completed_at: null,
+  created_at: "",
+};
+
+const ROAM_POINT_CASE_STUDY = {
+  hero: {
+    title: "Roam Point Fast Charging Infrastructure Rollout",
+    subtitle: "Deploying distributed EV charging infrastructure to support electric motorcycle mobility across Nairobi.",
+    quickFacts: [
+      { label: "Location", value: "Nairobi, Kenya", icon: Map },
+      { label: "Project Type", value: "Electric Mobility Infrastructure", icon: Zap },
+      { label: "Role", value: "Product Owner - Charging Infrastructure Deployment", icon: Users },
+      { label: "Technology", value: "6.6 kW DC Fast Chargers", icon: Cpu },
+      { label: "Deployment Model", value: "Distributed urban charging network", icon: Layout },
+      { label: "Impact Areas", value: "Clean mobility • Infrastructure • Renewable integration", icon: Target },
+    ],
+  },
+  sections: [
+    {
+      heading: "Project Overview",
+      content: "The Roam Point project focuses on deploying distributed fast charging infrastructure to support the growing adoption of electric motorcycles in Nairobi. Electric mobility offers a cost-effective and sustainable alternative to traditional internal combustion motorcycles, but the success of this transition depends on the availability of reliable charging infrastructure.\n\nRoam Point chargers are designed to provide accessible and fast charging solutions across urban environments, enabling riders to recharge their vehicles quickly while minimizing operational downtime.\n\nThe project aims to build a scalable network of charging stations located in strategic locations such as transport hubs, commercial centers, and public parking areas.",
+    },
+    {
+      heading: "The Problem",
+      content: "Electric motorcycle adoption in Kenya is accelerating due to the lower operating costs compared to petrol-powered motorcycles. However, charging infrastructure remains limited and unevenly distributed across urban environments.\n\nKey challenges included:\n\n• Limited availability of public EV charging stations\n• Range anxiety among riders\n• Long charging times in centralized facilities\n• Lack of infrastructure near high-traffic mobility hubs\n\nWithout accessible charging infrastructure, the expansion of electric mobility would remain constrained. The Roam Point initiative was designed to address these challenges by deploying a distributed charging network across Nairobi.",
+    },
+    {
+      heading: "My Role",
+      content: "Product Owner - Roam Point Charging Infrastructure\n\nResponsibilities included:\n\n• Leading infrastructure deployment strategy\n• Identifying and evaluating potential charging locations\n• Coordinating partnerships with site owners and businesses\n• Conducting site feasibility assessments\n• Supporting rollout of charging infrastructure\n• Working with cross-functional teams on operational planning\n\nThe role required combining technical understanding of energy systems with infrastructure planning and stakeholder engagement.",
+    },
+    {
+      heading: "Charging Infrastructure Design",
+      content: "The Roam Point charger is a compact DC fast charging unit designed specifically for electric motorcycles operating in urban African environments.\n\nKey technical features include:\n\n• Power output: 6.6 kW DC fast charging capability\n• Efficiency: 94% peak efficiency\n• Connectivity: 4G LTE and WiFi for real-time monitoring and system management\n• Charging interface: Dual Type 6 connectors for electric motorcycle charging\n• Protection systems: Surge protection, over-voltage protection, temperature protection\n• Remote management: Over-the-air software updates enable remote maintenance and system optimization\n\nThese features allow the chargers to operate reliably in both urban and semi-urban environments.",
+    },
+    {
+      heading: "Charging Models and Installation Types",
+      content: "Roam Point supports several installation configurations that enable flexible deployment across different environments.\n\n• Wall mount installation: Used in secure environments such as garages, workshops, and commercial buildings.\n\n• Mobile charging units: Portable charging stations that can be deployed in dynamic environments such as small workshops and kiosks.\n\n• Pole mounted chargers: Suitable for curbside parking spaces and open-air locations.\n\n• Canopy charging stations: Designed for larger charging hubs located in commercial centers or transport hubs.\n\nThese configurations allow infrastructure deployment in locations with varying spatial and operational requirements.",
+    },
+    {
+      heading: "Site Selection and Deployment Strategy",
+      content: "Charging locations are selected based on several criteria:\n\nMobility demand: Locations with high motorcycle traffic such as boda boda stages, transport hubs, and commercial centers.\n\nEnergy availability: Sites must have access to reliable electricity supply and adequate electrical capacity for charger installation.\n\nAccessibility: Charging stations are positioned in areas that allow easy access for riders.\n\nSafety: Locations must provide safe environments for both riders and equipment.\n\nTypical deployment locations include transport hubs, shopping centers, fuel stations, fleet depots, and public parking spaces. The compact charger footprint allows installation even in space-constrained environments.",
+    },
+    {
+      heading: "Digital Platform Integration",
+      content: "Roam Point chargers are integrated with a digital platform that enables riders to locate charging stations and manage charging sessions.\n\nPlatform features include:\n\n• Real-time charger map: Riders can view available charging stations on the Roam mobile application.\n\n• Mobile payments: Charging sessions can be paid for using integrated mobile payment systems.\n\n• Remote monitoring: Operators can monitor charger performance remotely.\n\nThis digital integration improves both operational efficiency and rider convenience.",
+    },
+    {
+      heading: "Partnership Model",
+      content: "A key component of the project is the partnership model that enables businesses and landowners to host charging infrastructure.\n\nPartner responsibilities include providing space for charger installation, maintaining accessibility, and supporting operational visibility.\n\nBenefits to partners include revenue sharing from electricity sales, monthly rental income, and increased customer traffic.\n\nThis partnership approach allows the charging network to scale rapidly while creating economic incentives for host locations.",
+    },
+    {
+      heading: "Impact",
+      content: "The Roam Point charging network contributes to the growth of sustainable mobility by:\n\n• Enabling reliable charging for electric motorcycle riders\n• Reducing dependence on fossil fuel-powered motorcycles\n• Lowering transportation-related emissions\n• Supporting the expansion of electric mobility infrastructure\n\nBy deploying distributed charging infrastructure, the project helps accelerate the transition toward cleaner urban transportation systems.",
+    },
+    {
+      heading: "Future Expansion",
+      content: "Future development of the Roam Point network may include:\n\n• Expansion to additional cities\n• Integration with renewable energy systems\n• Development of larger charging hubs\n• Improved digital monitoring and analytics",
+    },
+  ],
+};
 
 const projectTypes = [
   { value: "solar", label: "Solar Installation" },
@@ -269,6 +336,9 @@ const Projects = () => {
     return projectTypes.find(t => t.value === type)?.label || type;
   };
 
+  const displayProjects = [ROAM_POINT_PROJECT, ...projects];
+  const isStaticProject = (id: string) => id === "roam-point";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -316,7 +386,7 @@ const Projects = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
+              {displayProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
                   initial={{ opacity: 0, y: 50 }}
@@ -350,7 +420,7 @@ const Projects = () => {
                         </span>
                       </div>
                       
-                      {isAdmin && (
+                      {isAdmin && !isStaticProject(project.id) && (
                         <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={(e) => {
@@ -402,7 +472,7 @@ const Projects = () => {
             </div>
           )}
 
-          {projects.length === 0 && !loading && (
+          {displayProjects.length === 0 && !loading && (
             <div className="text-center py-20">
               <Image className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-display font-bold mb-2">No Projects Yet</h3>
@@ -422,8 +492,79 @@ const Projects = () => {
 
       {/* Project Detail Modal */}
       <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          {selectedProject && (
+        <DialogContent className={selectedProject?.id === "roam-point" ? "max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" : "max-w-2xl max-h-[90vh] overflow-y-auto"}>
+          {selectedProject && selectedProject.id === "roam-point" ? (
+            /* Roam Point full case study */
+            <div className="divide-y divide-white/10 bg-background">
+              {/* Hero image */}
+              {selectedProject.images?.[0] && (
+                <div className="h-48 sm:h-52 w-full overflow-hidden rounded-t-lg">
+                  <img
+                    src={selectedProject.images[0]}
+                    alt="Roam Point charger in the field"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              {/* Title and quick facts on solid background for readability */}
+              <div className="px-6 pb-6 pt-6 sm:px-8 sm:pt-8 bg-background">
+                <h2 className="text-2xl sm:text-3xl font-display font-bold mb-2 text-foreground">
+                  {ROAM_POINT_CASE_STUDY.hero.title}
+                </h2>
+                <p className="text-muted-foreground text-base sm:text-lg mb-6 max-w-3xl">
+                  {ROAM_POINT_CASE_STUDY.hero.subtitle}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {ROAM_POINT_CASE_STUDY.hero.quickFacts.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-muted/50 border border-border"
+                    >
+                      <item.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                          {item.label}
+                        </p>
+                        <p className="text-sm font-medium leading-snug text-foreground">{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Case study sections */}
+              <div className="content-body px-6 py-8 sm:px-8 space-y-12 bg-background">
+                {ROAM_POINT_CASE_STUDY.sections.map((section, index) => (
+                  <section key={index} className="space-y-4">
+                    <h3 className="text-lg sm:text-xl font-display font-semibold text-primary border-b border-primary/20 pb-2">
+                      {section.heading}
+                    </h3>
+                    <div className="text-muted-foreground leading-relaxed whitespace-pre-line text-sm sm:text-base text-foreground/90">
+                      {section.content}
+                    </div>
+                  </section>
+                ))}
+              </div>
+
+              {/* Photo gallery */}
+              {selectedProject.images && selectedProject.images.length > 1 && (
+                <div className="px-6 py-8 sm:px-8 border-t border-white/10">
+                  <h3 className="text-lg font-display font-semibold text-primary mb-4">Gallery</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {selectedProject.images.map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        alt={`Roam Point charging infrastructure ${index + 1}`}
+                        className="w-full h-36 object-cover rounded-lg border border-white/10"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : selectedProject ? (
+            /* Standard project modal */
             <>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-display">
@@ -448,7 +589,6 @@ const Projects = () => {
                 </DialogDescription>
               </DialogHeader>
               
-              {/* Image gallery */}
               {selectedProject.images && selectedProject.images.length > 0 ? (
                 <div className="grid grid-cols-2 gap-2 my-4">
                   {selectedProject.images.map((img, index) => (
@@ -473,7 +613,7 @@ const Projects = () => {
                 </div>
               )}
               
-              <div className="space-y-4">
+              <div className="content-body space-y-4">
                 <div>
                   <h4 className="font-display font-semibold text-lg mb-2 text-primary">About This Project</h4>
                   <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
@@ -482,7 +622,7 @@ const Projects = () => {
                 </div>
               </div>
             </>
-          )}
+          ) : null}
         </DialogContent>
       </Dialog>
 
