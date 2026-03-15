@@ -27,7 +27,10 @@ export function ThemeProvider({
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
+    root.style.colorScheme = theme;
     localStorage.setItem(storageKey, theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#0a0a0a" : "#fafafa");
   }, [theme, storageKey]);
 
   const toggleTheme = () => {

@@ -20,6 +20,23 @@
 
     <link rel="canonical" href="https://royokola.com" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#0a0a0a" id="theme-color" />
+    <script>
+      (function() {
+        var key = 'portfolio-theme';
+        var theme = 'dark';
+        try {
+          if (typeof localStorage !== 'undefined') {
+            var stored = localStorage.getItem(key);
+            if (stored === 'light' || stored === 'dark') theme = stored;
+          }
+        } catch (e) {}
+        var root = document.documentElement;
+        root.classList.add(theme);
+        root.setAttribute('data-theme', theme);
+        if (root.style) root.style.colorScheme = theme;
+      })();
+    </script>
 
     <!-- DNS prefetch / preconnect for external resources to reduce latency -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
