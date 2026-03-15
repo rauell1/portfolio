@@ -2,6 +2,8 @@
 
 A personal portfolio and thought-leadership site focused on renewable energy engineering, electric mobility infrastructure, and sustainable systems in Africa.
 
+🔗 **Live site:** [https://v0-personal-projects-lac.vercel.app](https://v0-personal-projects-lac.vercel.app)
+
 ## What’s included
 
 * **About** – Background, skills, and resume (CV download)
