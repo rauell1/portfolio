@@ -47,10 +47,12 @@ interface Project {
   images: string[] | null;
   completed_at: string | null;
   created_at: string;
+  slug?: string | null;
 }
 
 const ROAM_POINT_PROJECT: Project = {
   id: "roam-point",
+  slug: "roam-point",
   title: "Roam Point EV Charging Infrastructure",
   description: "Roam Point is a distributed EV charging infrastructure solution designed to accelerate electric motorcycle adoption across African cities by providing accessible and high-speed charging hubs.",
   location: "Nairobi, Kenya",
@@ -154,7 +156,7 @@ const Projects = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setProjects(data || []);
+      setProjects((data as Project[]) || []);
     } catch (error: any) {
       console.error("Error fetching projects:", error);
       toast({
@@ -336,8 +338,13 @@ const Projects = () => {
     return projectTypes.find(t => t.value === type)?.label || type;
   };
 
-  const displayProjects = [ROAM_POINT_PROJECT, ...projects];
-  const isStaticProject = (id: string) => id === "roam-point";
+  // If the Roam Point project is already in the DB (identified by slug), use that version.
+  // Otherwise fall back to the hardcoded constant so the card always shows.
+  const hasRoamPointInDB = projects.some((p) => p.slug === "roam-point");
+  const displayProjects = hasRoamPointInDB
+    ? projects
+    : [ROAM_POINT_PROJECT, ...projects];
+  const isRoamPoint = (p: Project) => p.slug === "roam-point" || p.id === "roam-point";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -420,7 +427,7 @@ const Projects = () => {
                         </span>
                       </div>
                       
-                      {isAdmin && !isStaticProject(project.id) && (
+                      {isAdmin && (
                         <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={(e) => {
@@ -492,8 +499,8 @@ const Projects = () => {
 
       {/* Project Detail Modal */}
       <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className={selectedProject?.id === "roam-point" ? "max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" : "max-w-2xl max-h-[90vh] overflow-y-auto"}>
-          {selectedProject && selectedProject.id === "roam-point" ? (
+        <DialogContent className={selectedProject && isRoamPoint(selectedProject) ? "max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" : "max-w-2xl max-h-[90vh] overflow-y-auto"}>
+          {selectedProject && isRoamPoint(selectedProject) ? (
             /* Roam Point full case study */
             <div className="divide-y divide-white/10 bg-background">
               {/* Hero image */}
