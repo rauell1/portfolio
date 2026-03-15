@@ -55,7 +55,7 @@ const ROAM_POINT_PROJECT: Project = {
   description: "Roam Point is a distributed EV charging infrastructure solution designed to accelerate electric motorcycle adoption across African cities by providing accessible and high-speed charging hubs.",
   location: "Nairobi, Kenya",
   project_type: "ev",
-  images: ["/images/basigo-charging.png", "/images/roam-electric.webp", "/images/basigo-buses.jpeg"],
+  images: ["/images/roam-electric.webp", "/images/basigo-charging.png", "/images/basigo-buses.jpeg"],
   completed_at: null,
   created_at: "",
 };
