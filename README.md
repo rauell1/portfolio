@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Roy Okola – Portfolio
 
-## Project info
+A personal portfolio and thought-leadership site focused on renewable energy engineering, electric mobility infrastructure, and sustainable systems in Africa.
 
-**URL**: https://lovable.dev/projects/bdc02455-3f95-4205-951e-81323973c116
+## What’s included
 
-## How can I edit this code?
+* **About** – Background, skills, and resume (CV download)
+* **Projects** – Project portfolio with a featured Roam Point EV charging case study and admin-managed projects
+* **Case studies** – Detailed case studies (solar microgrid, Roam Point, site feasibility, cold storage, energy demand modeling)
+* **Blog** – Articles on solar, EV charging, and circular economy (Supabase-backed with static pillar content)
+* **Contact** – Get in touch
 
-There are several ways of editing your application.
+## Tech stack
 
-**Use Lovable**
+* **React 18** + **TypeScript** + **Vite**
+* **Tailwind CSS** + **shadcn/ui** (Radix)
+* **React Router** for client-side routing
+* **Supabase** for blog posts and projects (optional; static content works without it)
+* **Framer Motion** for animations
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bdc02455-3f95-4205-951e-81323973c116) and start prompting.
+## Requirements
 
-Changes made via Lovable will be committed automatically to this repo.
+* Node.js 18+
+* npm or yarn
 
-**Use your preferred IDE**
+## Setup
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Clone and enter the project
+git clone <your-repo-url>
+cd portfolio
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Install dependencies
+npm install
 
-Follow these steps:
+# Optional: configure Supabase for blog/projects
+# Copy .env.example to .env and set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+# Without env, the app still runs with static blog and projects.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Run locally
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:5173](http://localhost:5173).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Scripts
 
-**Use GitHub Codespaces**
+| Command       | Description              |
+|---------------|--------------------------|
+| `npm run dev` | Start dev server         |
+| `npm run build` | Production build      |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint              |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Deployment
 
-## What technologies are used for this project?
+Build output is in `dist/`. Deploy that folder to any static host:
 
-This project is built with:
+* **Vercel** – Connect the repo; build command `npm run build`, output directory `dist`
+* **Netlify** – Same; add redirects for client-side routing: `/* /index.html 200`
+* **GitHub Pages / other** – Run `npm run build` and upload `dist/`, and configure SPA fallback to `index.html`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in the host’s environment if you use Supabase for blog/projects.
 
-## How can I deploy this project?
+## Project structure
 
-Simply open [Lovable](https://lovable.dev/projects/bdc02455-3f95-4205-951e-81323973c116) and click on Share -> Publish.
+```
+portfolio/
+├── public/          Static assets (CV, PDFs, images)
+├── src/
+│   ├── components/ UI components
+│   ├── data/        Static blog posts and content
+│   ├── hooks/       useAuth, etc.
+│   ├── integrations/ Supabase client
+│   ├── pages/       Route pages (Index, Blog, Projects, CaseStudies, etc.)
+│   └── main.tsx     Entry point
+├── index.html
+├── package.json
+├── vite.config.ts
+└── tailwind.config.js
+```
 
-## Can I connect a custom domain to my Lovable project?
+## License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Personal portfolio; content and code as specified in the repository.
