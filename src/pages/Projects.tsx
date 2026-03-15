@@ -405,13 +405,13 @@ const Projects = () => {
                     onClick={() => setSelectedProject(project)}
                     className="glass-card rounded-2xl overflow-hidden cursor-pointer card-hover h-full flex flex-col"
                   >
-                    {/* Image placeholder */}
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 relative flex items-center justify-center">
+                    {/* Image area – centered and consistent across cards */}
+                    <div className="relative bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center aspect-[4/3] w-full">
                       {project.images && project.images.length > 0 ? (
                         <img 
                           src={project.images[0]} 
                           alt={project.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-center"
                         />
                       ) : (
                         <div className="text-center">
@@ -597,17 +597,13 @@ const Projects = () => {
               </DialogHeader>
               
               {selectedProject.images && selectedProject.images.length > 0 ? (
-                <div className="grid grid-cols-2 gap-2 my-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
                   {selectedProject.images.map((img, index) => (
                     <img
                       key={index}
                       src={img}
                       alt={`${selectedProject.title} - ${index + 1}`}
-                      className={`w-full h-48 object-cover rounded-xl ${
-                        index === 0 && selectedProject.images!.length % 2 !== 0 
-                          ? "col-span-2 h-64" 
-                          : ""
-                      }`}
+                      className="w-full h-64 object-cover object-center rounded-xl"
                     />
                   ))}
                 </div>

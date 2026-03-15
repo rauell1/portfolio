@@ -230,12 +230,13 @@ const Blog = () => {
                       to={`/blog/${post.slug}`}
                       className="block rounded-2xl overflow-hidden border border-white/10 bg-card hover:border-primary/30 transition-all duration-300 group"
                     >
-                      <div className="relative h-52 overflow-hidden bg-muted/30">
+                      {/* Cover image – centered with consistent aspect ratio */}
+                      <div className="relative overflow-hidden bg-muted/30 flex items-center justify-center aspect-[4/3] w-full">
                         {hasCover && !failedCoverIds.has(post.id) ? (
                           <img
                             src={post.cover_image!}
                             alt=""
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                             onError={() => setFailedCoverIds((prev) => new Set(prev).add(post.id))}
                           />
                         ) : (
