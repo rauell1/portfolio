@@ -17,24 +17,25 @@ function getSystemTheme(): Theme {
   return "dark";
 }
 
-function getInitialTheme(storageKey: string): Theme {
-  try {
-    const stored = localStorage.getItem(storageKey) as Theme;
-    if (stored === "light" || stored === "dark") return stored;
-  } catch {
-    // localStorage unavailable (e.g. private browsing on iOS Safari)
-  }
-  return getSystemTheme();
-}
-
 export function ThemeProvider({
   children,
+  defaultTheme,
   storageKey = "portfolio-theme",
 }: {
   children: React.ReactNode;
+  defaultTheme?: Theme;
   storageKey?: string;
 }) {
-  const [theme, setTheme] = useState<Theme>(() => getInitialTheme(storageKey));
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      const stored = localStorage.getItem(storageKey) as Theme;
+      if (stored === "light" || stored === "dark") return stored;
+    } catch {
+      // localStorage unavailable (e.g. private browsing on iOS Safari)
+    }
+    // Use explicit defaultTheme when provided, otherwise fall back to system preference
+    return defaultTheme ?? getSystemTheme();
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -52,8 +53,9 @@ export function ThemeProvider({
   }, [theme, storageKey]);
 
   // Follow OS theme changes when the user has not set an explicit preference
+  // and no defaultTheme was provided (i.e. defaultTheme should track the OS)
   useEffect(() => {
-    if (!window.matchMedia) return;
+    if (!window.matchMedia || defaultTheme !== undefined) return;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
     const handleChange = (e: MediaQueryListEvent) => {
       let stored: string | null = null;
@@ -68,7 +70,7 @@ export function ThemeProvider({
     };
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [storageKey]);
+  }, [storageKey, defaultTheme]);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
