@@ -7,25 +7,24 @@
 const U = (id: string, w = 1200, q = 85) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
 
-// Local images: BasiGo and Roam (user-provided, in public/images)
+// Local images: BasiGo buses and Roam bikes (user-provided, in public/images)
 const LOCAL_IMAGES = {
-  basigoCharging: "/images/basigo-charging.png", // BasiGo DC fast charging hub (GET.invest)
   basigoBuses: "/images/basigo-buses.jpeg",     // BasiGo buses (Africa50)
   roamElectric: "/images/roam-electric.webp",    // Roam electric bikes (Greenspoon, CIO Africa)
 };
 
-// Cover: EV blog uses your BasiGo charging image.
+// Cover: EV blog uses a high-quality Unsplash EV charging station image.
 const PLACEHOLDER_IMAGES = {
   solar: U("1680355065203-43ad84bb6e69"),
-  evCharging: LOCAL_IMAGES.basigoCharging,
+  evCharging: U("1558618666-fcd25c85cd64"),
   circular: U("1771172195332-3bc9ded9f3b5"),
 };
 
-// EV article: only your 3 uploaded images, each used once, in context. No external URLs that can break.
+// EV article: local authentic images for intro and practice; Unsplash for fleet/charging slot.
 const EV_ARTICLE_IMAGES = {
   evIntro: LOCAL_IMAGES.basigoBuses,         // First image: BasiGo electric bus lineup
   evPractice: LOCAL_IMAGES.roamElectric,     // Kenya and West Africa electric mobility (Roam bikes)
-  evFleet: LOCAL_IMAGES.basigoCharging,      // Public and fleet charging (BasiGo charging hub)
+  evFleet: U("1619642751034-765dfdf7c58e", 1000), // Public and fleet charging hub
 };
 
 const IN_ARTICLE_IMAGES = {
