@@ -7,8 +7,9 @@ export const ThemeToggle = () => {
 
   return (
     <motion.button
+      type="button"
       onClick={toggleTheme}
-      className="relative p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
+      className="relative p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors touch-manipulation"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
