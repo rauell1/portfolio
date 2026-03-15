@@ -20,6 +20,10 @@ const ResetPassword = () => {
   useEffect(() => {
     // Check if we have a valid session from the reset link
     const checkSession = async () => {
+      if (!supabase) {
+        setError("Authentication service is unavailable. Please try again later.");
+        return;
+      }
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         setError("Invalid or expired reset link. Please request a new one.");
@@ -43,6 +47,12 @@ const ResetPassword = () => {
     }
 
     setIsLoading(true);
+
+    if (!supabase) {
+      setError("Authentication service is unavailable. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.updateUser({
       password: password,

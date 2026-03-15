@@ -18,6 +18,16 @@ const ForgotPassword = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (!supabase) {
+      toast({
+        title: "Error",
+        description: "Authentication service is unavailable. Please try again later.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     const redirectUrl = `${window.location.origin}/reset-password`;
     
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
