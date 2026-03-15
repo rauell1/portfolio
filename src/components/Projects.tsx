@@ -202,6 +202,8 @@ export const Projects = () => {
                     src={selectedProject.images[0]}
                     alt={selectedProject.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-black/40 to-transparent" />
                   <div className="absolute bottom-4 left-6 right-6">
@@ -295,6 +297,8 @@ export const Projects = () => {
                         src={img}
                         alt={`${selectedProject.title} ${i + 1}`}
                         className="w-full h-20 object-cover rounded-lg border border-white/10 hover:border-primary/50 transition-colors cursor-pointer"
+                        loading="lazy"
+                        decoding="async"
                       />
                     ))}
                   </div>

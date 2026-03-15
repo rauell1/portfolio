@@ -403,6 +403,8 @@ const AdminPostEditor = () => {
                   src={post.cover_image}
                   alt="Cover preview"
                   className="w-full h-32 object-cover rounded-lg"
+                  loading="lazy"
+                  decoding="async"
                 />
               )}
             </div>

@@ -412,6 +412,8 @@ const Projects = () => {
                           src={project.images[0]} 
                           alt={project.title}
                           className="w-full h-full object-cover object-center"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="text-center">
@@ -510,6 +512,8 @@ const Projects = () => {
                     src={selectedProject.images[0]}
                     alt="Roam Point charger in the field"
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
               )}
@@ -564,6 +568,8 @@ const Projects = () => {
                         src={img}
                         alt={`Roam Point charging infrastructure ${index + 1}`}
                         className="w-full h-36 object-cover rounded-lg border border-white/10"
+                        loading="lazy"
+                        decoding="async"
                       />
                     ))}
                   </div>
@@ -604,6 +610,8 @@ const Projects = () => {
                       src={img}
                       alt={`${selectedProject.title} - ${index + 1}`}
                       className="w-full h-64 object-cover object-center rounded-xl"
+                      loading="lazy"
+                      decoding="async"
                     />
                   ))}
                 </div>
@@ -725,6 +733,8 @@ const Projects = () => {
                         src={img}
                         alt={`Project image ${index + 1}`}
                         className="w-full h-20 object-cover rounded-lg"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <button
                         onClick={() => removeImage(index)}

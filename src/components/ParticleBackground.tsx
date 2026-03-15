@@ -34,6 +34,7 @@ interface GeometricShape {
   type: "hexagon" | "triangle" | "square" | "energy-ring" | "circuit-board" | "power-line" | "grid-pattern";
 }
 
+
 export const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -42,12 +43,17 @@ export const ParticleBackground = () => {
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationRef = useRef<number>();
   const frameCountRef = useRef(0);
+  // Cache device capability flags once at mount to avoid repeated checks per frame
+  const isMobileRef = useRef(window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
+  const reducedMotionRef = useRef(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   const initParticles = useCallback((width: number, height: number) => {
     const particles: Particle[] = [];
     const shapes: GeometricShape[] = [];
 
-    for (let i = 0; i < 75; i++) {
+    // Use fewer particles on mobile to reduce GPU/CPU load
+    const particleCount = isMobileRef.current ? 30 : 75;
+    for (let i = 0; i < particleCount; i++) {
       const weightedTypes: Particle["type"][] = [
         "circle", "circle",
         "solar", "solar", "solar", "solar",
@@ -77,7 +83,8 @@ export const ParticleBackground = () => {
       });
     }
 
-    for (let i = 0; i < 12; i++) {
+    const shapeCount = isMobileRef.current ? 5 : 12;
+    for (let i = 0; i < shapeCount; i++) {
       const shapeTypes: GeometricShape["type"][] = [
         "hexagon", "triangle", "energy-ring",
         "circuit-board", "power-line", "grid-pattern"
@@ -567,6 +574,12 @@ export const ParticleBackground = () => {
     const height = canvas.height;
     frameCountRef.current++;
 
+    // On mobile, render every other frame to halve GPU load
+    if (isMobileRef.current && frameCountRef.current % 2 !== 0) {
+      animationRef.current = requestAnimationFrame(animate);
+      return;
+    }
+
     ctx.clearRect(0, 0, width, height);
 
     // Draw geometric shapes with glow
@@ -722,6 +735,9 @@ export const ParticleBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Skip canvas animation entirely when user prefers reduced motion
+    if (reducedMotionRef.current) return;
+
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -729,7 +745,10 @@ export const ParticleBackground = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      // Skip mouse tracking on touch/mobile devices (no hover interaction)
+      if (!isMobileRef.current) {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      }
     };
 
     handleResize();
@@ -756,7 +775,8 @@ export const ParticleBackground = () => {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/3 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
       </div>
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* Skip Framer Motion floating decorations on mobile to save resources */}
+      <div className="hidden md:block fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div
           className="absolute top-20 right-20 w-24 h-24 border border-primary/15"
           style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}

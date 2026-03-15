@@ -272,7 +272,7 @@ const ProjectsManager = () => {
                     {/* Thumbnail */}
                     <div className="w-16 h-16 rounded-lg overflow-hidden bg-primary/10 flex-shrink-0 flex items-center justify-center">
                       {project.images && project.images.length > 0 ? (
-                        <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" />
+                        <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                       ) : (
                         <Image className="w-6 h-6 text-primary/40" />
                       )}
@@ -414,7 +414,7 @@ const ProjectsManager = () => {
                 <div className="grid grid-cols-3 gap-2 mb-3">
                   {editingProject.images.map((img, index) => (
                     <div key={index} className="relative group">
-                      <img src={img} alt={`Project image ${index + 1}`} className="w-full h-20 object-cover rounded-lg" />
+                      <img src={img} alt={`Project image ${index + 1}`} className="w-full h-20 object-cover rounded-lg" loading="lazy" decoding="async" />
                       <button
                         onClick={() => removeImage(index)}
                         className="absolute top-1 right-1 p-1 rounded-full bg-destructive text-white opacity-0 group-hover:opacity-100 transition-opacity"
