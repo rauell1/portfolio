@@ -1,33 +1,43 @@
 /**
  * Static blog posts: high-value content for African clean energy infrastructure.
- * Cover and in-article images: unique Unsplash URLs per slot, HD (w=1200/1000, q=85).
+ * Cover and in-article images: local images from public/images preferred; Unsplash as fallback.
  * No duplicates; each image matches the surrounding content.
  */
 
 const U = (id: string, w = 1200, q = 85) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
 
-// Local images: BasiGo buses, charging station, and Roam bikes (user-provided, in public/images)
+// Local images: BasiGo buses, charging station, Roam bikes, and Roam chargers (user-provided, in public/images)
 const LOCAL_IMAGES = {
-  basigoBuses: "/images/basigo-buses.jpeg",      // BasiGo buses parked (Africa50)
-  basigoCharging: "/images/basigo-charging.png", // BasiGo buses at charging stations
-  roamElectric: "/images/roam-electric.webp",    // Roam electric bikes (Greenspoon, CIO Africa)
+  basigoBuses: "/images/basigo-buses.jpeg",                          // BasiGo buses parked (Africa50)
+  basigoCharging: "/images/basigo-charging.png",                     // BasiGo buses at charging stations
+  basigoLeading: "/images/basigo-leading-the-charge.webp",           // BasiGo leading the charge
+  roamElectric: "/images/roam-electric.webp",                        // Roam electric bikes (Greenspoon, CIO Africa)
+  roamMotorBus: "/images/roam-motorbike-x-roam-bus.jpg",            // Roam motorbike and bus combined
+  roamMotorBusAlt: "/images/roam-motorbike-x-roam-bus-alt.jpg",     // Roam motorbike and bus (alt)
+  roamCharger1: "/images/roam-charger-1.jpeg",                       // Roam charging station (1)
+  roamCharger2: "/images/roam-charger-2.jpeg",                       // Roam charging station (2)
+  roamCharger3: "/images/roam-charger-3.jpeg",                       // Roam charging station (3)
+  roamCharger4: "/images/roam-charger-4.jpeg",                       // Roam charging station (4)
 };
 
-// Cover: EV blog uses a high-quality Unsplash EV charging station image.
+// Cover: EV blog uses a local Roam charger image.
 const PLACEHOLDER_IMAGES = {
   solar: U("1680355065203-43ad84bb6e69"),
-  evCharging: U("1558618666-fcd25c85cd64"),
+  evCharging: LOCAL_IMAGES.roamCharger1,
   circular: U("1771172195332-3bc9ded9f3b5"),
 };
 
-// EV article: local charging image for intro; Unsplash for practical, fleet, design, and renewable slots.
+// EV article: all local images for the EV charging infrastructure post.
 const EV_ARTICLE_IMAGES = {
-  evIntro: LOCAL_IMAGES.basigoCharging,                    // Intro: BasiGo electric buses at charging stations
-  evPractice: U("1545324418-cc1a3fa10c00", 1000),          // Importance: EV charging station in urban use
-  evFleet: U("1619642751034-765dfdf7c58e", 1000),          // Models: public and fleet charging hub
-  evDesign: U("1593941707882-a5b6d85b4930", 1000),         // Design: EV charging connector and equipment
-  evRenewable: U("1624555130405-28f3e36e0f38", 1000),      // Renewable: solar canopy EV charging
+  evIntro: LOCAL_IMAGES.basigoCharging,       // Intro: BasiGo electric buses at charging stations
+  evPractice: LOCAL_IMAGES.roamElectric,      // Importance: Roam electric bikes in urban use
+  evFleet: LOCAL_IMAGES.basigoBuses,          // Models: fleet of BasiGo electric buses
+  evDistributed: LOCAL_IMAGES.roamMotorBus,   // Distributed: Roam motorbike and bus showing light EVs
+  evDesign: LOCAL_IMAGES.roamCharger2,        // Design: Roam charging station equipment
+  evDesign2: LOCAL_IMAGES.roamCharger3,       // Design (detail): Roam charger close-up
+  evRenewable: LOCAL_IMAGES.basigoLeading,    // Renewable: BasiGo leading the charge with clean energy
+  evConclusion: LOCAL_IMAGES.roamCharger4,    // Conclusion: Roam charging infrastructure
 };
 
 const IN_ARTICLE_IMAGES = {
@@ -140,7 +150,7 @@ Electric mobility is gaining momentum across Africa as cities seek cleaner trans
 
 For electric vehicles to operate effectively, drivers must have access to convenient and reliable charging stations. This is true for cars and buses, and equally for the electric motorcycles and tuk-tuks that dominate urban mobility in many African cities. Without adequate charging infrastructure, EV adoption can be slowed by concerns such as limited driving range, uncertainty about charging availability, and the time required to recharge. Charging networks must therefore be designed to support growing EV fleets while ensuring accessibility (location and hours), reliability (uptime and power quality), and affordability (pricing that supports both operators and users). In practice, this means a mix of fast charging for en-route top-ups and slower or overnight charging at homes, depots, and workplaces.
 
-![EV charging station providing reliable access for electric vehicle users](${IN_ARTICLE_IMAGES.evPractice})
+![Roam electric motorcycles — a key light EV driving demand for distributed charging in African cities](${IN_ARTICLE_IMAGES.evPractice})
 
 ## Charging Infrastructure Models
 
@@ -150,17 +160,21 @@ Public Charging Stations are installed in high-traffic locations such as shoppin
 
 Fleet Charging refers to dedicated infrastructure for commercial fleets: buses, delivery vehicles, or ride-hailing motorcycles. These installations are often depot-based, with scheduling and power management optimized for fleet operations. Fleet charging can be a stepping stone to public networks as operators open capacity to third parties.
 
+![BasiGo electric bus fleet — depot-based charging optimised for commercial operations in Nairobi](${IN_ARTICLE_IMAGES.evFleet})
+
 Distributed Charging Networks consist of smaller charging points deployed across cities to ensure that riders are never far from a charge. This model is particularly effective for electric motorcycles and other light EVs that have smaller batteries and shorter ranges. Distributed networks can be built through partnerships with shops, fuel stations, and property owners, spreading cost and increasing coverage.
 
-![Public and fleet charging hub showing multiple EV charging stations](${IN_ARTICLE_IMAGES.evFleet})
+![Roam motorbike and bus — light and heavy electric vehicles both depend on well-distributed charging](${IN_ARTICLE_IMAGES.evDistributed})
 
 ## Infrastructure Design Considerations
 
 Designing charging infrastructure requires careful analysis of several factors. Electricity availability and capacity at the site determine whether a connection is feasible and what power level can be offered. Mobility demand patterns (where and when riders need to charge) inform location choice and the mix of fast versus slow chargers. Urban planning constraints (land use, permits, aesthetics) affect where hardware can be installed and how it is configured. Safety requirements (electrical standards, fire protection, user safety) must be met to protect users and equipment and to satisfy regulators and insurers.
 
+![Roam charging station — purpose-built hardware designed for reliability and ease of use](${IN_ARTICLE_IMAGES.evDesign})
+
 Advanced charging systems often include connectivity features that allow operators to monitor performance remotely, manage access and payments, and perform diagnostics. This reduces the cost of operations and improves reliability. Software and data also enable dynamic pricing, demand management, and integration with renewable generation or grid services.
 
-![EV charging connector and smart charging equipment](${IN_ARTICLE_IMAGES.evDesign})
+![Smart charging equipment with connectivity for remote monitoring and payment management](${IN_ARTICLE_IMAGES.evDesign2})
 
 ## The Role of Renewable Energy
 
@@ -168,11 +182,13 @@ Integrating renewable energy with charging infrastructure can reduce operational
 
 This combination of renewable energy and electric mobility represents an important step toward sustainable transportation systems. It also aligns with the priorities of many development and climate finance institutions, which are looking to support integrated solutions that advance both clean energy and clean mobility.
 
-![Solar-powered EV charging canopy combining clean energy and electric mobility](${IN_ARTICLE_IMAGES.evRenewable})
+![BasiGo leading the charge — integrating clean energy with electric bus operations across East Africa](${IN_ARTICLE_IMAGES.evRenewable})
 
 ## Conclusion
 
-As electric mobility expands across Africa, the development of reliable charging infrastructure will be essential. Investments in charging networks today will help shape the future of transportation systems across the continent. The right mix of public, fleet, and distributed charging, combined with robust design and, where possible, renewable energy integration, can accelerate the transition to electric mobility while creating value for operators, users, and communities.`,
+As electric mobility expands across Africa, the development of reliable charging infrastructure will be essential. Investments in charging networks today will help shape the future of transportation systems across the continent. The right mix of public, fleet, and distributed charging, combined with robust design and, where possible, renewable energy integration, can accelerate the transition to electric mobility while creating value for operators, users, and communities.
+
+![Roam charging infrastructure — building the network that will power tomorrow's electric mobility](${IN_ARTICLE_IMAGES.evConclusion})`,
     cover_image: PLACEHOLDER_IMAGES.evCharging,
     category: "ev-mobility",
     tags: ["electric-vehicles", "charging", "infrastructure", "mobility"],
