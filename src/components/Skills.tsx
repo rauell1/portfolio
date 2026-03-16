@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Sun, Battery, Wind, Zap, Leaf, Droplets } from "lucide-react";
 import { SkillsRadarChart } from "./SkillsRadarChart";
+import { supabase } from "@/integrations/supabase/client";
 
 // Animated renewable energy icons
 const EnergyIcon = ({ icon: Icon, delay, className }: { icon: any; delay: number; className?: string }) => (
@@ -27,7 +28,15 @@ const EnergyIcon = ({ icon: Icon, delay, className }: { icon: any; delay: number
   </motion.div>
 );
 
-const skills = [
+interface SkillItem { name: string; level: number }
+interface SkillsContent {
+  tagline: string;
+  heading: string;
+  heading_highlight: string;
+  items: SkillItem[];
+}
+
+const DEFAULT_SKILLS: SkillItem[] = [
   { name: "Solar PV Design", level: 95 },
   { name: "EV Charging Systems", level: 90 },
   { name: "Energy Audits", level: 88 },
@@ -38,7 +47,14 @@ const skills = [
   { name: "Community Engagement", level: 95 },
 ];
 
-const AnimatedProgressBar = ({ skill, index, isInView }: { skill: typeof skills[0]; index: number; isInView: boolean }) => {
+const DEFAULT: SkillsContent = {
+  tagline: "My Expertise",
+  heading: "Skills &",
+  heading_highlight: "Expertise",
+  items: DEFAULT_SKILLS,
+};
+
+const AnimatedProgressBar = ({ skill, index, isInView }: { skill: SkillItem; index: number; isInView: boolean }) => {
   const [width, setWidth] = useState(0);
   
   useEffect(() => {
@@ -81,6 +97,22 @@ const AnimatedProgressBar = ({ skill, index, isInView }: { skill: typeof skills[
 export const Skills = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [content, setContent] = useState<SkillsContent>(DEFAULT);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase
+      .from("page_sections")
+      .select("content")
+      .eq("page", "home")
+      .eq("section", "skills")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.content) setContent(data.content as SkillsContent);
+      });
+  }, []);
+
+  const skills = content.items;
 
   const energyIcons = [
     { icon: Sun, position: "top-4 left-4" },
@@ -120,9 +152,9 @@ export const Skills = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">My Expertise</span>
+          <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Skills & <span className="gradient-text">Expertise</span>
+            {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
           </h2>
         </motion.div>
 

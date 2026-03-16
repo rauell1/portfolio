@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Plus, Edit, Trash2, Loader2, Search, MapPin,
-  Calendar, BookOpen, Star, ChevronDown, ChevronUp
+  Calendar, BookOpen, Star, ChevronDown, ChevronUp, Archive
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -407,8 +407,17 @@ const CaseStudiesManager = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" onClick={() => togglePublish(cs)}>
-                      {cs.published ? "Unpublish" : "Publish"}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title={cs.published ? "Archive (hide from site)" : "Publish (show on site)"}
+                      onClick={() => togglePublish(cs)}
+                    >
+                      {cs.published ? (
+                        <Archive className="w-4 h-4 text-yellow-500" />
+                      ) : (
+                        <BookOpen className="w-4 h-4 text-green-500" />
+                      )}
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => handleEdit(cs)}>
                       <Edit className="w-4 h-4" />

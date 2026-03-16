@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Plus, Edit, Trash2, Loader2, Search, MapPin,
-  Calendar, FolderOpen, Upload, Image as ImageIcon
+  Calendar, FolderOpen, Upload, Image as ImageIcon, Archive, Globe
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +45,7 @@ interface Project {
   completed_at: string | null;
   created_at: string;
   slug?: string | null;
+  status: string;
 }
 
 const projectTypes = [
@@ -54,6 +55,12 @@ const projectTypes = [
   { value: "biogas", label: "Biogas" },
   { value: "storage", label: "Energy Storage" },
   { value: "other", label: "Other" },
+];
+
+const statusOptions = [
+  { value: "published", label: "Published" },
+  { value: "draft",     label: "Draft" },
+  { value: "archived",  label: "Archived" },
 ];
 
 const DatabaseProjectsManager = () => {
@@ -105,6 +112,7 @@ const DatabaseProjectsManager = () => {
       project_type: "solar",
       images: [],
       completed_at: null,
+      status: "published",
     });
     setIsEditModalOpen(true);
   };
@@ -197,13 +205,23 @@ const DatabaseProjectsManager = () => {
 
     setIsSaving(true);
     try {
+      // Convert plain date string (YYYY-MM-DD from <input type="date">) to a
+      // full ISO timestamp so PostgREST / PostgreSQL timestamptz column accepts it.
+      const rawDate = editing.completed_at;
+      const completedAt = rawDate
+        ? rawDate.includes("T")
+          ? rawDate
+          : `${rawDate}T00:00:00.000Z`
+        : null;
+
       const payload = {
         title: editing.title,
         description: editing.description,
         location: editing.location || null,
         project_type: editing.project_type || "solar",
         images: editing.images || [],
-        completed_at: editing.completed_at || null,
+        completed_at: completedAt,
+        status: editing.status || "published",
       };
 
       if (editing.id) {
@@ -261,8 +279,35 @@ const DatabaseProjectsManager = () => {
     }
   };
 
+  const handleArchiveToggle = async (project: Project) => {
+    if (!supabase) return;
+    const newStatus = project.status === "archived" ? "published" : "archived";
+    try {
+      const { error } = await supabase
+        .from("projects")
+        .update({ status: newStatus })
+        .eq("id", project.id);
+      if (error) throw error;
+      toast({
+        title: "Success",
+        description: `Project ${newStatus === "archived" ? "archived" : "restored to published"}`,
+      });
+      await fetchProjects();
+    } catch (error: any) {
+      toast({ title: "Error", description: "Failed to update project status", variant: "destructive" });
+    }
+  };
+
   const getProjectTypeLabel = (type: string) => {
     return projectTypes.find(t => t.value === type)?.label || type;
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "archived":  return "bg-yellow-500/20 text-yellow-400";
+      case "draft":     return "bg-orange-500/20 text-orange-400";
+      default:          return "bg-green-500/20 text-green-400";
+    }
   };
 
   const filtered = projects.filter(p =>
@@ -368,6 +413,9 @@ const DatabaseProjectsManager = () => {
                       <span className="px-2 py-0.5 rounded-full text-xs bg-primary/20 text-primary">
                         {getProjectTypeLabel(project.project_type)}
                       </span>
+                      <span className={`px-2 py-0.5 rounded-full text-xs ${getStatusBadge(project.status)}`}>
+                        {project.status || "published"}
+                      </span>
                     </div>
                     <p className="text-sm text-muted-foreground line-clamp-1 mb-2">
                       {project.description}
@@ -390,6 +438,13 @@ const DatabaseProjectsManager = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon" title={project.status === "archived" ? "Restore" : "Archive"} onClick={() => handleArchiveToggle(project)}>
+                      {project.status === "archived" ? (
+                        <Globe className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <Archive className="w-4 h-4 text-yellow-500" />
+                      )}
+                    </Button>
                     <Button variant="ghost" size="icon" onClick={() => handleEdit(project)}>
                       <Edit className="w-4 h-4" />
                     </Button>
@@ -472,14 +527,35 @@ const DatabaseProjectsManager = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="completed_at">Completion Date</Label>
-              <Input
-                id="completed_at"
-                type="date"
-                value={editing.completed_at?.split("T")[0] || ""}
-                onChange={(e) => setEditing(prev => ({ ...prev, completed_at: e.target.value || null }))}
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="completed_at">Completion Date</Label>
+                <Input
+                  id="completed_at"
+                  type="date"
+                  value={editing.completed_at?.split("T")[0] || ""}
+                  onChange={(e) => setEditing(prev => ({ ...prev, completed_at: e.target.value || null }))}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="status">Status</Label>
+                <Select
+                  value={editing.status || "published"}
+                  onValueChange={(value) => setEditing(prev => ({ ...prev, status: value }))}
+                >
+                  <SelectTrigger id="status">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {statusOptions.map(opt => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             {/* Image upload */}

@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Briefcase, Calendar, MapPin, ChevronRight, ExternalLink, Award } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+import { Calendar, MapPin, ChevronRight, ExternalLink, Award } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Experience {
   company: string;
@@ -13,7 +14,14 @@ interface Experience {
   externalUrl?: string;
 }
 
-const experiences: Experience[] = [
+interface ExperienceContent {
+  tagline: string;
+  heading: string;
+  heading_highlight: string;
+  items: Experience[];
+}
+
+const DEFAULT_ITEMS: Experience[] = [
   {
     company: "SafariCharge",
     role: "Founder",
@@ -87,9 +95,32 @@ const experiences: Experience[] = [
   },
 ];
 
+const DEFAULT: ExperienceContent = {
+  tagline: "Career Journey",
+  heading: "Professional",
+  heading_highlight: "Experience",
+  items: DEFAULT_ITEMS,
+};
+
 export const Experience = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [content, setContent] = useState<ExperienceContent>(DEFAULT);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase
+      .from("page_sections")
+      .select("content")
+      .eq("page", "home")
+      .eq("section", "experience")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.content) setContent(data.content as ExperienceContent);
+      });
+  }, []);
+
+  const experiences = content.items;
 
   return (
     <section id="experience" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
@@ -101,13 +132,10 @@ export const Experience = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">Career Journey</span>
+          <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Professional <span className="gradient-text">Experience</span>
+            {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Building expertise across clean energy, e-mobility, and sustainable technology.
-          </p>
         </motion.div>
 
         {/* Timeline */}

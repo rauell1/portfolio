@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind, Link2, Check } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind, Link2, Check, Edit } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getStaticPostBySlug, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
+import { useAuth } from "@/hooks/useAuth";
 
 interface BlogPost {
   id: string;
@@ -52,6 +53,7 @@ function ArticleImage({ src, alt, className }: { src: string; alt: string; class
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -260,6 +262,16 @@ const BlogPostPage = () => {
                     day: "numeric",
                   })}
                 </span>
+              )}
+              {/* Admin inline edit shortcut */}
+              {user && (
+                <Link
+                  to={`/admin/posts/${post.id}`}
+                  className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 transition-colors"
+                >
+                  <Edit className="w-3 h-3" />
+                  Edit Post
+                </Link>
               )}
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground leading-tight mb-4">

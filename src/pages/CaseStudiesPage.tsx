@@ -4,13 +4,15 @@ import {
   Sun, Battery, Zap, Leaf, TrendingUp, Users,
   MapPin, Calendar, X, ChevronRight, BarChart3,
   Droplets, Thermometer, ArrowLeft, Wifi, Shield,
-  Download, Crown, Map
+  Download, Crown, Map, Edit, Archive
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 // Icon map for resolving icon names from the database
 const ICON_MAP: Record<string, typeof Sun> = {
@@ -257,6 +259,8 @@ const caseStudies: CaseStudy[] = [
 ];
 
 const CaseStudiesPage = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const [caseStudiesData, setCaseStudiesData] = useState<CaseStudy[]>(caseStudies);
   const modalScrollRef = useRef<HTMLDivElement>(null);
@@ -306,6 +310,27 @@ const CaseStudiesPage = () => {
       modalScrollRef.current.scrollTop = 0;
     }
   }, [selectedStudy]);
+
+  const archiveCaseStudy = async (id: string, currentPublished: boolean) => {
+    if (!supabase) return;
+    try {
+      const { error } = await supabase
+        .from("case_studies")
+        .update({ published: !currentPublished })
+        .eq("id", id);
+      if (error) throw error;
+      toast({
+        title: "Success",
+        description: `Case study ${currentPublished ? "archived" : "restored"}`,
+      });
+      // Refresh
+      setCaseStudiesData((prev) =>
+        currentPublished ? prev.filter((s) => s.id !== id) : prev
+      );
+    } catch {
+      toast({ title: "Error", description: "Failed to update case study", variant: "destructive" });
+    }
+  };
 
   const flagshipStudy = caseStudiesData.find(s => s.isFlagship);
   const otherStudies = caseStudiesData.filter(s => !s.isFlagship);
