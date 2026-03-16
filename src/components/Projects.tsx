@@ -2,7 +2,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin, Globe } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { portfolioProjects, type SharedProject } from "../../../../SafariCharge/dashboard/src/data/portfolioProjects";
+import { portfolioProjects, type Project as SharedProject } from "../data/portfolioProjects";
 
 interface Project extends Omit<SharedProject, "iconName"> {
   icon: LucideIcon;

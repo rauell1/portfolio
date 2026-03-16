@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 
-const DASHBOARD_URL = "https://safaricharge-dashboard.vercel.app";
+const DASHBOARD_URL = "https://sc-solardashboard-roy-okola-otienos-projects.vercel.app";
 
 const navItems = [
   { href: "#about", label: "About" },
