@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { AuthProvider } from "./hooks/useAuth";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { Component, ReactNode, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 
@@ -14,7 +14,27 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ProjectsPage = lazy(() => import("./pages/Projects"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+
+const ProtectedBlog = () => {
+  const { user } = useAuth();
+  const isAdmin = user?.email === "royokola3@gmail.com";
+  if (!isAdmin) {
+    return <NotFound />;
+  }
+  return <Blog />;
+};
+
+const ProtectedBlogPost = () => {
+  const { user } = useAuth();
+  const isAdmin = user?.email === "royokola3@gmail.com";
+  if (!isAdmin) {
+    return <NotFound />;
+  }
+  return <BlogPost />;
+};
 
 const PageLoader = () => (
   <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0a0a0a" }}>
@@ -66,10 +86,13 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/resume" element={<Resume />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/blog" element={<ProtectedBlog />} />
+                  <Route path="/blog/:slug" element={<ProtectedBlogPost />} />
                   <Route path="/case-studies" element={<CaseStudiesPage />} />
                   <Route path="/projects" element={<ProjectsPage />} />
+                  <Route path="/admin" element={<AdminLogin />} />
+                  <Route path="/admin/posts/new" element={<AdminPostEditor />} />
+                  <Route path="/admin/posts/:id" element={<AdminPostEditor />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
