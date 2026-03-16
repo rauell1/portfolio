@@ -58,6 +58,16 @@ const AdminDashboard = () => {
   }, []);
 
   const fetchPosts = async () => {
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured. Please check environment variables.",
+        variant: "destructive"
+      });
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase
       .from("blog_posts")
       .select("id, title, slug, excerpt, category, published, published_at, created_at, tags")
@@ -73,6 +83,15 @@ const AdminDashboard = () => {
 
   const handleDelete = async () => {
     if (!deletePostId) return;
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const { error } = await supabase.from("blog_posts").delete().eq("id", deletePostId);
     if (error) {
       toast({ title: "Error", description: "Failed to delete post", variant: "destructive" });
@@ -84,9 +103,18 @@ const AdminDashboard = () => {
   };
 
   const togglePublish = async (post: BlogPost) => {
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const { error } = await supabase
       .from("blog_posts")
-      .update({ 
+      .update({
         published: !post.published,
         published_at: !post.published ? new Date().toISOString() : null
       })
