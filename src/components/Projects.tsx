@@ -36,23 +36,29 @@ export const Projects = () => {
 
       if (!error && data && data.length > 0) {
         // Map database projects to the Project interface
-        const mapped: Project[] = data.map((proj: any) => ({
-          id: proj.id,
-          title: proj.title,
-          description: proj.description || "",
-          longDescription: proj.description || "",
-          category: proj.project_type || "Other",
-          tags: [], // Database projects don't have tags in the same format
-          gradient: "from-primary/20 to-primary/5",
-          icon: Zap, // Default icon for database projects
-          link: undefined,
-          images: proj.images || [],
-          specs: proj.location ? [{ label: "Location", value: proj.location }] : undefined,
-          role: undefined,
-          pdfDownload: undefined,
-          isFounder: false,
-          isFlagship: false,
-        }));
+        const mapped: Project[] = data
+          .map((proj: any) => ({
+            id: proj.id,
+            title: proj.title,
+            description: proj.description || "",
+            longDescription: proj.description || "",
+            category: proj.project_type || "Other",
+            tags: [],
+            gradient: "from-primary/20 to-primary/5",
+            icon: Zap,
+            link: undefined,
+            images: proj.images || [],
+            specs: proj.location ? [{ label: "Location", value: proj.location }] : undefined,
+            role: undefined,
+            pdfDownload: undefined,
+            isFounder: false,
+            isFlagship: false,
+          }))
+          .filter(
+            (proj: Project) =>
+              proj.id !== "roam-energy-page" &&
+              proj.title !== "Roam Energy Marketing Site"
+          );
         // Combine database projects with fallback projects for a complete display
         setProjects([...mapped, ...fallbackProjects].slice(0, 6));
       }
