@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 
 // Icon map for resolving icon names from the database
 const ICON_MAP: Record<string, typeof Sun> = {
@@ -262,14 +263,14 @@ const CaseStudiesPage = () => {
 
   useEffect(() => {
     const fetchFromSupabase = async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from("case_studies")
         .select("*")
         .eq("published", true)
         .order("sort_order", { ascending: true });
 
       if (!error && data && data.length > 0) {
-        const mapped: CaseStudy[] = data.map((cs: any) => ({
+        const mapped: CaseStudy[] = data.map((cs: Tables<"case_studies">) => ({
           id: cs.slug || cs.id,
           title: cs.title,
           subtitle: cs.subtitle || "",
@@ -281,9 +282,13 @@ const CaseStudiesPage = () => {
           partner: cs.partner || undefined,
           image: cs.image || undefined,
           pdfDownload: cs.pdf_download || undefined,
-          sections: Array.isArray(cs.sections) ? cs.sections : [],
+          sections: Array.isArray(cs.sections) ? (cs.sections as { heading: string; content: string }[]) : [],
           metrics: Array.isArray(cs.metrics)
-            ? cs.metrics.map((m: any) => ({ label: m.label, value: m.value, icon: resolveIcon(m.icon_name || "Zap") }))
+            ? (cs.metrics as { label: string; value: string; icon_name: string }[]).map(m => ({
+                label: m.label,
+                value: m.value,
+                icon: resolveIcon(m.icon_name || "Zap"),
+              }))
             : [],
           gradient: cs.gradient || "from-blue-500 to-cyan-400",
           icon: resolveIcon(cs.icon_name || "Zap"),

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
@@ -97,7 +98,7 @@ const CaseStudiesManager = () => {
 
   const fetchCaseStudies = async () => {
     setLoading(true);
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("case_studies")
       .select("*")
       .order("sort_order", { ascending: true });
@@ -105,10 +106,10 @@ const CaseStudiesManager = () => {
     if (error) {
       toast({ title: "Error", description: "Failed to fetch case studies", variant: "destructive" });
     } else {
-      const parsed = (data || []).map((cs: any) => ({
+      const parsed = (data || []).map((cs: Tables<"case_studies">) => ({
         ...cs,
-        sections: Array.isArray(cs.sections) ? cs.sections : [],
-        metrics: Array.isArray(cs.metrics) ? cs.metrics : [],
+        sections: Array.isArray(cs.sections) ? (cs.sections as CaseStudySection[]) : [],
+        metrics: Array.isArray(cs.metrics) ? (cs.metrics as CaseStudyMetric[]) : [],
       }));
       setCaseStudies(parsed);
     }
@@ -177,11 +178,11 @@ const CaseStudiesManager = () => {
       };
 
       if (editing.id) {
-        const { error } = await (supabase as any).from("case_studies").update(payload).eq("id", editing.id);
+        const { error } = await supabase.from("case_studies").update(payload).eq("id", editing.id);
         if (error) throw error;
         toast({ title: "Success", description: "Case study updated successfully" });
       } else {
-        const { error } = await (supabase as any).from("case_studies").insert(payload);
+        const { error } = await supabase.from("case_studies").insert(payload);
         if (error) throw error;
         toast({ title: "Success", description: "Case study created successfully" });
       }
@@ -199,7 +200,7 @@ const CaseStudiesManager = () => {
   const handleDelete = async () => {
     if (!deleteId) return;
     try {
-      const { error } = await (supabase as any).from("case_studies").delete().eq("id", deleteId);
+      const { error } = await supabase.from("case_studies").delete().eq("id", deleteId);
       if (error) throw error;
       toast({ title: "Success", description: "Case study deleted successfully" });
       await fetchCaseStudies();
@@ -211,7 +212,7 @@ const CaseStudiesManager = () => {
   };
 
   const togglePublish = async (cs: CaseStudy) => {
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("case_studies")
       .update({ published: !cs.published })
       .eq("id", cs.id);
