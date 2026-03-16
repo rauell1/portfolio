@@ -9,6 +9,17 @@ import {
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
+
+// Icon map for resolving icon names from the database
+const ICON_MAP: Record<string, typeof Sun> = {
+  Sun, Battery, Zap, Leaf, TrendingUp, Users, MapPin, Calendar,
+  BarChart3, Droplets, Thermometer, Wifi, Shield, Map,
+};
+
+const resolveIcon = (name: string): typeof Sun => ICON_MAP[name] ?? Zap;
+
 // Case study images: local images from public/images/
 const CASE_STUDY_IMAGES = {
   solarMicrogrid: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80",  // Solar
@@ -247,7 +258,48 @@ const caseStudies: CaseStudy[] = [
 
 const CaseStudiesPage = () => {
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
+  const [caseStudiesData, setCaseStudiesData] = useState<CaseStudy[]>(caseStudies);
   const modalScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchFromSupabase = async () => {
+      const { data, error } = await supabase
+        .from("case_studies")
+        .select("*")
+        .eq("published", true)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        const mapped: CaseStudy[] = data.map((cs: Tables<"case_studies">) => ({
+          id: cs.slug || cs.id,
+          title: cs.title,
+          subtitle: cs.subtitle || "",
+          category: cs.category,
+          location: cs.location || "",
+          date: cs.date || "",
+          role: cs.role || undefined,
+          isFlagship: cs.is_flagship,
+          partner: cs.partner || undefined,
+          image: cs.image || undefined,
+          pdfDownload: cs.pdf_download || undefined,
+          sections: Array.isArray(cs.sections) ? (cs.sections as { heading: string; content: string }[]) : [],
+          metrics: Array.isArray(cs.metrics)
+            ? (cs.metrics as { label: string; value: string; icon_name: string }[]).map(m => ({
+                label: m.label,
+                value: m.value,
+                icon: resolveIcon(m.icon_name || "Zap"),
+              }))
+            : [],
+          gradient: cs.gradient || "from-blue-500 to-cyan-400",
+          icon: resolveIcon(cs.icon_name || "Zap"),
+        }));
+        setCaseStudiesData(mapped);
+      }
+      // On error or empty, keep hardcoded fallback
+    };
+
+    fetchFromSupabase();
+  }, []);
 
   useEffect(() => {
     if (selectedStudy && modalScrollRef.current) {
@@ -255,8 +307,8 @@ const CaseStudiesPage = () => {
     }
   }, [selectedStudy]);
 
-  const flagshipStudy = caseStudies.find(s => s.isFlagship);
-  const otherStudies = caseStudies.filter(s => !s.isFlagship);
+  const flagshipStudy = caseStudiesData.find(s => s.isFlagship);
+  const otherStudies = caseStudiesData.filter(s => !s.isFlagship);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   Plus, Edit, Trash2, Eye, LogOut, FileText, 
-  Calendar, Tag, Loader2, Search, LayoutDashboard, FolderOpen
+  Calendar, Tag, Loader2, Search, LayoutDashboard, FolderOpen, BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import ProjectsManager from "@/components/admin/ProjectsManager";
+import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
 
 interface BlogPost {
   id: string;
@@ -34,7 +35,7 @@ interface BlogPost {
   tags: string[] | null;
 }
 
-type TabType = "posts" | "projects";
+type TabType = "posts" | "projects" | "case-studies";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<TabType>("posts");
@@ -180,10 +181,23 @@ const AdminDashboard = () => {
             <FolderOpen className="w-4 h-4" />
             Projects
           </button>
+          <button
+            onClick={() => setActiveTab("case-studies")}
+            className={`px-5 py-2.5 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${
+              activeTab === "case-studies"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            Case Studies
+          </button>
         </div>
 
         {activeTab === "projects" ? (
           <ProjectsManager />
+        ) : activeTab === "case-studies" ? (
+          <CaseStudiesManager />
         ) : (
           <>
             {/* Actions Bar */}
