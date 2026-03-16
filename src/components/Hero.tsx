@@ -1,8 +1,51 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { smoothScrollTo } from "@/lib/smoothScroll";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Stat { value: string; label: string }
+interface HeroContent {
+  availability: string;
+  name: string;
+  title: string;
+  description: string;
+  cta_primary: string;
+  cta_secondary: string;
+  stats: Stat[];
+}
+
+const DEFAULT: HeroContent = {
+  availability: "Available for opportunities",
+  name: "Roy Otieno",
+  title: "Clean Energy Engineer & E-Mobility Specialist",
+  description:
+    "Driving Africa's sustainable transition through solar infrastructure, EV charging networks, and innovative energy solutions.",
+  cta_primary: "View My Work",
+  cta_secondary: "Let's Connect",
+  stats: [
+    { value: "10+", label: "Solar Projects" },
+    { value: "3+", label: "Years Experience" },
+    { value: "5+", label: "EV Hub Sites" },
+  ],
+};
 
 export const Hero = () => {
+  const [content, setContent] = useState<HeroContent>(DEFAULT);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase
+      .from("page_sections")
+      .select("content")
+      .eq("page", "home")
+      .eq("section", "hero")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.content) setContent(data.content as HeroContent);
+      });
+  }, []);
+
   const scrollToWork = () => {
     const el = document.querySelector("#work");
     if (el) smoothScrollTo(el);
@@ -23,7 +66,7 @@ export const Hero = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          <span className="text-sm font-medium text-primary">Available for opportunities</span>
+          <span className="text-sm font-medium text-primary">{content.availability}</span>
         </motion.div>
 
         {/* Main heading */}
@@ -34,7 +77,7 @@ export const Hero = () => {
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight"
         >
           <span className="text-foreground">I'm </span>
-          <span className="gradient-text">Roy Otieno</span>
+          <span className="gradient-text">{content.name}</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -44,7 +87,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-4 font-light"
         >
-          Clean Energy Engineer & E-Mobility Specialist
+          {content.title}
         </motion.p>
 
         {/* Description */}
@@ -54,8 +97,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-base md:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-12"
         >
-          Driving Africa's sustainable transition through solar infrastructure, 
-          EV charging networks, and innovative energy solutions.
+          {content.description}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -70,7 +112,7 @@ export const Hero = () => {
             className="group flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl btn-glow"
           >
             <Sparkles className="w-5 h-5" />
-            View My Work
+            {content.cta_primary}
             <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
           </button>
           <a
@@ -82,7 +124,7 @@ export const Hero = () => {
             }}
             className="px-8 py-4 font-semibold rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           >
-            Let's Connect
+            {content.cta_secondary}
           </a>
         </motion.div>
 
@@ -93,11 +135,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 sm:mt-20 max-w-2xl mx-auto"
         >
-          {[
-            { value: "10+", label: "Solar Projects" },
-            { value: "3+", label: "Years Experience" },
-            { value: "5+", label: "EV Hub Sites" },
-          ].map((stat, index) => (
+          {content.stats.map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-3xl md:text-4xl font-display font-bold gradient-text mb-1">
                 {stat.value}

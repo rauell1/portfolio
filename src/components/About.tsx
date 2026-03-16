@@ -1,34 +1,58 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { MapPin, GraduationCap, Zap, Leaf } from "lucide-react";
 import headshot from "@/assets/headshot.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
-const highlights = [
-  {
-    icon: MapPin,
-    title: "Based in",
-    value: "Nairobi, Kenya",
-  },
-  {
-    icon: GraduationCap,
-    title: "Education",
-    value: "MBA Candidate & BSc. Engineering",
-  },
-  {
-    icon: Zap,
-    title: "Focus",
-    value: "Clean Energy & E-Mobility",
-  },
-  {
-    icon: Leaf,
-    title: "Mission",
-    value: "Sustainable Africa",
-  },
-];
+const iconMap: Record<string, React.FC<{ className?: string }>> = {
+  MapPin,
+  GraduationCap,
+  Zap,
+  Leaf,
+};
+
+interface Highlight { icon: string; title: string; value: string }
+interface AboutContent {
+  tagline: string;
+  heading: string;
+  heading_highlight: string;
+  paragraphs: string[];
+  highlights: Highlight[];
+}
+
+const DEFAULT: AboutContent = {
+  tagline: "About Me",
+  heading: "Powering Africa's",
+  heading_highlight: "Clean Future",
+  paragraphs: [
+    "I'm a renewable-energy and e-mobility specialist with hands-on experience in distributed energy infrastructure, EV-charging technology, and battery-swap system deployment across East Africa.",
+    "My expertise spans technical operations, system-uptime management, feasibility analysis, and cross-functional coordination with contractors, utilities, and regulatory agencies. I'm passionate about delivering practical solutions that enhance infrastructure reliability and accelerate the transition to sustainable energy.",
+  ],
+  highlights: [
+    { icon: "MapPin",        title: "Based in",   value: "Nairobi, Kenya" },
+    { icon: "GraduationCap", title: "Education",  value: "MBA Candidate & BSc. Engineering" },
+    { icon: "Zap",           title: "Focus",      value: "Clean Energy & E-Mobility" },
+    { icon: "Leaf",          title: "Mission",    value: "Sustainable Africa" },
+  ],
+};
 
 export const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [content, setContent] = useState<AboutContent>(DEFAULT);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase
+      .from("page_sections")
+      .select("content")
+      .eq("page", "home")
+      .eq("section", "about")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.content) setContent(data.content as AboutContent);
+      });
+  }, []);
 
   return (
     <section id="about" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
@@ -40,36 +64,34 @@ export const About = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-primary font-medium mb-4 block">About Me</span>
+            <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Powering Africa's <span className="gradient-text">Clean Future</span>
+              {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              I'm a renewable-energy and e-mobility specialist with hands-on experience in distributed 
-              energy infrastructure, EV-charging technology, and battery-swap system deployment across East Africa.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              My expertise spans technical operations, system-uptime management, feasibility analysis, 
-              and cross-functional coordination with contractors, utilities, and regulatory agencies. 
-              I'm passionate about delivering practical solutions that enhance infrastructure reliability 
-              and accelerate the transition to sustainable energy.
-            </p>
+            {content.paragraphs.map((p, i) => (
+              <p key={i} className="text-lg text-muted-foreground leading-relaxed mb-6">
+                {p}
+              </p>
+            ))}
 
             {/* Highlights grid */}
             <div className="grid grid-cols-2 gap-4">
-              {highlights.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-colors"
-                >
-                  <item.icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
-                  <p className="text-sm font-medium">{item.value}</p>
-                </motion.div>
-              ))}
+              {content.highlights.map((item, index) => {
+                const Icon = iconMap[item.icon] || Zap;
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                    className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-colors"
+                  >
+                    <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                    <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
+                    <p className="text-sm font-medium">{item.value}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
 

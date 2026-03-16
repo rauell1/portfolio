@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   Plus, Edit, Trash2, Eye, LogOut, FileText, 
-  Calendar, Tag, Loader2, Search, LayoutDashboard, FolderOpen, BookOpen
+  Calendar, Tag, Loader2, Search, LayoutDashboard, FolderOpen, BookOpen, Layout
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import DatabaseProjectsManager from "@/components/admin/DatabaseProjectsManager";
 import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
+import HomepageContentManager from "@/components/admin/HomepageContentManager";
 
 interface BlogPost {
   id: string;
@@ -35,7 +36,7 @@ interface BlogPost {
   tags: string[] | null;
 }
 
-type TabType = "posts" | "projects" | "case-studies";
+type TabType = "posts" | "projects" | "case-studies" | "content";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<TabType>("posts");
@@ -220,12 +221,25 @@ const AdminDashboard = () => {
             <BookOpen className="w-4 h-4" />
             Case Studies
           </button>
+          <button
+            onClick={() => setActiveTab("content")}
+            className={`px-5 py-2.5 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${
+              activeTab === "content"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Layout className="w-4 h-4" />
+            Homepage
+          </button>
         </div>
 
         {activeTab === "projects" ? (
           <DatabaseProjectsManager />
         ) : activeTab === "case-studies" ? (
           <CaseStudiesManager />
+        ) : activeTab === "content" ? (
+          <HomepageContentManager />
         ) : (
           <>
             {/* Actions Bar */}

@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Calendar, Tag, Search, Leaf, Zap, Wind, Link2, Check, Sun, Globe } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Search, Leaf, Zap, Wind, Link2, Check, Sun, Globe, Edit } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { STATIC_BLOG_POSTS, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
+import { useAuth } from "@/hooks/useAuth";
 
 interface BlogPost {
   id: string;
@@ -41,6 +42,7 @@ const BLOG_PILLARS = [
 ];
 
 const Blog = () => {
+  const { user } = useAuth();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -275,14 +277,27 @@ const Blog = () => {
                         )}
                         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                           <span className="text-xs text-primary font-medium group-hover:underline">Read article</span>
-                          <button
-                            onClick={(e) => copyPostLink(e, post.slug)}
-                            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                            title="Copy link"
-                          >
-                            {copiedSlug === post.slug ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
-                            {copiedSlug === post.slug ? "Copied" : "Copy link"}
-                          </button>
+                          <div className="flex items-center gap-2">
+                            {user && (
+                              <Link
+                                to={`/admin/posts/${post.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1 text-xs text-amber-500 hover:text-amber-400 transition-colors"
+                                title="Edit post"
+                              >
+                                <Edit className="w-3 h-3" />
+                                Edit
+                              </Link>
+                            )}
+                            <button
+                              onClick={(e) => copyPostLink(e, post.slug)}
+                              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                              title="Copy link"
+                            >
+                              {copiedSlug === post.slug ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
+                              {copiedSlug === post.slug ? "Copied" : "Copy link"}
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </Link>

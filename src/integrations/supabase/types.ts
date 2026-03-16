@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      page_sections: {
+        Row: {
+          id: string
+          page: string
+          section: string
+          content: Json
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          page?: string
+          section: string
+          content?: Json
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          page?: string
+          section?: string
+          content?: Json
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       case_studies: {
         Row: {
           id: string
@@ -159,6 +186,7 @@ export type Database = {
           location: string | null
           project_type: string
           slug: string | null
+          status: string
           title: string
           updated_at: string
         }
@@ -171,6 +199,7 @@ export type Database = {
           location?: string | null
           project_type?: string
           slug?: string | null
+          status?: string
           title: string
           updated_at?: string
         }
@@ -183,6 +212,7 @@ export type Database = {
           location?: string | null
           project_type?: string
           slug?: string | null
+          status?: string
           title?: string
           updated_at?: string
         }
