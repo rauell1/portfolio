@@ -56,7 +56,13 @@
     --shadow-glow-strong: 0 0 60px hsla(197, 68%, 44%, 0.6);
   }
 
-  .light {
+  /* [data-theme="light"] is included alongside .light so that browsers that
+     do not reliably apply CSS custom-property overrides from a class on
+     <html> (e.g. some Samsung Internet versions, older Firefox, Brave with
+     shields) still pick up the light-mode variables via the data attribute
+     that ThemeProvider sets on documentElement. */
+  .light,
+  [data-theme="light"] {
     --background: 0 0% 98%;
     --foreground: 0 0% 10%;
 
@@ -109,6 +115,9 @@
   html {
     scroll-behavior: smooth;
     color-scheme: light dark;
+    /* Prevent elastic over-scroll bounce that can make the page feel laggy on
+       mobile (especially on Android). `contain` still allows pull-to-refresh. */
+    overscroll-behavior-y: contain;
   }
 
   html.light {
@@ -139,6 +148,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
+    /* Hint to the browser that touch panning is only vertical, allowing it to
+       optimise touch-scroll compositing on mobile (no need to wait for JS). */
+    touch-action: pan-y;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -160,7 +172,8 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
 
-  .light .glass {
+  .light .glass,
+  [data-theme="light"] .glass {
     @apply bg-white/70 border-black/10;
   }
 
@@ -168,7 +181,8 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg;
   }
 
-  .light .glass-card {
+  .light .glass-card,
+  [data-theme="light"] .glass-card {
     @apply bg-white border-black/10 shadow-md;
   }
 
@@ -177,7 +191,8 @@
     background-image: linear-gradient(135deg, hsl(197 68% 44%) 0%, hsl(197 100% 70%) 100%);
   }
 
-  .light .gradient-text {
+  .light .gradient-text,
+  [data-theme="light"] .gradient-text {
     background-image: linear-gradient(135deg, hsl(197 68% 35%) 0%, hsl(197 100% 45%) 100%);
   }
 
@@ -193,9 +208,12 @@
     border-radius: inherit;
     padding: 1px;
     background: linear-gradient(135deg, hsl(197 68% 44%), hsl(197 100% 60%));
+    /* Standard mask (Firefox, Chrome 120+) */
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    /* WebKit/Blink fallback (Chrome < 120, Safari) */
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-    mask-composite: exclude;
     pointer-events: none;
   }
 
@@ -227,7 +245,8 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px hsla(197, 68%, 44%, 0.2);
   }
 
-  .light .card-hover:hover {
+  .light .card-hover:hover,
+  [data-theme="light"] .card-hover:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px hsla(197, 68%, 44%, 0.15);
   }
 
