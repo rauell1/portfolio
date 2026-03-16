@@ -98,6 +98,16 @@ const CaseStudiesManager = () => {
 
   const fetchCaseStudies = async () => {
     setLoading(true);
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured. Please check environment variables.",
+        variant: "destructive"
+      });
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")
@@ -154,6 +164,15 @@ const CaseStudiesManager = () => {
       return;
     }
 
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSaving(true);
     try {
       const slug = editing.slug || slugify(editing.title);
@@ -199,6 +218,16 @@ const CaseStudiesManager = () => {
 
   const handleDelete = async () => {
     if (!deleteId) return;
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      setDeleteId(null);
+      return;
+    }
+
     try {
       const { error } = await supabase.from("case_studies").delete().eq("id", deleteId);
       if (error) throw error;
@@ -212,6 +241,15 @@ const CaseStudiesManager = () => {
   };
 
   const togglePublish = async (cs: CaseStudy) => {
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const { error } = await supabase
       .from("case_studies")
       .update({ published: !cs.published })

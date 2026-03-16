@@ -74,6 +74,16 @@ const DatabaseProjectsManager = () => {
 
   const fetchProjects = async () => {
     setLoading(true);
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured. Please check environment variables.",
+        variant: "destructive"
+      });
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase
       .from("projects")
       .select("*")
@@ -107,6 +117,15 @@ const DatabaseProjectsManager = () => {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setUploading(true);
     const newImages: string[] = [...(editing.images || [])];
@@ -167,6 +186,15 @@ const DatabaseProjectsManager = () => {
       return;
     }
 
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSaving(true);
     try {
       const payload = {
@@ -211,6 +239,16 @@ const DatabaseProjectsManager = () => {
 
   const handleDelete = async () => {
     if (!deleteId) return;
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      setDeleteId(null);
+      return;
+    }
+
     try {
       const { error } = await supabase.from("projects").delete().eq("id", deleteId);
       if (error) throw error;

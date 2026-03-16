@@ -69,6 +69,16 @@ const AdminPostEditor = () => {
 
   const fetchPost = async () => {
     setLoading(true);
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured. Please check environment variables.",
+        variant: "destructive"
+      });
+      navigate("/admin/dashboard");
+      return;
+    }
+
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -140,6 +150,15 @@ const AdminPostEditor = () => {
       return;
     }
 
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setSaving(true);
 
     const postData = {
@@ -187,7 +206,17 @@ const AdminPostEditor = () => {
 
   const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !supabase) return;
+    if (!file) return;
+
+    if (!supabase) {
+      toast({
+        title: "Configuration Error",
+        description: "Supabase connection not configured.",
+        variant: "destructive"
+      });
+      if (coverImageInputRef.current) coverImageInputRef.current.value = "";
+      return;
+    }
 
     const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
     if (!allowedTypes.includes(file.type)) {
