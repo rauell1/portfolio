@@ -20,7 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import ProjectsManager from "@/components/admin/ProjectsManager";
+import DatabaseProjectsManager from "@/components/admin/DatabaseProjectsManager";
 import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
 
 interface BlogPost {
@@ -195,7 +195,7 @@ const AdminDashboard = () => {
         </div>
 
         {activeTab === "projects" ? (
-          <ProjectsManager />
+          <DatabaseProjectsManager />
         ) : activeTab === "case-studies" ? (
           <CaseStudiesManager />
         ) : (
