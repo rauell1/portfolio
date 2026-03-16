@@ -1,8 +1,9 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Zap, Sun, Battery, Leaf, BarChart3, Download, MapPin, Globe } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { portfolioProjects, type Project as SharedProject } from "../data/portfolioProjects";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Project extends Omit<SharedProject, "iconName"> {
   icon: LucideIcon;
@@ -12,7 +13,8 @@ const iconMap: Record<string, LucideIcon> = {
   Zap, Battery, Sun, Leaf, BarChart3, Globe,
 };
 
-const projects: Project[] = portfolioProjects.map((p) => ({
+// Fallback to hardcoded portfolio projects
+const fallbackProjects: Project[] = portfolioProjects.map((p) => ({
   ...p,
   icon: iconMap[p.iconName] ?? Zap,
 }));
@@ -20,8 +22,45 @@ const projects: Project[] = portfolioProjects.map((p) => ({
 export const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(6);
+
+      if (!error && data && data.length > 0) {
+        // Map database projects to the Project interface
+        const mapped: Project[] = data.map((proj: any) => ({
+          id: proj.id,
+          title: proj.title,
+          description: proj.description || "",
+          longDescription: proj.description || "",
+          category: proj.project_type || "Other",
+          tags: [], // Database projects don't have tags in the same format
+          gradient: "from-primary/20 to-primary/5",
+          icon: Zap, // Default icon for database projects
+          link: undefined,
+          images: proj.images || [],
+          specs: proj.location ? [{ label: "Location", value: proj.location }] : undefined,
+          role: undefined,
+          pdfDownload: undefined,
+          isFounder: false,
+          isFlagship: false,
+        }));
+        // Combine database projects with fallback projects for a complete display
+        setProjects([...mapped, ...fallbackProjects].slice(0, 6));
+      }
+      // On error or empty, keep fallback
+    };
+
+    fetchProjects();
+  }, []);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);

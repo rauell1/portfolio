@@ -1,10 +1,11 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Sun, Zap, Leaf, TrendingUp, Users, BarChart3,
   Thermometer, Battery, ChevronRight, MapPin, Calendar, Crown
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CaseStudyPreview {
   id: string;
@@ -19,7 +20,16 @@ interface CaseStudyPreview {
   metrics: { label: string; value: string; icon: typeof TrendingUp }[];
 }
 
-const previews: CaseStudyPreview[] = [
+// Icon map for resolving icon names from the database
+const ICON_MAP: Record<string, typeof Sun> = {
+  Sun, Battery, Zap, Leaf, TrendingUp, Users, MapPin, Calendar,
+  BarChart3, Thermometer,
+};
+
+const resolveIcon = (name: string): typeof Sun => ICON_MAP[name] ?? Zap;
+
+// Fallback data in case database is empty
+const fallbackPreviews: CaseStudyPreview[] = [
   {
     id: "solar-microgrid-ev",
     title: "Solar Microgrid for EV Charging",
@@ -68,6 +78,45 @@ const previews: CaseStudyPreview[] = [
 export const CaseStudies = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [previews, setPreviews] = useState<CaseStudyPreview[]>(fallbackPreviews);
+
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      const { data, error } = await supabase
+        .from("case_studies")
+        .select("*")
+        .eq("published", true)
+        .order("sort_order", { ascending: true })
+        .limit(3);
+
+      if (!error && data && data.length > 0) {
+        const mapped: CaseStudyPreview[] = data.map((cs: any) => ({
+          id: cs.slug || cs.id,
+          title: cs.title,
+          subtitle: cs.subtitle || "",
+          category: cs.category,
+          location: cs.location || "",
+          date: cs.date || "",
+          isFlagship: cs.is_flagship,
+          gradient: cs.gradient || "from-blue-500 to-cyan-400",
+          icon: resolveIcon(cs.icon_name || "Zap"),
+          metrics: Array.isArray(cs.metrics)
+            ? (cs.metrics as { label: string; value: string; icon_name: string }[])
+                .slice(0, 2)
+                .map(m => ({
+                  label: m.label,
+                  value: m.value,
+                  icon: resolveIcon(m.icon_name || "TrendingUp"),
+                }))
+            : [],
+        }));
+        setPreviews(mapped);
+      }
+      // On error or empty, keep fallback
+    };
+
+    fetchCaseStudies();
+  }, []);
 
   return (
     <section id="case-studies" className="py-32 px-6 relative" ref={ref}>
