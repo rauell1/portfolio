@@ -7,12 +7,23 @@ import { Skills } from "@/components/Skills";
 import { Leadership } from "@/components/Leadership";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { ParticleBackground } from "@/components/ParticleBackground";
+import { lazy, Suspense } from "react";
+
+// Lazy-load the particle canvas so it doesn't block the initial paint of
+// above-the-fold content (Hero + Navbar).  The null fallback is intentional —
+// the background should simply be absent until the module arrives.
+const ParticleBackground = lazy(() =>
+  import("@/components/ParticleBackground").then((m) => ({
+    default: m.ParticleBackground,
+  }))
+);
 
 const Index = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <ParticleBackground />
+      <Suspense fallback={null}>
+        <ParticleBackground />
+      </Suspense>
       <Navbar />
       <Hero />
       <main className="relative z-10">

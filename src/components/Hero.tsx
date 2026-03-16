@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
+import { smoothScrollTo } from "@/lib/smoothScroll";
 
 export const Hero = () => {
   const scrollToWork = () => {
-    document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
+    const el = document.querySelector("#work");
+    if (el) smoothScrollTo(el);
   };
 
   return (
@@ -75,7 +77,8 @@ export const Hero = () => {
             href="#contact"
             onClick={(e) => {
               e.preventDefault();
-              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+              const el = document.querySelector("#contact");
+              if (el) smoothScrollTo(el);
             }}
             className="px-8 py-4 font-semibold rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           >

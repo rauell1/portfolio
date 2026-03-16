@@ -4,6 +4,7 @@ import { Menu, X, FileText, BookOpen, LayoutDashboard, LogOut } from "lucide-rea
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "./ThemeToggle";
+import { smoothScrollTo } from "@/lib/smoothScroll";
 
 const navItems = [
   { href: "#about", label: "About" },
@@ -36,9 +37,7 @@ export const Navbar = () => {
       return;
     }
     const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    if (element) smoothScrollTo(element);
     setMobileMenuOpen(false);
   };
 

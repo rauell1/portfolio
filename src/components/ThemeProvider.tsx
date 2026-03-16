@@ -42,7 +42,13 @@ export function ThemeProvider({
     root.classList.remove("light", "dark");
     root.classList.add(theme);
     root.setAttribute("data-theme", theme);
-    root.style.colorScheme = theme;
+    try {
+      // colorScheme is well-supported but wrap defensively for strict browser
+      // environments or older engines (e.g. WebKit < 15) where it may throw.
+      root.style.colorScheme = theme;
+    } catch {
+      // Ignore — the class + data-theme already carry the theme information.
+    }
     try {
       localStorage.setItem(storageKey, theme);
     } catch {
