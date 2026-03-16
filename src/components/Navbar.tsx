@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, BookOpen, LayoutDashboard, LogOut } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, FileText, BookOpen } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
@@ -19,9 +19,8 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const isAdmin = user?.email === "royokola3@gmail.com";
 
   useEffect(() => {
@@ -40,12 +39,6 @@ export const Navbar = () => {
     const element = document.querySelector(href);
     if (element) smoothScrollTo(element);
     setMobileMenuOpen(false);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    setMobileMenuOpen(false);
-    navigate("/");
   };
 
   return (
@@ -106,30 +99,6 @@ export const Navbar = () => {
                 </Link>
               </li>
 
-              {/* Admin buttons */}
-              {isAdmin && (
-                <>
-                  <li className="ml-1">
-                    <Link
-                      to="/admin/dashboard"
-                      className="relative px-3 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-300 group flex items-center gap-1"
-                    >
-                      <LayoutDashboard className="w-4 h-4" />
-                      <span className="relative z-10">Dashboard</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleSignOut}
-                      className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-destructive transition-colors duration-300 flex items-center gap-1"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Logout</span>
-                    </button>
-                  </li>
-                </>
-              )}
-
               <li className="ml-2">
                 <ThemeToggle />
               </li>
@@ -185,28 +154,6 @@ export const Navbar = () => {
                   <FileText className="w-4 h-4" />
                   Resume
                 </Link>
-
-                {/* Admin mobile buttons */}
-                {isAdmin && (
-                  <>
-                    <div className="border-t border-border my-2" />
-                    <Link
-                      to="/admin/dashboard"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-primary hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                    >
-                      <LayoutDashboard className="w-4 h-4" />
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-destructive hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Logout
-                    </button>
-                  </>
-                )}
               </div>
             </motion.div>
           )}

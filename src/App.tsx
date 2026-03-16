@@ -12,13 +12,8 @@ import Index from "./pages/Index";
 const Resume = lazy(() => import("./pages/Resume"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
 const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ProjectsPage = lazy(() => import("./pages/Projects"));
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -75,12 +70,6 @@ const App = () => (
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/case-studies" element={<CaseStudiesPage />} />
                   <Route path="/projects" element={<ProjectsPage />} />
-                  <Route path="/admin" element={<AdminLogin />} />
-                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                  <Route path="/admin/posts/:id" element={<AdminPostEditor />} />
-                  <Route path="/admin/posts/new" element={<AdminPostEditor />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
