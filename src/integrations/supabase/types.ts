@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      case_studies: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          subtitle: string | null
+          category: string
+          location: string | null
+          date: string | null
+          role: string | null
+          partner: string | null
+          image: string | null
+          pdf_download: string | null
+          is_flagship: boolean
+          published: boolean
+          sections: Json
+          metrics: Json
+          gradient: string
+          icon_name: string
+          sort_order: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          subtitle?: string | null
+          category?: string
+          location?: string | null
+          date?: string | null
+          role?: string | null
+          partner?: string | null
+          image?: string | null
+          pdf_download?: string | null
+          is_flagship?: boolean
+          published?: boolean
+          sections?: Json
+          metrics?: Json
+          gradient?: string
+          icon_name?: string
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          subtitle?: string | null
+          category?: string
+          location?: string | null
+          date?: string | null
+          role?: string | null
+          partner?: string | null
+          image?: string | null
+          pdf_download?: string | null
+          is_flagship?: boolean
+          published?: boolean
+          sections?: Json
+          metrics?: Json
+          gradient?: string
+          icon_name?: string
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           category: string
