@@ -39,6 +39,7 @@ interface Metric {
 
 interface CaseStudy {
   id: string;
+  slug?: string;
   title: string;
   subtitle: string;
   category: string;
@@ -265,6 +266,11 @@ const CaseStudiesPage = () => {
   const [caseStudiesData, setCaseStudiesData] = useState<CaseStudy[]>(caseStudies);
   const modalScrollRef = useRef<HTMLDivElement>(null);
 
+  const isUuid = (value: string) =>
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      value,
+    );
+
   useEffect(() => {
     const fetchFromSupabase = async () => {
       const { data, error } = await supabase
@@ -275,7 +281,8 @@ const CaseStudiesPage = () => {
 
       if (!error && data && data.length > 0) {
         const mapped: CaseStudy[] = data.map((cs: Tables<"case_studies">) => ({
-          id: cs.slug || cs.id,
+          id: cs.id,
+          slug: cs.slug || undefined,
           title: cs.title,
           subtitle: cs.subtitle || "",
           category: cs.category,
@@ -314,10 +321,14 @@ const CaseStudiesPage = () => {
   const archiveCaseStudy = async (id: string, currentPublished: boolean) => {
     if (!supabase) return;
     try {
-      const { error } = await supabase
-        .from("case_studies")
-        .update({ published: !currentPublished })
-        .eq("id", id);
+      let query = supabase.from("case_studies").update({ published: !currentPublished });
+      if (isUuid(id)) {
+        query = query.eq("id", id);
+      } else {
+        query = query.eq("slug", id);
+      }
+
+      const { error } = await query;
       if (error) throw error;
       toast({
         title: "Success",

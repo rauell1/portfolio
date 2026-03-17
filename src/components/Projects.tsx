@@ -162,7 +162,7 @@ export const Projects = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto min-h-screen"
             onClick={closeModal}
           >
             <motion.div
@@ -170,11 +170,11 @@ export const Projects = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-card rounded-2xl border border-border overflow-hidden my-8 mx-auto"
+              className="relative w-full max-w-2xl max-h-[90vh] flex flex-col bg-card rounded-2xl border border-border overflow-hidden shadow-2xl my-4 sm:my-8"
             >
               {/* Header - image or gradient */}
               {selectedProject.images && selectedProject.images.length > 0 ? (
-                <div className="relative h-56">
+                <div className="relative h-56 shrink-0">
                   <img
                     src={selectedProject.images[0]}
                     alt={selectedProject.title}
@@ -214,7 +214,7 @@ export const Projects = () => {
                   </button>
                 </div>
               ) : (
-                <div className={`h-32 bg-gradient-to-br ${selectedProject.gradient} relative`}>
+                <div className={`h-32 bg-gradient-to-br ${selectedProject.gradient} relative shrink-0`}>
                   <div className="absolute inset-0 bg-black/30" />
                   <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
                     <div className="flex items-center gap-3">
@@ -244,7 +244,8 @@ export const Projects = () => {
               )}
 
               {/* Content */}
-              <div className="p-6">
+              <div className="flex-1 overflow-y-auto min-h-0">
+                <div className="p-6">
                 {selectedProject.role && (
                   <p className="text-sm text-amber-400/80 font-medium mb-3">{selectedProject.role}</p>
                 )}
@@ -338,6 +339,7 @@ export const Projects = () => {
                       <ChevronRight className="w-5 h-5" />
                     </button>
                   </div>
+                </div>
                 </div>
               </div>
             </motion.div>

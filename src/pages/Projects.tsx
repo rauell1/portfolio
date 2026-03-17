@@ -50,6 +50,11 @@ interface Project {
   slug?: string | null;
 }
 
+const isUuid = (value: string) =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    value,
+  );
+
 const ROAM_POINT_PROJECT: Project = {
   id: "roam-point",
   slug: "roam-point",
@@ -252,19 +257,26 @@ const Projects = () => {
     setIsSaving(true);
 
     try {
+      const payload = {
+        title: editingProject.title,
+        description: editingProject.description,
+        location: editingProject.location,
+        project_type: editingProject.project_type || "solar",
+        images: editingProject.images || [],
+        completed_at: editingProject.completed_at,
+      };
+
       if (editingProject.id) {
-        // Update existing project
-        const { error } = await supabase
-          .from("projects")
-          .update({
-            title: editingProject.title,
-            description: editingProject.description,
-            location: editingProject.location,
-            project_type: editingProject.project_type || "solar",
-            images: editingProject.images || [],
-            completed_at: editingProject.completed_at,
-          })
-          .eq("id", editingProject.id);
+        // Update existing project (by UUID id when available; otherwise fall back to slug)
+        let query = supabase.from("projects").update(payload);
+        if (isUuid(editingProject.id)) {
+          query = query.eq("id", editingProject.id);
+        } else {
+          const slug = editingProject.slug || editingProject.id;
+          query = query.eq("slug", slug);
+        }
+
+        const { error } = await query;
 
         if (error) throw error;
         toast({
@@ -276,12 +288,7 @@ const Projects = () => {
         const { error } = await supabase
           .from("projects")
           .insert({
-            title: editingProject.title,
-            description: editingProject.description,
-            location: editingProject.location,
-            project_type: editingProject.project_type || "solar",
-            images: editingProject.images || [],
-            completed_at: editingProject.completed_at,
+            ...payload,
           });
 
         if (error) throw error;
@@ -310,10 +317,14 @@ const Projects = () => {
     if (!deleteProjectId) return;
 
     try {
-      const { error } = await supabase
-        .from("projects")
-        .delete()
-        .eq("id", deleteProjectId);
+      let query = supabase.from("projects").delete();
+      if (isUuid(deleteProjectId)) {
+        query = query.eq("id", deleteProjectId);
+      } else {
+        query = query.eq("slug", deleteProjectId);
+      }
+
+      const { error } = await query;
 
       if (error) throw error;
       
@@ -431,24 +442,28 @@ const Projects = () => {
                       
                       {isAdmin && (
                         <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEditProject(project);
-                            }}
-                            className="p-2 rounded-lg bg-black/50 hover:bg-black/70 text-white transition-colors"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setDeleteProjectId(project.id);
-                            }}
-                            className="p-2 rounded-lg bg-destructive/80 hover:bg-destructive text-white transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          {!(!hasRoamPointInDB && isRoamPoint(project)) && (
+                            <>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEditProject(project);
+                                }}
+                                className="p-2 rounded-lg bg-black/50 hover:bg-black/70 text-white transition-colors"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDeleteProjectId(project.slug || project.id);
+                                }}
+                                className="p-2 rounded-lg bg-destructive/80 hover:bg-destructive text-white transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </>
+                          )}
                         </div>
                       )}
                     </div>
