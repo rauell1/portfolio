@@ -59,7 +59,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Connect + Admin + Social - Unified */}
+          {/* Connect + Admin + Social */}
           <div className="flex flex-col items-start md:items-end gap-3">
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
@@ -80,6 +80,8 @@ export const Footer = () => {
               <Link 
                 to="/admin"
                 className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-primary/20 text-muted-foreground/60 hover:text-primary transition-all duration-300 flex items-center gap-1"
+                aria-label="Admin login"
+                title="Admin login"
               >
                 <Lock className="w-4 h-4" />
               </Link>
