@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
+import { isAdminEmail } from "./lib/config";
 import { Component, ReactNode, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 
@@ -20,7 +21,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const ProtectedBlog = () => {
   const { user } = useAuth();
-  const isAdmin = user?.email === "royokola3@gmail.com";
+  const isAdmin = isAdminEmail(user?.email);
   if (!isAdmin) {
     return <NotFound />;
   }
@@ -29,7 +30,7 @@ const ProtectedBlog = () => {
 
 const ProtectedBlogPost = () => {
   const { user } = useAuth();
-  const isAdmin = user?.email === "royokola3@gmail.com";
+  const isAdmin = isAdminEmail(user?.email);
   if (!isAdmin) {
     return <NotFound />;
   }

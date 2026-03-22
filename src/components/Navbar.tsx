@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
+import { isAdminEmail } from "@/lib/config";
 
 
 const navItems = [
@@ -21,7 +22,7 @@ export const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const { user } = useAuth();
-  const isAdmin = user?.email === "royokola3@gmail.com";
+  const isAdmin = isAdminEmail(user?.email);
 
   useEffect(() => {
     const handleScroll = () => {

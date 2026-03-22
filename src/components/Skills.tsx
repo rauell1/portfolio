@@ -1,11 +1,13 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import React from "react";
 import { Sun, Battery, Wind, Zap, Leaf, Droplets } from "lucide-react";
+import type { LucideProps } from "lucide-react";
 import { SkillsRadarChart } from "./SkillsRadarChart";
 import { supabase } from "@/integrations/supabase/client";
 
 // Animated renewable energy icons
-const EnergyIcon = ({ icon: Icon, delay, className }: { icon: any; delay: number; className?: string }) => (
+const EnergyIcon = ({ icon: Icon, delay, className }: { icon: React.ComponentType<LucideProps>; delay: number; className?: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0 }}
     animate={{ opacity: 1, scale: 1 }}

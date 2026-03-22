@@ -3,9 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
 // These are the public anon (publishable) keys – safe for client-side code.
-// Override via VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY env vars if needed.
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://hvgkhrfgfhkvxkgqiwlp.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2Z2tocmZnZmhrdnhrZ3Fpd2xwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0MjY1NDQsImV4cCI6MjA4NTAwMjU0NH0.VnS0MlyJ02-xIb92J6Deb-WGFXneVcfWTdHafjS7tys";
+// Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in your .env file.
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";

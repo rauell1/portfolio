@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag, Search, Leaf, Zap, Wind, Link2, Check, Sun, Globe, Edit } from "lucide-react";
@@ -60,11 +60,7 @@ const Blog = () => {
     });
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
@@ -87,7 +83,11 @@ const Blog = () => {
       setPosts(STATIC_BLOG_POSTS);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =

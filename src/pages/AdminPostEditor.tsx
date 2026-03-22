@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { isAdminEmail } from "@/lib/config";
 
 interface BlogPost {
   id?: string;
@@ -49,7 +50,7 @@ const AdminPostEditor = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const isAdmin = user?.email === "royokola3@gmail.com";
+  const isAdmin = isAdminEmail(user?.email);
 
   useEffect(() => {
     if (!isEditing) return;
@@ -101,7 +102,7 @@ const AdminPostEditor = () => {
     );
   }
 
-  const handleChange = (field: keyof BlogPost, value: any) => {
+  const handleChange = (field: keyof BlogPost, value: BlogPost[keyof BlogPost]) => {
     setPost((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -115,7 +116,7 @@ const AdminPostEditor = () => {
     setError(null);
 
     try {
-      const payload: any = {
+      const payload: Omit<BlogPost, "id"> & { published_at?: string } = {
         title: post.title,
         slug: post.slug,
         excerpt: post.excerpt,
@@ -124,6 +125,7 @@ const AdminPostEditor = () => {
         category: post.category,
         tags: post.tags,
         published: post.published,
+        published_at: post.published_at,
       };
 
       if (post.published && !post.published_at) {
@@ -147,7 +149,7 @@ const AdminPostEditor = () => {
       });
 
       navigate("/blog");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error saving post:", err);
       setError("Failed to save post. Please try again.");
       toast({

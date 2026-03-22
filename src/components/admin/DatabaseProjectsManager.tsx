@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Plus, Edit, Trash2, Loader2, Search, MapPin,
@@ -75,11 +75,7 @@ const DatabaseProjectsManager = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     setLoading(true);
     if (!supabase) {
       toast({
@@ -102,7 +98,11 @@ const DatabaseProjectsManager = () => {
       setProjects((data as Project[]) || []);
     }
     setLoading(false);
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleAdd = () => {
     setEditing({
@@ -162,7 +162,7 @@ const DatabaseProjectsManager = () => {
         title: "Success",
         description: "Images uploaded successfully",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error uploading images:", error);
       toast({
         title: "Error",
@@ -244,10 +244,10 @@ const DatabaseProjectsManager = () => {
       await fetchProjects();
       setIsEditModalOpen(false);
       setEditing({});
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message || "Failed to save project",
+        description: error instanceof Error ? error.message : "Failed to save project",
         variant: "destructive",
       });
     } finally {
@@ -272,7 +272,7 @@ const DatabaseProjectsManager = () => {
       if (error) throw error;
       toast({ title: "Success", description: "Project deleted successfully" });
       await fetchProjects();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({ title: "Error", description: "Failed to delete project", variant: "destructive" });
     } finally {
       setDeleteId(null);
@@ -293,7 +293,7 @@ const DatabaseProjectsManager = () => {
         description: `Project ${newStatus === "archived" ? "archived" : "restored to published"}`,
       });
       await fetchProjects();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({ title: "Error", description: "Failed to update project status", variant: "destructive" });
     }
   };

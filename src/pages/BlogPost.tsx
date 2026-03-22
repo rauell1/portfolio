@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind, Link2, Check, Edit } from "lucide-react";
@@ -59,11 +59,7 @@ const BlogPostPage = () => {
   const [linkCopied, setLinkCopied] = useState(false);
   const [coverImageFailed, setCoverImageFailed] = useState(false);
 
-  useEffect(() => {
-    fetchPost();
-  }, [slug]);
-
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     if (!slug) {
       setLoading(false);
       return;
@@ -91,7 +87,11 @@ const BlogPostPage = () => {
       navigate("/blog");
     }
     setLoading(false);
-  };
+  }, [slug, navigate]);
+
+  useEffect(() => {
+    fetchPost();
+  }, [fetchPost]);
 
   const sharePost = () => {
     if (navigator.share) {
