@@ -37,7 +37,7 @@ export const Projects = () => {
       if (!error && data && data.length > 0) {
         // Map database projects to the Project interface
         const mapped: Project[] = data
-          .map((proj: any) => ({
+          .map((proj) => ({
             id: proj.id,
             title: proj.title,
             description: proj.description || "",

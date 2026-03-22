@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { 
   ArrowLeft, Plus, Image, Calendar, MapPin, 
@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { isAdminEmail } from "@/lib/config";
 import {
   Dialog,
   DialogContent,
@@ -146,14 +147,9 @@ const Projects = () => {
   
   const { user } = useAuth();
   const { toast } = useToast();
-  const isAdmin = user?.email === "royokola3@gmail.com";
+  const isAdmin = isAdminEmail(user?.email);
 
-  // Fetch projects from database
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("projects")
@@ -162,7 +158,7 @@ const Projects = () => {
 
       if (error) throw error;
       setProjects((data as Project[]) || []);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error fetching projects:", error);
       toast({
         title: "Error",
@@ -172,7 +168,12 @@ const Projects = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  // Fetch projects from database
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleAddProject = () => {
     setEditingProject({
@@ -222,7 +223,7 @@ const Projects = () => {
         title: "Success",
         description: "Images uploaded successfully",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error uploading images:", error);
       toast({
         title: "Error",
@@ -301,11 +302,11 @@ const Projects = () => {
       await fetchProjects();
       setIsEditModalOpen(false);
       setEditingProject({});
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error saving project:", error);
       toast({
         title: "Error",
-        description: error.message || "Failed to save project. Make sure you're logged in as admin.",
+        description: error instanceof Error ? error.message : "Failed to save project. Make sure you're logged in as admin.",
         variant: "destructive",
       });
     } finally {
@@ -333,7 +334,7 @@ const Projects = () => {
         description: "Project deleted successfully",
       });
       await fetchProjects();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error deleting project:", error);
       toast({
         title: "Error",

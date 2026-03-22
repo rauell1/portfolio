@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Plus, Edit, Trash2, Loader2, Search, MapPin,
@@ -92,11 +92,7 @@ const CaseStudiesManager = () => {
   const [expandedSections, setExpandedSections] = useState<boolean>(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchCaseStudies();
-  }, []);
-
-  const fetchCaseStudies = async () => {
+  const fetchCaseStudies = useCallback(async () => {
     setLoading(true);
     if (!supabase) {
       toast({
@@ -124,7 +120,11 @@ const CaseStudiesManager = () => {
       setCaseStudies(parsed);
     }
     setLoading(false);
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchCaseStudies();
+  }, [fetchCaseStudies]);
 
   const handleAdd = () => {
     setEditing({
@@ -209,8 +209,8 @@ const CaseStudiesManager = () => {
       await fetchCaseStudies();
       setIsEditModalOpen(false);
       setEditing({});
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message || "Failed to save case study", variant: "destructive" });
+    } catch (error: unknown) {
+      toast({ title: "Error", description: error instanceof Error ? error.message : "Failed to save case study", variant: "destructive" });
     } finally {
       setIsSaving(false);
     }
@@ -233,7 +233,7 @@ const CaseStudiesManager = () => {
       if (error) throw error;
       toast({ title: "Success", description: "Case study deleted successfully" });
       await fetchCaseStudies();
-    } catch (error: any) {
+    } catch (_error: unknown) {
       toast({ title: "Error", description: "Failed to delete case study", variant: "destructive" });
     } finally {
       setDeleteId(null);

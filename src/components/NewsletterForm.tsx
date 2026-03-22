@@ -46,7 +46,7 @@ export const NewsletterForm = () => {
 
       setStatus("success");
       setEmail("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Newsletter subscription error:", error);
       setStatus("error");
       setErrorMessage("Failed to subscribe. Please try again.");

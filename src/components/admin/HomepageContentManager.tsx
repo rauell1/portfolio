@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Loader2, Save, RefreshCw, ChevronDown, ChevronUp,
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import type { Json } from "@/integrations/supabase/types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -715,11 +716,7 @@ const HomepageContentManager = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>("hero");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchSections();
-  }, []);
-
-  const fetchSections = async () => {
+  const fetchSections = useCallback(async () => {
     setLoading(true);
     if (!supabase) {
       toast({
@@ -743,7 +740,11 @@ const HomepageContentManager = () => {
       setSections((data as PageSection[]) || []);
     }
     setLoading(false);
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchSections();
+  }, [fetchSections]);
 
   const handleContentChange = (sectionKey: SectionKey, newContent: SectionContent) => {
     setSections((prev) =>
@@ -759,7 +760,7 @@ const HomepageContentManager = () => {
     try {
       const { error } = await supabase
         .from("page_sections")
-        .update({ content: section.content as any })
+        .update({ content: section.content as unknown as Json })
         .eq("id", section.id);
 
       if (error) throw error;
@@ -768,10 +769,10 @@ const HomepageContentManager = () => {
         description: `${sectionLabels[sectionKey]} updated successfully`,
       });
       await fetchSections();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message || "Failed to save section",
+        description: error instanceof Error ? error.message : "Failed to save section",
         variant: "destructive",
       });
     } finally {

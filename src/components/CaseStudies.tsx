@@ -90,7 +90,7 @@ export const CaseStudies = () => {
         .limit(3);
 
       if (!error && data && data.length > 0) {
-        const mapped: CaseStudyPreview[] = data.map((cs: any) => ({
+        const mapped: CaseStudyPreview[] = data.map((cs) => ({
           id: cs.slug || cs.id,
           title: cs.title,
           subtitle: cs.subtitle || "",
