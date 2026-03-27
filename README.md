@@ -6,229 +6,96 @@ Personal portfolio and CMS for a renewable energy engineer, electric mobility sp
 
 ---
 
-## Overview
+## Quickstart
 
-A production-grade, full-stack portfolio site built with React, TypeScript, and Supabase. It showcases projects, case studies, a blog, and a resume — all editable via a built-in admin CMS.
+1) Install prerequisites: Node.js 18+ and the Supabase CLI (for migrations/functions).  
+2) Install deps: `npm ci`  
+3) Configure env: `cp .env.example .env` and fill the values below. Supabase credentials are required because the client is used across pages.  
+4) Run locally: `npm run dev` then open http://localhost:5173  
+5) (Optional) Sync the database: `supabase db push` from the project root.
 
----
-
-## Features
-
-- **Dynamic portfolio** — Projects and case studies pulled from Supabase with static fallbacks
-- **Admin CMS** — Authenticated editor for blog posts, projects, case studies, and homepage sections
-- **Blog** — Mix of static (pillar) posts and dynamic Supabase-backed posts
-- **Contact form** — Email via Supabase Edge Functions + Resend, with rate limiting and input validation
-- **Newsletter** — Subscriber management with welcome email automation
-- **Dark / Light mode** — Theme toggle with system preference detection
-- **Error boundary** — Graceful fallback UI on unexpected render errors
-- **Lazy loading** — Non-home pages are code-split for fast initial load
+> The UI ships with fallback content in `src/data/blogPosts.ts` and `src/data/portfolioProjects.ts`, but the Supabase client still needs valid `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to load without runtime errors.
 
 ---
 
-## Tech Stack
+## Scripts
 
-| Layer | Technology |
-|---|---|
-| Framework | React 18 + TypeScript (strict) |
-| Bundler | Vite |
-| Styling | Tailwind CSS + shadcn/ui (Radix UI) |
-| Routing | React Router v6 |
-| Data fetching | TanStack Query |
-| Animations | Framer Motion |
-| Backend / DB | Supabase (PostgreSQL + Auth + Storage) |
-| Edge Functions | Deno (Supabase Functions) |
-| Email | Resend |
-| Deployment | Vercel |
+- `npm run dev` — Vite dev server
+- `npm run lint` — ESLint across the repo
+- `npm run build` — Production build
+- `npm run preview` — Serve the production build locally
 
 ---
 
-## Folder Structure
+## Architecture
 
-```
-src/
-├── App.tsx                  # Root component: routing, providers, error boundary
-├── main.tsx                 # Entry point
-├── index.css                # Global styles and design tokens
-├── components/
-│   ├── admin/               # CMS editor components (auth-protected)
-│   ├── ui/                  # shadcn/ui primitives (auto-generated)
-│   └── *.tsx                # Page section components (Hero, About, etc.)
-├── data/
-│   ├── blogPosts.ts         # Static pillar blog posts
-│   └── portfolioProjects.ts # Static project definitions (fallback)
-├── hooks/
-│   ├── use-mobile.tsx       # Responsive breakpoint hook
-│   ├── use-toast.ts         # Toast notification hook
-│   └── useAuth.tsx          # Supabase auth context + hook
-├── integrations/
-│   └── supabase/
-│       ├── client.ts        # Supabase client (env-var configured)
-│       └── types.ts         # Auto-generated DB type definitions
-├── lib/
-│   ├── config.ts            # App config constants (admin email, etc.)
-│   ├── smoothScroll.ts      # Scroll utility
-│   └── utils.ts             # Tailwind class merge utility
-└── pages/
-    ├── Index.tsx            # Homepage
-    ├── Resume.tsx           # CV / resume page
-    ├── Projects.tsx         # Projects list + admin editor
-    ├── Blog.tsx             # Blog listing (admin-only)
-    ├── BlogPost.tsx         # Blog post reader
-    ├── CaseStudiesPage.tsx  # Case studies
-    ├── AdminLogin.tsx       # Admin sign-in
-    ├── AdminPostEditor.tsx  # Blog post editor
-    └── NotFound.tsx         # 404 page
-
-supabase/
-├── config.toml              # Supabase project config
-├── functions/
-│   ├── send-contact-email/  # Edge function: contact form emails
-│   └── send-newsletter-welcome/ # Edge function: welcome + admin notification
-└── migrations/              # Database schema migrations
-```
+- React 18 + TypeScript (Vite)
+- Tailwind CSS + shadcn/ui (Radix UI primitives)
+- React Router v6 for routing and code-split pages
+- TanStack Query for data fetching/caching
+- Supabase (PostgreSQL + Auth + Edge Functions + Storage) as the backend
+- Framer Motion for animation, Resend for transactional email
 
 ---
 
-## Setup
+## Environment & Data
 
-### Prerequisites
-
-- Node.js 18+
-- A [Supabase](https://app.supabase.com) project (optional — site works with static fallback data)
-- A [Resend](https://resend.com) account (optional — for contact/newsletter emails)
-
-### 1. Clone and install
-
-```bash
-git clone https://github.com/rauell1/portfolio.git
-cd portfolio
-npm install
-```
-
-### 2. Configure environment variables
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` with your values:
-
-```env
-# Required for dynamic content (Supabase)
-VITE_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-
-# Required for admin CMS access
-VITE_ADMIN_EMAIL=your_admin_email@example.com
-```
-
-### 3. Run locally
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173)
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
+| Variable | Required | Purpose |
 |---|---|---|
-| `VITE_SUPABASE_URL` | Yes (for dynamic content) | Supabase project URL |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | Yes (for dynamic content) | Supabase anon/public key |
-| `VITE_ADMIN_EMAIL` | Yes (for CMS access) | Email address with admin privileges |
+| `VITE_SUPABASE_URL` | Yes | Supabase project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Yes | Supabase anon/public key used by the client |
+| `VITE_ADMIN_EMAIL` | Yes | Email with admin privileges in the CMS |
 
-> **Note:** `VITE_` prefixed variables are bundled into the client. Only use public/anon keys here — never service-role keys.
+`VITE_`-prefixed values are exposed to the client; only use public/anon Supabase keys.
 
-### Supabase Edge Function Secrets
+Data sources:
+- Supabase tables: `projects`, `case_studies`, `blog_posts`, `page_sections`, `newsletter_subscribers`
+- Static fallbacks: `src/data/blogPosts.ts` and `src/data/portfolioProjects.ts` (used when tables are empty or fetches fail)
+- Supabase client configuration: `src/integrations/supabase/client.ts`
 
-Set these in your Supabase project dashboard under **Settings → Edge Functions**:
-
-| Secret | Description |
-|---|---|
-| `RESEND_API_KEY` | Resend API key for sending emails |
-| `ADMIN_EMAIL` | Admin email for new subscriber notifications |
-
----
-
-## Database Migrations
-
-Apply migrations using the Supabase CLI:
-
-```bash
-supabase db push
-```
-
-Migrations are in `supabase/migrations/` and set up:
-- `page_sections` — CMS-editable homepage sections
-- `blog_posts` — Blog articles
-- `projects` — Portfolio projects
-- `case_studies` — Detailed case studies
-- `newsletter_subscribers` — Newsletter subscription list
-
----
-
-## Build
-
-```bash
-npm run build       # Production build
-npm run preview     # Preview the production build locally
-npm run lint        # Run ESLint
-```
-
----
-
-## Deployment
-
-### Vercel (recommended)
-
-1. Connect your GitHub repo to [Vercel](https://vercel.com)
-2. Set the environment variables in Vercel project settings:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_PUBLISHABLE_KEY`
-   - `VITE_ADMIN_EMAIL`
-3. Deploy settings:
-   - **Build command:** `npm run build`
-   - **Output directory:** `dist`
-   - **Framework preset:** Vite
-
-The `vercel.json` in the repo configures SPA routing (all paths → `index.html`).
-
-### Supabase Edge Functions
-
-```bash
-supabase functions deploy send-contact-email
-supabase functions deploy send-newsletter-welcome
-```
-
-Set secrets before deploying:
-
-```bash
-supabase secrets set RESEND_API_KEY=your_key
-supabase secrets set ADMIN_EMAIL=your_email
-```
+Supabase Edge Function secrets (set in the Supabase dashboard):
+- `RESEND_API_KEY` — for contact/newsletter emails
+- `ADMIN_EMAIL` — for admin notifications
 
 ---
 
 ## Admin CMS
 
-1. Navigate to `/admin` and sign in with the configured admin email
-2. After signing in, the navbar shows admin links to manage:
-   - Blog posts (via `/admin/posts/new` or `/admin/posts/:id`)
-   - Projects, case studies, and homepage sections (via inline editors on each page)
+- Create a Supabase Auth user whose email matches `VITE_ADMIN_EMAIL`
+- Visit `/admin` to sign in; once authenticated, the navbar exposes admin routes:
+  - Blog posts: `/admin/posts/new` and `/admin/posts/:id`
+  - Projects, case studies, and homepage sections: inline editors on their respective pages
+- Dynamic pages fetch from Supabase first and keep static fallback content if the query returns no rows.
+
+---
+
+## Database & Edge Functions
+
+- Migrations live in `supabase/migrations/`; apply with `supabase db push`
+- Edge functions live in `supabase/functions/`; deploy with:
+  - `supabase functions deploy send-contact-email`
+  - `supabase functions deploy send-newsletter-welcome`
+- Configure `supabase/config.toml` per your project, and set the function secrets before deploying:
+  - `supabase secrets set RESEND_API_KEY=your_key`
+  - `supabase secrets set ADMIN_EMAIL=your_email`
+
+---
+
+## Deployment (Vercel)
+
+1. Connect the repo to Vercel.  
+2. Set env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_ADMIN_EMAIL`.  
+3. Build command: `npm run build`  
+4. Output directory: `dist`  
+5. SPA routing is configured via `vercel.json`.
 
 ---
 
 ## Security
 
-- **No secrets in source code** — Supabase credentials loaded from environment variables only
-- **Admin access** — Controlled by Supabase Auth + email match against `VITE_ADMIN_EMAIL`
-- **Rate limiting** — Contact and newsletter edge functions enforce per-IP rate limits
-- **Input validation** — Zod schemas on the frontend; server-side validation in edge functions
-- **XSS prevention** — All user input HTML-escaped in email templates
-- **Error boundaries** — React error boundary prevents full app crashes
+- No service-role keys in the client; use only anon/public keys
+- Admin access is gated by Supabase Auth and `VITE_ADMIN_EMAIL`
+- Edge functions enforce validation and rate limiting for contact/newsletter flows
 
 ---
 
