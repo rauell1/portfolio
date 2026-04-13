@@ -14,7 +14,7 @@
 # == 'skipped' problem where GitHub Actions refused to schedule
 # tag-snapshot on manual runs.
 #
-# ── DEPENDENCY ADVISORY ──────────────────────────────────────
+# ── DEPENDENCY ADVISORY ──────────────────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
 #   - actions/checkout@v4
 #   - actions/setup-node@v4  (node-version: '24')
@@ -25,11 +25,12 @@
 #   2. You add a new package that requires a higher Node minimum
 #      → Align node-version with engines.node in package.json
 #   3. actions/* release a new major version
-#      → Check release notes for breaking changes before upgrading
-#   4. The `resend`, `@vercel/node`, or `@vercel/analytics` packages
-#      release a new major version
+#      → Review release notes for breaking changes before upgrading
+#   4. The `resend` or `@vercel/analytics` packages release a new major version
 #      → Review their migration guides; breaking API changes may require
 #        updates to api/contact.ts and api/newsletter.ts
+#      NOTE: @vercel/node is NOT in package.json — Vercel injects it
+#      automatically at build time. Do not add it back.
 # Dependabot auto-bumps these actions monthly — review its PRs promptly.
 # =============================================================
 name: Safe Rollback
@@ -59,7 +60,7 @@ permissions:
   contents: write
 
 jobs:
-  # ── PATH A, step 1: build gate (push only) ──────────────────────
+  # ── PATH A, step 1: build gate (push only) ────────────────────────────────
   build:
     name: Build gate
     runs-on: ubuntu-latest
@@ -81,15 +82,13 @@ jobs:
       - name: Lint (advisory)
         run: npm run lint
         continue-on-error: true
-        env:
-          ESLINT_NO_FAIL_ON_ERROR: '1'
 
       - name: Build
         run: npm run build
         env:
           CI: true
 
-  # ── PATH A, step 2: tag on successful push build ─────────────────
+  # ── PATH A, step 2: tag on successful push build ──────────────────────────
   tag-on-push:
     name: Tag snapshot (post-push)
     runs-on: ubuntu-latest
@@ -123,7 +122,7 @@ jobs:
           echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| snapshot/latest | updated |" >> $GITHUB_STEP_SUMMARY
 
-  # ── PATH B, step 1: tag on manual dispatch (no build needed) ─────
+  # ── PATH B, step 1: tag on manual dispatch (no build needed) ─────────────
   tag-on-dispatch:
     name: Tag snapshot (manual)
     runs-on: ubuntu-latest
@@ -156,7 +155,7 @@ jobs:
           echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
 
-  # ── PATH B, step 2: rollback (manual + target_sha provided) ──────
+  # ── PATH B, step 2: rollback (manual + target_sha provided) ──────────────
   rollback:
     name: Non-destructive rollback
     runs-on: ubuntu-latest
