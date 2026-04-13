@@ -1,18 +1,38 @@
-name: Safe Rollback
-
-# This workflow has two completely independent trigger paths:
+# =============================================================
+# SAFE ROLLBACK
+# Two completely independent trigger paths:
 #
 # PATH A — push to main:
-#   build job runs → on success, tag-snapshot job runs
-#   These are chained with needs: [build] intentionally.
+#   build job runs → on success, tag-on-push creates a snapshot tag.
 #
 # PATH B — manual dispatch:
-#   tag-snapshot-manual job runs (no build dependency)
-#   rollback job runs if target_sha is provided
+#   tag-on-dispatch creates a snapshot tag of current HEAD.
+#   If target_sha is provided, rollback job reverts to that SHA
+#   non-destructively (revert commits, history preserved).
 #
-# Separating the two paths avoids the needs.build.result == 'skipped'
-# problem that caused the previous version to silently do nothing on
-# manual dispatches.
+# Separating push and dispatch paths avoids the needs.build.result
+# == 'skipped' problem where GitHub Actions refused to schedule
+# tag-snapshot on manual runs.
+#
+# ── DEPENDENCY ADVISORY ──────────────────────────────────────
+# This workflow uses the following pinned GitHub Actions:
+#   - actions/checkout@v4
+#   - actions/setup-node@v4  (node-version: '24')
+#
+# Review and update these pins when:
+#   1. Node.js 24 exits Active LTS (scheduled ~Oct 2027)
+#      → Upgrade to the next LTS (26). Check https://nodejs.org/en/about/previous-releases
+#   2. You add a new package that requires a higher Node minimum
+#      → Align node-version with engines.node in package.json
+#   3. actions/* release a new major version
+#      → Check release notes for breaking changes before upgrading
+#   4. The `resend`, `@vercel/node`, or `@vercel/analytics` packages
+#      release a new major version
+#      → Review their migration guides; breaking API changes may require
+#        updates to api/contact.ts and api/newsletter.ts
+# Dependabot auto-bumps these actions monthly — review its PRs promptly.
+# =============================================================
+name: Safe Rollback
 
 on:
   push:
@@ -29,25 +49,45 @@ on:
         required: false
         default: 'Manual rollback via GitHub Actions'
 
+# PATH A (push): queue builds — never cancel a running build on the same branch.
+# PATH B (dispatch): allow only one manual rollback at a time per branch.
+concurrency:
+  group: safe-rollback-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
 jobs:
   # ── PATH A, step 1: build gate (push only) ──────────────────────
   build:
-    name: Build & lint gate
+    name: Build gate
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
+      - name: Install dependencies
+        run: npm ci
+
+      # Lint surfaces warnings as GitHub annotations but never fails the build.
+      # Fix lint errors locally: run `npm run lint` before pushing.
+      # To enforce lint as a hard gate, change continue-on-error to false.
+      - name: Lint (advisory)
+        run: npm run lint
         continue-on-error: true
-      - run: npm run build
+        env:
+          ESLINT_NO_FAIL_ON_ERROR: '1'
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
 
   # ── PATH A, step 2: tag on successful push build ─────────────────
   tag-on-push:
@@ -55,6 +95,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.event_name == 'push' && needs.build.result == 'success'
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,7 +106,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Create snapshot tags
+      - name: Create snapshot tag
         run: |
           set -euo pipefail
           SHORT=$(git rev-parse --short HEAD)
@@ -86,6 +128,8 @@ jobs:
     name: Tag snapshot (manual)
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -95,24 +139,30 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Create snapshot tags
+      - name: Create snapshot tag
         run: |
           set -euo pipefail
           SHORT=$(git rev-parse --short HEAD)
           FULL=$(git rev-parse HEAD)
           TS=$(date -u +"%Y%m%dT%H%M%SZ")
           TAG="snapshot/${TS}-${SHORT}"
-          git tag "$TAG" "$FULL" -m "Manual snapshot dispatch"
+          git tag "$TAG" "$FULL" -m "Manual snapshot dispatch by ${{ github.actor }}"
           git tag -f snapshot/latest "$FULL" -m "Latest known-good: $FULL"
           git push origin "$TAG"
           git push origin snapshot/latest --force
           echo "Tagged: $TAG"
+          echo "## Manual snapshot created" >> $GITHUB_STEP_SUMMARY
+          echo "| Tag | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
 
   # ── PATH B, step 2: rollback (manual + target_sha provided) ──────
   rollback:
     name: Non-destructive rollback
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.target_sha != ''
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -128,7 +178,7 @@ jobs:
           set -euo pipefail
           TARGET="${{ github.event.inputs.target_sha }}"
           FULL=$(git rev-parse "${TARGET}" 2>/dev/null) || {
-            echo "::error::SHA '${TARGET}' not found."
+            echo "::error::SHA '${TARGET}' not found in repository history."
             exit 1
           }
           SHORT=$(git rev-parse --short "$FULL")
@@ -152,17 +202,19 @@ jobs:
           while IFS= read -r c; do
             git revert --no-edit --no-commit "$c" || {
               git revert --abort 2>/dev/null || true
-              echo "::error::Conflict at $c — rollback aborted."
+              echo "::error::Merge conflict at $c — rollback aborted. Resolve manually."
               exit 1
             }
           done <<< "$COMMITS"
           REASON="${{ github.event.inputs.reason }}"
           ACTOR="${{ github.actor }}"
-          COMMIT_MSG=$(printf 'revert(rollback): restore state at %s\n\nTarget: %s (%s)\nReason: %s\nBy: %s\n\nNon-destructive - all history preserved.' "$SHORT" "$SHORT" "$FULL" "$REASON" "$ACTOR")
+          COMMIT_MSG=$(printf 'revert(rollback): restore state at %s\n\nTarget: %s (%s)\nReason: %s\nBy: %s\n\nNon-destructive — all history preserved.' "$SHORT" "$SHORT" "$FULL" "$REASON" "$ACTOR")
           git commit -m "$COMMIT_MSG"
           git pull --rebase origin main
           git push origin main
           echo "Rollback pushed."
           echo "## Rollback complete" >> $GITHUB_STEP_SUMMARY
           echo "| Rolled back to | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Full SHA | \`${FULL}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Reason | ${{ github.event.inputs.reason }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY

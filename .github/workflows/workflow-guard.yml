@@ -1,12 +1,36 @@
-# ============================================================
+# =============================================================
 # WORKFLOW GUARD
-# Runs on every push to main and on every PR.
+# Runs on every push to main and on every PR targeting main.
 #
-# Two independent jobs — no lint dependency:
+# Three independent jobs — each can pass/fail independently:
 #
-#  1. build-check          — npm ci + vite build must pass
-#  2. dry-run-readme-shell — safe find/node dry-run against src/
-# ============================================================
+#  1. type-check          — tsc --noEmit (surfaces TS errors fast,
+#                            before the full Vite bundle)
+#  2. build-check         — npm ci + vite build (full production bundle)
+#  3. dry-run-readme-shell — safe find/node dry-run against src/
+#
+# ── DEPENDENCY ADVISORY ──────────────────────────────────────
+# This workflow uses the following pinned GitHub Actions:
+#   - actions/checkout@v4
+#   - actions/setup-node@v4  (node-version: '24')
+#
+# Review and update these pins when:
+#   1. Node.js 24 exits Active LTS (~Oct 2027)
+#      → Upgrade node-version to the next LTS (26)
+#        and verify your dependencies support it first:
+#        `npx check-node-version --node '>=26'`
+#   2. You upgrade TypeScript (devDependencies in package.json)
+#      → Run `npx tsc --version` locally after upgrade to verify
+#        no new strict errors are introduced
+#   3. You add a new Vite plugin or Rollup option to vite.config.ts
+#      → Verify the build-check job still passes — plugin breaking
+#        changes are the most common source of CI regressions
+#   4. You upgrade framer-motion, @tanstack/react-query, or any package
+#      with peer dependencies on React
+#      → Check that `npm ci` installs cleanly without peer dep warnings
+#   5. actions/* release a new major version
+#      → Review release notes; Dependabot will open a PR automatically
+# =============================================================
 name: Workflow Guard
 
 on:
@@ -16,17 +40,53 @@ on:
       - '.github/workflows/**'
       - 'src/**'
       - 'package.json'
+      - 'tsconfig*.json'
+      - 'vite.config.ts'
   pull_request:
     branches: [main]
     paths:
       - '.github/workflows/**'
       - 'src/**'
       - 'package.json'
+      - 'tsconfig*.json'
+      - 'vite.config.ts'
+
+# Cancel superseded runs on the same branch/PR to save minutes.
+concurrency:
+  group: workflow-guard-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
+  # ── Job 1: TypeScript type check ─────────────────────────────────
+  # Runs tsc --noEmit to catch type errors before the full Vite build.
+  # This is intentionally separate from build-check so type errors are
+  # reported as a distinct failing check with a clear label.
+  type-check:
+    name: TypeScript type check
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tsc --noEmit
+        run: npx tsc --noEmit
+        # If this fails: you have TypeScript errors in src/.
+        # Run `npx tsc --noEmit` locally to see the full error list.
+        # Common causes after a dependency upgrade:
+        #   - New strict types in a library's .d.ts files
+        #   - Removed or renamed exports
+        #   - React peer dep version mismatch
+
+  # ── Job 2: Vite production build ─────────────────────────────────
   build-check:
     name: Vite build sanity check
     runs-on: ubuntu-latest
@@ -45,6 +105,7 @@ jobs:
         env:
           CI: true
 
+  # ── Job 3: Dry-run README shell logic ────────────────────────────
   dry-run-readme-shell:
     name: Dry-run README shell logic against real src/ tree
     runs-on: ubuntu-latest
