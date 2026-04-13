@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `243b14f` — Add files via upload |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 02:49 UTC |
+| **Last commit** | `d66c957` — Add SafariCharge cross-linked case study/blog template and update headshot |
+| **Committed by** | Roy Okola Otieno |
+| **Commit date** | 2026-04-14 02:52 UTC |
 | **Branch** | `main` |
-| **Total commits** | 202 |
+| **Total commits** | 205 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
