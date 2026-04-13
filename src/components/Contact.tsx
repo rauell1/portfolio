@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, MapPin, Send, CheckCircle, AlertCircle, Phone, ExternalLink } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -16,7 +15,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -57,12 +56,17 @@ export const Contact = () => {
     }
 
     try {
-      const { data, error } = await supabase.functions.invoke("send-contact-email", {
-        body: formData,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error || "Failed to send message");
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -74,7 +78,6 @@ export const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
 
   const contactInfo = [
     { icon: Mail, label: "Email", value: "royokola3@gmail.com", href: "mailto:royokola3@gmail.com" },
@@ -111,7 +114,7 @@ export const Contact = () => {
           >
             <div className="glass-card rounded-2xl p-8">
               <h3 className="text-2xl font-display font-bold mb-6">Contact Information</h3>
-              
+
               <div className="space-y-4">
                 {contactInfo.map((item, index) => (
                   <motion.a
@@ -136,7 +139,6 @@ export const Contact = () => {
                 ))}
               </div>
             </div>
-
 
             {/* Quick actions */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -174,7 +176,9 @@ export const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
+                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${
+                    fieldErrors.name ? 'border-red-500' : 'border-input'
+                  } focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                   placeholder="Your name"
                 />
                 {fieldErrors.name && <p className="text-red-500 text-sm mt-1">{fieldErrors.name}</p>}
@@ -187,13 +191,15 @@ export const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.email ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
+                  className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${
+                    fieldErrors.email ? 'border-red-500' : 'border-input'
+                  } focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                   placeholder="your@email.com"
                 />
                 {fieldErrors.email && <p className="text-red-500 text-sm mt-1">{fieldErrors.email}</p>}
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject</label>
               <input
@@ -202,7 +208,9 @@ export const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.subject ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
+                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${
+                  fieldErrors.subject ? 'border-red-500' : 'border-input'
+                } focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors`}
                 placeholder="What's this about?"
               />
               {fieldErrors.subject && <p className="text-red-500 text-sm mt-1">{fieldErrors.subject}</p>}
@@ -216,7 +224,9 @@ export const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${fieldErrors.message ? 'border-red-500' : 'border-input'} focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors resize-none`}
+                className={`w-full px-4 py-3 rounded-xl text-base bg-black/5 dark:bg-white/5 border ${
+                  fieldErrors.message ? 'border-red-500' : 'border-input'
+                } focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors resize-none`}
                 placeholder="Tell me about your project..."
               />
               {fieldErrors.message && <p className="text-red-500 text-sm mt-1">{fieldErrors.message}</p>}

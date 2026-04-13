@@ -16,7 +16,6 @@ export const NewsletterForm = () => {
     setStatus("loading");
     setErrorMessage("");
 
-    // Validate email
     const result = emailSchema.safeParse(email);
     if (!result.success) {
       setStatus("error");
@@ -25,24 +24,31 @@ export const NewsletterForm = () => {
     }
 
     try {
-      // Subscribe to newsletter
-      const { error } = await supabase.from("newsletter_subscribers").insert({ email });
+      // Store subscriber in Supabase (keep existing behaviour)
+      const { error: dbError } = await supabase
+        .from("newsletter_subscribers")
+        .insert({ email });
 
-      if (error) {
-        if (error.code === "23505") {
-          // Unique constraint violation
+      if (dbError) {
+        if (dbError.code === "23505") {
           setStatus("error");
           setErrorMessage("This email is already subscribed!");
-        } else {
-          throw error;
+          return;
         }
-        return;
+        throw dbError;
       }
 
-      // Send welcome email via edge function
-      await supabase.functions.invoke("send-newsletter-welcome", {
-        body: { email },
+      // Send welcome email via Resend API route
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
+
+      if (!response.ok) {
+        // Welcome email failed — but subscriber is already stored, so still succeed UX-wise
+        console.warn("Welcome email failed — subscriber stored but email not sent");
+      }
 
       setStatus("success");
       setEmail("");
