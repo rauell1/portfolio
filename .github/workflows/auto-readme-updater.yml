@@ -158,8 +158,6 @@ jobs:
           set -euo pipefail
           if git diff --quiet README.md; then
             echo "README unchanged."
-            echo "## README auto-update" >> $GITHUB_STEP_SUMMARY
-            echo "Result: no README.md changes required." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
           git add README.md
@@ -167,8 +165,6 @@ jobs:
           git pull --rebase origin main
           git push origin main
           echo "README updated and pushed."
-          echo "## README auto-update" >> $GITHUB_STEP_SUMMARY
-          echo "Result: updated README.md snapshot block." >> $GITHUB_STEP_SUMMARY
       - name: Job summary
         if: always()
         run: |
