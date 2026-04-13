@@ -15,4 +15,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: https://royokola.com/sitemap.xml
+Sitemap: https://roy-otieno.vercel.app/sitemap.xml

@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Load Satoshi from Fontshare — less overexposed than Space Grotesk, fits clean-tech brand */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap');
+/* Keep Inter as a body fallback — widely available and highly legible */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -147,24 +150,23 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    /* Satoshi as primary, Inter as fallback, then system sans-serif */
+    font-family: 'Satoshi', 'Inter', sans-serif;
     /* Hint to the browser that touch panning is only vertical, allowing it to
        optimise touch-scroll compositing on mobile (no need to wait for JS). */
     touch-action: pan-y;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+    /* Satoshi has excellent weight contrast for display headings */
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-weight: 700;
   }
 
-  /* Justify paragraph body text app-wide (main, article, and content-body wrappers) */
-  main p,
-  article p,
-  .content-body p,
-  .content-body .leading-relaxed.whitespace-pre-line {
-    text-align: justify;
-    text-justify: inter-word;
-  }
+  /* Removed: text-align: justify on paragraphs.
+     Justified text creates uneven word spacing ("rivers") that hurts
+     readability, especially on narrow mobile viewports. Left-aligned
+     prose is the W3C and typographic best practice for the web. */
 }
 
 @layer components {
@@ -252,7 +254,7 @@
 
   .section-heading {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold mb-4;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Satoshi', 'Inter', sans-serif;
   }
 }
 
