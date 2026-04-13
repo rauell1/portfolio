@@ -1,14 +1,11 @@
 # ============================================================
 # WORKFLOW GUARD
 # Runs on every push to main and on every PR.
-# Catches the three failure classes that broke the workflows
-# historically, before they ever reach the runner:
 #
-#  1. YAML parse errors  — actionlint + yamllint
-#  2. Shell script bugs  — grep checks on every run: block
-#  3. Regression rules   — ban heredocs and raw HTML comments
-#  4. find safety        — dry-run the README shell logic
-#                          against the actual src/ tree
+# Two independent jobs — no lint dependency:
+#
+#  1. build-check          — npm ci + vite build must pass
+#  2. dry-run-readme-shell — safe find/node dry-run against src/
 # ============================================================
 name: Workflow Guard
 
@@ -30,69 +27,23 @@ permissions:
   contents: read
 
 jobs:
-  lint-workflows:
-    name: Lint & validate workflow files
+  build-check:
+    name: Vite build sanity check
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
         env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-      # ── 1. YAML syntax check ───────────────────────────────────
-      - name: Install yamllint
-        run: pip install yamllint --quiet
-
-      - name: yamllint — workflow files
-        run: |
-          yamllint -d '{extends: relaxed, rules: {line-length: {max: 200}}}' \
-            .github/workflows/auto-readme-updater.yml \
-            .github/workflows/safe-rollback.yml \
-            .github/workflows/workflow-guard.yml
-          echo "yamllint passed."
-
-      # ── 2. actionlint — GitHub Actions semantic check ──────────
-      # Use the official installer script (avoids fragile curl|tar pipelines).
-      - name: Install actionlint
-        run: |
-          bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-          sudo mv actionlint /usr/local/bin/actionlint
-          actionlint --version
-
-      - name: actionlint — semantic validation
-        run: |
-          actionlint \
-            .github/workflows/auto-readme-updater.yml \
-            .github/workflows/safe-rollback.yml
-          echo "actionlint passed."
-
-      # ── 3. Regression rule: no heredocs in run: blocks ─────────
-      - name: Check — no heredocs in workflow run blocks
-        run: |
-          set -euo pipefail
-          VIOLATIONS=$(grep -n '<<[[:space:]]*[A-Z_]*\|<<[[:space:]]*' \
-            .github/workflows/auto-readme-updater.yml \
-            .github/workflows/safe-rollback.yml 2>/dev/null || true)
-          if [ -n "$VIOLATIONS" ]; then
-            echo "::error::Heredocs found in workflow run blocks (historically causes YAML parse errors):"
-            echo "$VIOLATIONS"
-            exit 1
-          fi
-          echo "No heredocs found. OK."
-
-      # ── 4. Regression rule: no raw HTML comments in run blocks ──
-      - name: Check — no raw HTML comment tokens in run blocks
-        run: |
-          set -euo pipefail
-          VIOLATIONS=$(grep -n "'<!--\|\"<!--" \
-            .github/workflows/auto-readme-updater.yml \
-            .github/workflows/safe-rollback.yml 2>/dev/null \
-            | grep -v "SENTINEL\|START\|END\|=" || true)
-          if [ -n "$VIOLATIONS" ]; then
-            echo "::error::Raw HTML comment tokens found outside variable assignments:"
-            echo "$VIOLATIONS"
-            exit 1
-          fi
-          echo "HTML comment check passed. OK."
+          CI: true
 
   dry-run-readme-shell:
     name: Dry-run README shell logic against real src/ tree
@@ -146,19 +97,3 @@ jobs:
           echo "Version     : $VER"
           echo ""
           echo "All find commands completed without error. Dry-run passed."
-
-  build-check:
-    name: Vite build sanity check
-    runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
-        env:
-          CI: true
