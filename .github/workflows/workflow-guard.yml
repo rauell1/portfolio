@@ -12,7 +12,7 @@
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
 #   - actions/checkout@v4
-#   - actions/setup-node@v4  (node-version: '24')
+#   - actions/setup-node@v6  (node-version: '24')
 #
 # Review and update these pins when:
 #   1. Node.js 24 exits Active LTS (~Oct 2027)
@@ -72,7 +72,7 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
           cache: 'npm'
@@ -95,7 +95,7 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
           cache: 'npm'
@@ -117,7 +117,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
 
