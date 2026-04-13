@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `83a0af1` — fix: repo hygiene — remove .env.local, package-lock.json, move CODEBASE_MAP to docs/ |
+| **Last commit** | `38e0736` — fix: repair safe-rollback and codebase-map workflows |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 23:25 UTC |
+| **Commit date** | 2026-04-13 23:32 UTC |
 | **Branch** | `main` |
-| **Total commits** | 161 |
+| **Total commits** | 163 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 97 |
 | **CSS files** | 1 |
