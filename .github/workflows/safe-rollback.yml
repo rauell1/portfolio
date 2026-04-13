@@ -38,7 +38,9 @@ name: Safe Rollback
 on:
   push:
     branches: [main]
-    paths-ignore: ['README.md']
+    paths-ignore:
+      - 'README.md'          # auto-readme-updater commits this
+      - 'package-lock.json'  # sync-lockfile commits this; no build gate needed
   workflow_dispatch:
     inputs:
       target_sha:

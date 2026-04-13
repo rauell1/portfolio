@@ -51,9 +51,10 @@ on:
       - 'tsconfig*.json'
       - 'vite.config.ts'
 
-# Cancel superseded runs on the same branch/PR to save minutes.
+# Use event name in the group key so a push to main cannot cancel
+# an in-progress PR check running the same workflow concurrently.
 concurrency:
-  group: workflow-guard-${{ github.ref }}
+  group: workflow-guard-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
