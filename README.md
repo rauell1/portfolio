@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `e96ba78` — ci: add workflow-guard, branch protection rules, and PR template |
+| **Last commit** | `7647c69` — fix(ci): use actionlint installer script, bump Node to 24, fix tar failure |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:13 UTC |
+| **Commit date** | 2026-04-13 20:16 UTC |
 | **Branch** | `main` |
-| **Total commits** | 122 |
+| **Total commits** | 124 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
