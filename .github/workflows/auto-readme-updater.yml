@@ -162,8 +162,15 @@ jobs:
           fi
           git add README.md
           git commit -m "docs(auto): update README snapshot [skip ci]"
-          git pull --rebase origin main
-          git push origin main
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "::error::Failed to push README update after 3 attempts."
+              exit 1
+            fi
+          done
           echo "README updated and pushed."
       - name: Job summary
         if: always()

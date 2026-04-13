@@ -70,8 +70,15 @@ jobs:
 
           git add bun.lock
           git commit -m "chore(deps): sync bun.lock [skip ci]"
-          git pull --rebase origin main
-          git push origin main
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "::error::Failed to push bun.lock update after 3 attempts."
+              exit 1
+            fi
+          done
           echo "bun.lock updated and pushed."
       - name: Job summary
         if: always()

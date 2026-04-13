@@ -120,6 +120,13 @@ export const Navbar = () => {
               )}
               {isAdmin && (
                 <li>
+                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                    Logged in as {user?.email}
+                  </span>
+                </li>
+              )}
+              {isAdmin && (
+                <li>
                   <button
                     onClick={handleLogout}
                     className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group flex items-center gap-1"
@@ -159,6 +166,13 @@ export const Navbar = () => {
               className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
             >
               <div className="px-6 py-4 space-y-2">
+                {isAdmin && (
+                  <div className="px-4 py-2">
+                    <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                      Logged in as {user?.email}
+                    </span>
+                  </div>
+                )}
                 {navItems.map((item) => (
                   <button
                     key={item.href}

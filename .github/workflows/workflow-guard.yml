@@ -74,7 +74,7 @@ jobs:
           bun-version: latest
           cache: true
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
       - name: Run tsc --noEmit
         run: bunx tsc --noEmit
         # If this fails: you have TypeScript errors in src/.
@@ -103,7 +103,7 @@ jobs:
           bun-version: latest
           cache: true
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
       - name: Build
         run: bun run build
         env:

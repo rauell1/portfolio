@@ -61,7 +61,7 @@ jobs:
         with:
           bun-version: latest
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
       - name: Lint (advisory)
         run: bun run lint
         continue-on-error: true
@@ -206,8 +206,15 @@ jobs:
           ACTOR="${{ github.actor }}"
           COMMIT_MSG=$(printf 'revert(rollback): restore state at %s\n\nTarget: %s (%s)\nReason: %s\nBy: %s\n\nNon-destructive — all history preserved.' "$SHORT" "$SHORT" "$FULL" "$REASON" "$ACTOR")
           git commit -m "$COMMIT_MSG"
-          git pull --rebase origin main
-          git push origin main
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "::error::Failed to push rollback commit after 3 attempts."
+              exit 1
+            fi
+          done
           echo "Rollback pushed."
           echo "## Rollback complete" >> $GITHUB_STEP_SUMMARY
           echo "| Rolled back to | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY

@@ -63,8 +63,15 @@ jobs:
           else
             COMMIT_SHA=$(git rev-parse --short HEAD)
             git commit -m "docs: auto-update CODEBASE_MAP.md [${COMMIT_SHA}] [skip ci]"
-            git pull --rebase origin main
-            git push
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push origin main; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::Failed to push CODEBASE_MAP update after 3 attempts."
+                exit 1
+              fi
+            done
            fi
       - name: Job summary
         if: always()
