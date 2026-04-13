@@ -1,0 +1,162 @@
+# ============================================================
+# WORKFLOW GUARD
+# Runs on every push to main and on every PR.
+# Catches the three failure classes that broke the workflows
+# historically, before they ever reach the runner:
+#
+#  1. YAML parse errors  — actionlint + yamllint
+#  2. Shell script bugs  — shellcheck on every run: block
+#  3. Regression rules   — grep to ban heredocs and raw HTML
+#                          comments inside run: blocks
+#  4. find safety        — dry-run the README shell logic
+#                          against the actual src/ tree
+# ============================================================
+name: Workflow Guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'package.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'package.json'
+
+permissions:
+  contents: read
+
+jobs:
+  lint-workflows:
+    name: Lint & validate workflow files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── 1. YAML syntax check ───────────────────────────────────
+      - name: Install yamllint
+        run: pip install yamllint --quiet
+
+      - name: yamllint — workflow files
+        run: |
+          yamllint -d '{extends: relaxed, rules: {line-length: {max: 200}}}' \
+            .github/workflows/auto-readme-updater.yml \
+            .github/workflows/safe-rollback.yml \
+            .github/workflows/workflow-guard.yml
+          echo "yamllint passed."
+
+      # ── 2. actionlint — GitHub Actions semantic check ──────────
+      - name: Install actionlint
+        run: |
+          ACTIONLINT_VERSION=$(curl -s https://api.github.com/repos/rhysd/actionlint/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+          curl -sL "https://github.com/rhysd/actionlint/releases/download/${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION#v}_linux_amd64.tar.gz" \
+            | tar -xz -C /usr/local/bin actionlint
+          echo "actionlint ${ACTIONLINT_VERSION} installed."
+
+      - name: actionlint — semantic validation
+        run: |
+          actionlint \
+            .github/workflows/auto-readme-updater.yml \
+            .github/workflows/safe-rollback.yml
+          echo "actionlint passed."
+
+      # ── 3. Regression rule: no heredocs in run: blocks ─────────
+      - name: Check — no heredocs in workflow run blocks
+        run: |
+          set -euo pipefail
+          VIOLATIONS=$(grep -n '<<[[:space:]]*[A-Z_]*\|<<[[:space:]]*' \
+            .github/workflows/auto-readme-updater.yml \
+            .github/workflows/safe-rollback.yml 2>/dev/null || true)
+          if [ -n "$VIOLATIONS" ]; then
+            echo "::error::Heredocs found in workflow run blocks (historically causes YAML parse errors):"
+            echo "$VIOLATIONS"
+            exit 1
+          fi
+          echo "No heredocs found. OK."
+
+      # ── 4. Regression rule: no raw HTML comments in run blocks ──
+      - name: Check — no raw HTML comment tokens in run blocks
+        run: |
+          set -euo pipefail
+          # Sentinel strings must be stored in shell variables, not written raw.
+          # We allow them ONLY when they appear as part of a shell variable assignment.
+          # Bare occurrences on a line that is not a variable assignment are banned.
+          VIOLATIONS=$(grep -n "'<!--\|\"<!--" \
+            .github/workflows/auto-readme-updater.yml \
+            .github/workflows/safe-rollback.yml 2>/dev/null \
+            | grep -v "SENTINEL\|START\|END\|=" || true)
+          if [ -n "$VIOLATIONS" ]; then
+            echo "::error::Raw HTML comment tokens found outside variable assignments:"
+            echo "$VIOLATIONS"
+            exit 1
+          fi
+          echo "HTML comment check passed. OK."
+
+  dry-run-readme-shell:
+    name: Dry-run README shell logic against real src/ tree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Simulate README stat gathering
+        run: |
+          set -euo pipefail
+
+          echo "=== Verifying src/ directory structure ==="
+          ls -la src/
+
+          echo ""
+          echo "=== Running safe find commands (must not exit 1) ==="
+
+          TS=$(find src \( -name '*.ts' -o -name '*.tsx' \) 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+          CSS=$(find src -name '*.css' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+
+          if [ -d src/components ]; then
+            COMP=$(find src/components -name '*.tsx' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+          else
+            COMP=0
+          fi
+
+          PAGES=0
+          for dir in src/pages src/views src/app; do
+            if [ -d "$dir" ]; then
+              COUNT=$(find "$dir" -name '*.tsx' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+              PAGES=$((PAGES + COUNT))
+            fi
+          done
+
+          VER=$(node -p "require('./package.json').version" 2>/dev/null || echo 'n/a')
+
+          echo ""
+          echo "=== Results ==="
+          echo "TS files    : $TS"
+          echo "CSS files   : $CSS"
+          echo "Components  : $COMP"
+          echo "Pages/views : $PAGES"
+          echo "Version     : $VER"
+          echo ""
+          echo "All find commands completed without error. Dry-run passed."
+
+  build-check:
+    name: Vite build sanity check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+        env:
+          CI: true

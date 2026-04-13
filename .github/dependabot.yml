@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # Keep GitHub Actions up to date automatically
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "ci(deps)"
+    labels:
+      - "dependencies"
+      - "ci"
+
+  # Keep npm dependencies up to date
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"
+    ignore:
+      # Only patch/minor for production deps — avoid major breaking changes
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

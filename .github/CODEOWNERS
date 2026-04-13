@@ -1,0 +1,4 @@
+# Workflow files require an explicit review before merge
+# to prevent accidental breakage of CI.
+.github/workflows/** @rauell1
+.github/dependabot.yml @rauell1
