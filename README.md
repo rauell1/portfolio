@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `22978b4` — fix(deps): remove @vercel/node from dependencies — it is a Vercel build runtime, not a project dep |
+| **Last commit** | `f8a73bf` — ci: harden all four workflows — inter-workflow safety, concurrency, peer-deps, badges |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:42 UTC |
+| **Commit date** | 2026-04-13 21:14 UTC |
 | **Branch** | `main` |
-| **Total commits** | 132 |
+| **Total commits** | 135 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
@@ -143,5 +143,5 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 ## 🤗 Workflow Status
 
-![README](https://github.com/rauell1/portfolio/actions/workflows/auto-readme-updater.yml/badge.svg)  ![Rollback](https://github.com/rauell1/portfolio/actions/workflows/safe-rollback.yml/badge.svg)  ![Guard](https://github.com/rauell1/portfolio/actions/workflows/workflow-guard.yml/badge.svg)
+![README](https://github.com/rauell1/portfolio/actions/workflows/auto-readme-updater.yml/badge.svg)  ![Rollback](https://github.com/rauell1/portfolio/actions/workflows/safe-rollback.yml/badge.svg)  ![Guard](https://github.com/rauell1/portfolio/actions/workflows/workflow-guard.yml/badge.svg)  ![Sync](https://github.com/rauell1/portfolio/actions/workflows/sync-lockfile.yml/badge.svg)
 <!-- AUTO-UPDATED:END -->
