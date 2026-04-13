@@ -3,19 +3,35 @@ import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
 // These are the public anon (publishable) keys – safe for client-side code.
-// Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in your .env file.
+// Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in your .env file
+// (and in Vercel → Project Settings → Environment Variables for production).
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+
+// Detect whether localStorage is available (blocked in sandboxed iframes
+// and some private-browsing modes), and fall back to in-memory storage so
+// the Supabase client still initialises and signIn works correctly.
+function isLocalStorageAvailable(): boolean {
+  try {
+    const key = '__supabase_test__';
+    localStorage.setItem(key, '1');
+    localStorage.removeItem(key);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase: ReturnType<typeof createClient<Database>> | null = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY
-  ? createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-      auth: {
-        storage: localStorage,
-        persistSession: true,
-        autoRefreshToken: true,
-      }
-    })
-  : null;
+export const supabase: ReturnType<typeof createClient<Database>> | null =
+  SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY
+    ? createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+        auth: {
+          storage: isLocalStorageAvailable() ? localStorage : undefined,
+          persistSession: true,
+          autoRefreshToken: true,
+        },
+      })
+    : null;
