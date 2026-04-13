@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-13T19:27:51.316Z**
+> Last updated: **2026-04-13T19:31:07.790Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -11,6 +11,7 @@
 | File | Purpose |
 |---|---|
 | `.env.example` | Env var template — Supabase URL/key, EmailJS keys, reCAPTCHA |
+| `.env.local` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `.gitignore` | Ignores node_modules, dist, .env, build artifacts |
 | `README.md` | Project overview, setup instructions, deployment guide |
 | `components.json` | shadcn/ui config — component registry, aliases, style defaults |
@@ -34,6 +35,9 @@
 | `src/App.tsx` | Router root — React Router v6 routes, <ThemeProvider>, lazy page imports |
 | `src/index.css` | Global styles — CSS variables, Tailwind layers, Satoshi font import, custom animations |
 | `src/main.tsx` | React DOM root — wraps <App /> with <StrictMode> |
+| `src/utils/supabase/client.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/utils/supabase/middleware.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/utils/supabase/server.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/vite-env.d.ts` | Vite env type declarations |
 
 ---
