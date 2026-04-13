@@ -156,13 +156,10 @@ jobs:
               exit 1
             }
           done <<< "$COMMITS"
-          git commit -m "revert(rollback): restore state at ${SHORT}
-
-Target  : ${SHORT} (${FULL})
-Reason  : ${{ github.event.inputs.reason }}
-By      : ${{ github.actor }}
-
-Non-destructive — all history preserved."
+          REASON="${{ github.event.inputs.reason }}"
+          ACTOR="${{ github.actor }}"
+          COMMIT_MSG=$(printf 'revert(rollback): restore state at %s\n\nTarget: %s (%s)\nReason: %s\nBy: %s\n\nNon-destructive - all history preserved.' "$SHORT" "$SHORT" "$FULL" "$REASON" "$ACTOR")
+          git commit -m "$COMMIT_MSG"
           git pull --rebase origin main
           git push origin main
           echo "Rollback pushed."

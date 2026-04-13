@@ -1,1 +1,128 @@
-bmFtZTogQXV0byBSRUFETUUgVXBkYXRlcgoKb246CiAgcHVzaDoKICAgIGJyYW5jaGVzOiBbbWFpbl0KICAgIHBhdGhzLWlnbm9yZTogWydSRUFETUUubWQnXQogIHdvcmtmbG93X2Rpc3BhdGNoOgoKcGVybWlzc2lvbnM6CiAgY29udGVudHM6IHdyaXRlCgpqb2JzOgogIHVwZGF0ZS1yZWFkbWU6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY0CiAgICAgICAgd2l0aDoKICAgICAgICAgIGZldGNoLWRlcHRoOiAwCiAgICAgICAgICB0b2tlbjogJHt7IHNlY3JldHMuR0lUSFVCX1RPS0VOIH19CgogICAgICAtIHVzZXM6IGFjdGlvbnMvc2V0dXAtbm9kZUB2NAogICAgICAgIHdpdGg6CiAgICAgICAgICBub2RlLXZlcnNpb246ICcyMCcKCiAgICAgIC0gbmFtZTogQ29uZmlndXJlIGdpdAogICAgICAgIHJ1bjogfAogICAgICAgICAgZ2l0IGNvbmZpZyB1c2VyLm5hbWUgICJnaXRodWItYWN0aW9uc1tib3RdIgogICAgICAgICAgZ2l0IGNvbmZpZyB1c2VyLmVtYWlsICI0MTg5ODI4MitnbG1odWItYWN0aW9uc1tib3RdQHVzZXJzLm5vcmVwbHkuZ2l0aHViLmNvbSIKCiAgICAgIC0gbmFtZTogQnVpbGQgYW5kIHNwbGljZSBSRUFETUUgYmxvY2sKICAgICAgICBydW46IHwKICAgICAgICAgIHNldCAtZXVvIHBpcGVmYWlsCgogICAgICAgICAgU0hBPSQoZ2l0IHJldi1wYXJzZSAtLXNob3J0IEhFQUQpCiAgICAgICAgICBNU0c9JChnaXQgbG9nIC0xIC0tcHJldHR5PWZvcm1hdDoiJXMiKQogICAgICAgICAgREFURT0kKGdpdCBsb2cgLTEgLS1wcmV0dHk9Zm9ybWF0OiIlY2QiIC0tZGF0ZT1mb3JtYXQ6IiVZLSVtLSVkICVIOiVNIFVUQyIpCiAgICAgICAgICBBVVRIT1I9JChnaXQgbG9nIC0xIC0tcHJldHR5PWZvcm1hdDoiJWFuIikKICAgICAgICAgIFRPVEFMPSQoZ2l0IHJldi1saXN0IC0tY291bnQgSEVBRCkKICAgICAgICAgIEJSQU5DSD0kKGdpdCByZXYtcGFyc2UgLS1hYmJyZXYtcmVmIEhFQUQpCiAgICAgICAgICBWRVI9JChub2RlIC1wICJyZXF1aXJlKCcuL3BhY2thZ2UuanNvbicpLnZlcnNpb24iIDI+L2Rldi9udWxsIHx8IGVjaG8gJ24vYScpCiAgICAgICAgICBSRVBPPSJyYXVlbGwxL3BvcnRmb2xpbyIKCiAgICAgICAgICAjIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAgICAgICAgICAjIFNhZmUgZmlsZSBjb3VudHM6IHVzZSBgZmluZCBTSU5HTEVfRElSYCBwZXIgZGlyZWN0b3J5IHRoYXQgZXhpc3RzLgogICAgICAgICAgIyBgZmluZCBhIGIgY2Agd2l0aCBzZXQgLWUgZXhpdHMgMSBpZiBhbnkgb2YgYSxiLGMgYXJlIG1pc3NpbmcuCiAgICAgICAgICAjIFdlIGd1YXJkIGV2ZXJ5IGZpbmQgd2l0aCBgfHwgdHJ1ZWAgYW5kIHRlc3QgdGhlIGRpciBmaXJzdC4KICAgICAgICAgICMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCiAgICAgICAgICAjIEFsbCBUUy9UU1ggZmlsZXMgdW5kZXIgc3JjLyAoYWx3YXlzIGV4aXN0cykKICAgICAgICAgIFRTPSQoZmluZCBzcmMgXCggLW5hbWUgJyoudHMnIC1vIC1uYW1lICcqLnRzeCcgXCkgMj4vZGV2L251bGwgfCB3YyAtbCB8IHRyIC1kICcgJyB8fCBlY2hvICcwJykKCiAgICAgICAgICAjIENTUyBmaWxlcyB1bmRlciBzcmMvCiAgICAgICAgICBDU1M9JChmaW5kIHNyYyAtbmFtZSAnKi5jc3MnIDI+L2Rldi9udWxsIHwgd2MgLWwgfCB0ciAtZCAnICcgfHwgZWNobyAnMCcpCgogICAgICAgICAgIyBDb21wb25lbnRzOiBvbmx5IHNlYXJjaCBpZiB0aGUgZGlyIGV4aXN0cwogICAgICAgICAgaWYgWyAtZCBzcmMvY29tcG9uZW50cyBdOyB0aGVuCiAgICAgICAgICAgIENPTVA9JChmaW5kIHNyYy9jb21wb25lbnRzIC1uYW1lICcqLnRzeCcgMj4vZGV2L251bGwgfCB3YyAtbCB8IHRyIC1kICcgJyB8fCBlY2hvICcwJykKICAgICAgICAgIGVsc2UKICAgICAgICAgICAgQ09NUD0wCiAgICAgICAgICBmaQoKICAgICAgICAgICMgUGFnZXM6IGNoZWNrIGVhY2ggZGlyIGluZGVwZW5kZW50bHkKICAgICAgICAgIFBBR0VTPTAKICAgICAgICAgIGZvciBkaXIgaW4gc3JjL3BhZ2VzIHNyYy92aWV3cyBzcmMvYXBwOyBkbwogICAgICAgICAgICBpZiBbIC1kICIkZGlyIiBdOyB0aGVuCiAgICAgICAgICAgICAgQ09VTlQ9JChmaW5kICIkZGlyIiAtbmFtZSAnKi50c3gnIDI+L2Rldi9udWxsIHwgd2MgLWwgfCB0ciAtZCAnICcgfHwgZWNobyAnMCcpCiAgICAgICAgICAgICAgUEFHRVM9JCgoUEFHRVMgKyBDT1VOVCkpCiAgICAgICAgICAgIGZpCiAgICAgICAgICBkb25lCgogICAgICAgICAgQkxPQ0tfRklMRT0iL3RtcC9yZWFkbWVfYmxvY2subWQiCiAgICAgICAgICBybSAtZiAiJEJMT0NLX0ZJTEUiCgogICAgICAgICAgcHJpbnRmICclc1xuJyAiPCEtLSBBVVRPLVVQREFURUQ6U1RBUlQgLS0+IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiPiDimqEgKipUaGlzIHNlY3Rpb24gaXMgYXV0by1nZW5lcmF0ZWQgYnkgdGhlIFtBdXRvIFJFQURNRSBVcGRhdGVyXSguZ2l0aHViL3dvcmtmbG93cy9hdXRvLXJlYWRtZS11cGRhdGVyLnltbCkgb24gZXZlcnkgcHVzaCB0byBcYG1haW5cYC4qKiIgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIyMg8J+UiyBSZXBvIFNuYXBzaG90IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAifCBGaWVsZCB8IFZhbHVlIHwiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAifC0tLXwtLS18IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqTGFzdCBjb21taXQqKiB8IGAlc2AgXHUyMDE0ICVzIHxcbicgICAiJFNIQSIgIiRNU0ciICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqQ29tbWl0dGVkIGJ5KiogfCAlcyB8XG4nICAgICAgICAgICAgIiRBVVRIT1IiICAgICAgICAgICA+PiAiJEJMT0NLX0ZJTEUiCiAgICAgICAgICBwcmludGYgJ3wgKipDb21taXQgZGF0ZSoqIHwgJXMgfFxuJyAgICAgICAgICAgICIkREFURSIgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqQnJhbmNoKiogfCBgJXNgIHxcbicgICAgICAgICAgICAgICAiJEJSQU5DSCIgICAgICAgICAgID4+ICIkQkxPQ0tfRklMRSIKICAgICAgICAgIHByaW50ZiAnfCAqKlRvdGFsIGNvbW1pdHMqKiB8ICVzIHxcbicgICAgICAgICAiJFRPVEFMIiAgICAgICAgICAgID4+ICIkQkxPQ0tfRklMRSIKICAgICAgICAgIHByaW50ZiAnfCAqKlBhY2thZ2UgdmVyc2lvbioqIHwgYCVzYCB8XG4nICAgICAiJFZFUiIgICAgICAgICAgICAgID4+ICIkQkxPQ0tfRklMRSIKICAgICAgICAgIHByaW50ZiAnfCAqKlR5cGVTY3JpcHQgZmlsZXMqKiB8ICVzIHxcbicgICAgICIkVFMiICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqQ1NTIGZpbGVzKiogfCAlcyB8XG4nICAgICAgICAgICAgIiRDU1MiICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqUmVhY3QgY29tcG9uZW50cyoqIHwgJXMgfFxuJyAgICAgIiRDT01QIiAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICd8ICoqUGFnZXMgLyB2aWV3cyoqIHwgJXMgfFxuJyAgICAgICAiJFBBR0VTIiAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIyMg8J+klyBXb3JrZmxvdyBTdGF0dXMiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICchW1JFQURNRV0oaHR0cHM6Ly9naXRodWIuY29tLyVzL2FjdGlvbnMvd29ya2Zsb3dzL2F1dG8tcmVhZG1lLXVwZGF0ZXIueW1sL2JhZGdlLnN2ZykgICcgIiRSRVBPIiA+PiAiJEJMT0NLX0ZJTEUiCiAgICAgICAgICBwcmludGYgJyFbUm9sbGJhY2tdKGh0dHBzOi8vZ2l0aHViLmNvbS8lcy9hY3Rpb25zL3dvcmtmbG93cy9zYWZlLXJvbGxiYWNrLnltbC9iYWRnZS5zdmcpXG4nICIkUkVQTyIgPj4gIiRCTE9DS19GSUxFIgogICAgICAgICAgcHJpbnRmICclc1xuJyAiPCEtLSBBVVRPLVVQREFURUQ6RU5EIC0tPiIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA+PiAiJEJMT0NLX0ZJTEUiCgogICAgICAgICAgZWNobyAiPT09IEJsb2NrIHByZXZpZXcgPT09IgogICAgICAgICAgY2F0ICIkQkxPQ0tfRklMRSIKCiAgICAgICAgICBSRUFETUU9IlJFQURNRS5tZCIKICAgICAgICAgIGlmICEgZ3JlcCAtcUYgJzwhLS0gQVVUTy1VUERBVEVEOlNUQVJUIC0tPicgIiRSRUFETUUiOyB0aGVuCiAgICAgICAgICAgIHByaW50ZiAnXG4tLS1cblxuJyA+PiAiJFJFQURNRSIKICAgICAgICAgICAgY2F0ICIkQkxPQ0tfRklMRSIgID4+ICIkUkVBRE1FIgogICAgICAgICAgICBlY2hvICJTZW50aW5lbHMgbWlzc2luZyAtIGFwcGVuZGVkIGJsb2NrLiIKICAgICAgICAgIGVsc2UKICAgICAgICAgICAgYXdrICcKICAgICAgICAgICAgICAvPCEtLSBBVVRPLVVQREFURUQ6U1RBUlQgLS0+LyB7IHNraXA9MTsgd2hpbGUgKChnZXRsaW5lIGxpbmUgPCAiL3RtcC9yZWFkbWVfYmxvY2subWQiKSA+IDApIHByaW50IGxpbmU7IGNsb3NlKCIvdG1wL3JlYWRtZV9ibG9jay5tZCIpOyBuZXh0IH0KICAgICAgICAgICAgICAvPCEtLSBBVVRPLVVQREFURUQ6RU5EIC0tPi8gICB7IHNraXA9MDsgbmV4dCB9CiAgICAgICAgICAgICAhc2tpcCB7IHByaW50IH0KICAgICAgICAgICAgJyAiJFJFQURNRSIgPiAvdG1wL3JlYWRtZV9uZXcubWQKICAgICAgICAgICAgbXYgL3RtcC9yZWFkbWVfbmV3Lm1kICIkUkVBRE1FIgogICAgICAgICAgICBlY2hvICJTZW50aW5lbCBibG9jayByZXBsYWNlZCB2aWEgYXdrLiIKICAgICAgICAgIGZpCgogICAgICAtIG5hbWU6IENvbW1pdCBpZiBjaGFuZ2VkCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBnaXQgZGlmZiAtLXF1aWV0IFJFQURNRS5tZCAmJiB7IGVjaG8gIlJFQURNRSB1bmNoYW5nZWQuIjsgZXhpdCAwOyB9CiAgICAgICAgICBnaXQgYWRkIFJFQURNRS5tZAogICAgICAgICAgZ2l0IGNvbW1pdCAtbSAiZG9jcyhhdXRvKTogdXBkYXRlIFJFQURNRSBzbmFwc2hvdCBbc2tpcCBjaV0iCiAgICAgICAgICBnaXQgcHVsbCAtLXJlYmFzZSBvcmlnaW4gbWFpbgogICAgICAgICAgZ2l0IHB1c2ggb3JpZ2luIG1haW4KICAgICAgICAgIGVjaG8gIlJFQURNRSB1cGRhdGVkIGFuZCBwdXNoZWQuIgo=
+name: Auto README Updater
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Build and splice README block
+        run: |
+          set -euo pipefail
+
+          SHA=$(git rev-parse --short HEAD)
+          MSG=$(git log -1 --pretty=format:"%s")
+          DATE=$(git log -1 --pretty=format:"%cd" --date=format:"%Y-%m-%d %H:%M UTC")
+          AUTHOR=$(git log -1 --pretty=format:"%an")
+          TOTAL=$(git rev-list --count HEAD)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          VER=$(node -p "require('./package.json').version" 2>/dev/null || echo 'n/a')
+          REPO="rauell1/portfolio"
+
+          # Sentinel strings stored in variables — never written raw in the run block
+          # to avoid any YAML scanner issues with angle-bracket tokens.
+          SENTINEL_START='<!-- AUTO-UPDATED:START -->'
+          SENTINEL_END='<!-- AUTO-UPDATED:END -->'
+
+          # -----------------------------------------------------------------
+          # Safe file counts: guard every find with a directory existence check.
+          # `find a b c` with set -e exits 1 when any path is missing.
+          # Always use a single directory per find call.
+          # -----------------------------------------------------------------
+
+          # All TS/TSX files under src/ (src/ always exists)
+          TS=$(find src \( -name '*.ts' -o -name '*.tsx' \) 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+
+          # CSS files under src/
+          CSS=$(find src -name '*.css' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+
+          # Components: only search if the directory exists
+          if [ -d src/components ]; then
+            COMP=$(find src/components -name '*.tsx' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+          else
+            COMP=0
+          fi
+
+          # Pages: check each candidate directory independently
+          PAGES=0
+          for dir in src/pages src/views src/app; do
+            if [ -d "$dir" ]; then
+              COUNT=$(find "$dir" -name '*.tsx' 2>/dev/null | wc -l | tr -d ' ' || echo '0')
+              PAGES=$((PAGES + COUNT))
+            fi
+          done
+
+          BLOCK_FILE="/tmp/readme_block.md"
+          rm -f "$BLOCK_FILE"
+
+          printf '%s\n' "$SENTINEL_START"                                                                                  >> "$BLOCK_FILE"
+          printf '%s\n' "> ⚡ **This section is auto-generated by the [Auto README Updater](.github/workflows/auto-readme-updater.yml) on every push to \`main\`.**" >> "$BLOCK_FILE"
+          printf '\n'                                                                                                       >> "$BLOCK_FILE"
+          printf '%s\n' "## 🔋 Repo Snapshot"                                                                             >> "$BLOCK_FILE"
+          printf '\n'                                                                                                       >> "$BLOCK_FILE"
+          printf '%s\n' "| Field | Value |"                                                                                >> "$BLOCK_FILE"
+          printf '%s\n' "|---|---|"                                                                                         >> "$BLOCK_FILE"
+          printf '| **Last commit** | `%s` — %s |\n'   "$SHA"    "$MSG"    >> "$BLOCK_FILE"
+          printf '| **Committed by** | %s |\n'          "$AUTHOR"           >> "$BLOCK_FILE"
+          printf '| **Commit date** | %s |\n'           "$DATE"             >> "$BLOCK_FILE"
+          printf '| **Branch** | `%s` |\n'              "$BRANCH"           >> "$BLOCK_FILE"
+          printf '| **Total commits** | %s |\n'         "$TOTAL"            >> "$BLOCK_FILE"
+          printf '| **Package version** | `%s` |\n'     "$VER"              >> "$BLOCK_FILE"
+          printf '| **TypeScript files** | %s |\n'      "$TS"               >> "$BLOCK_FILE"
+          printf '| **CSS files** | %s |\n'             "$CSS"              >> "$BLOCK_FILE"
+          printf '| **React components** | %s |\n'      "$COMP"             >> "$BLOCK_FILE"
+          printf '| **Pages / views** | %s |\n'         "$PAGES"            >> "$BLOCK_FILE"
+          printf '\n'                                                                                                       >> "$BLOCK_FILE"
+          printf '%s\n' "## 🤗 Workflow Status"                                                                           >> "$BLOCK_FILE"
+          printf '\n'                                                                                                       >> "$BLOCK_FILE"
+          printf '![README](https://github.com/%s/actions/workflows/auto-readme-updater.yml/badge.svg)  ' "$REPO"         >> "$BLOCK_FILE"
+          printf '![Rollback](https://github.com/%s/actions/workflows/safe-rollback.yml/badge.svg)\n'    "$REPO"          >> "$BLOCK_FILE"
+          printf '%s\n' "$SENTINEL_END"                                                                                    >> "$BLOCK_FILE"
+
+          echo "=== Block preview ==="
+          cat "$BLOCK_FILE"
+
+          README="README.md"
+          if ! grep -qF "$SENTINEL_START" "$README"; then
+            printf '\n---\n\n' >> "$README"
+            cat "$BLOCK_FILE" >> "$README"
+            echo "Sentinels missing — appended block."
+          else
+            awk -v block="$BLOCK_FILE" -v start="$SENTINEL_START" -v end="$SENTINEL_END" '
+              $0 == start { skip=1; while ((getline line < block) > 0) print line; close(block); next }
+              $0 == end   { skip=0; next }
+              !skip        { print }
+            ' "$README" > /tmp/readme_new.md
+            mv /tmp/readme_new.md "$README"
+            echo "Sentinel block replaced via awk."
+          fi
+
+      - name: Commit if changed
+        run: |
+          git diff --quiet README.md && { echo "README unchanged."; exit 0; }
+          git add README.md
+          git commit -m "docs(auto): update README snapshot [skip ci]"
+          git pull --rebase origin main
+          git push origin main
+          echo "README updated and pushed."
