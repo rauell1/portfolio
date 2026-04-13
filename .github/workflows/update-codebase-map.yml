@@ -1,0 +1,48 @@
+name: Update Codebase Map
+
+on:
+  push:
+    branches:
+      - main
+    # Only run when source files actually change — skip if only CODEBASE_MAP.md changed
+    paths-ignore:
+      - 'CODEBASE_MAP.md'
+      - '.github/workflows/update-codebase-map.yml'
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-map:
+    name: Regenerate CODEBASE_MAP.md
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate CODEBASE_MAP.md
+        run: node .github/scripts/generate-codebase-map.mjs
+
+      - name: Commit updated map (if changed)
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add CODEBASE_MAP.md
+          # Only commit if there are actual changes
+          if git diff --cached --quiet; then
+            echo "No changes to CODEBASE_MAP.md — skipping commit."
+          else
+            COMMIT_SHA=$(git rev-parse --short HEAD)
+            git commit -m "docs: auto-update CODEBASE_MAP.md [${COMMIT_SHA}] [skip ci]"
+            git push
+          fi
