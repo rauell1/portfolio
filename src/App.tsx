@@ -7,6 +7,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { isAdminEmail } from "./lib/config";
 import { Component, ReactNode, lazy, Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 
 // Lazy-load non-home pages to reduce initial bundle size
@@ -99,6 +100,7 @@ const App = () => (
                 </Routes>
               </Suspense>
             </BrowserRouter>
+            <Analytics />
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>
