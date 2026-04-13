@@ -1,27 +1,32 @@
 /**
- * Smoothly scrolls to an element.
+ * Smoothly scrolls to an element, accounting for a sticky header offset.
  *
- * Uses the native `scrollIntoView({ behavior: "smooth" })` when the browser
- * supports the `scrollBehavior` CSS property (all modern browsers including
- * Chrome, Firefox, Edge, and iOS Safari ≥ 15.4).
+ * Uses native `scrollIntoView` when the browser supports `scrollBehavior`
+ * (all modern browsers including Chrome, Firefox, Edge, and iOS Safari ≥ 15.4).
  *
  * Falls back to a manual eased `requestAnimationFrame` loop on older browsers
- * (e.g. iOS Safari < 15.4) so scrolling is never instant-jump.
+ * so scrolling is never an instant jump.
+ *
+ * @param element - The target DOM element to scroll to.
+ * @param headerOffset - Height in px of any sticky header to offset by. Default 80.
  */
-export function smoothScrollTo(element: Element): void {
+export function smoothScrollTo(element: Element, headerOffset = 80): void {
+  const targetY =
+    element.getBoundingClientRect().top + window.scrollY - headerOffset;
+
   if ("scrollBehavior" in document.documentElement.style) {
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: targetY, behavior: "smooth" });
     return;
   }
 
   // Polyfill: manual eased scroll for browsers without scrollBehavior support
-  const targetY =
-    element.getBoundingClientRect().top + window.scrollY;
   const startY = window.scrollY;
   const distance = targetY - startY;
+
+  // Guard: if already at target, do nothing (avoids divide-by-zero in duration calc)
+  if (distance === 0) return;
+
   // Duration scales with distance but is capped at 800 ms to avoid sluggishness.
-  // The factor 0.5 maps ~1000 px of scroll distance to ~500 ms, which feels
-  // natural on most screens without being too slow for short hops.
   const SCROLL_SPEED_FACTOR = 0.5;
   const duration = Math.min(Math.abs(distance) * SCROLL_SPEED_FACTOR, 800);
   let startTime: number | null = null;

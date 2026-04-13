@@ -63,7 +63,7 @@ export const Testimonials = () => {
   return (
     <section id="testimonials" className="py-32 px-6 relative" ref={ref}>
       {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
@@ -94,29 +94,31 @@ export const Testimonials = () => {
         >
           <div className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
             {/* Quote icon */}
-            <div className="absolute top-6 right-6 opacity-10">
+            <div className="absolute top-6 right-6 opacity-10" aria-hidden="true">
               <Quote className="w-24 h-24 text-primary" />
             </div>
 
             {/* Navigation */}
             <div className="flex justify-between items-start mb-8">
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1" aria-label={`Rated ${testimonials[currentIndex].rating} out of 5 stars`}>
                 {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  <Star key={i} className="w-5 h-5 fill-primary text-primary" aria-hidden="true" />
                 ))}
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => navigate("prev")}
+                  aria-label="Previous testimonial"
                   className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-5 h-5" aria-hidden="true" />
                 </button>
                 <button
                   onClick={() => navigate("next")}
+                  aria-label="Next testimonial"
                   className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -134,7 +136,10 @@ export const Testimonials = () => {
               </blockquote>
 
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-display font-bold text-lg">
+                <div
+                  className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-display font-bold text-lg"
+                  aria-hidden="true"
+                >
                   {testimonials[currentIndex].name.split(" ").map(n => n[0]).join("")}
                 </div>
                 <div>
@@ -147,15 +152,18 @@ export const Testimonials = () => {
             </motion.div>
 
             {/* Dots indicator */}
-            <div className="flex justify-center gap-2 mt-8">
-              {testimonials.map((_, index) => (
+            <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Testimonial navigation">
+              {testimonials.map((t, index) => (
                 <button
                   key={index}
+                  role="tab"
+                  aria-selected={index === currentIndex}
+                  aria-label={`Go to testimonial from ${t.name}`}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
+                  className={`h-2 rounded-full transition-all ${
                     index === currentIndex
                       ? "bg-primary w-6"
-                      : "bg-black/10 dark:bg-white/20 hover:bg-black/20 dark:hover:bg-white/40"
+                      : "w-2 bg-black/10 dark:bg-white/20 hover:bg-black/20 dark:hover:bg-white/40"
                   }`}
                 />
               ))}
@@ -175,13 +183,25 @@ export const Testimonials = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                 onClick={() => setCurrentIndex(testimonials.findIndex(t => t.id === testimonial.id))}
-                className="glass-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setCurrentIndex(testimonials.findIndex(t => t.id === testimonial.id));
+                  }
+                }}
+                aria-label={`Read full testimonial from ${testimonial.name}`}
+                className="glass-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
                 <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/60 to-primary/30 flex items-center justify-center text-white font-medium text-sm">
+                  <div
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/60 to-primary/30 flex items-center justify-center text-white font-medium text-sm"
+                    aria-hidden="true"
+                  >
                     {testimonial.name.split(" ").map(n => n[0]).join("")}
                   </div>
                   <div>
