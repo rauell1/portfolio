@@ -121,6 +121,9 @@
     /* Prevent elastic over-scroll bounce that can make the page feel laggy on
        mobile (especially on Android). `contain` still allows pull-to-refresh. */
     overscroll-behavior-y: contain;
+    /* FIX: Prevent text size inflation on iOS after orientation change */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   html.light {
@@ -155,18 +158,28 @@
     /* Hint to the browser that touch panning is only vertical, allowing it to
        optimise touch-scroll compositing on mobile (no need to wait for JS). */
     touch-action: pan-y;
+    /* FIX: prevent horizontal overflow caused by full-bleed sections on narrow screens */
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     /* Satoshi has excellent weight contrast for display headings */
     font-family: 'Satoshi', 'Inter', sans-serif;
     font-weight: 700;
+    /* FIX: prevent long heading words from overflowing on small screens */
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
-  /* Removed: text-align: justify on paragraphs.
-     Justified text creates uneven word spacing ("rivers") that hurts
-     readability, especially on narrow mobile viewports. Left-aligned
-     prose is the W3C and typographic best practice for the web. */
+  /* FIX: Remove tap highlight flash on mobile — replaced by explicit :active states */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* FIX: Ensure images never cause horizontal overflow */
+  img, video, canvas, svg {
+    max-width: 100%;
+  }
 }
 
 @layer components {
@@ -191,6 +204,10 @@
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(197 68% 44%) 0%, hsl(197 100% 70%) 100%);
+    /* FIX: prevent gradient-text from being clipped on the block axis (common in Safari) */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-bottom: 0.05em;
   }
 
   .light .gradient-text,
@@ -230,7 +247,9 @@
   .btn-glow {
     @apply relative overflow-hidden;
     box-shadow: 0 0 20px hsla(197, 68%, 44%, 0.4);
-    transition: all 0.3s ease;
+    /* FIX: use 200ms — 300ms felt slow on low-end devices */
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .btn-glow:hover {
@@ -238,18 +257,33 @@
     transform: translateY(-2px);
   }
 
+  /* FIX: explicit :active state for touch devices (hover doesn't fire on mobile) */
+  .btn-glow:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 0 15px hsla(197, 68%, 44%, 0.3);
+    transition-duration: 80ms;
+  }
+
   .card-hover {
-    @apply transition-all duration-500;
+    /* FIX: use 300ms — was 500ms, feels sluggish especially on mid-range Androids */
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card-hover:hover {
-    @apply -translate-y-2;
+    transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px hsla(197, 68%, 44%, 0.2);
   }
 
   .light .card-hover:hover,
   [data-theme="light"] .card-hover:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px hsla(197, 68%, 44%, 0.15);
+  }
+
+  /* FIX: active state for touch — cards need tap feedback */
+  .card-hover:active {
+    transform: translateY(-2px) scale(0.99);
+    transition-duration: 80ms;
   }
 
   .section-heading {
@@ -350,6 +384,26 @@
 }
 
 /* ============================================================
+   FIX: skeleton shimmer — used by loading states
+   ============================================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted-foreground) / 0.15) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.25rem;
+}
+
+/* ============================================================
    Performance: respect user's reduced-motion preference.
    Disables or simplifies all animations for users who request
    reduced motion (accessibility + battery/CPU savings).
@@ -378,4 +432,38 @@
 .card-hover {
   will-change: transform;
   contain: layout style;
+}
+
+/* ============================================================
+   FIX: Disable hover effects on touch devices.
+   Hover states on mobile can get "stuck" after a tap and
+   make cards/buttons look permanently highlighted.
+   ============================================================ */
+@media (hover: none) {
+  .btn-glow:hover {
+    transform: none;
+    box-shadow: 0 0 20px hsla(197, 68%, 44%, 0.4);
+  }
+  .card-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Ensure the :active state is the feedback mechanism on touch */
+  .btn-glow:active {
+    transform: scale(0.97);
+    transition-duration: 80ms;
+  }
+  .card-hover:active {
+    transform: scale(0.98);
+    transition-duration: 80ms;
+  }
+}
+
+/* ============================================================
+   FIX: Focus-visible ring — keyboard navigation safety net
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+  border-radius: 0.25rem;
 }

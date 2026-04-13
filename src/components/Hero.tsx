@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 import { useEffect, useState } from "react";
@@ -32,6 +32,8 @@ const DEFAULT: HeroContent = {
 
 export const Hero = () => {
   const [content, setContent] = useState<HeroContent>(DEFAULT);
+  // FIX: respect prefers-reduced-motion in Framer Motion animations
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!supabase) return;
@@ -51,15 +53,27 @@ export const Hero = () => {
     if (el) smoothScrollTo(el);
   };
 
+  // FIX: short-circuit all entrance animations when reduced motion is preferred
+  const fadeUp = prefersReducedMotion
+    ? { initial: {}, animate: {}, transition: {} }
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+      };
+
   return (
-    <header className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    // FIX: use <section> with role label for correct landmark semantics
+    <section
+      aria-label="Introduction"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+    >
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         {/* Availability badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.0 }}
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-primary/10 border border-primary/30"
         >
           <span className="relative flex h-2 w-2">
@@ -69,11 +83,10 @@ export const Hero = () => {
           <span className="text-sm font-medium text-primary">{content.availability}</span>
         </motion.div>
 
-        {/* Main heading */}
+        {/* Main heading — h1 is correct here, only one per page */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight"
         >
           <span className="text-foreground">I'm </span>
@@ -82,9 +95,8 @@ export const Hero = () => {
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.35 }}
           className="text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-4 font-light"
         >
           {content.title}
@@ -92,9 +104,8 @@ export const Hero = () => {
 
         {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.45 }}
           className="text-base md:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-12"
         >
           {content.description}
@@ -102,18 +113,19 @@ export const Hero = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.55 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <button
             onClick={scrollToWork}
+            // FIX: added aria-label so the icon-bearing button has a clear accessible name
+            aria-label="View my work"
             className="group flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl btn-glow"
           >
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-5 h-5" aria-hidden="true" />
             {content.cta_primary}
-            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" aria-hidden="true" />
           </button>
           <a
             href="#contact"
@@ -130,9 +142,8 @@ export const Hero = () => {
 
         {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.65 }}
           className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 sm:mt-20 max-w-2xl mx-auto"
         >
           {content.stats.map((stat, index) => (
@@ -146,21 +157,26 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Scroll indicator - subtle chevron */}
+      {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={prefersReducedMotion ? {} : { opacity: 0 }}
         animate={{ opacity: 0.5 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer hover:opacity-100 transition-opacity"
         onClick={scrollToWork}
+        // FIX: make scroll indicator keyboard-accessible
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll to work section"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollToWork(); } }}
       >
         <motion.div
-          animate={{ y: [0, 6, 0] }}
+          animate={prefersReducedMotion ? {} : { y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ArrowDown className="w-5 h-5 text-primary/60" />
+          <ArrowDown className="w-5 h-5 text-primary/60" aria-hidden="true" />
         </motion.div>
       </motion.div>
-    </header>
+    </section>
   );
 };
