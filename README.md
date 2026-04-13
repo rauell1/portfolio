@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `f8a73bf` — ci: harden all four workflows — inter-workflow safety, concurrency, peer-deps, badges |
+| **Last commit** | `ecf8253` — feat: add CODEBASE_MAP.md and auto-update workflow |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 21:14 UTC |
+| **Commit date** | 2026-04-13 21:23 UTC |
 | **Branch** | `main` |
-| **Total commits** | 135 |
+| **Total commits** | 137 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
