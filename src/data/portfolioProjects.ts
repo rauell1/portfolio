@@ -27,7 +27,7 @@ export const portfolioProjects: Project[] = [
     longDescription:
       "Piloted 2 sites and partnered with local malls for deployment. The project integrates solar PV, EV chargers, and repurposed EV batteries to create sustainable charging infrastructure.",
     iconName: "Zap",
-    link: "https://safaricharge.com",
+    link: "https://safaricharge-website.vercel.app/",
     gradient: "from-blue-500 to-cyan-400",
     tags: ["Solar", "EV Charging", "Battery Storage"],
     isFounder: true,
