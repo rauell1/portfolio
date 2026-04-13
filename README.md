@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `1151b19` — feat: wire contact & newsletter forms to Resend via Vercel API routes |
+| **Last commit** | `643907f` — ci: harden all three workflows — Node 24, concurrency, dep advisory, TS check |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:29 UTC |
+| **Commit date** | 2026-04-13 20:39 UTC |
 | **Branch** | `main` |
-| **Total commits** | 128 |
+| **Total commits** | 130 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
@@ -143,5 +143,5 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 ## 🤗 Workflow Status
 
-![README](https://github.com/rauell1/portfolio/actions/workflows/auto-readme-updater.yml/badge.svg)  ![Rollback](https://github.com/rauell1/portfolio/actions/workflows/safe-rollback.yml/badge.svg)
+![README](https://github.com/rauell1/portfolio/actions/workflows/auto-readme-updater.yml/badge.svg)  ![Rollback](https://github.com/rauell1/portfolio/actions/workflows/safe-rollback.yml/badge.svg)  ![Guard](https://github.com/rauell1/portfolio/actions/workflows/workflow-guard.yml/badge.svg)
 <!-- AUTO-UPDATED:END -->
