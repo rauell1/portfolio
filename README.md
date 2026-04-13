@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `c1ce603` — Merge pull request #7 from rauell1/copilot/fix-ci-auto-readme-rollback-workflows |
+| **Last commit** | `e96ba78` — ci: add workflow-guard, branch protection rules, and PR template |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:10 UTC |
+| **Commit date** | 2026-04-13 20:13 UTC |
 | **Branch** | `main` |
-| **Total commits** | 120 |
+| **Total commits** | 122 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
