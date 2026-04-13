@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `5aad377` — Add SafariCharge project and restore full content CRUD flows |
-| **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-04-14 02:47 UTC |
+| **Last commit** | `243b14f` — Add files via upload |
+| **Committed by** | Roy Otieno | Energy & Mobility Systems |
+| **Commit date** | 2026-04-14 02:49 UTC |
 | **Branch** | `main` |
-| **Total commits** | 199 |
+| **Total commits** | 202 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
