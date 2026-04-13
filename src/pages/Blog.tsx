@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Calendar, Tag, Search, Leaf, Zap, Wind, Link2, Check, Sun, Globe, Edit } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Search, Leaf, Zap, Wind, Link2, Check, Sun, Globe, Edit, RefreshCw } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -22,6 +22,9 @@ interface BlogPost {
   tags: string[] | null;
   published_at: string | null;
   created_at: string;
+  share_token?: string | null;
+  share_enabled?: boolean;
+  share_expires_at?: string | null;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -52,12 +55,87 @@ const Blog = () => {
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [failedCoverIds, setFailedCoverIds] = useState<Set<string>>(new Set());
 
-  const copyPostLink = (e: React.MouseEvent, slug: string) => {
+  const getDefaultShareExpiryIso = () => {
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 30);
+    return expires.toISOString();
+  };
+
+  const isShareActive = (post: BlogPost) => {
+    if (!post.share_enabled || !post.share_token) {
+      return false;
+    }
+    if (!post.share_expires_at) {
+      return true;
+    }
+    return new Date(post.share_expires_at).getTime() > Date.now();
+  };
+
+  const copyPostLink = async (e: React.MouseEvent, post: BlogPost) => {
     e.preventDefault();
     e.stopPropagation();
-    const url = `${window.location.origin}/blog/${slug}`;
+
+    const isStatic = STATIC_BLOG_SLUGS.has(post.slug);
+    if (isStatic) {
+      const url = `${window.location.origin}/blog/${post.slug}`;
+      navigator.clipboard.writeText(url).then(() => {
+        setCopiedSlug(post.slug);
+        setTimeout(() => setCopiedSlug(null), 2000);
+      });
+      return;
+    }
+
+    let shareToken = post.share_token ?? null;
+    const shareIsActive = isShareActive(post);
+    let shareExpiresAt = post.share_expires_at ?? null;
+    if (!shareToken || !shareIsActive) {
+      shareToken = crypto.randomUUID();
+      shareExpiresAt = getDefaultShareExpiryIso();
+      const { error } = await supabase
+        .from("blog_posts")
+        .update({ share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt })
+        .eq("id", post.id);
+      if (error) {
+        console.error("Unable to generate share token:", error);
+        return;
+      }
+      setPosts((prev) => prev.map((item) => (item.id === post.id ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt } : item)));
+    }
+
+    const url = `${window.location.origin}/blog/${post.slug}?s=${encodeURIComponent(shareToken)}`;
     navigator.clipboard.writeText(url).then(() => {
-      setCopiedSlug(slug);
+      setCopiedSlug(post.slug);
+      setTimeout(() => setCopiedSlug(null), 2000);
+    });
+  };
+
+  const regenerateShareLink = async (e: React.MouseEvent, post: BlogPost) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const shareToken = crypto.randomUUID();
+    const shareExpiresAt = getDefaultShareExpiryIso();
+    const { error } = await supabase
+      .from("blog_posts")
+      .update({ share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt })
+      .eq("id", post.id);
+
+    if (error) {
+      console.error("Unable to regenerate share token:", error);
+      return;
+    }
+
+    setPosts((prev) =>
+      prev.map((item) =>
+        item.id === post.id
+          ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt }
+          : item
+      )
+    );
+
+    const url = `${window.location.origin}/blog/${post.slug}?s=${encodeURIComponent(shareToken)}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiedSlug(post.slug);
       setTimeout(() => setCopiedSlug(null), 2000);
     });
   };
@@ -66,7 +144,7 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, excerpt, cover_image, category, tags, published_at, created_at")
+        .select("id, title, slug, excerpt, cover_image, category, tags, published_at, created_at, share_token, share_enabled, share_expires_at")
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(100);
@@ -198,14 +276,8 @@ const Blog = () => {
           </motion.div>
 
           {isAdmin && (
-            <div className="mb-6 flex justify-end">
-              <Link
-                to="/admin/posts/new"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-              >
-                <Edit className="w-4 h-4" />
-                New Post
-              </Link>
+            <div className="mb-6 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
+              Manage existing blog posts from this page. New post creation is disabled for content control.
             </div>
           )}
 
@@ -234,6 +306,7 @@ const Blog = () => {
                 const Icon = categoryIcons[post.category] || Leaf;
                 const colorClass = categoryColors[post.category] || "bg-primary/20 text-primary";
                 const hasCover = !!post.cover_image;
+                const isStaticPost = STATIC_BLOG_SLUGS.has(post.slug);
 
                 return (
                   <motion.article
@@ -292,7 +365,7 @@ const Blog = () => {
                         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                           <span className="text-xs text-primary font-medium group-hover:underline">Read article</span>
                           <div className="flex items-center gap-2">
-                            {isAdmin && (
+                            {isAdmin && !isStaticPost && (
                               <Link
                                 to={`/admin/posts/${post.id}`}
                                 onClick={(e) => e.stopPropagation()}
@@ -303,14 +376,26 @@ const Blog = () => {
                                 Edit
                               </Link>
                             )}
-                            <button
-                              onClick={(e) => copyPostLink(e, post.slug)}
-                              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                              title="Copy link"
-                            >
-                              {copiedSlug === post.slug ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
-                              {copiedSlug === post.slug ? "Copied" : "Copy link"}
-                            </button>
+                            {!isStaticPost && (
+                              <>
+                                <button
+                                  onClick={(e) => copyPostLink(e, post)}
+                                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                                  title="Copy link"
+                                >
+                                  {copiedSlug === post.slug ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
+                                  {copiedSlug === post.slug ? "Copied" : "Copy link"}
+                                </button>
+                                <button
+                                  onClick={(e) => regenerateShareLink(e, post)}
+                                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                                  title="Regenerate link"
+                                >
+                                  <RefreshCw className="w-3.5 h-3.5" />
+                                  Regenerate
+                                </button>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>

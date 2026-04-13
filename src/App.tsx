@@ -1,5 +1,3 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,6 +18,8 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
 const AuthResetPassword = lazy(() => import("./pages/AuthResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const LazyToaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+const LazySonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
 
 const ProtectedAdminPostEditor = () => {
   const { user } = useAuth();
@@ -30,10 +30,18 @@ const ProtectedAdminPostEditor = () => {
   return <AdminPostEditor />;
 };
 
+const ProtectedBlogIndex = () => {
+  const { user } = useAuth();
+  const isAdmin = isAdminEmail(user?.email);
+  if (!isAdmin) {
+    return <AdminLogin />;
+  }
+  return <Blog />;
+};
+
 const PageLoader = () => (
-  <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0a0a0a" }}>
-    <div style={{ width: "2rem", height: "2rem", border: "2px solid hsl(197 68% 44%)", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.6s linear infinite" }} />
-    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
+    <div className="app-spinner" />
   </div>
 );
 
@@ -52,11 +60,11 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0a0a0a", color: "#fff", fontFamily: "sans-serif", textAlign: "center", padding: "2rem" }}>
+        <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] text-white text-center p-8">
           <div>
-            <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Roy Okola Otieno</h1>
-            <p style={{ opacity: 0.7, marginBottom: "1.5rem" }}>Portfolio is temporarily unavailable. Please try again later.</p>
-            <button onClick={() => window.location.reload()} style={{ padding: "0.5rem 1.5rem", background: "#197", border: "none", borderRadius: "0.5rem", color: "#fff", cursor: "pointer", fontSize: "1rem" }}>
+            <h1 className="text-3xl mb-4">Roy Okola Otieno</h1>
+            <p className="opacity-70 mb-6">Portfolio is temporarily unavailable. Please try again later.</p>
+            <button onClick={() => window.location.reload()} className="px-6 py-2 bg-[#197] border-0 rounded-lg text-white cursor-pointer text-base">
               Reload Page
             </button>
           </div>
@@ -73,19 +81,20 @@ const App = () => (
       <ThemeProvider>
         <AuthProvider>
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
+            <Suspense fallback={null}>
+              <LazyToaster />
+              <LazySonner />
+            </Suspense>
             <BrowserRouter>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/resume" element={<Resume />} />
-                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog" element={<ProtectedBlogIndex />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/case-studies" element={<CaseStudiesPage />} />
                   <Route path="/projects" element={<ProjectsPage />} />
                   <Route path="/admin" element={<AdminLogin />} />
-                  <Route path="/admin/posts/new" element={<ProtectedAdminPostEditor />} />
                   <Route path="/admin/posts/:id" element={<ProtectedAdminPostEditor />} />
                   <Route path="/auth/reset-password" element={<AuthResetPassword />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

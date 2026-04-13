@@ -1,11 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
-import { Projects } from "@/components/Projects";
-import { Experience } from "@/components/Experience";
-import { Skills } from "@/components/Skills";
-import { Leadership } from "@/components/Leadership";
-import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { lazy, Suspense } from "react";
 
@@ -18,6 +12,13 @@ const ParticleBackground = lazy(() =>
   }))
 );
 
+const About = lazy(() => import("@/components/About").then((m) => ({ default: m.About })));
+const Projects = lazy(() => import("@/components/Projects").then((m) => ({ default: m.Projects })));
+const Experience = lazy(() => import("@/components/Experience").then((m) => ({ default: m.Experience })));
+const Skills = lazy(() => import("@/components/Skills").then((m) => ({ default: m.Skills })));
+const Leadership = lazy(() => import("@/components/Leadership").then((m) => ({ default: m.Leadership })));
+const Contact = lazy(() => import("@/components/Contact").then((m) => ({ default: m.Contact })));
+
 const Index = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -27,12 +28,14 @@ const Index = () => {
       <Navbar />
       <Hero />
       <main className="relative z-10">
-        <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Leadership />
-        <Contact />
+        <Suspense fallback={<div className="h-24" />}>
+          <About />
+          <Projects />
+          <Experience />
+          <Skills />
+          <Leadership />
+          <Contact />
+        </Suspense>
       </main>
       <Footer />
     </div>

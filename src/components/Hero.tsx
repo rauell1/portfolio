@@ -87,7 +87,7 @@ export const Hero = () => {
         <motion.h1
           {...fadeUp}
           transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.2 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl font-display font-bold mb-6 leading-tight"
         >
           <span className="text-foreground">I'm </span>
           <span className="gradient-text">{content.name}</span>
@@ -144,7 +144,7 @@ export const Hero = () => {
         <motion.div
           {...fadeUp}
           transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.65 }}
-          className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 sm:mt-20 max-w-2xl mx-auto"
+          className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-4 sm:gap-8 mt-16 sm:mt-20 max-w-3xl mx-auto"
         >
           {content.stats.map((stat, index) => (
             <div key={index} className="text-center">

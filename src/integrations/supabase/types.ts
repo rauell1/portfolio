@@ -120,6 +120,9 @@ export type Database = {
           id: string
           published: boolean
           published_at: string | null
+          share_enabled: boolean
+          share_expires_at: string | null
+          share_token: string | null
           slug: string
           tags: string[] | null
           title: string
@@ -134,6 +137,9 @@ export type Database = {
           id?: string
           published?: boolean
           published_at?: string | null
+          share_enabled?: boolean
+          share_expires_at?: string | null
+          share_token?: string | null
           slug: string
           tags?: string[] | null
           title: string
@@ -148,6 +154,9 @@ export type Database = {
           id?: string
           published?: boolean
           published_at?: string | null
+          share_enabled?: boolean
+          share_expires_at?: string | null
+          share_token?: string | null
           slug?: string
           tags?: string[] | null
           title?: string
@@ -223,7 +232,27 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_shared_blog_post: {
+        Args: {
+          p_slug: string
+          p_token: string
+        }
+        Returns: {
+          id: string
+          title: string
+          slug: string
+          excerpt: string | null
+          content: string
+          cover_image: string | null
+          category: string
+          tags: string[] | null
+          published_at: string | null
+          created_at: string
+          share_token: string | null
+          share_enabled: boolean
+          share_expires_at: string | null
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

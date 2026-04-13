@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag, Share2, Leaf, Zap, Wind, Link2, Check, Edit } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getStaticPostBySlug, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
 import { useAuth } from "@/hooks/useAuth";
+import { isAdminEmail } from "@/lib/config";
 
 interface BlogPost {
   id: string;
@@ -21,6 +22,9 @@ interface BlogPost {
   tags: string[] | null;
   published_at: string | null;
   created_at: string;
+  share_token?: string | null;
+  share_enabled?: boolean;
+  share_expires_at?: string | null;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -33,7 +37,7 @@ function ArticleImage({ src, alt, className }: { src: string; alt: string; class
   const [failed, setFailed] = useState(false);
   if (failed) {
     return (
-      <div className={`rounded-xl border border-border bg-muted/20 flex items-center justify-center ${className || ""}`} style={{ minHeight: 240 }}>
+      <div className={`rounded-xl border border-border bg-muted/20 flex min-h-[240px] items-center justify-center ${className || ""}`}>
         <span className="text-sm text-muted-foreground">Image unavailable</span>
       </div>
     );
@@ -53,41 +57,76 @@ function ArticleImage({ src, alt, className }: { src: string; alt: string; class
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
+  const isAdmin = isAdminEmail(user?.email);
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
   const [coverImageFailed, setCoverImageFailed] = useState(false);
+  const [isSharedView, setIsSharedView] = useState(false);
 
   const fetchPost = useCallback(async () => {
     if (!slug) {
       setLoading(false);
       return;
     }
+    const shareToken = new URLSearchParams(location.search).get("s");
+    const sharedAccess = !isAdmin && !!shareToken;
+    setIsSharedView(sharedAccess);
+
     // For static pillar posts, always use static content so images and formatting are always correct
     const staticPost = getStaticPostBySlug(slug);
     if (STATIC_BLOG_SLUGS.has(slug) && staticPost) {
+      if (!isAdmin) {
+        navigate("/admin", { replace: true });
+        setLoading(false);
+        return;
+      }
       setPost(staticPost);
       setLoading(false);
       return;
     }
-    const { data, error } = await supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", slug)
-      .eq("published", true)
-      .maybeSingle();
+
+    let data: BlogPost | null = null;
+    let error: unknown = null;
+
+    if (isAdmin) {
+      const response = await supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("slug", slug)
+        .eq("published", true)
+        .maybeSingle();
+      data = response.data as BlogPost | null;
+      error = response.error;
+    } else {
+      if (!shareToken) {
+        navigate("/admin", { replace: true });
+        setLoading(false);
+        return;
+      }
+
+      const response = await supabase.rpc("get_shared_blog_post", {
+        p_slug: slug,
+        p_token: shareToken,
+      });
+
+      if (response.error) {
+        error = response.error;
+      } else if (response.data && response.data.length > 0) {
+        data = response.data[0] as BlogPost;
+      }
+    }
 
     if (data) {
       setPost(data);
-    } else if (staticPost) {
-      setPost(staticPost);
     } else {
       if (error) console.error("Error fetching post:", error);
-      navigate("/blog");
+      navigate(isAdmin ? "/blog" : "/admin", { replace: true });
     }
     setLoading(false);
-  }, [slug, navigate]);
+  }, [slug, navigate, location.search, isAdmin]);
 
   useEffect(() => {
     fetchPost();
@@ -199,7 +238,7 @@ const BlogPostPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <ParticleBackground />
-      <Navbar />
+      {!isSharedView && <Navbar />}
 
       <main className="relative z-10 pt-20 pb-12 px-4 sm:px-6">
         <article className="max-w-4xl mx-auto">
@@ -209,13 +248,15 @@ const BlogPostPage = () => {
             transition={{ duration: 0.5 }}
             className="mb-6"
           >
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Blog
-            </Link>
+            {!isSharedView && (
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Blog
+              </Link>
+            )}
           </motion.div>
 
           {/* Cover image first (hero) */}
@@ -264,7 +305,7 @@ const BlogPostPage = () => {
                 </span>
               )}
               {/* Admin inline edit shortcut */}
-              {user && (
+              {isAdmin && (
                 <Link
                   to={`/admin/posts/${post.id}`}
                   className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 transition-colors"
@@ -315,56 +356,60 @@ const BlogPostPage = () => {
           )}
 
           {/* Share & Copy link */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
-            <button
-              onClick={sharePost}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+          {!isSharedView && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-8 flex flex-wrap gap-3"
             >
-              <Share2 className="w-4 h-4" />
-              Share this article
-            </button>
-            <button
-              onClick={copyPostLink}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-            >
-              {linkCopied ? (
-                <>
-                  <Check className="w-4 h-4 text-green-500" />
-                  Link copied!
-                </>
-              ) : (
-                <>
-                  <Link2 className="w-4 h-4" />
-                  Copy link
-                </>
-              )}
-            </button>
-          </motion.div>
+              <button
+                onClick={sharePost}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+              >
+                <Share2 className="w-4 h-4" />
+                Share this article
+              </button>
+              <button
+                onClick={copyPostLink}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+              >
+                {linkCopied ? (
+                  <>
+                    <Check className="w-4 h-4 text-green-500" />
+                    Link copied!
+                  </>
+                ) : (
+                  <>
+                    <Link2 className="w-4 h-4" />
+                    Copy link
+                  </>
+                )}
+              </button>
+            </motion.div>
+          )}
 
           {/* Newsletter CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="glass-card rounded-2xl p-8 text-center mt-16"
-          >
-            <h2 className="text-2xl font-display font-bold mb-4">
-              Enjoyed this article?
-            </h2>
-            <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-              Subscribe to get more insights on renewable energy and sustainability.
-            </p>
-            <NewsletterForm />
-          </motion.div>
+          {!isSharedView && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="glass-card rounded-2xl p-8 text-center mt-16"
+            >
+              <h2 className="text-2xl font-display font-bold mb-4">
+                Enjoyed this article?
+              </h2>
+              <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+                Subscribe to get more insights on renewable energy and sustainability.
+              </p>
+              <NewsletterForm />
+            </motion.div>
+          )}
         </article>
       </main>
 
-      <Footer />
+      {!isSharedView && <Footer />}
     </div>
   );
 };

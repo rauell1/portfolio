@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { 
-  ArrowLeft, Plus, Image, Calendar, MapPin, 
+import {
+  ArrowLeft, Image, Calendar, MapPin, 
   Edit, Trash2, Loader2, Upload, Zap, Map, Users, Target, Cpu, Layout
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -175,18 +175,6 @@ const Projects = () => {
     fetchProjects();
   }, [fetchProjects]);
 
-  const handleAddProject = () => {
-    setEditingProject({
-      title: "",
-      description: "",
-      location: "",
-      project_type: "solar",
-      images: [],
-      completed_at: null,
-    });
-    setIsEditModalOpen(true);
-  };
-
   const handleEditProject = (project: Project) => {
     setEditingProject(project);
     setIsEditModalOpen(true);
@@ -246,6 +234,15 @@ const Projects = () => {
   };
 
   const handleSaveProject = async () => {
+    if (!editingProject.id) {
+      toast({
+        title: "Creation disabled",
+        description: "Only existing projects can be edited.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!editingProject.title || !editingProject.description) {
       toast({
         title: "Error",
@@ -283,19 +280,6 @@ const Projects = () => {
         toast({
           title: "Success",
           description: "Project updated successfully",
-        });
-      } else {
-        // Create new project
-        const { error } = await supabase
-          .from("projects")
-          .insert({
-            ...payload,
-          });
-
-        if (error) throw error;
-        toast({
-          title: "Success",
-          description: "Project created successfully",
         });
       }
 
@@ -391,10 +375,9 @@ const Projects = () => {
             </div>
             
             {isAdmin && (
-              <Button onClick={handleAddProject} className="self-start">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Project
-              </Button>
+              <div className="self-start rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
+                Editing mode: update existing projects from each card's edit button.
+              </div>
             )}
           </motion.div>
 
@@ -450,6 +433,8 @@ const Projects = () => {
                                   e.stopPropagation();
                                   handleEditProject(project);
                                 }}
+                                aria-label="Edit project"
+                                title="Edit project"
                                 className="p-2 rounded-lg bg-black/50 hover:bg-black/70 text-white transition-colors"
                               >
                                 <Edit className="w-4 h-4" />
@@ -459,6 +444,8 @@ const Projects = () => {
                                   e.stopPropagation();
                                   setDeleteProjectId(project.slug || project.id);
                                 }}
+                                aria-label="Delete project"
+                                title="Delete project"
                                 className="p-2 rounded-lg bg-destructive/80 hover:bg-destructive text-white transition-colors"
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -737,6 +724,7 @@ const Projects = () => {
                 accept="image/*"
                 multiple
                 onChange={handleImageUpload}
+                aria-label="Upload project images"
                 className="hidden"
               />
               
@@ -754,6 +742,8 @@ const Projects = () => {
                       />
                       <button
                         onClick={() => removeImage(index)}
+                        aria-label="Remove image"
+                        title="Remove image"
                         className="absolute top-1 right-1 p-1 rounded-full bg-destructive text-white opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <Trash2 className="w-3 h-3" />

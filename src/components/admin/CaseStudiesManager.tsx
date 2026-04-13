@@ -126,28 +126,6 @@ const CaseStudiesManager = () => {
     fetchCaseStudies();
   }, [fetchCaseStudies]);
 
-  const handleAdd = () => {
-    setEditing({
-      title: "",
-      subtitle: "",
-      category: "sustainability",
-      location: "",
-      date: "",
-      role: "",
-      partner: "",
-      image: "",
-      pdf_download: "",
-      is_flagship: false,
-      published: true,
-      sections: [{ heading: "", content: "" }],
-      metrics: [{ label: "", value: "", icon_name: "Zap" }],
-      gradient: "from-blue-500 to-cyan-400",
-      icon_name: "Zap",
-    });
-    setExpandedSections(false);
-    setIsEditModalOpen(true);
-  };
-
   const handleEdit = (cs: CaseStudy) => {
     setEditing({
       ...cs,
@@ -201,9 +179,9 @@ const CaseStudiesManager = () => {
         if (error) throw error;
         toast({ title: "Success", description: "Case study updated successfully" });
       } else {
-        const { error } = await supabase.from("case_studies").insert(payload);
-        if (error) throw error;
-        toast({ title: "Success", description: "Case study created successfully" });
+        toast({ title: "Creation disabled", description: "Only existing case studies can be edited.", variant: "destructive" });
+        setIsSaving(false);
+        return;
       }
 
       await fetchCaseStudies();
@@ -312,10 +290,9 @@ const CaseStudiesManager = () => {
             className="pl-10"
           />
         </div>
-        <Button onClick={handleAdd}>
-          <Plus className="w-4 h-4 mr-2" />
-          New Case Study
-        </Button>
+        <div className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
+          Editing mode: update existing case studies only.
+        </div>
       </div>
 
       {/* Stats */}
@@ -348,7 +325,6 @@ const CaseStudiesManager = () => {
           <div className="p-12 text-center">
             <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground">No case studies found</p>
-            <Button className="mt-4" onClick={handleAdd}>Create your first case study</Button>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -443,9 +419,9 @@ const CaseStudiesManager = () => {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-display">
-              {editing.id ? "Edit Case Study" : "Add New Case Study"}
+              {editing.id ? "Edit Case Study" : "Create Disabled"}
             </DialogTitle>
-            <DialogDescription>Fill in the details for your case study.</DialogDescription>
+            <DialogDescription>Editing existing case studies is enabled. New creation is disabled.</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 mt-4">
@@ -549,6 +525,7 @@ const CaseStudiesManager = () => {
                   id="cs-gradient"
                   value={editing.gradient || "from-blue-500 to-cyan-400"}
                   onChange={(e) => setEditing(prev => ({ ...prev, gradient: e.target.value }))}
+                  aria-label="Case study gradient"
                   className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   {gradientOptions.map(g => (
@@ -562,6 +539,7 @@ const CaseStudiesManager = () => {
                   id="cs-icon"
                   value={editing.icon_name || "Zap"}
                   onChange={(e) => setEditing(prev => ({ ...prev, icon_name: e.target.value }))}
+                  aria-label="Case study icon"
                   className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   {iconOptions.map(icon => (
@@ -665,6 +643,7 @@ const CaseStudiesManager = () => {
                     <select
                       value={metric.icon_name}
                       onChange={(e) => updateMetric(i, "icon_name", e.target.value)}
+                      aria-label="Metric icon"
                       className="flex-1 h-10 rounded-md border border-input bg-background px-2 text-sm"
                     >
                       {iconOptions.map(icon => (
