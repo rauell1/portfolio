@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `643907f` — ci: harden all three workflows — Node 24, concurrency, dep advisory, TS check |
+| **Last commit** | `22978b4` — fix(deps): remove @vercel/node from dependencies — it is a Vercel build runtime, not a project dep |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:39 UTC |
+| **Commit date** | 2026-04-13 20:42 UTC |
 | **Branch** | `main` |
-| **Total commits** | 130 |
+| **Total commits** | 132 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
