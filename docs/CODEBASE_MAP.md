@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-13T20:47:56.645Z**
+> Last updated: **2026-04-13T22:29:52.778Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -47,6 +47,7 @@
 |---|---|
 | `src/pages/AdminLogin.tsx` | Admin auth gate — Supabase email/password login |
 | `src/pages/AdminPostEditor.tsx` | Blog post CRUD editor — RichTextEditor, image upload, publish |
+| `src/pages/AuthResetPassword.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/pages/Blog.tsx` | Blog listing — fetches posts from Supabase, search + tag filter |
 | `src/pages/BlogPost.tsx` | Individual blog post view — MDX/HTML rendering, TOC |
 | `src/pages/CaseStudiesPage.tsx` | Detailed case study pages with tabs, metrics, timeline |
