@@ -1,34 +1,31 @@
-# ============================================================
-# SAFE ROLLBACK
-# • On every push to main: runs build gate, then tags the commit
-#   as snapshot/<timestamp>-<sha> and updates snapshot/latest.
-# • On manual dispatch with a target_sha: creates a non-destructive
-#   revert commit — no commits are ever deleted or force-pushed away.
-#
-# FIX (vs previous version):
-#   tag-snapshot previously used `needs: [build]` unconditionally.
-#   The build job only runs on `push` (skipped on workflow_dispatch),
-#   so needs.build.result was never 'success' on manual runs — the
-#   tag-snapshot job was silently skipped every time.
-#   Fix: allow 'skipped' as a valid build result for tag-snapshot.
-#   The rollback job has NO dependency on build at all (independent).
-# ============================================================
 name: Safe Rollback
+
+# This workflow has two completely independent trigger paths:
+#
+# PATH A — push to main:
+#   build job runs → on success, tag-snapshot job runs
+#   These are chained with needs: [build] intentionally.
+#
+# PATH B — manual dispatch:
+#   tag-snapshot-manual job runs (no build dependency)
+#   rollback job runs if target_sha is provided
+#
+# Separating the two paths avoids the needs.build.result == 'skipped'
+# problem that caused the previous version to silently do nothing on
+# manual dispatches.
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - 'README.md'
+    branches: [main]
+    paths-ignore: ['README.md']
   workflow_dispatch:
     inputs:
       target_sha:
-        description: 'Short or full SHA to roll back to (leave empty to only re-tag HEAD)'
+        description: 'SHA to roll back to (leave empty to just tag HEAD)'
         required: false
         default: ''
       reason:
-        description: 'Reason for rollback (recorded in commit message)'
+        description: 'Reason for rollback'
         required: false
         default: 'Manual rollback via GitHub Actions'
 
@@ -36,191 +33,139 @@ permissions:
   contents: write
 
 jobs:
-  # ── Job 1: Build & lint gate (push only) ──────────────────────────
+  # ── PATH A, step 1: build gate (push only) ──────────────────────
   build:
     name: Build & lint gate
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+        continue-on-error: true
+      - run: npm run build
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-        continue-on-error: true   # lint warnings don't block tagging
-
-      - name: Build
-        run: npm run build
-
-  # ── Job 2: Tag snapshot ────────────────────────────────────────────
-  # Runs after a successful push build, OR standalone on workflow_dispatch.
-  # KEY FIX: needs.build.result can be 'success' (push) OR 'skipped'
-  # (workflow_dispatch — build job never ran). Both are valid here.
-  tag-snapshot:
-    name: Tag commit as snapshot
+  # ── PATH A, step 2: tag on successful push build ─────────────────
+  tag-on-push:
+    name: Tag snapshot (post-push)
     runs-on: ubuntu-latest
     needs: [build]
-    if: |
-      always() && (
-        needs.build.result == 'success' ||
-        needs.build.result == 'skipped'
-      )
-
+    if: github.event_name == 'push' && needs.build.result == 'success'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure git identity
+      - name: Configure git
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
       - name: Create snapshot tags
         run: |
           set -euo pipefail
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          FULL_SHA=$(git rev-parse HEAD)
-          TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
-          TAG_NAME="snapshot/${TIMESTAMP}-${SHORT_SHA}"
-
-          echo "Tagging ${FULL_SHA} as ${TAG_NAME}"
-
-          git tag "${TAG_NAME}" "${FULL_SHA}" \
-            -m "Auto-snapshot after successful build on main"
-
-          git tag -f snapshot/latest "${FULL_SHA}" \
-            -m "Latest known-good snapshot: ${FULL_SHA}"
-
-          git push origin "${TAG_NAME}"
+          SHORT=$(git rev-parse --short HEAD)
+          FULL=$(git rev-parse HEAD)
+          TS=$(date -u +"%Y%m%dT%H%M%SZ")
+          TAG="snapshot/${TS}-${SHORT}"
+          git tag "$TAG" "$FULL" -m "Auto-snapshot: push build passed"
+          git tag -f snapshot/latest "$FULL" -m "Latest known-good: $FULL"
+          git push origin "$TAG"
           git push origin snapshot/latest --force
+          echo "Tagged: $TAG"
+          echo "## Snapshot created" >> $GITHUB_STEP_SUMMARY
+          echo "| Tag | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| snapshot/latest | updated |" >> $GITHUB_STEP_SUMMARY
 
-          echo "✅ Snapshot tags pushed:"
-          echo "   Immutable : ${TAG_NAME}"
-          echo "   Rolling   : snapshot/latest → ${FULL_SHA}"
-
-      - name: Write job summary
-        run: |
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          COMMIT_MSG=$(git log -1 --pretty=format:"%s")
-          echo "## ✅ Snapshot created" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Commit | \`${SHORT_SHA}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Message | ${COMMIT_MSG} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Tag | \`snapshot/latest\` updated |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "To roll back to this point later, use SHA: \`${SHORT_SHA}\`" >> $GITHUB_STEP_SUMMARY
-
-  # ── Job 3: Non-destructive rollback (manual dispatch only) ─────────
-  # Intentionally has NO dependency on the build job.
-  # build only runs on push; rollback only runs on workflow_dispatch.
-  # Chaining them caused the tag-snapshot bug — keep them independent.
-  rollback:
-    name: Non-destructive rollback
+  # ── PATH B, step 1: tag on manual dispatch (no build needed) ─────
+  tag-on-dispatch:
+    name: Tag snapshot (manual)
     runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'workflow_dispatch' &&
-      github.event.inputs.target_sha != ''
-
+    if: github.event_name == 'workflow_dispatch'
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure git identity
+      - name: Configure git
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Create snapshot tags
+        run: |
+          set -euo pipefail
+          SHORT=$(git rev-parse --short HEAD)
+          FULL=$(git rev-parse HEAD)
+          TS=$(date -u +"%Y%m%dT%H%M%SZ")
+          TAG="snapshot/${TS}-${SHORT}"
+          git tag "$TAG" "$FULL" -m "Manual snapshot dispatch"
+          git tag -f snapshot/latest "$FULL" -m "Latest known-good: $FULL"
+          git push origin "$TAG"
+          git push origin snapshot/latest --force
+          echo "Tagged: $TAG"
 
+  # ── PATH B, step 2: rollback (manual + target_sha provided) ──────
+  rollback:
+    name: Non-destructive rollback
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.target_sha != ''
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Validate target SHA
-        id: validate
+        id: val
         run: |
           set -euo pipefail
           TARGET="${{ github.event.inputs.target_sha }}"
-          FULL_SHA=$(git rev-parse "${TARGET}" 2>/dev/null) || {
-            echo "::error::SHA '${TARGET}' not found in repository history."
+          FULL=$(git rev-parse "${TARGET}" 2>/dev/null) || {
+            echo "::error::SHA '${TARGET}' not found."
             exit 1
           }
-          SHORT_SHA=$(git rev-parse --short "${FULL_SHA}")
-          echo "full_sha=${FULL_SHA}"   >> $GITHUB_OUTPUT
-          echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
-          echo "Validated: ${FULL_SHA}"
-
-      - name: Safety check — refuse rollback to current HEAD
+          SHORT=$(git rev-parse --short "$FULL")
+          echo "full=$FULL"   >> $GITHUB_OUTPUT
+          echo "short=$SHORT" >> $GITHUB_OUTPUT
+      - name: Perform revert
         run: |
           set -euo pipefail
+          FULL="${{ steps.val.outputs.full }}"
+          SHORT="${{ steps.val.outputs.short }}"
           CURRENT=$(git rev-parse HEAD)
-          TARGET="${{ steps.validate.outputs.full_sha }}"
-          if [ "${CURRENT}" = "${TARGET}" ]; then
-            echo "::warning::Target SHA equals current HEAD — nothing to roll back."
+          if [ "$CURRENT" = "$FULL" ]; then
+            echo "::warning::Already at target SHA — nothing to revert."
             exit 0
           fi
-
-      - name: Perform non-destructive rollback
-        id: do_rollback
-        run: |
-          set -euo pipefail
-          TARGET="${{ steps.validate.outputs.full_sha }}"
-          SHORT="${{ steps.validate.outputs.short_sha }}"
-          REASON="${{ github.event.inputs.reason }}"
-          CURRENT=$(git rev-parse --short HEAD)
-
-          COMMITS=$(git log --reverse --pretty=format:"%H" "${TARGET}"..HEAD)
-
-          if [ -z "${COMMITS}" ]; then
-            echo "No commits between ${SHORT} and ${CURRENT} — nothing to revert."
-            echo "skipped=true" >> $GITHUB_OUTPUT
+          COMMITS=$(git log --reverse --pretty=format:"%H" "${FULL}"..HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "No commits to revert."
             exit 0
           fi
-
-          while IFS= read -r commit; do
-            git revert --no-edit --no-commit "${commit}" || {
-              echo "::error::Conflict reverting ${commit}. Aborting."
+          while IFS= read -r c; do
+            git revert --no-edit --no-commit "$c" || {
               git revert --abort 2>/dev/null || true
+              echo "::error::Conflict at $c — rollback aborted."
               exit 1
             }
-          done <<< "${COMMITS}"
-
+          done <<< "$COMMITS"
           git commit -m "revert(rollback): restore state at ${SHORT}
 
-Rolled back from : ${CURRENT}
-Target snapshot  : ${SHORT} (${TARGET})
-Reason           : ${REASON}
-Triggered by     : ${{ github.actor }}
+Target  : ${SHORT} (${FULL})
+Reason  : ${{ github.event.inputs.reason }}
+By      : ${{ github.actor }}
 
-Non-destructive revert — all previous commits are preserved in history.
-To undo this rollback, simply revert this commit."
-
+Non-destructive — all history preserved."
           git pull --rebase origin main
           git push origin main
-          echo "skipped=false" >> $GITHUB_OUTPUT
-          echo "✅ Rollback committed and pushed."
-
-      - name: Write job summary
-        if: steps.do_rollback.outputs.skipped != 'true'
-        run: |
-          SHORT="${{ steps.validate.outputs.short_sha }}"
-          echo "## ↩️ Rollback complete" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "Rollback pushed."
+          echo "## Rollback complete" >> $GITHUB_STEP_SUMMARY
           echo "| Rolled back to | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Reason | ${{ github.event.inputs.reason }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| History preserved | ✅ Yes — revert commit added, no force-push |" >> $GITHUB_STEP_SUMMARY
