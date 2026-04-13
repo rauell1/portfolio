@@ -33,7 +33,7 @@ const DEFAULT_ITEMS: Experience[] = [
     ],
     current: true,
     isFounder: true,
-    externalUrl: "https://safaricharge.com",
+    externalUrl: "https://safaricharge-website.vercel.app/",
   },
   {
     company: "Roam Electric Ltd",

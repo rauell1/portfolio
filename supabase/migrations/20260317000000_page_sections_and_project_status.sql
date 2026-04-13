@@ -95,7 +95,7 @@ VALUES
         "period": "2024 - Present",
         "current": true,
         "isFounder": true,
-        "externalUrl": "https://safaricharge.com",
+        "externalUrl": "https://safaricharge-website.vercel.app/",
         "description": [
           "Founded an EV charging infrastructure startup focused on expanding access to sustainable mobility across East Africa",
           "Leading strategic partnerships and market development for EV charging solutions"
