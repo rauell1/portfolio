@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `7163373` — fix(deps): add @supabase/ssr — required by createBrowserClient/createServerClient imports |
+| **Last commit** | `83a0af1` — fix: repo hygiene — remove .env.local, package-lock.json, move CODEBASE_MAP to docs/ |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 22:40 UTC |
+| **Commit date** | 2026-04-13 23:25 UTC |
 | **Branch** | `main` |
-| **Total commits** | 158 |
+| **Total commits** | 161 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 97 |
 | **CSS files** | 1 |
