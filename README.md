@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `7647c69` — fix(ci): use actionlint installer script, bump Node to 24, fix tar failure |
+| **Last commit** | `6a84458` — ci: remove lint-workflows job, keep only build-check and dry-run-readme-shell |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:16 UTC |
+| **Commit date** | 2026-04-13 20:24 UTC |
 | **Branch** | `main` |
-| **Total commits** | 124 |
+| **Total commits** | 126 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
