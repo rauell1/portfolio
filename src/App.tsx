@@ -18,24 +18,16 @@ const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ProjectsPage = lazy(() => import("./pages/Projects"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
+const AuthResetPassword = lazy(() => import("./pages/AuthResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const ProtectedBlog = () => {
+const ProtectedAdminPostEditor = () => {
   const { user } = useAuth();
   const isAdmin = isAdminEmail(user?.email);
   if (!isAdmin) {
-    return <NotFound />;
+    return <AdminLogin />;
   }
-  return <Blog />;
-};
-
-const ProtectedBlogPost = () => {
-  const { user } = useAuth();
-  const isAdmin = isAdminEmail(user?.email);
-  if (!isAdmin) {
-    return <NotFound />;
-  }
-  return <BlogPost />;
+  return <AdminPostEditor />;
 };
 
 const PageLoader = () => (
@@ -88,13 +80,14 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/resume" element={<Resume />} />
-                  <Route path="/blog" element={<ProtectedBlog />} />
-                  <Route path="/blog/:slug" element={<ProtectedBlogPost />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/case-studies" element={<CaseStudiesPage />} />
                   <Route path="/projects" element={<ProjectsPage />} />
                   <Route path="/admin" element={<AdminLogin />} />
-                  <Route path="/admin/posts/new" element={<AdminPostEditor />} />
-                  <Route path="/admin/posts/:id" element={<AdminPostEditor />} />
+                  <Route path="/admin/posts/new" element={<ProtectedAdminPostEditor />} />
+                  <Route path="/admin/posts/:id" element={<ProtectedAdminPostEditor />} />
+                  <Route path="/auth/reset-password" element={<AuthResetPassword />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

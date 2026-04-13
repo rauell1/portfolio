@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { SUPABASE_URL_HOST } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 5 * 60 * 1000;
@@ -18,6 +19,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResetSending, setIsResetSending] = useState(false);
   const [error, setError] = useState("");
   const attemptsRef = useRef(0);
   const lockoutUntilRef = useRef<number>(0);
@@ -73,6 +75,40 @@ const AdminLogin = () => {
     }
 
     setIsLoading(false);
+  };
+
+  const handleForgotPassword = async () => {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!normalizedEmail) {
+      setError("Enter your email first, then click Forgot password.");
+      return;
+    }
+    if (!supabase) {
+      setError("Authentication service is unavailable. Please try again later.");
+      return;
+    }
+
+    setIsResetSending(true);
+    const redirectTo = `${window.location.origin}/auth/reset-password`;
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
+      redirectTo,
+    });
+    setIsResetSending(false);
+
+    if (resetError) {
+      setError(resetError.message);
+      toast({
+        title: "Reset email failed",
+        description: resetError.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Reset email sent",
+      description: "Check your inbox and open the reset link to set a new password.",
+    });
   };
 
   return (
@@ -147,6 +183,17 @@ const AdminLogin = () => {
             <p className="text-xs text-muted-foreground text-center mt-2">
               This login is restricted to the site owner.
             </p>
+
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                disabled={isResetSending}
+                className="text-xs text-primary hover:underline disabled:opacity-60"
+              >
+                {isResetSending ? "Sending reset email..." : "Forgot password?"}
+              </button>
+            </div>
           </form>
 
           <div className="mt-6 text-center">

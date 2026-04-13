@@ -9,7 +9,7 @@
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
 #   - actions/checkout@v4
-#   - actions/setup-node@v6  (node-version: '24')
+#   - actions/setup-node@v4  (node-version: '20')
 #
 # The generate script uses Node (not Bun) because it's a lightweight
 # standalone .mjs file with no package dependencies — Node is sufficient.
@@ -45,9 +45,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Generate docs/CODEBASE_MAP.md
         run: node .github/scripts/generate-codebase-map.mjs

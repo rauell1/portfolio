@@ -9,7 +9,7 @@
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
 #   - actions/checkout@v4
-#   - actions/setup-node@v6  (node-version: '24')
+#   - actions/setup-node@v4  (node-version: '20')
 #
 # Review and update these pins when:
 #   1. A new LTS Node.js version is released (currently 24, next: 26 ~Oct 2027)
@@ -55,9 +55,9 @@ jobs:
 
       # No `cache: npm` here — this workflow never runs npm ci.
       # node -p only reads package.json; node_modules are not needed.
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Configure git
         run: |
