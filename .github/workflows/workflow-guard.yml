@@ -11,7 +11,7 @@
 #
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
-#   - actions/checkout@v4
+#   - actions/checkout@v6
 #   - oven-sh/setup-bun@v2    (bun-version: latest; for type/build jobs)
 #   - actions/setup-node@v4   (node-version: '20'; dry-run job only)
 #
@@ -68,7 +68,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
@@ -97,7 +97,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
@@ -122,7 +122,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 

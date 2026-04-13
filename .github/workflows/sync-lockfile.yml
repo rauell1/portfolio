@@ -15,7 +15,7 @@
 #
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────────────────
 # This workflow uses:
-#   - actions/checkout@v4
+#   - actions/checkout@v6
 #   - oven-sh/setup-bun@v2 (bun-version: latest)
 # Keep Bun setup current with your CI toolchain.
 # =============================================================
@@ -42,7 +42,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 

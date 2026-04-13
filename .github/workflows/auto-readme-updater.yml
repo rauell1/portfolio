@@ -8,7 +8,7 @@
 #
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
-#   - actions/checkout@v4
+#   - actions/checkout@v6
 #   - actions/setup-node@v4  (node-version: '20')
 #
 # Review and update these pins when:
@@ -48,7 +48,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
