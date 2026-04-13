@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Linkedin, ArrowUp, Github, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { isAdminEmail } from "@/lib/config";
 
 // X (Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
@@ -10,6 +12,9 @@ const XIcon = ({ className }: { className?: string }) => (
 );
 
 export const Footer = () => {
+  const { user } = useAuth();
+  const isAdmin = isAdminEmail(user?.email);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -21,8 +26,15 @@ export const Footer = () => {
   ];
 
   const quickLinks = [
+    { label: "Blog", href: "/blog" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Projects", href: "/projects" },
+  ];
+
+  const adminLinks = [
+    { label: "Edit Blog", href: "/admin/posts/new" },
+    { label: "Edit Case Studies", href: "/case-studies#admin-case-studies-manager" },
+    { label: "Edit Projects", href: "/projects" },
   ];
 
   return (
@@ -45,7 +57,7 @@ export const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="font-display font-semibold mb-2 text-xs uppercase tracking-wider text-muted-foreground">Quick Links</h4>
-            <ul className="flex gap-4">
+            <ul className="flex gap-4 flex-wrap">
               {quickLinks.map((link) => (
                 <li key={link.label}>
                   <Link 
@@ -57,6 +69,20 @@ export const Footer = () => {
                 </li>
               ))}
             </ul>
+            {isAdmin && (
+              <ul className="flex gap-4 flex-wrap mt-2">
+                {adminLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-xs text-primary/90 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Connect + Admin + Social */}

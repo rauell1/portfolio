@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { STATIC_BLOG_POSTS, STATIC_BLOG_SLUGS } from "@/data/blogPosts";
 import { useAuth } from "@/hooks/useAuth";
+import { isAdminEmail } from "@/lib/config";
 
 interface BlogPost {
   id: string;
@@ -43,6 +44,7 @@ const BLOG_PILLARS = [
 
 const Blog = () => {
   const { user } = useAuth();
+  const isAdmin = isAdminEmail(user?.email);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -195,6 +197,18 @@ const Blog = () => {
             </div>
           </motion.div>
 
+          {isAdmin && (
+            <div className="mb-6 flex justify-end">
+              <Link
+                to="/admin/posts/new"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+              >
+                <Edit className="w-4 h-4" />
+                New Post
+              </Link>
+            </div>
+          )}
+
           {/* Blog Posts Grid */}
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -278,7 +292,7 @@ const Blog = () => {
                         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                           <span className="text-xs text-primary font-medium group-hover:underline">Read article</span>
                           <div className="flex items-center gap-2">
-                            {user && (
+                            {isAdmin && (
                               <Link
                                 to={`/admin/posts/${post.id}`}
                                 onClick={(e) => e.stopPropagation()}

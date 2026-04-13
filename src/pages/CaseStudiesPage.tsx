@@ -13,6 +13,8 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { isAdminEmail } from "@/lib/config";
+import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
 
 // Icon map for resolving icon names from the database
 const ICON_MAP: Record<string, typeof Sun> = {
@@ -261,6 +263,7 @@ const caseStudies: CaseStudy[] = [
 
 const CaseStudiesPage = () => {
   const { user } = useAuth();
+  const isAdmin = isAdminEmail(user?.email);
   const { toast } = useToast();
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const [caseStudiesData, setCaseStudiesData] = useState<CaseStudy[]>(caseStudies);
@@ -375,6 +378,22 @@ const CaseStudiesPage = () => {
               Engineering documentation of renewable energy and mobility infrastructure projects making measurable impact across Africa.
             </p>
           </motion.div>
+
+          {isAdmin && (
+            <motion.section
+              id="admin-case-studies-manager"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="glass-card rounded-2xl p-6 mb-10"
+            >
+              <h2 className="text-xl font-display font-bold mb-2">Manage Case Studies</h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                Add, edit, publish, archive, and remove case studies directly from this page.
+              </p>
+              <CaseStudiesManager />
+            </motion.section>
+          )}
 
           {/* Flagship Case Study */}
           {flagshipStudy && (
