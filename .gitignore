@@ -30,7 +30,7 @@ node_modules
 .next
 out
 
-# environment
+# environment — NEVER commit these
 .env
 .env.local
 .env.*.local
@@ -49,3 +49,9 @@ download
 
 dist
 build
+
+# Auto-generated files — do not commit to root
+CODEBASE_MAP.md
+
+# npm lockfile — this project uses Bun
+package-lock.json
