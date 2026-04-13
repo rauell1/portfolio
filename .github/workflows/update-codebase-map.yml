@@ -54,17 +54,21 @@ jobs:
 
       - name: Commit updated map (if changed)
         run: |
+          set -euo pipefail
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add docs/CODEBASE_MAP.md
           if git diff --cached --quiet; then
             echo "No changes to docs/CODEBASE_MAP.md — skipping commit."
-            echo "## docs/CODEBASE_MAP.md already up to date" >> $GITHUB_STEP_SUMMARY
           else
             COMMIT_SHA=$(git rev-parse --short HEAD)
             git commit -m "docs: auto-update CODEBASE_MAP.md [${COMMIT_SHA}] [skip ci]"
             git pull --rebase origin main
             git push
-            echo "## docs/CODEBASE_MAP.md updated" >> $GITHUB_STEP_SUMMARY
-            echo "Map regenerated for commit \`${COMMIT_SHA}\`" >> $GITHUB_STEP_SUMMARY
-          fi
+           fi
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Update Codebase Map" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY
