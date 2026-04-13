@@ -1,7 +1,7 @@
 /**
  * generate-codebase-map.mjs
  *
- * Walks the repo and regenerates CODEBASE_MAP.md.
+ * Walks the repo and regenerates docs/CODEBASE_MAP.md.
  * Run by the GitHub Actions workflow on every push to main.
  *
  * Design goals:
@@ -11,16 +11,16 @@
  *  - Skips ignored directories (node_modules, dist, .git, etc.)
  */
 
-import { readdir, readFile, writeFile, stat } from 'fs/promises';
-import { join, relative, extname, basename } from 'path';
+import { readdir, writeFile, mkdir } from 'fs/promises';
+import { join, relative, basename } from 'path';
 
 const ROOT = process.cwd();
-const OUTPUT = join(ROOT, 'CODEBASE_MAP.md');
+const OUTPUT = join(ROOT, 'docs', 'CODEBASE_MAP.md');
 
 // Directories to skip entirely
 const SKIP_DIRS = new Set([
   'node_modules', 'dist', '.git', '.next', 'coverage',
-  'build', '.turbo', '.cache', 'old',
+  'build', '.turbo', '.cache', 'old', 'docs',
 ]);
 
 // Files to skip
@@ -41,11 +41,10 @@ const DESCRIPTIONS = {
   'eslint.config.js': 'ESLint — TypeScript + React hooks rules',
   'components.json': 'shadcn/ui config — component registry, aliases, style defaults',
   'vercel.json': 'Vercel routing — SPA fallback rewrite (`/*` → `/index.html`)',
-  'package.json': 'Dependencies + npm scripts (dev, build, lint, preview)',
+  'package.json': 'Dependencies + bun scripts (dev, build, lint, preview)',
   '.env.example': 'Env var template — Supabase URL/key, EmailJS keys, reCAPTCHA',
-  '.gitignore': 'Ignores node_modules, dist, .env, build artifacts',
+  '.gitignore': 'Ignores node_modules, dist, .env, build artifacts, auto-generated files',
   'README.md': 'Project overview, setup instructions, deployment guide',
-  'CODEBASE_MAP.md': 'Auto-generated codebase map — updated on every push to main',
 
   // src/
   'src/main.tsx': 'React DOM root — wraps <App /> with <StrictMode>',
@@ -78,7 +77,7 @@ const DESCRIPTIONS = {
   'src/components/Navbar.tsx': 'Responsive sticky navbar — desktop links, mobile hamburger, scroll spy',
   'src/components/NavLink.tsx': 'Smooth-scroll anchor link primitive used inside Navbar.tsx',
   'src/components/Footer.tsx': 'Site footer — copyright, social links, quick nav',
-  'src/components/ThemeProvider.tsx': 'Context provider — light/dark/system theme state, localStorage persistence',
+  'src/components/ThemeProvider.tsx': 'Context provider — light/dark/system theme state',
   'src/components/ThemeToggle.tsx': 'Sun/moon icon button — toggles ThemeProvider theme',
   'src/components/ParticleBackground.tsx': 'Canvas-based animated particle network used in Hero background',
   'src/components/ProgressBar.tsx': 'Scroll progress indicator bar fixed to top of viewport',
@@ -102,8 +101,8 @@ const DESCRIPTIONS = {
   'public/images/og-image.png': 'Open Graph / social preview image (1200×630px)',
 
   // Config / CI
-  '.github/workflows/update-codebase-map.yml': 'GitHub Actions — auto-regenerates CODEBASE_MAP.md on every push to main',
-  '.github/scripts/generate-codebase-map.mjs': 'Node.js script that walks the repo and writes CODEBASE_MAP.md',
+  '.github/workflows/update-codebase-map.yml': 'GitHub Actions — auto-regenerates docs/CODEBASE_MAP.md on every push to main',
+  '.github/scripts/generate-codebase-map.mjs': 'Node.js script that walks the repo and writes docs/CODEBASE_MAP.md',
 };
 
 // shadcn/ui primitive descriptions (short)
@@ -174,62 +173,35 @@ async function walk(dir, results = []) {
 
 /** Get a description for a file path */
 function getDescription(relPath) {
-  // Exact match first
   if (DESCRIPTIONS[relPath]) return DESCRIPTIONS[relPath];
-
-  // shadcn/ui components
   if (relPath.startsWith('src/components/ui/')) {
     const name = basename(relPath);
     return SHADCN_DESCRIPTIONS[name] ?? 'shadcn/ui primitive';
   }
-
-  // GitHub Actions workflows
   if (relPath.startsWith('.github/workflows/')) return 'GitHub Actions workflow';
   if (relPath.startsWith('.github/scripts/')) return 'CI helper script';
-
-  // Supabase migrations
   if (relPath.startsWith('supabase/migrations/')) return 'Supabase SQL migration';
   if (relPath.startsWith('supabase/functions/')) return 'Supabase Edge Function (Deno)';
-
-  // API routes
   if (relPath.startsWith('api/')) return 'Vercel Serverless Function';
-
   return '_(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_';
-}
-
-/** Group files by their top-level directory */
-function groupBySection(files) {
-  const groups = {};
-  for (const f of files) {
-    const parts = f.split('/');
-    const section = parts.length === 1 ? 'root' : parts[0];
-    if (!groups[section]) groups[section] = [];
-    groups[section].push(f);
-  }
-  return groups;
 }
 
 /** Render a section as a markdown table */
 function renderTable(files) {
+  if (!files.length) return '_None_';
   const rows = files.map(f => `| \`${f}\` | ${getDescription(f)} |`);
-  return [
-    '| File | Purpose |',
-    '|---|---|',
-    ...rows,
-  ].join('\n');
+  return ['| File | Purpose |', '|---|---|', ...rows].join('\n');
 }
 
 async function main() {
   const allFiles = await walk(ROOT);
   const relFiles = allFiles
-    .map(f => relative(ROOT, f).replace(/\\/g, '/')) // normalise Windows paths
-    .filter(f => !f.startsWith('CODEBASE_MAP.md')) // exclude self
+    .map(f => relative(ROOT, f).replace(/\\/g, '/'))
+    .filter(f => !f.startsWith('docs/'))
     .sort();
 
-  // Read current git info
   const now = new Date().toISOString();
 
-  // Separate ui components from other src/components
   const uiFiles = relFiles.filter(f => f.startsWith('src/components/ui/'));
   const adminFiles = relFiles.filter(f => f.startsWith('src/components/admin/'));
   const sectionComponents = relFiles.filter(
@@ -242,12 +214,9 @@ async function main() {
   const integrationFiles = relFiles.filter(f => f.startsWith('src/integrations/'));
   const srcRootFiles = relFiles.filter(
     f => f.startsWith('src/') &&
-    !f.startsWith('src/components/') &&
-    !f.startsWith('src/pages/') &&
-    !f.startsWith('src/hooks/') &&
-    !f.startsWith('src/lib/') &&
-    !f.startsWith('src/data/') &&
-    !f.startsWith('src/integrations/') &&
+    !f.startsWith('src/components/') && !f.startsWith('src/pages/') &&
+    !f.startsWith('src/hooks/') && !f.startsWith('src/lib/') &&
+    !f.startsWith('src/data/') && !f.startsWith('src/integrations/') &&
     !f.startsWith('src/assets/')
   );
   const publicFiles = relFiles.filter(f => f.startsWith('public/'));
@@ -257,7 +226,7 @@ async function main() {
   const rootFiles = relFiles.filter(f => !f.includes('/'));
 
   const lines = [
-    `# 🗺️ Codebase Map — Roy Otieno Portfolio`,
+    `# \uD83D\uDDFA\uFE0F Codebase Map \u2014 Roy Otieno Portfolio`,
     ``,
     `> **Auto-generated** on every push to \`main\` by \`.github/workflows/update-codebase-map.yml\``,
     `> Last updated: **${now}**`,
@@ -265,72 +234,56 @@ async function main() {
     ``,
     `---`,
     ``,
-    `## 📁 Root`,
+    `## \uD83D\uDCC1 Root`,
     ``,
     renderTable(rootFiles),
     ``,
     `---`,
     ``,
-    `## 📁 src/ — Entry Points`,
+    `## \uD83D\uDCC1 src/ \u2014 Entry Points`,
     ``,
     renderTable(srcRootFiles),
     ``,
     `---`,
     ``,
-    `## 📁 src/pages/`,
+    `## \uD83D\uDCC1 src/pages/`,
     ``,
     renderTable(pageFiles),
     ``,
     `---`,
     ``,
-    `## 📁 src/components/ — Section & Layout`,
+    `## \uD83D\uDCC1 src/components/ \u2014 Section & Layout`,
     ``,
     renderTable(sectionComponents),
   ];
 
   if (adminFiles.length) {
-    lines.push(``, `### 📁 src/components/admin/`, ``, renderTable(adminFiles));
+    lines.push(``, `### \uD83D\uDCC1 src/components/admin/`, ``, renderTable(adminFiles));
   }
 
   lines.push(
     ``,
-    `### 📁 src/components/ui/ — shadcn/ui Primitives`,
+    `### \uD83D\uDCC1 src/components/ui/ \u2014 shadcn/ui Primitives`,
     ``,
-    `> ⚠️ Do not edit manually — regenerate via \`npx shadcn-ui add <component>\``,
+    `> \u26A0\uFE0F Do not edit manually \u2014 regenerate via \`npx shadcn-ui add <component>\``,
     ``,
     renderTable(uiFiles),
   );
 
-  if (hookFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 src/hooks/`, ``, renderTable(hookFiles));
-  }
-  if (libFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 src/lib/`, ``, renderTable(libFiles));
-  }
-  if (dataFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 src/data/`, ``, renderTable(dataFiles));
-  }
-  if (integrationFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 src/integrations/`, ``, renderTable(integrationFiles));
-  }
-  if (publicFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 public/`, ``, renderTable(publicFiles));
-  }
-  if (apiFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 api/ — Vercel Serverless Functions`, ``, renderTable(apiFiles));
-  }
-  if (supabaseFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 supabase/`, ``, renderTable(supabaseFiles));
-  }
-  if (githubFiles.length) {
-    lines.push(``, `---`, ``, `## 📁 .github/`, ``, renderTable(githubFiles));
-  }
+  if (hookFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 src/hooks/`, ``, renderTable(hookFiles));
+  if (libFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 src/lib/`, ``, renderTable(libFiles));
+  if (dataFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 src/data/`, ``, renderTable(dataFiles));
+  if (integrationFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 src/integrations/`, ``, renderTable(integrationFiles));
+  if (publicFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 public/`, ``, renderTable(publicFiles));
+  if (apiFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 api/ \u2014 Vercel Serverless Functions`, ``, renderTable(apiFiles));
+  if (supabaseFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 supabase/`, ``, renderTable(supabaseFiles));
+  if (githubFiles.length) lines.push(``, `---`, ``, `## \uD83D\uDCC1 .github/`, ``, renderTable(githubFiles));
 
   lines.push(
     ``,
     `---`,
     ``,
-    `## 🔑 Key Aliases`,
+    `## \uD83D\uDD11 Key Aliases`,
     ``,
     `| Alias | Resolves to |`,
     `|---|---|`,
@@ -344,7 +297,7 @@ async function main() {
     ``,
     `---`,
     ``,
-    `## 🛠️ Tech Stack`,
+    `## \uD83D\uDEE0\uFE0F Tech Stack`,
     ``,
     `| Layer | Technology |`,
     `|---|---|`,
@@ -359,15 +312,16 @@ async function main() {
     `| Animation | Custom CSS + Canvas particles |`,
     `| Fonts | Satoshi (Fontshare) |`,
     `| Deployment | Vercel (SPA routing via vercel.json) |`,
-    `| Package Manager | Bun (CI) / npm (local) |`,
+    `| Package Manager | Bun |`,
     ``,
     `---`,
     ``,
-    `_This file is auto-regenerated by \`.github/scripts/generate-codebase-map.mjs\`. Manual edits will be overwritten on the next push to \`main\`._`,
+    `_Auto-regenerated by \`.github/scripts/generate-codebase-map.mjs\`. Manual edits will be overwritten on next push to \`main\`._`,
   );
 
+  await mkdir(join(ROOT, 'docs'), { recursive: true });
   await writeFile(OUTPUT, lines.join('\n'), 'utf8');
-  console.log(`✅ CODEBASE_MAP.md written (${relFiles.length} files indexed).`);
+  console.log(`\u2705 docs/CODEBASE_MAP.md written (${relFiles.length} files indexed).`);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
