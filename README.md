@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `6a84458` — ci: remove lint-workflows job, keep only build-check and dry-run-readme-shell |
+| **Last commit** | `1151b19` — feat: wire contact & newsletter forms to Resend via Vercel API routes |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 20:24 UTC |
+| **Commit date** | 2026-04-13 20:29 UTC |
 | **Branch** | `main` |
-| **Total commits** | 126 |
+| **Total commits** | 128 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
