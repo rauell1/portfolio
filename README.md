@@ -130,16 +130,16 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `a2f74a2` — Fix admin auth config and login diagnostics |
+| **Last commit** | `fe59068` — Add password reset flow, public blog routes, and CI workflow fixes |
 | **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-04-14 01:06 UTC |
+| **Commit date** | 2026-04-14 01:29 UTC |
 | **Branch** | `main` |
-| **Total commits** | 174 |
+| **Total commits** | 176 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 97 |
+| **TypeScript files** | 98 |
 | **CSS files** | 1 |
 | **React components** | 71 |
-| **Pages / views** | 9 |
+| **Pages / views** | 10 |
 
 ## 🤗 Workflow Status
 
