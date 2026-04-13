@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `372aa0c` — perf: comprehensive audit fixes — animation performance, canvas throttle, mobile safety, a11y, CLS |
+| **Last commit** | `b668b5a` — fix: full codebase audit — perf, a11y, meta & SEO (#15) |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 21:33 UTC |
+| **Commit date** | 2026-04-13 21:47 UTC |
 | **Branch** | `main` |
-| **Total commits** | 140 |
+| **Total commits** | 143 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
