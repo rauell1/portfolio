@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `17a96a2` — Add admin edit quick-links and logout controls |
+| **Last commit** | `5d382ac` — Stabilize workflows and add admin identity chip |
 | **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-04-14 01:42 UTC |
+| **Commit date** | 2026-04-14 01:52 UTC |
 | **Branch** | `main` |
-| **Total commits** | 181 |
+| **Total commits** | 183 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
