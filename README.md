@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `900addc` — Add schema bootstrap and RLS hardening migration |
+| **Last commit** | `0deebbd` — Harden APIs, secure blog sharing, and optimize app performance |
 | **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-04-14 02:05 UTC |
+| **Commit date** | 2026-04-14 02:38 UTC |
 | **Branch** | `main` |
-| **Total commits** | 190 |
+| **Total commits** | 193 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
