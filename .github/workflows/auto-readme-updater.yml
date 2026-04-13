@@ -35,7 +35,7 @@ on:
 # cancel-in-progress: false ensures the queued run still executes
 # (we want every push eventually reflected, not skipped).
 concurrency:
-  group: readme-updater-${{ github.ref }}
+  group: maintenance-auto-commits-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
@@ -44,6 +44,7 @@ permissions:
 jobs:
   update-readme:
     name: Build and splice README block
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
