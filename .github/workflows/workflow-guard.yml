@@ -5,9 +5,8 @@
 # historically, before they ever reach the runner:
 #
 #  1. YAML parse errors  — actionlint + yamllint
-#  2. Shell script bugs  — shellcheck on every run: block
-#  3. Regression rules   — grep to ban heredocs and raw HTML
-#                          comments inside run: blocks
+#  2. Shell script bugs  — grep checks on every run: block
+#  3. Regression rules   — ban heredocs and raw HTML comments
 #  4. find safety        — dry-run the README shell logic
 #                          against the actual src/ tree
 # ============================================================
@@ -36,6 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       # ── 1. YAML syntax check ───────────────────────────────────
       - name: Install yamllint
@@ -50,12 +51,12 @@ jobs:
           echo "yamllint passed."
 
       # ── 2. actionlint — GitHub Actions semantic check ──────────
+      # Use the official installer script (avoids fragile curl|tar pipelines).
       - name: Install actionlint
         run: |
-          ACTIONLINT_VERSION=$(curl -s https://api.github.com/repos/rhysd/actionlint/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
-          curl -sL "https://github.com/rhysd/actionlint/releases/download/${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION#v}_linux_amd64.tar.gz" \
-            | tar -xz -C /usr/local/bin actionlint
-          echo "actionlint ${ACTIONLINT_VERSION} installed."
+          bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          sudo mv actionlint /usr/local/bin/actionlint
+          actionlint --version
 
       - name: actionlint — semantic validation
         run: |
@@ -82,9 +83,6 @@ jobs:
       - name: Check — no raw HTML comment tokens in run blocks
         run: |
           set -euo pipefail
-          # Sentinel strings must be stored in shell variables, not written raw.
-          # We allow them ONLY when they appear as part of a shell variable assignment.
-          # Bare occurrences on a line that is not a variable assignment are banned.
           VIOLATIONS=$(grep -n "'<!--\|\"<!--" \
             .github/workflows/auto-readme-updater.yml \
             .github/workflows/safe-rollback.yml 2>/dev/null \
@@ -99,6 +97,8 @@ jobs:
   dry-run-readme-shell:
     name: Dry-run README shell logic against real src/ tree
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -106,7 +106,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Simulate README stat gathering
         run: |
@@ -150,11 +150,13 @@ jobs:
   build-check:
     name: Vite build sanity check
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
       - run: npm ci
       - run: npm run build
