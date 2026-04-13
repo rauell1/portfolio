@@ -130,13 +130,13 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `b79dada` — fix: replace all safaricharge.com links with safaricharge-website.vercel.app (#17) |
+| **Last commit** | `7a1b827` — feat: add Supabase SSR helpers, update client with correct env keys, add .env.local (#18) |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 22:27 UTC |
+| **Commit date** | 2026-04-13 22:30 UTC |
 | **Branch** | `main` |
-| **Total commits** | 150 |
+| **Total commits** | 153 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 94 |
+| **TypeScript files** | 97 |
 | **CSS files** | 1 |
 | **React components** | 71 |
 | **Pages / views** | 9 |
