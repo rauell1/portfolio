@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { SUPABASE_URL_HOST } from "@/integrations/supabase/client";
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 5 * 60 * 1000;
@@ -37,7 +38,9 @@ const AdminLogin = () => {
 
     setIsLoading(true);
 
-    const { error } = await signIn(email, password);
+    // Normalize input to avoid accidental whitespace/case mismatch issues.
+    const normalizedEmail = email.trim().toLowerCase();
+    const { error } = await signIn(normalizedEmail, password);
 
     if (error) {
       attemptsRef.current += 1;
@@ -46,11 +49,19 @@ const AdminLogin = () => {
         attemptsRef.current = 0;
         setError("Too many failed attempts. Please try again in a few minutes.");
       } else {
-        setError(error.message);
+        const authError = error as Error & { code?: string; status?: number };
+        const baseMessage =
+          error.message === "Invalid login credentials"
+            ? "Invalid login credentials. This usually means the password is incorrect or the email does not exist in the connected Supabase project."
+            : error.message;
+        const details = authError.code
+          ? ` (code: ${authError.code}${authError.status ? `, status: ${authError.status}` : ""})`
+          : "";
+        setError(`${baseMessage}${details}`);
       }
       toast({
         title: "Login failed",
-        description: "Please check your credentials and try again.",
+        description: "Please verify credentials and confirm this deployment points to the correct Supabase project.",
         variant: "destructive",
       });
     } else {
@@ -139,6 +150,9 @@ const AdminLogin = () => {
           </form>
 
           <div className="mt-6 text-center">
+            <p className="text-[11px] text-muted-foreground mb-3">
+              Supabase host: {SUPABASE_URL_HOST ?? "not configured"}
+            </p>
             <Link
               to="/"
               className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
