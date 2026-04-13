@@ -12,16 +12,6 @@ const SUPABASE_PUBLISHABLE_KEY =
   (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ??
   (import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY as string | undefined);
 
-export const SUPABASE_URL_HOST = SUPABASE_URL
-  ? (() => {
-      try {
-        return new URL(SUPABASE_URL).host;
-      } catch {
-        return null;
-      }
-    })()
-  : null;
-
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 

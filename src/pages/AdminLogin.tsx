@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-import { SUPABASE_URL_HOST } from "@/integrations/supabase/client";
 import { supabase } from "@/integrations/supabase/client";
 
 const MAX_ATTEMPTS = 5;
@@ -197,9 +196,6 @@ const AdminLogin = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-[11px] text-muted-foreground mb-3">
-              Supabase host: {SUPABASE_URL_HOST ?? "not configured"}
-            </p>
             <Link
               to="/"
               className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
