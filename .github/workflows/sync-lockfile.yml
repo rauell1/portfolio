@@ -65,16 +65,8 @@ jobs:
           set -euo pipefail
           if git diff --quiet bun.lock; then
             echo "bun.lock already in sync — nothing to commit."
-            echo "## bun.lock already in sync" >> $GITHUB_STEP_SUMMARY
-            echo "No changes to bun.lock were needed." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-
-          # Show a summary of what changed (package names added/removed)
-          echo "## bun.lock updated" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git diff --stat bun.lock >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
           git add bun.lock
           git commit -m "chore(deps): sync bun.lock [skip ci]"
