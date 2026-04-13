@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `b668b5a` — fix: full codebase audit — perf, a11y, meta & SEO (#15) |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 21:47 UTC |
+| **Last commit** | `094b545` — ci(deps): bump actions/setup-node from 4 to 6 |
+| **Committed by** | dependabot[bot] |
+| **Commit date** | 2026-04-13 21:56 UTC |
 | **Branch** | `main` |
-| **Total commits** | 143 |
+| **Total commits** | 145 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
