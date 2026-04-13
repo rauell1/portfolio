@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `ecf8253` — feat: add CODEBASE_MAP.md and auto-update workflow |
+| **Last commit** | `372aa0c` — perf: comprehensive audit fixes — animation performance, canvas throttle, mobile safety, a11y, CLS |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 21:23 UTC |
+| **Commit date** | 2026-04-13 21:33 UTC |
 | **Branch** | `main` |
-| **Total commits** | 137 |
+| **Total commits** | 140 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
