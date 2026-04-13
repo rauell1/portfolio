@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { MapPin, GraduationCap, Zap, Leaf } from "lucide-react";
-import headshot from "@/assets/headshot.jpg";
 import { supabase } from "@/integrations/supabase/client";
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
@@ -111,7 +110,7 @@ export const About = () => {
               {/* Headshot */}
               <div className="absolute inset-12 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl">
                 <img 
-                  src={headshot} 
+                  src="/images/og-image.png"
                   alt="Roy Otieno - Clean Energy Engineer"
                   className="w-full h-full object-cover"
                   loading="eager"

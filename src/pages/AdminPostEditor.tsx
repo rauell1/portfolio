@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Save, Loader2, Tag, Calendar, FileText, AlertCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -38,10 +38,23 @@ const emptyPost: BlogPost = {
   published_at: null,
 };
 
+const SAFARICHARGE_DRAFT_TEMPLATE: BlogPost = {
+  title: "SafariCharge Platform: Product and Infrastructure Roadmap",
+  slug: "safaricharge-platform-product-infrastructure-roadmap",
+  excerpt: "Draft article covering SafariCharge platform architecture, operations workflows, and rollout strategy.",
+  content: "## Overview\n\nThis draft captures the current SafariCharge platform direction.\n\n## Problem\n\nDefine the key market and operational challenge addressed by SafariCharge.\n\n## Solution\n\nDocument the platform modules, user flows, and deployment strategy.\n\n## Progress\n\nSummarize milestones, implementation status, and current blockers.\n\n## Next Steps\n\nOutline roadmap priorities and execution timeline.",
+  cover_image: "/images/og-image.png",
+  category: "ev-mobility",
+  tags: ["safaricharge", "ev-mobility", "platform", "africa"],
+  published: false,
+  published_at: null,
+};
+
 const AdminPostEditor = () => {
   const { id } = useParams();
   const isEditing = !!id && id !== "new";
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -49,6 +62,7 @@ const AdminPostEditor = () => {
   const [loading, setLoading] = useState<boolean>(isEditing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [templateHint, setTemplateHint] = useState<string | null>(null);
 
   const isAdmin = isAdminEmail(user?.email);
 
@@ -82,6 +96,15 @@ const AdminPostEditor = () => {
     };
     fetchPost();
   }, [id, isEditing]);
+
+  useEffect(() => {
+    if (isEditing) return;
+    const template = new URLSearchParams(location.search).get("template");
+    if (template === "safaricharge") {
+      setPost(SAFARICHARGE_DRAFT_TEMPLATE);
+      setTemplateHint("SafariCharge draft template loaded. Edit and save when ready.");
+    }
+  }, [isEditing, location.search]);
 
   if (!isAdmin) {
     return (
@@ -203,6 +226,12 @@ const AdminPostEditor = () => {
                   <div className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm text-destructive">
                     <AlertCircle className="w-4 h-4 mt-0.5" />
                     <span>{error}</span>
+                  </div>
+                )}
+
+                {templateHint && (
+                  <div className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
+                    {templateHint}
                   </div>
                 )}
 

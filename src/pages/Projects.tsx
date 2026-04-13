@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft, Plus, Image, Calendar, MapPin, 
-  Edit, Trash2, Loader2, Upload, Zap, Map, Users, Target, Cpu, Layout
+  Edit, Trash2, Loader2, Upload, Zap, Map, Users, Target, Cpu, Layout, ExternalLink
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -78,6 +78,14 @@ const SAFARICHARGE_PROJECT: Project = {
   images: ["/images/og-image.png"],
   completed_at: null,
   created_at: "",
+};
+
+const PROJECT_DEEP_LINKS: Record<string, { caseStudy?: string; blogDraft?: string; repo?: string }> = {
+  "safaricharge-platform": {
+    caseStudy: "/case-studies?study=safaricharge-platform",
+    blogDraft: "/admin/posts/new?template=safaricharge",
+    repo: "https://github.com/rauell1/safaricharge",
+  },
 };
 
 const ROAM_POINT_CASE_STUDY = {
@@ -368,6 +376,7 @@ const Projects = () => {
   ];
   const isRoamPoint = (p: Project) => p.slug === "roam-point" || p.id === "roam-point";
   const isSafariCharge = (p: Project) => p.slug === "safaricharge-platform" || p.id === "safaricharge-platform";
+  const getProjectLinks = (p: Project) => PROJECT_DEEP_LINKS[p.slug || p.id || ""];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -662,6 +671,41 @@ const Projects = () => {
                     {selectedProject.description}
                   </p>
                 </div>
+
+                {getProjectLinks(selectedProject) && (
+                  <div className="pt-2">
+                    <h5 className="font-medium text-sm text-muted-foreground mb-2">Related Links</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {getProjectLinks(selectedProject)?.caseStudy && (
+                        <Link
+                          to={getProjectLinks(selectedProject)!.caseStudy!}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          Open Case Study
+                        </Link>
+                      )}
+                      {getProjectLinks(selectedProject)?.blogDraft && (
+                        <Link
+                          to={getProjectLinks(selectedProject)!.blogDraft!}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          Open Blog Draft
+                        </Link>
+                      )}
+                      {getProjectLinks(selectedProject)?.repo && (
+                        <a
+                          href={getProjectLinks(selectedProject)!.repo!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          Repo
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           ) : null}

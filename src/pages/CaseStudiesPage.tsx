@@ -6,7 +6,7 @@ import {
   Droplets, Thermometer, ArrowLeft, Wifi, Shield,
   Download, Crown, Map, Edit, Archive
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
@@ -31,6 +31,7 @@ const CASE_STUDY_IMAGES = {
   siteFeasibility: "/images/basigo-buses.jpeg",   // BasiGo buses – EV infrastructure
   solarColdStorage: "https://images.unsplash.com/photo-1698752822107-69f8973936e4?w=800&q=80", // Solar, different from above
   energyDemand: "/images/basigo-charging.png",    // BasiGo charging infrastructure
+  safaricharge: "/images/og-image.png",
 };
 
 interface Metric {
@@ -229,6 +230,44 @@ const caseStudies: CaseStudy[] = [
     icon: Sun,
   },
   {
+    id: "safaricharge-platform",
+    slug: "safaricharge-platform",
+    title: "SafariCharge Platform Buildout and Operations Workflow",
+    subtitle: "Designing and shipping the SafariCharge platform stack for EV charging operations and growth.",
+    category: "Platform Engineering",
+    location: "Nairobi, Kenya",
+    date: "2025-Present",
+    role: "Founder & Product Lead",
+    partner: "SafariCharge",
+    image: CASE_STUDY_IMAGES.safaricharge,
+    sections: [
+      {
+        heading: "Project Overview",
+        content: "SafariCharge is a clean-mobility platform project focused on building practical software and operations tooling to support EV charging infrastructure growth in East Africa. The work spans product strategy, platform implementation, and deployment workflows.",
+      },
+      {
+        heading: "Core Problem",
+        content: "EV ecosystem growth requires coordination across infrastructure planning, partner onboarding, and reliable software operations. Fragmented workflows slow deployments and reduce operational visibility.",
+      },
+      {
+        heading: "Platform Work Delivered",
+        content: "Implemented portfolio-facing product experience, operational workflow tooling, and integration-ready architecture to support expansion of charging deployments and partner operations.",
+      },
+      {
+        heading: "Current Focus",
+        content: "Scaling content and project communication through linked project, case-study, and blog flows while strengthening platform reliability, security, and delivery velocity.",
+      },
+    ],
+    metrics: [
+      { label: "Focus", value: "Platform + Ops", icon: Cpu },
+      { label: "Model", value: "Product-led", icon: TrendingUp },
+      { label: "Domain", value: "EV Charging", icon: Zap },
+      { label: "Region", value: "East Africa", icon: MapPin },
+    ],
+    gradient: "from-cyan-500 to-blue-600",
+    icon: Cpu,
+  },
+  {
     id: "energy-demand-modeling",
     title: "Energy Demand Modeling for Electric Mobility Infrastructure",
     subtitle: "Analyzing charging demand patterns to inform infrastructure planning",
@@ -265,6 +304,7 @@ const CaseStudiesPage = () => {
   const { user } = useAuth();
   const isAdmin = isAdminEmail(user?.email);
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const [caseStudiesData, setCaseStudiesData] = useState<CaseStudy[]>(caseStudies);
   const modalScrollRef = useRef<HTMLDivElement>(null);
@@ -320,6 +360,15 @@ const CaseStudiesPage = () => {
       modalScrollRef.current.scrollTop = 0;
     }
   }, [selectedStudy]);
+
+  useEffect(() => {
+    const study = searchParams.get("study");
+    if (!study || selectedStudy) return;
+    const matched = caseStudiesData.find((item) => item.id === study || item.slug === study);
+    if (matched) {
+      setSelectedStudy(matched);
+    }
+  }, [searchParams, caseStudiesData, selectedStudy]);
 
   const archiveCaseStudy = async (id: string, currentPublished: boolean) => {
     if (!supabase) return;
