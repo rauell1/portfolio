@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-13T23:05:50.838Z**
+> Last updated: **2026-04-13T23:38:46.323Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -220,6 +220,7 @@
 
 | File | Purpose |
 |---|---|
+| `api/_lib/security.ts` | Vercel Serverless Function |
 | `api/contact.ts` | Vercel Serverless Function |
 | `api/newsletter.ts` | Vercel Serverless Function |
 
@@ -240,6 +241,7 @@
 | `supabase/migrations/20260316000000_case_studies.sql` | Supabase SQL migration |
 | `supabase/migrations/20260317000000_page_sections_and_project_status.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414000000_schema_and_rls_hardening.sql` | Supabase SQL migration |
+| `supabase/migrations/20260414010000_blog_share_access_controls.sql` | Supabase SQL migration |
 
 ---
 
