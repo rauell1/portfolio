@@ -1,32 +1,25 @@
 # =============================================================
-# SYNC LOCK FILE
+# SYNC BUN LOCKFILE
 # Runs automatically whenever package.json changes on main,
 # or can be triggered manually.
 #
-# Purpose: keeps package-lock.json in sync with package.json
-# so that `npm ci` never fails in other workflows with
-# EUSAGE / lock file out of sync errors.
+# Purpose: keeps bun.lock in sync with package.json
+# so that `bun install --frozen-lockfile` in CI workflows
+# remains deterministic.
 #
 # How it works:
 #   1. Checks out main
-#   2. Runs `npm install --package-lock-only --legacy-peer-deps`
-#      (regenerates package-lock.json without touching node_modules;
-#       --legacy-peer-deps matches the peer dep resolution used when
-#       packages were originally installed locally, preventing a
-#       mismatch loop with framer-motion / tiptap peer warnings)
-#   3. If the lock file changed, commits and pushes it with [skip ci]
+#   2. Runs `bun install` (refreshes bun.lock from package.json)
+#   3. If bun.lock changed, commits and pushes it with [skip ci]
 #      so it does NOT re-trigger safe-rollback or workflow-guard
 #
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────────────────
-# This workflow only needs actions/checkout and actions/setup-node.
-# Review node-version here whenever you update the node-version in
-# safe-rollback.yml or workflow-guard.yml — all three must match.
-#
-# If you switch from --legacy-peer-deps to --strict-peer-deps locally
-# (i.e., all peer dep conflicts are resolved), remove the flag from the
-# `npm install` command below and commit.
+# This workflow uses:
+#   - actions/checkout@v4
+#   - oven-sh/setup-bun@v2 (bun-version: latest)
+# Keep Bun setup current with your CI toolchain.
 # =============================================================
-name: Sync Lock File
+name: Sync Bun Lockfile
 
 on:
   push:
@@ -44,7 +37,7 @@ permissions:
 
 jobs:
   sync:
-    name: Regenerate package-lock.json
+    name: Sync bun.lock
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -53,38 +46,44 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: '24'
+          bun-version: latest
+          cache: true
 
       - name: Configure git
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Regenerate lock file
-        # --package-lock-only: updates lock file only, does not install node_modules
-        # --legacy-peer-deps:  matches the peer dep resolution strategy used locally
-        #                      (prevents mismatch with framer-motion / tiptap warnings)
-        run: npm install --package-lock-only --legacy-peer-deps
+      - name: Sync bun.lock
+        run: bun install
 
       - name: Commit if changed
         run: |
-          if git diff --quiet package-lock.json; then
-            echo "Lock file already in sync — nothing to commit."
-            echo "## Lock file already in sync" >> $GITHUB_STEP_SUMMARY
-            echo "No changes to package-lock.json were needed." >> $GITHUB_STEP_SUMMARY
+          set -euo pipefail
+          if git diff --quiet bun.lock; then
+            echo "bun.lock already in sync — nothing to commit."
+            echo "## bun.lock already in sync" >> $GITHUB_STEP_SUMMARY
+            echo "No changes to bun.lock were needed." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
 
           # Show a summary of what changed (package names added/removed)
-          echo "## Lock file updated" >> $GITHUB_STEP_SUMMARY
+          echo "## bun.lock updated" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git diff --stat package-lock.json >> $GITHUB_STEP_SUMMARY
+          git diff --stat bun.lock >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-          git add package-lock.json
-          git commit -m "chore(deps): regenerate package-lock.json [skip ci]"
+          git add bun.lock
+          git commit -m "chore(deps): sync bun.lock [skip ci]"
           git pull --rebase origin main
           git push origin main
-          echo "Lock file updated and pushed."
+          echo "bun.lock updated and pushed."
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Sync bun.lock job" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY

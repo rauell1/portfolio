@@ -1,7 +1,7 @@
 # =============================================================
 # AUTO README UPDATER
 # Runs on every push to main (excluding README.md and
-# package-lock.json changes) and on manual dispatch.
+# lockfile-only changes) and on manual dispatch.
 #
 # Updates the <!-- AUTO-UPDATED:START/END --> block in README.md
 # with live repo stats (commit info, file counts, workflow badges).
@@ -13,14 +13,9 @@
 #
 # Review and update these pins when:
 #   1. A new LTS Node.js version is released (currently 24, next: 26 ~Oct 2027)
-#      → Update node-version: '24' → '26' once 26 enters Active LTS
+#      → Update node-version once 26 enters Active LTS
 #   2. actions/checkout or actions/setup-node release a new major version
-#      → Check https://github.com/actions/checkout/releases
-#        and https://github.com/actions/setup-node/releases quarterly
-#   3. You add new npm dependencies that require a newer Node minimum
-#      → Check engines.node in package.json and align node-version here
-# Dependabot is configured in dependabot.yml to auto-bump these
-# actions monthly. Review its PRs promptly.
+#      → Review release notes before bumping
 #
 # NOTE: This workflow does NOT run `npm ci` — it only reads
 # package.json via `node -p`. No cache is needed.
@@ -32,7 +27,8 @@ on:
     branches: [main]
     paths-ignore:
       - 'README.md'
-      - 'package-lock.json'   # sync-lockfile commits this; no readme update needed
+      - 'package-lock.json'   # legacy npm lockfile (if ever reintroduced)
+      - 'bun.lock'            # sync-lockfile commits this; no readme update needed
   workflow_dispatch:
 
 # Prevent parallel runs from racing on the README commit.
@@ -65,6 +61,7 @@ jobs:
 
       - name: Configure git
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -158,9 +155,23 @@ jobs:
 
       - name: Commit if changed
         run: |
-          git diff --quiet README.md && { echo "README unchanged."; exit 0; }
+          set -euo pipefail
+          if git diff --quiet README.md; then
+            echo "README unchanged."
+            echo "## README auto-update" >> $GITHUB_STEP_SUMMARY
+            echo "Result: no README.md changes required." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
           git add README.md
           git commit -m "docs(auto): update README snapshot [skip ci]"
           git pull --rebase origin main
           git push origin main
           echo "README updated and pushed."
+          echo "## README auto-update" >> $GITHUB_STEP_SUMMARY
+          echo "Result: updated README.md snapshot block." >> $GITHUB_STEP_SUMMARY
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Auto README Updater" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY

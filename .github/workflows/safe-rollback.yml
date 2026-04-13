@@ -16,7 +16,8 @@
 #   - oven-sh/setup-bun@v2
 #
 # Review and update these pins when:
-#   1. Bun releases a new major version → update bun-version below
+#   1. Bun releases a new major version
+#      → verify latest Bun remains compatible with your toolchain
 #   2. You add a new package that requires a higher Bun minimum
 #   3. actions/* release a new major version
 #      → Review release notes for breaking changes before upgrading
@@ -29,6 +30,7 @@ on:
     paths-ignore:
       - 'README.md'           # auto-readme-updater commits this
       - 'docs/CODEBASE_MAP.md' # update-codebase-map commits this
+      - 'bun.lock'            # sync-lockfile commits this
   workflow_dispatch:
     inputs:
       target_sha:
@@ -67,6 +69,12 @@ jobs:
         run: bun run build
         env:
           CI: true
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Build gate" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY
 
   # ── PATH A, step 2: tag on successful push build ──────────────────────────
   tag-on-push:
@@ -81,6 +89,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure git
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create snapshot tag
@@ -99,6 +108,12 @@ jobs:
           echo "| Tag | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| snapshot/latest | updated |" >> $GITHUB_STEP_SUMMARY
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Tag snapshot (post-push)" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY
 
   # ── PATH B, step 1: tag on manual dispatch ────────────────────────────────
   tag-on-dispatch:
@@ -112,6 +127,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure git
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create snapshot tag
@@ -130,6 +146,12 @@ jobs:
           echo "| Tag | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| SHA | \`${SHORT}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Tag snapshot (manual)" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY
 
   # ── PATH B, step 2: rollback (manual + target_sha provided) ──────────────
   rollback:
@@ -143,6 +165,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure git
         run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Validate target SHA
@@ -191,3 +214,9 @@ jobs:
           echo "| Full SHA | \`${FULL}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Reason | ${{ github.event.inputs.reason }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Triggered by | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+      - name: Job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          echo "## Non-destructive rollback" >> $GITHUB_STEP_SUMMARY
+          echo "Result: \`${{ job.status }}\`" >> $GITHUB_STEP_SUMMARY
