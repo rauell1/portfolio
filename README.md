@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `9e8a755` — Merge pull request #22 from rauell1/copilot/audit-harden-github-actions |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-13 23:47 UTC |
+| **Last commit** | `a2f74a2` — Fix admin auth config and login diagnostics |
+| **Committed by** | Roy Okola Otieno |
+| **Commit date** | 2026-04-14 01:06 UTC |
 | **Branch** | `main` |
-| **Total commits** | 171 |
+| **Total commits** | 174 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 97 |
 | **CSS files** | 1 |
