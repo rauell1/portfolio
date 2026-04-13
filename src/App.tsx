@@ -95,6 +95,7 @@ const App = () => (
                   <Route path="/case-studies" element={<CaseStudiesPage />} />
                   <Route path="/projects" element={<ProjectsPage />} />
                   <Route path="/admin" element={<AdminLogin />} />
+                  <Route path="/admin/posts/new" element={<ProtectedAdminPostEditor />} />
                   <Route path="/admin/posts/:id" element={<ProtectedAdminPostEditor />} />
                   <Route path="/auth/reset-password" element={<AuthResetPassword />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

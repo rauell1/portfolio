@@ -126,6 +126,28 @@ const CaseStudiesManager = () => {
     fetchCaseStudies();
   }, [fetchCaseStudies]);
 
+  const handleAdd = () => {
+    setEditing({
+      title: "",
+      subtitle: "",
+      category: "sustainability",
+      location: "",
+      date: "",
+      role: "",
+      partner: "",
+      image: "",
+      pdf_download: "",
+      is_flagship: false,
+      published: true,
+      sections: [{ heading: "", content: "" }],
+      metrics: [{ label: "", value: "", icon_name: "Zap" }],
+      gradient: "from-blue-500 to-cyan-400",
+      icon_name: "Zap",
+    });
+    setExpandedSections(false);
+    setIsEditModalOpen(true);
+  };
+
   const handleEdit = (cs: CaseStudy) => {
     setEditing({
       ...cs,
@@ -179,9 +201,9 @@ const CaseStudiesManager = () => {
         if (error) throw error;
         toast({ title: "Success", description: "Case study updated successfully" });
       } else {
-        toast({ title: "Creation disabled", description: "Only existing case studies can be edited.", variant: "destructive" });
-        setIsSaving(false);
-        return;
+        const { error } = await supabase.from("case_studies").insert(payload);
+        if (error) throw error;
+        toast({ title: "Success", description: "Case study created successfully" });
       }
 
       await fetchCaseStudies();
@@ -290,9 +312,10 @@ const CaseStudiesManager = () => {
             className="pl-10"
           />
         </div>
-        <div className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
-          Editing mode: update existing case studies only.
-        </div>
+        <Button onClick={handleAdd}>
+          <Plus className="w-4 h-4 mr-2" />
+          New Case Study
+        </Button>
       </div>
 
       {/* Stats */}
@@ -325,6 +348,7 @@ const CaseStudiesManager = () => {
           <div className="p-12 text-center">
             <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground">No case studies found</p>
+            <Button className="mt-4" onClick={handleAdd}>Create your first case study</Button>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -419,9 +443,9 @@ const CaseStudiesManager = () => {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-display">
-              {editing.id ? "Edit Case Study" : "Create Disabled"}
+              {editing.id ? "Edit Case Study" : "Add New Case Study"}
             </DialogTitle>
-            <DialogDescription>Editing existing case studies is enabled. New creation is disabled.</DialogDescription>
+            <DialogDescription>Fill in the details for your case study.</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 mt-4">

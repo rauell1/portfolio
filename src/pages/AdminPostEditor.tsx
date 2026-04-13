@@ -83,12 +83,6 @@ const AdminPostEditor = () => {
     fetchPost();
   }, [id, isEditing]);
 
-  useEffect(() => {
-    if (!isEditing) {
-      setError("Creating new blog posts is disabled. Edit an existing post from the blog manager.");
-    }
-  }, [isEditing]);
-
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
@@ -113,11 +107,6 @@ const AdminPostEditor = () => {
   };
 
   const handleSave = async () => {
-    if (!isEditing) {
-      setError("Creating new blog posts is disabled. Edit an existing post from the blog manager.");
-      return;
-    }
-
     if (!post.title || !post.slug || !post.content) {
       setError("Title, slug, and content are required.");
       return;
@@ -146,6 +135,8 @@ const AdminPostEditor = () => {
       let result;
       if (isEditing && post.id) {
         result = await supabase.from("blog_posts").update(payload).eq("id", post.id);
+      } else {
+        result = await supabase.from("blog_posts").insert(payload);
       }
 
       if (result.error) {
@@ -192,7 +183,7 @@ const AdminPostEditor = () => {
               Back to Blog
             </Link>
             <span className="text-xs text-muted-foreground">
-              {isEditing ? "Edit blog post" : "Creation disabled"}
+              {isEditing ? "Edit blog post" : "Create blog post"}
             </span>
           </motion.div>
 
@@ -322,7 +313,7 @@ const AdminPostEditor = () => {
                     <span>Published</span>
                   </label>
 
-                  <Button type="button" onClick={handleSave} disabled={saving || !isEditing}>
+                  <Button type="button" onClick={handleSave} disabled={saving}>
                     {saving ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />

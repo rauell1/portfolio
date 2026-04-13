@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowLeft, Image, Calendar, MapPin, 
+  ArrowLeft, Plus, Image, Calendar, MapPin, 
   Edit, Trash2, Loader2, Upload, Zap, Map, Users, Target, Cpu, Layout
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -64,6 +64,18 @@ const ROAM_POINT_PROJECT: Project = {
   location: "Nairobi, Kenya",
   project_type: "ev",
   images: ["/images/roam-electric.webp", "/images/roam-charger-1.jpeg", "/images/roam-charger-2.jpeg", "/images/roam-charger-3.jpeg", "/images/roam-charger-4.jpeg"],
+  completed_at: null,
+  created_at: "",
+};
+
+const SAFARICHARGE_PROJECT: Project = {
+  id: "safaricharge-platform",
+  slug: "safaricharge-platform",
+  title: "SafariCharge Platform Development",
+  description: "End-to-end platform work on SafariCharge, including clean mobility product architecture, web experience, and operational tooling for EV charging deployment workflows.",
+  location: "Nairobi, Kenya",
+  project_type: "ev",
+  images: ["/images/og-image.png"],
   completed_at: null,
   created_at: "",
 };
@@ -175,6 +187,18 @@ const Projects = () => {
     fetchProjects();
   }, [fetchProjects]);
 
+  const handleAddProject = () => {
+    setEditingProject({
+      title: "",
+      description: "",
+      location: "",
+      project_type: "solar",
+      images: [],
+      completed_at: null,
+    });
+    setIsEditModalOpen(true);
+  };
+
   const handleEditProject = (project: Project) => {
     setEditingProject(project);
     setIsEditModalOpen(true);
@@ -234,15 +258,6 @@ const Projects = () => {
   };
 
   const handleSaveProject = async () => {
-    if (!editingProject.id) {
-      toast({
-        title: "Creation disabled",
-        description: "Only existing projects can be edited.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     if (!editingProject.title || !editingProject.description) {
       toast({
         title: "Error",
@@ -280,6 +295,14 @@ const Projects = () => {
         toast({
           title: "Success",
           description: "Project updated successfully",
+        });
+      } else {
+        const { error } = await supabase.from("projects").insert(payload);
+
+        if (error) throw error;
+        toast({
+          title: "Success",
+          description: "Project created successfully",
         });
       }
 
@@ -337,10 +360,14 @@ const Projects = () => {
   // If the Roam Point project is already in the DB (identified by slug), use that version.
   // Otherwise fall back to the hardcoded constant so the card always shows.
   const hasRoamPointInDB = projects.some((p) => p.slug === "roam-point");
-  const displayProjects = hasRoamPointInDB
-    ? projects
-    : [ROAM_POINT_PROJECT, ...projects];
+  const hasSafariChargeInDB = projects.some((p) => p.slug === "safaricharge-platform");
+  const displayProjects = [
+    ...(hasRoamPointInDB ? [] : [ROAM_POINT_PROJECT]),
+    ...(hasSafariChargeInDB ? [] : [SAFARICHARGE_PROJECT]),
+    ...projects,
+  ];
   const isRoamPoint = (p: Project) => p.slug === "roam-point" || p.id === "roam-point";
+  const isSafariCharge = (p: Project) => p.slug === "safaricharge-platform" || p.id === "safaricharge-platform";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -375,9 +402,10 @@ const Projects = () => {
             </div>
             
             {isAdmin && (
-              <div className="self-start rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary">
-                Editing mode: update existing projects from each card's edit button.
-              </div>
+              <Button onClick={handleAddProject} className="self-start">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Project
+              </Button>
             )}
           </motion.div>
 
@@ -426,7 +454,7 @@ const Projects = () => {
                       
                       {isAdmin && (
                         <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          {!(!hasRoamPointInDB && isRoamPoint(project)) && (
+                          {!((!hasRoamPointInDB && isRoamPoint(project)) || (!hasSafariChargeInDB && isSafariCharge(project))) && (
                             <>
                               <button
                                 onClick={(e) => {

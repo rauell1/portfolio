@@ -276,8 +276,15 @@ const Blog = () => {
           </motion.div>
 
           {isAdmin && (
-            <div className="mb-6 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
-              Manage existing blog posts from this page. New post creation is disabled for content control.
+            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
+              <span>Blog manager is enabled: create new posts or edit existing ones.</span>
+              <Link
+                to="/admin/posts/new"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+              >
+                <Edit className="w-4 h-4" />
+                New Post
+              </Link>
             </div>
           )}
 
