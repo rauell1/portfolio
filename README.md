@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `d832a2c` — Serialize maintenance workflows and skip bot push loops |
+| **Last commit** | `900addc` — Add schema bootstrap and RLS hardening migration |
 | **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-04-14 01:59 UTC |
+| **Commit date** | 2026-04-14 02:05 UTC |
 | **Branch** | `main` |
-| **Total commits** | 187 |
+| **Total commits** | 190 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
