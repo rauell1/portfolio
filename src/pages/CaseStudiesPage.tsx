@@ -4,7 +4,7 @@ import {
   Sun, Battery, Zap, Leaf, TrendingUp, Users,
   MapPin, Calendar, X, ChevronRight, BarChart3,
   Droplets, Thermometer, ArrowLeft, Wifi, Shield,
-  Download, Crown, Map, Edit, Archive
+  Download, Crown, Map, Edit, Archive, Cpu
 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -19,18 +19,18 @@ import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
 // Icon map for resolving icon names from the database
 const ICON_MAP: Record<string, typeof Sun> = {
   Sun, Battery, Zap, Leaf, TrendingUp, Users, MapPin, Calendar,
-  BarChart3, Droplets, Thermometer, Wifi, Shield, Map,
+  BarChart3, Droplets, Thermometer, Wifi, Shield, Map, Cpu,
 };
 
 const resolveIcon = (name: string): typeof Sun => ICON_MAP[name] ?? Zap;
 
-// Case study images: local images from public/images/
+// Case study images
 const CASE_STUDY_IMAGES = {
-  solarMicrogrid: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80",  // Solar
-  roamPoint: "/images/roam-electric.webp",        // Roam Electric bikes – EV charging
-  siteFeasibility: "/images/basigo-buses.jpeg",   // BasiGo buses – EV infrastructure
-  solarColdStorage: "https://images.unsplash.com/photo-1698752822107-69f8973936e4?w=800&q=80", // Solar, different from above
-  energyDemand: "/images/basigo-charging.png",    // BasiGo charging infrastructure
+  solarMicrogrid: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80",
+  roamPoint: "/images/roam-electric.webp",
+  siteFeasibility: "/images/basigo-buses.jpeg",
+  solarColdStorage: "https://images.unsplash.com/photo-1698752822107-69f8973936e4?w=800&q=80",
+  energyDemand: "/images/basigo-charging.png",
   safaricharge: "/images/og-image.png",
 };
 
@@ -71,34 +71,16 @@ const caseStudies: CaseStudy[] = [
     isFlagship: true,
     image: CASE_STUDY_IMAGES.solarMicrogrid,
     sections: [
-      {
-        heading: "Project Overview",
-        content: "Electric mobility infrastructure introduces new electricity demand to urban energy systems. In regions where grid capacity may be constrained or where electricity costs fluctuate, integrating renewable energy into charging infrastructure becomes essential.\n\nThis project explores the integration of a solar photovoltaic microgrid with EV charging infrastructure to reduce reliance on grid electricity, lower operational costs, and reduce carbon emissions. The case study demonstrates how renewable energy can support the growth of electric mobility in African cities while maintaining reliable charging access for riders. The goal was to design a system capable of supporting electric motorcycle charging operations using solar power while maintaining grid connectivity as a backup energy source. The work combined energy systems engineering with mobility infrastructure planning to deliver a technically sound and economically viable solution."
-      },
-      {
-        heading: "Problem Statement",
-        content: "Electric motorcycle adoption in East Africa is growing rapidly due to lower operational costs and increasing demand for clean mobility solutions. However, charging infrastructure introduces several challenges: increased electricity demand at charging sites; high operational costs when relying solely on grid electricity; limited renewable energy integration in mobility infrastructure; and potential grid instability in areas with weak electrical infrastructure.\n\nWithout renewable integration, EV charging stations may still depend heavily on carbon-intensive electricity sources. The challenge was therefore to design a solar-integrated charging solution that could offset grid electricity demand while maintaining operational reliability. Addressing these issues was critical to scaling electric mobility in a sustainable and cost-effective way."
-      },
-      {
-        heading: "Objectives",
-        content: "The key objectives were: evaluate the feasibility of solar PV integration for EV charging stations; analyze charging demand patterns for electric motorcycles; determine optimal solar system capacity for charging operations; estimate carbon emission reductions from renewable energy integration; and assess economic viability and operational savings.\n\nSecondary goals included documenting technical design choices for replication at other sites and providing clear metrics (solar capacity, grid independence, CO2 savings) to support future investment and policy discussions."
-      },
-      {
-        heading: "Methodology",
-        content: "The study followed a structured engineering approach.\n\nCharging Demand Analysis: Charging patterns were analyzed (number of motorcycles charged per day, average energy per session, peak demand hours, charger output capacity). This step established the load profile that the solar system would need to serve.\n\nSolar Resource Assessment: Solar irradiation data was evaluated (average daily irradiation, seasonal variability, system performance ratios) to size the PV array correctly for the location.\n\nPV System Design: The solar photovoltaic system was sized (array capacity, inverter sizing, system efficiency, energy output simulations) to meet a target share of demand from solar.\n\nGrid Integration: The system was designed as a grid-tied hybrid where solar supplies the load first and the grid provides additional power when solar is insufficient, ensuring reliability in all weather conditions."
-      },
-      {
-        heading: "Technical System Design",
-        content: "The proposed system included several integrated components.\n\nSolar PV System: Photovoltaic array on canopy structures, inverters for DC to AC conversion, and monitoring systems for performance tracking.\n\nCharging Infrastructure: DC fast chargers for electric motorcycles and load management systems to balance demand with available solar and grid supply.\n\nGrid Interconnection: Grid connection for supplemental supply and protection systems for safe operation and islanding where applicable.\n\nEnergy Management: Smart controllers to prioritize solar utilization and monitoring platforms for energy analytics. Together, these elements form a replicable design for solar-backed EV charging sites."
-      },
-      {
-        heading: "Results and Impact",
-        content: "Operational benefits included reduction in grid electricity consumption, lower operating costs for charging infrastructure operators, and increased resilience during grid outages.\n\nEnvironmental impact: Reduction in carbon emissions associated with electricity consumption and contribution to sustainable mobility ecosystems. Quantified outcomes (e.g. CO2 saved per year, share of demand from solar) support both operational and reporting needs.\n\nScalability: Solar-integrated charging systems can be replicated across urban mobility hubs and support distributed charging infrastructure deployment. Lessons learned: renewable energy integration significantly improves sustainability of mobility infrastructure; charging demand patterns influence solar system sizing; and distributed microgrid approaches are suitable for emerging electric mobility ecosystems."
-      },
+      { heading: "Project Overview", content: "Electric mobility infrastructure introduces new electricity demand to urban energy systems. In regions where grid capacity may be constrained or where electricity costs fluctuate, integrating renewable energy into charging infrastructure becomes essential.\n\nThis project explores the integration of a solar photovoltaic microgrid with EV charging infrastructure to reduce reliance on grid electricity, lower operational costs, and reduce carbon emissions." },
+      { heading: "Problem Statement", content: "Electric motorcycle adoption in East Africa is growing rapidly due to lower operational costs and increasing demand for clean mobility solutions. However, charging infrastructure introduces several challenges: increased electricity demand at charging sites; high operational costs when relying solely on grid electricity; limited renewable energy integration in mobility infrastructure; and potential grid instability in areas with weak electrical infrastructure." },
+      { heading: "Objectives", content: "The key objectives were: evaluate the feasibility of solar PV integration for EV charging stations; analyze charging demand patterns for electric motorcycles; determine optimal solar system capacity for charging operations; estimate carbon emission reductions from renewable energy integration; and assess economic viability and operational savings." },
+      { heading: "Methodology", content: "The study followed a structured engineering approach.\n\nCharging Demand Analysis: Charging patterns were analyzed (number of motorcycles charged per day, average energy per session, peak demand hours, charger output capacity).\n\nSolar Resource Assessment: Solar irradiation data was evaluated (average daily irradiation, seasonal variability, system performance ratios) to size the PV array correctly for the location.\n\nPV System Design: The solar photovoltaic system was sized (array capacity, inverter sizing, system efficiency, energy output simulations) to meet a target share of demand from solar." },
+      { heading: "Technical System Design", content: "The proposed system included several integrated components.\n\nSolar PV System: Photovoltaic array on canopy structures, inverters for DC to AC conversion, and monitoring systems for performance tracking.\n\nCharging Infrastructure: DC fast chargers for electric motorcycles and load management systems to balance demand with available solar and grid supply.\n\nGrid Interconnection: Grid connection for supplemental supply and protection systems for safe operation and islanding where applicable." },
+      { heading: "Results and Impact", content: "Operational benefits included reduction in grid electricity consumption, lower operating costs for charging infrastructure operators, and increased resilience during grid outages.\n\nEnvironmental impact: Reduction in carbon emissions associated with electricity consumption and contribution to sustainable mobility ecosystems.\n\nScalability: Solar-integrated charging systems can be replicated across urban mobility hubs and support distributed charging infrastructure deployment." },
     ],
     metrics: [
       { label: "Solar Capacity", value: "50 kW", icon: Sun },
-      { label: "CO₂ Saved/Year", value: "45 tons", icon: Leaf },
+      { label: "CO\u2082 Saved/Year", value: "45 tons", icon: Leaf },
       { label: "EVs Charged/Month", value: "200+", icon: Zap },
       { label: "Grid Independence", value: "70%", icon: Battery },
     ],
@@ -117,34 +99,13 @@ const caseStudies: CaseStudy[] = [
     image: CASE_STUDY_IMAGES.roamPoint,
     pdfDownload: "/Roam_Point_Partnership_Opportunity.pdf",
     sections: [
-      {
-        heading: "Project Overview",
-        content: "Roam Point is a distributed electric vehicle charging infrastructure designed to support the growing adoption of electric motorcycles across African cities. The project focuses on developing accessible charging infrastructure that allows riders to recharge quickly while enabling businesses and landowners to host charging stations.\n\nAs Product Owner, the role involved supporting the development, deployment strategy, and partnership ecosystem required to scale charging infrastructure. This included defining product requirements, coordinating with technical and commercial teams, and ensuring that deployment locations and partner agreements aligned with both rider demand and business objectives."
-      },
-      {
-        heading: "Problem Statement",
-        content: "Electric motorcycle adoption is increasing rapidly, but infrastructure limitations remain a major barrier. Key challenges include: limited public charging stations; long travel distances between charging locations; infrastructure deployment costs; and lack of commercial incentives for charging site hosts.\n\nWithout accessible charging infrastructure, riders may experience reduced operational efficiency and range anxiety. The Roam Point initiative was designed to address these gaps by offering a distributed, partner-hosted model that could scale quickly while sharing value with site owners and improving the rider experience."
-      },
-      {
-        heading: "Objectives",
-        content: "The project aimed to: deploy distributed EV charging infrastructure across urban environments; create partnership models that enable businesses to host charging stations; improve charging accessibility for electric motorcycle riders; and support scalable electric mobility ecosystems.\n\nSuccess was measured through the number of operational charging points, partner uptake, rider usage, and feedback from both hosts and riders. Clear objectives helped align technical, commercial, and operational efforts throughout the rollout."
-      },
-      {
-        heading: "Infrastructure Design",
-        content: "The Roam Point charging solution is designed for flexible deployment. Technical specifications include: 6.6 kW DC fast charging capability; high efficiency power electronics; connectivity for remote monitoring and management; and dual charging connectors for operational flexibility.\n\nThe infrastructure is compact and robust, suitable for environmental conditions commonly encountered across African urban environments. Design choices prioritized reliability, ease of installation, and the ability to operate in varied grid and space conditions, supporting deployment across different site types and partner locations."
-      },
-      {
-        heading: "Deployment Models",
-        content: "The charging system supports multiple installation configurations to suit different partner sites and use cases.\n\nWall Mounted Chargers: For secure walls within commercial spaces or workshops.\n\nMobile Chargers: Portable units for small businesses or repair workshops where a fixed installation is not suitable.\n\nPole Mounted Chargers: For open parking spaces and curbside locations.\n\nCanopy Charging Stations: For larger installations such as transport hubs or shopping centers.\n\nCharging stations are deployed in high-traffic mobility locations including motorcycle stages, transport hubs, commercial centers, fuel stations, and fleet depots. This variety allows the network to grow in line with rider demand and partner availability."
-      },
-      {
-        heading: "Business Model",
-        content: "The project introduces a partnership model that allows landowners and businesses to host charging infrastructure. Partner responsibilities include providing space and basic site support; in return, partners benefit through monthly rental payments, revenue sharing from electricity sales, and increased customer foot traffic.\n\nThis model enables rapid infrastructure expansion while aligning incentives between infrastructure operators and property owners. It also reduces upfront capital requirements for the network operator and creates a clear value proposition for host sites, which was essential for scaling deployment across Nairobi and beyond."
-      },
-      {
-        heading: "Impact",
-        content: "The Roam Point project contributes to increased accessibility of EV charging infrastructure, reduced operational barriers for electric motorcycle riders, expansion of electric mobility ecosystems, and new economic opportunities for local businesses.\n\nBy combining product ownership with a partner-led deployment model, the project demonstrates how EV charging networks can scale in emerging markets while supporting clean mobility and local economic activity. Ongoing monitoring of usage, partner satisfaction, and rider feedback informs further optimization and expansion."
-      },
+      { heading: "Project Overview", content: "Roam Point is a distributed electric vehicle charging infrastructure designed to support the growing adoption of electric motorcycles across African cities. The project focuses on developing accessible charging infrastructure that allows riders to recharge quickly while enabling businesses and landowners to host charging stations." },
+      { heading: "Problem Statement", content: "Electric motorcycle adoption is increasing rapidly, but infrastructure limitations remain a major barrier. Key challenges include: limited public charging stations; long travel distances between charging locations; infrastructure deployment costs; and lack of commercial incentives for charging site hosts." },
+      { heading: "Objectives", content: "The project aimed to: deploy distributed EV charging infrastructure across urban environments; create partnership models that enable businesses to host charging stations; improve charging accessibility for electric motorcycle riders; and support scalable electric mobility ecosystems." },
+      { heading: "Infrastructure Design", content: "Technical specifications include: 6.6 kW DC fast charging capability; high efficiency power electronics; connectivity for remote monitoring and management; and dual charging connectors for operational flexibility.\n\nThe infrastructure is compact and robust, suitable for environmental conditions commonly encountered across African urban environments." },
+      { heading: "Deployment Models", content: "Wall Mounted Chargers: For secure walls within commercial spaces or workshops.\n\nMobile Chargers: Portable units for small businesses or repair workshops.\n\nPole Mounted Chargers: For open parking spaces and curbside locations.\n\nCanopy Charging Stations: For larger installations such as transport hubs or shopping centers." },
+      { heading: "Business Model", content: "The project introduces a partnership model that allows landowners and businesses to host charging infrastructure. Partners benefit through monthly rental payments, revenue sharing from electricity sales, and increased customer foot traffic." },
+      { heading: "Impact", content: "The Roam Point project contributes to increased accessibility of EV charging infrastructure, reduced operational barriers for electric motorcycle riders, expansion of electric mobility ecosystems, and new economic opportunities for local businesses." },
     ],
     metrics: [
       { label: "Charging Output", value: "6.6 kW", icon: Zap },
@@ -164,26 +125,11 @@ const caseStudies: CaseStudy[] = [
     date: "2024-2025",
     image: CASE_STUDY_IMAGES.siteFeasibility,
     sections: [
-      {
-        heading: "Project Overview",
-        content: "The deployment of EV charging infrastructure requires careful site selection to ensure accessibility, demand, and operational viability. This project focused on evaluating potential locations for charging infrastructure using spatial analysis and demand mapping.\n\nThe work combined geographic information systems (GIS), mobility data, and infrastructure constraints to produce a shortlist of sites where charging stations would be both technically feasible and likely to achieve strong utilization. The output supported investment and rollout decisions for the broader charging network."
-      },
-      {
-        heading: "Problem Statement",
-        content: "Charging infrastructure must be strategically located to ensure high utilization, accessibility for riders, reliable electricity supply, and operational safety. Poor site selection may result in underutilized infrastructure or operational inefficiencies.\n\nWithout a structured approach to site selection, deployment can be driven by convenience or availability of space rather than demand and grid readiness. This project addressed that gap by applying a consistent, data-driven methodology to compare and rank candidate locations across the Nairobi metropolitan area."
-      },
-      {
-        heading: "Objectives",
-        content: "The feasibility study aimed to: identify high-potential locations for charging infrastructure; evaluate energy supply availability; analyze mobility demand patterns; and prioritize locations for deployment.\n\nA further objective was to document the methodology and criteria so that similar analyses could be repeated in other cities or as new data became available. Clear prioritization also helped align stakeholder expectations and focus rollout on the most promising sites first."
-      },
-      {
-        heading: "Methodology",
-        content: "Mobility Demand Analysis: Locations with high motorcycle traffic (e.g. stages, transit nodes, commercial corridors) were identified using available mobility and traffic data. This step ensured that candidate sites were aligned with where riders actually operate and park.\n\nInfrastructure Assessment: Potential sites were evaluated based on proximity to electricity infrastructure, land availability, and safety considerations. Only sites that could be connected to the grid and used safely were carried forward.\n\nSpatial Mapping: GIS tools were used to map candidate locations and analyze proximity to transport hubs and commercial centers. Overlays of demand, grid capacity, and land use helped rank and compare options in a consistent way."
-      },
-      {
-        heading: "Results",
-        content: "The analysis identified several high-priority zones suitable for charging infrastructure deployment. Key findings included: transport hubs present high charging demand and are natural anchors for the network; commercial centers offer strong partnership opportunities and visibility; and infrastructure clustering in key corridors improves accessibility for riders and supports network effects.\n\nThe resulting site shortlist and supporting maps were used to guide partnership discussions and rollout planning. The same approach can be extended to other regions as the charging network expands."
-      },
+      { heading: "Project Overview", content: "The deployment of EV charging infrastructure requires careful site selection to ensure accessibility, demand, and operational viability. This project focused on evaluating potential locations for charging infrastructure using spatial analysis and demand mapping." },
+      { heading: "Problem Statement", content: "Charging infrastructure must be strategically located to ensure high utilization, accessibility for riders, reliable electricity supply, and operational safety. Without a structured approach, deployment can be driven by convenience rather than demand and grid readiness." },
+      { heading: "Objectives", content: "The feasibility study aimed to: identify high-potential locations for charging infrastructure; evaluate energy supply availability; analyze mobility demand patterns; and prioritize locations for deployment." },
+      { heading: "Methodology", content: "Mobility Demand Analysis: Locations with high motorcycle traffic were identified using available mobility and traffic data.\n\nInfrastructure Assessment: Potential sites were evaluated based on proximity to electricity infrastructure, land availability, and safety considerations.\n\nSpatial Mapping: GIS tools were used to map candidate locations and analyze proximity to transport hubs and commercial centers." },
+      { heading: "Results", content: "The analysis identified several high-priority zones suitable for charging infrastructure deployment. Key findings: transport hubs present high charging demand; commercial centers offer strong partnership opportunities; and infrastructure clustering in key corridors improves accessibility for riders." },
     ],
     metrics: [
       { label: "Sites Analyzed", value: "50+", icon: MapPin },
@@ -203,22 +149,10 @@ const caseStudies: CaseStudy[] = [
     date: "2023",
     image: CASE_STUDY_IMAGES.solarColdStorage,
     sections: [
-      {
-        heading: "Project Overview",
-        content: "Post-harvest losses remain a major challenge in agricultural supply chains across developing regions. Limited access to refrigeration results in significant food waste and limits the ability of farmers to reach distant or higher-value markets.\n\nThis project explored the development of a solar-powered cold storage solution designed to extend shelf life for perishable produce. The goal was to demonstrate a technically feasible and economically viable option for smallholder farmers and aggregators who lack reliable grid power, combining solar PV with evaporative cooling to keep produce cool without dependence on the grid or diesel."
-      },
-      {
-        heading: "Problem Statement",
-        content: "Farmers often lack access to refrigeration infrastructure, leading to rapid spoilage of fresh produce, reduced farmer incomes, and food supply chain inefficiencies. Where grid power is unavailable or unreliable, conventional cold rooms are not an option.\n\nDiesel-powered cooling is costly and adds emissions; solar-powered alternatives must be appropriately sized, affordable, and easy to operate and maintain. This project addressed these constraints by focusing on a design that could be deployed in off-grid or weak-grid settings and that matched the cooling needs of typical smallholder harvests."
-      },
-      {
-        heading: "Solution",
-        content: "The system integrates solar photovoltaic energy with an evaporative cooling system to provide off-grid refrigeration. Solar panels charge a battery bank that powers the cooling unit, while the evaporative component reduces the need for high electrical demand and improves suitability for intermittent solar supply.\n\nThe design allows farmers to store produce immediately after harvest, reducing spoilage and improving market access. Sizing and operation were chosen to align with local climate, crop types, and typical harvest volumes, so that the solution could be replicated in similar contexts with minimal customization."
-      },
-      {
-        heading: "Impact",
-        content: "The system demonstrated the ability to extend produce shelf life by several days while operating entirely on renewable energy. Measured outcomes included reduction in post-harvest loss, improved ability to hold produce for better prices, and positive feedback from farmers on usability and reliability.\n\nThis approach supports both agricultural resilience and sustainable energy adoption. It also provides a reference design for solar cold storage in similar agro-climatic conditions and can inform future scaling or adaptation for other crops and regions."
-      },
+      { heading: "Project Overview", content: "Post-harvest losses remain a major challenge in agricultural supply chains across developing regions. This project explored the development of a solar-powered cold storage solution designed to extend shelf life for perishable produce, combining solar PV with evaporative cooling." },
+      { heading: "Problem Statement", content: "Farmers often lack access to refrigeration infrastructure, leading to rapid spoilage of fresh produce, reduced farmer incomes, and food supply chain inefficiencies. Where grid power is unavailable or unreliable, conventional cold rooms are not an option." },
+      { heading: "Solution", content: "The system integrates solar photovoltaic energy with an evaporative cooling system to provide off-grid refrigeration. Solar panels charge a battery bank that powers the cooling unit while the evaporative component reduces electrical demand." },
+      { heading: "Impact", content: "The system demonstrated the ability to extend produce shelf life by several days while operating entirely on renewable energy. Measured outcomes included reduction in post-harvest loss and improved ability to hold produce for better prices." },
     ],
     metrics: [
       { label: "Shelf Life Extended", value: "+7 days", icon: Thermometer },
@@ -241,22 +175,10 @@ const caseStudies: CaseStudy[] = [
     partner: "SafariCharge",
     image: CASE_STUDY_IMAGES.safaricharge,
     sections: [
-      {
-        heading: "Project Overview",
-        content: "SafariCharge is a clean-mobility platform project focused on building practical software and operations tooling to support EV charging infrastructure growth in East Africa. The work spans product strategy, platform implementation, and deployment workflows.",
-      },
-      {
-        heading: "Core Problem",
-        content: "EV ecosystem growth requires coordination across infrastructure planning, partner onboarding, and reliable software operations. Fragmented workflows slow deployments and reduce operational visibility.",
-      },
-      {
-        heading: "Platform Work Delivered",
-        content: "Implemented portfolio-facing product experience, operational workflow tooling, and integration-ready architecture to support expansion of charging deployments and partner operations.",
-      },
-      {
-        heading: "Current Focus",
-        content: "Scaling content and project communication through linked project, case-study, and blog flows while strengthening platform reliability, security, and delivery velocity.",
-      },
+      { heading: "Project Overview", content: "SafariCharge is a clean-mobility platform project focused on building practical software and operations tooling to support EV charging infrastructure growth in East Africa." },
+      { heading: "Core Problem", content: "EV ecosystem growth requires coordination across infrastructure planning, partner onboarding, and reliable software operations. Fragmented workflows slow deployments and reduce operational visibility." },
+      { heading: "Platform Work Delivered", content: "Implemented portfolio-facing product experience, operational workflow tooling, and integration-ready architecture to support expansion of charging deployments and partner operations." },
+      { heading: "Current Focus", content: "Scaling content and project communication through linked project, case-study, and blog flows while strengthening platform reliability, security, and delivery velocity." },
     ],
     metrics: [
       { label: "Focus", value: "Platform + Ops", icon: Cpu },
@@ -276,18 +198,9 @@ const caseStudies: CaseStudy[] = [
     date: "2024-2025",
     image: CASE_STUDY_IMAGES.energyDemand,
     sections: [
-      {
-        heading: "Project Overview",
-        content: "Understanding electricity demand patterns is essential for planning EV charging infrastructure. This project analyzed charging demand for electric motorcycles to support infrastructure planning and energy system design.\n\nThe work aimed to answer questions such as: when and where do riders charge, how much energy do they use per session, and what does that imply for grid capacity and for the sizing of solar or storage at charging sites? The results were used to inform both network rollout and the design of individual sites."
-      },
-      {
-        heading: "Methodology",
-        content: "Data from charging stations and rider usage patterns was analyzed to estimate average energy consumption per session, peak charging periods, and infrastructure capacity requirements. Where possible, data was disaggregated by time of day, day of week, and location to identify patterns and outliers.\n\nSimple models were used to project how demand might grow with more riders and more stations, and to test the sensitivity of capacity needs to assumptions about utilization and charging behavior. The methodology was documented so that it could be updated as more data became available."
-      },
-      {
-        heading: "Results",
-        content: "The analysis revealed key charging patterns that influence infrastructure planning. Peak charging demand typically occurs during operational downtime periods for riders (e.g. midday or early evening), which has implications for grid peak loads and for the value of solar generation that aligns with those windows.\n\nThese insights help inform infrastructure placement (e.g. where to add capacity first), grid capacity planning (e.g. upgrades or reinforcement needs), and renewable energy integration strategies (e.g. sizing of solar and storage at charging sites). The outputs were shared with technical and commercial teams to support decision-making and with partners where relevant."
-      },
+      { heading: "Project Overview", content: "Understanding electricity demand patterns is essential for planning EV charging infrastructure. This project analyzed charging demand for electric motorcycles to support infrastructure planning and energy system design." },
+      { heading: "Methodology", content: "Data from charging stations and rider usage patterns was analyzed to estimate average energy consumption per session, peak charging periods, and infrastructure capacity requirements." },
+      { heading: "Results", content: "The analysis revealed key charging patterns that influence infrastructure planning. Peak charging demand typically occurs during operational downtime periods for riders (midday or early evening), which has implications for grid peak loads and for the value of solar generation." },
     ],
     metrics: [
       { label: "Stations Analyzed", value: "15+", icon: Zap },
@@ -310,9 +223,7 @@ const CaseStudiesPage = () => {
   const modalScrollRef = useRef<HTMLDivElement>(null);
 
   const isUuid = (value: string) =>
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-      value,
-    );
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 
   useEffect(() => {
     const fetchFromSupabase = async () => {
@@ -336,9 +247,11 @@ const CaseStudiesPage = () => {
           partner: cs.partner || undefined,
           image: cs.image || undefined,
           pdfDownload: cs.pdf_download || undefined,
-          sections: Array.isArray(cs.sections) ? (cs.sections as { heading: string; content: string }[]) : [],
+          sections: Array.isArray(cs.sections)
+            ? (cs.sections as { heading: string; content: string }[])
+            : [],
           metrics: Array.isArray(cs.metrics)
-            ? (cs.metrics as { label: string; value: string; icon_name: string }[]).map(m => ({
+            ? (cs.metrics as { label: string; value: string; icon_name: string }[]).map((m) => ({
                 label: m.label,
                 value: m.value,
                 icon: resolveIcon(m.icon_name || "Zap"),
@@ -349,9 +262,7 @@ const CaseStudiesPage = () => {
         }));
         setCaseStudiesData(mapped);
       }
-      // On error or empty, keep hardcoded fallback
     };
-
     fetchFromSupabase();
   }, []);
 
@@ -365,78 +276,68 @@ const CaseStudiesPage = () => {
     const study = searchParams.get("study");
     if (!study || selectedStudy) return;
     const matched = caseStudiesData.find((item) => item.id === study || item.slug === study);
-    if (matched) {
-      setSelectedStudy(matched);
-    }
+    if (matched) setSelectedStudy(matched);
   }, [searchParams, caseStudiesData, selectedStudy]);
 
   const archiveCaseStudy = async (id: string, currentPublished: boolean) => {
     if (!supabase) return;
     try {
       let query = supabase.from("case_studies").update({ published: !currentPublished });
-      if (isUuid(id)) {
-        query = query.eq("id", id);
-      } else {
-        query = query.eq("slug", id);
-      }
-
+      query = isUuid(id) ? query.eq("id", id) : query.eq("slug", id);
       const { error } = await query;
       if (error) throw error;
-      toast({
-        title: "Success",
-        description: `Case study ${currentPublished ? "archived" : "restored"}`,
-      });
-      // Refresh
-      setCaseStudiesData((prev) =>
-        currentPublished ? prev.filter((s) => s.id !== id) : prev
-      );
+      toast({ title: "Success", description: `Case study ${currentPublished ? "archived" : "restored"}` });
+      setCaseStudiesData((prev) => (currentPublished ? prev.filter((s) => s.id !== id) : prev));
     } catch {
       toast({ title: "Error", description: "Failed to update case study", variant: "destructive" });
     }
   };
 
-  const flagshipStudy = caseStudiesData.find(s => s.isFlagship);
-  const otherStudies = caseStudiesData.filter(s => !s.isFlagship);
+  const flagshipStudy = caseStudiesData.find((s) => s.isFlagship);
+  const otherStudies = caseStudiesData.filter((s) => !s.isFlagship);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <main className="pt-24 pb-16 px-6">
-        <div className="max-w-6xl mx-auto">
+      <main className="pt-24 pb-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto space-y-12">
+
+          {/* Back link */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
 
-          {/* Header */}
+          {/* Page header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center space-y-4"
           >
-            <span className="text-primary font-medium mb-4 block">Impact Stories</span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <span className="text-primary font-medium text-sm tracking-wide uppercase">Impact Stories</span>
+            <h1 className="text-4xl md:text-5xl font-display font-bold">
               Case <span className="gradient-text">Studies</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Engineering documentation of renewable energy and mobility infrastructure projects making measurable impact across Africa.
             </p>
           </motion.div>
 
+          {/* Admin panel */}
           {isAdmin && (
             <motion.section
               id="admin-case-studies-manager"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="glass-card rounded-2xl p-6 mb-10"
+              className="glass-card rounded-2xl p-6 border border-primary/20"
             >
-              <h2 className="text-xl font-display font-bold mb-2">Manage Case Studies</h2>
+              <h2 className="text-xl font-display font-bold mb-1">Manage Case Studies</h2>
               <p className="text-sm text-muted-foreground mb-6">
                 Add, edit, publish, archive, and remove case studies directly from this page.
               </p>
@@ -450,43 +351,55 @@ const CaseStudiesPage = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="mb-12"
             >
               <div
                 onClick={() => setSelectedStudy(flagshipStudy)}
                 className="group glass-card rounded-2xl overflow-hidden cursor-pointer card-hover border border-amber-500/20"
               >
-                <div className="grid md:grid-cols-2 gap-0">
+                <div className="grid md:grid-cols-2">
+                  {/* Image: fixed aspect ratio, never stretches */}
                   {flagshipStudy.image && (
-                    <div className="relative h-64 md:h-auto md:min-h-[320px]">
-                      <img src={flagshipStudy.image} alt={flagshipStudy.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40" />
+                    <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[320px] overflow-hidden bg-muted/20">
+                      <img
+                        src={flagshipStudy.image}
+                        alt={flagshipStudy.title}
+                        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40 pointer-events-none" />
                       <div className="absolute top-4 left-4">
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full shadow">
                           <Crown className="w-3 h-3" />
                           Flagship Case Study
                         </span>
                       </div>
                     </div>
                   )}
-                  <div className="p-6 md:p-8 flex flex-col justify-center">
-                    <span className="text-xs text-muted-foreground mb-2">{flagshipStudy.category}</span>
-                    <h3 className="text-xl md:text-2xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
-                      {flagshipStudy.title}
-                    </h3>
-                    {flagshipStudy.role && (
-                      <p className="text-sm text-amber-400/80 font-medium mb-3">{flagshipStudy.role}</p>
-                    )}
-                    <p className="text-muted-foreground text-sm mb-4">{flagshipStudy.subtitle}</p>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
+
+                  {/* Content */}
+                  <div className="p-6 md:p-8 flex flex-col justify-center gap-4">
+                    <div>
+                      <span className="text-xs text-muted-foreground">{flagshipStudy.category}</span>
+                      <h3 className="text-xl md:text-2xl font-display font-bold mt-1 group-hover:text-primary transition-colors">
+                        {flagshipStudy.title}
+                      </h3>
+                      {flagshipStudy.role && (
+                        <p className="text-sm text-amber-400/80 font-medium mt-1">{flagshipStudy.role}</p>
+                      )}
+                      <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{flagshipStudy.subtitle}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
                       {flagshipStudy.metrics.slice(0, 4).map((m) => (
-                        <div key={m.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-2 text-center">
+                        <div key={m.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-3 text-center">
                           <p className="text-sm font-bold text-primary">{m.value}</p>
-                          <p className="text-xs text-muted-foreground">{m.label}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{m.label}</p>
                         </div>
                       ))}
                     </div>
-                    <div className="flex items-center gap-3">
+
+                    <div className="flex items-center gap-3 flex-wrap">
                       <button className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
                         Read Full Study <ChevronRight className="w-4 h-4" />
                       </button>
@@ -510,7 +423,7 @@ const CaseStudiesPage = () => {
           )}
 
           {/* Other Case Studies Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
             {otherStudies.map((study, index) => (
               <motion.div
                 key={study.id}
@@ -523,54 +436,65 @@ const CaseStudiesPage = () => {
                   onClick={() => setSelectedStudy(study)}
                   className="glass-card rounded-2xl overflow-hidden cursor-pointer card-hover h-full flex flex-col"
                 >
+                  {/* Card image: consistent aspect ratio */}
                   {study.image ? (
-                    <div className="h-48 relative">
-                      <img src={study.image} alt={study.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card via-black/30 to-transparent" />
-                      <div className="absolute top-4 right-4 p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                    <div className="relative aspect-video w-full overflow-hidden bg-muted/20 shrink-0">
+                      <img
+                        src={study.image}
+                        alt={study.title}
+                        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-black/20 to-transparent pointer-events-none" />
+                      <div className="absolute top-3 right-3 p-2 rounded-lg bg-white/20 backdrop-blur-sm">
                         <study.icon className="w-5 h-5 text-white" />
                       </div>
-                      <div className="absolute bottom-4 left-4">
+                      <div className="absolute bottom-3 left-4 right-4">
                         <span className="text-white/80 text-xs font-medium">{study.category}</span>
-                        <h3 className="text-lg font-display font-bold text-white">{study.title}</h3>
+                        <h3 className="text-base font-display font-bold text-white leading-snug mt-0.5">{study.title}</h3>
                       </div>
                     </div>
                   ) : (
-                    <div className={`h-48 bg-gradient-to-br ${study.gradient} relative p-6 flex flex-col justify-end`}>
-                      <div className="absolute top-4 right-4 p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                    <div className={`relative aspect-video w-full bg-gradient-to-br ${study.gradient} p-5 flex flex-col justify-end shrink-0`}>
+                      <div className="absolute top-3 right-3 p-2 rounded-lg bg-white/20 backdrop-blur-sm">
                         <study.icon className="w-5 h-5 text-white" />
                       </div>
                       {study.partner && (
                         <span className="text-white/90 text-xs font-medium bg-white/20 px-2 py-1 rounded-full self-start mb-2">
-                          Partner: {study.partner}
+                          {study.partner}
                         </span>
                       )}
                       <span className="text-white/80 text-xs font-medium">{study.category}</span>
-                      <h3 className="text-lg font-display font-bold text-white">{study.title}</h3>
+                      <h3 className="text-base font-display font-bold text-white leading-snug mt-0.5">{study.title}</h3>
                     </div>
                   )}
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{study.subtitle}</p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                  {/* Card body */}
+                  <div className="p-5 flex-1 flex flex-col gap-4">
+                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">{study.subtitle}</p>
+
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
                       <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
+                        <MapPin className="w-3 h-3 shrink-0" />
                         {study.location}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
+                        <Calendar className="w-3 h-3 shrink-0" />
                         {study.date}
                       </span>
                     </div>
+
                     <div className="grid grid-cols-2 gap-3 mt-auto">
                       {study.metrics.slice(0, 2).map((metric) => (
                         <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-lg p-3 text-center">
-                          <p className="text-lg font-bold text-primary">{metric.value}</p>
-                          <p className="text-xs text-muted-foreground">{metric.label}</p>
+                          <p className="text-base font-bold text-primary">{metric.value}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{metric.label}</p>
                         </div>
                       ))}
                     </div>
-                    <button className="mt-4 flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+
+                    <button className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
                       Read Case Study <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -578,10 +502,11 @@ const CaseStudiesPage = () => {
               </motion.div>
             ))}
           </div>
+
         </div>
       </main>
 
-      {/* Modal: responsive, fits any screen, scrollable body */}
+      {/* ─── Detail Modal ────────────────────────────────────────────────── */}
       <AnimatePresence>
         {selectedStudy && (
           <motion.div
@@ -589,47 +514,53 @@ const CaseStudiesPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto min-h-screen"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-sm overflow-y-auto"
             onClick={() => setSelectedStudy(null)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              exit={{ scale: 0.96, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[90vh] sm:max-h-[85vh] flex flex-col bg-card rounded-xl sm:rounded-2xl border border-border overflow-hidden shadow-2xl my-4 sm:my-8"
+              className="relative w-full max-w-3xl my-6 flex flex-col bg-card rounded-2xl border border-border overflow-hidden shadow-2xl"
             >
-              {/* Header: fixed height, no scroll */}
+              {/* Modal header: image + title row */}
               {selectedStudy.image ? (
-                <div className="relative shrink-0">
-                  <div className="h-28 sm:h-36">
+                <div className="shrink-0">
+                  {/* Contained image – aspect-ratio so it never crops too aggressively */}
+                  <div className="relative w-full aspect-[16/6] overflow-hidden bg-muted/20">
                     <img
                       src={selectedStudy.image}
                       alt={selectedStudy.title}
-                      className="w-full h-full object-cover object-center"
+                      className="absolute inset-0 w-full h-full object-cover object-center"
                       loading="eager"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent pointer-events-none" />
                   </div>
-                  <div className="bg-card px-4 py-3 sm:px-6 sm:py-4 border-b border-border flex items-start justify-between gap-3">
+
+                  {/* Title row below image */}
+                  <div className="bg-card px-5 py-4 sm:px-7 sm:py-5 border-b border-border flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-gradient-to-br ${selectedStudy.gradient} shrink-0`}>
+                      <div className={`p-2.5 rounded-xl bg-gradient-to-br ${selectedStudy.gradient} shrink-0`}>
                         <selectedStudy.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-muted-foreground text-xs sm:text-sm">{selectedStudy.category}</span>
+                          <span className="text-muted-foreground text-xs">{selectedStudy.category}</span>
                           {selectedStudy.isFlagship && (
                             <span className="text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-black px-2 py-0.5 rounded-full">
                               Flagship
                             </span>
                           )}
                         </div>
-                        <h3 className="text-base sm:text-xl md:text-2xl font-display font-bold text-foreground mt-0.5 truncate sm:whitespace-normal">{selectedStudy.title}</h3>
+                        <h3 className="text-base sm:text-xl font-display font-bold text-foreground mt-0.5 leading-snug">
+                          {selectedStudy.title}
+                        </h3>
                       </div>
                     </div>
                     <button
                       onClick={() => setSelectedStudy(null)}
-                      className="p-2 rounded-full bg-black/50 hover:bg-black/70 text-white shrink-0 transition-colors"
+                      className="p-2 rounded-full bg-muted hover:bg-muted/80 text-foreground shrink-0 transition-colors"
                       aria-label="Close"
                     >
                       <X className="w-5 h-5" />
@@ -637,79 +568,85 @@ const CaseStudiesPage = () => {
                   </div>
                 </div>
               ) : (
-                <div className={`h-36 sm:h-40 bg-gradient-to-br ${selectedStudy.gradient} relative p-4 sm:p-6 flex flex-col justify-end shrink-0`}>
+                <div className={`h-36 sm:h-44 bg-gradient-to-br ${selectedStudy.gradient} relative p-5 sm:p-7 flex flex-col justify-end shrink-0`}>
                   <button
                     onClick={() => setSelectedStudy(null)}
-                    className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
+                    className="absolute top-3 right-3 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
                     aria-label="Close"
                   >
                     <X className="w-5 h-5" />
                   </button>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-sm">
-                      <selectedStudy.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                  <div className="flex items-end gap-3">
+                    <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-sm shrink-0">
+                      <selectedStudy.icon className="w-7 h-7 text-white" />
                     </div>
                     <div>
-                      <span className="text-white/80 text-xs sm:text-sm">{selectedStudy.category}</span>
-                      <h3 className="text-lg sm:text-2xl font-display font-bold text-white">{selectedStudy.title}</h3>
+                      <span className="text-white/75 text-xs">{selectedStudy.category}</span>
+                      <h3 className="text-lg sm:text-2xl font-display font-bold text-white leading-snug">{selectedStudy.title}</h3>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Content: scrollable, fits remaining height */}
-              <div className="content-body flex-1 overflow-y-auto min-h-0 p-4 sm:p-6 md:p-8 bg-card">
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
-                  <span className="flex items-center gap-1.5 sm:gap-2">
-                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0" />
+              {/* Modal body – scrollable */}
+              <div className="flex-1 overflow-y-auto min-h-0 max-h-[65vh] p-5 sm:p-7 bg-card space-y-6">
+
+                {/* Meta row */}
+                <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
                     {selectedStudy.location}
                   </span>
-                  <span className="flex items-center gap-1.5 sm:gap-2">
-                    <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0" />
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
                     {selectedStudy.date}
                   </span>
                   {selectedStudy.partner && (
-                    <span className="flex items-center gap-1.5 sm:gap-2">
-                      <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0" />
-                      Partner: {selectedStudy.partner}
+                    <span className="flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5 text-primary shrink-0" />
+                      {selectedStudy.partner}
                     </span>
                   )}
                 </div>
 
+                {/* Role badge */}
                 {selectedStudy.role && (
-                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3">
                     <p className="text-xs sm:text-sm font-medium text-amber-400">{selectedStudy.role}</p>
                   </div>
                 )}
 
-                <div className="space-y-5 sm:space-y-6">
+                {/* Content sections */}
+                <div className="space-y-6">
                   {selectedStudy.sections.map((section) => (
                     <div key={section.heading}>
-                      <h4 className="font-display font-semibold text-base sm:text-lg mb-2 text-primary">{section.heading}</h4>
+                      <h4 className="font-display font-semibold text-sm sm:text-base text-primary mb-2">{section.heading}</h4>
                       <p className="text-foreground/90 text-sm sm:text-base leading-relaxed whitespace-pre-line">{section.content}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 border-t border-border">
+                {/* Metrics */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-border">
                   {selectedStudy.metrics.map((metric) => (
-                    <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-                      <metric.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary mx-auto mb-1.5 sm:mb-2" />
+                    <div key={metric.label} className="bg-black/5 dark:bg-white/5 rounded-xl p-3 sm:p-4 text-center">
+                      <metric.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary mx-auto mb-1.5" />
                       <p className="text-lg sm:text-2xl font-bold text-foreground">{metric.value}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5 sm:mt-1">{metric.label}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{metric.label}</p>
                     </div>
                   ))}
                 </div>
 
+                {/* PDF download */}
                 {selectedStudy.pdfDownload && (
-                  <div className="mt-5 sm:mt-6 pt-4 border-t border-border">
+                  <div className="pt-4 border-t border-border">
                     <a
                       href={selectedStudy.pdfDownload}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors text-xs sm:text-sm"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm"
                     >
-                      <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      <Download className="w-4 h-4" />
                       Download Partnership Document
                     </a>
                   </div>

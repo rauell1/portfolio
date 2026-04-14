@@ -62,19 +62,14 @@ const Blog = () => {
   };
 
   const isShareActive = (post: BlogPost) => {
-    if (!post.share_enabled || !post.share_token) {
-      return false;
-    }
-    if (!post.share_expires_at) {
-      return true;
-    }
+    if (!post.share_enabled || !post.share_token) return false;
+    if (!post.share_expires_at) return true;
     return new Date(post.share_expires_at).getTime() > Date.now();
   };
 
   const copyPostLink = async (e: React.MouseEvent, post: BlogPost) => {
     e.preventDefault();
     e.stopPropagation();
-
     const isStatic = STATIC_BLOG_SLUGS.has(post.slug);
     if (isStatic) {
       const url = `${window.location.origin}/blog/${post.slug}`;
@@ -84,7 +79,6 @@ const Blog = () => {
       });
       return;
     }
-
     let shareToken = post.share_token ?? null;
     const shareIsActive = isShareActive(post);
     let shareExpiresAt = post.share_expires_at ?? null;
@@ -95,14 +89,14 @@ const Blog = () => {
         .from("blog_posts")
         .update({ share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt })
         .eq("id", post.id);
-      if (error) {
-        console.error("Unable to generate share token:", error);
-        return;
-      }
-      setPosts((prev) => prev.map((item) => (item.id === post.id ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt } : item)));
+      if (error) { console.error("Unable to generate share token:", error); return; }
+      setPosts((prev) =>
+        prev.map((item) =>
+          item.id === post.id ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt } : item
+        )
+      );
     }
-
-    const url = `${window.location.origin}/blog/${post.slug}?s=${encodeURIComponent(shareToken)}`;
+    const url = `${window.location.origin}/blog/${post.slug}?s=${encodeURIComponent(shareToken!)}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedSlug(post.slug);
       setTimeout(() => setCopiedSlug(null), 2000);
@@ -112,27 +106,18 @@ const Blog = () => {
   const regenerateShareLink = async (e: React.MouseEvent, post: BlogPost) => {
     e.preventDefault();
     e.stopPropagation();
-
     const shareToken = crypto.randomUUID();
     const shareExpiresAt = getDefaultShareExpiryIso();
     const { error } = await supabase
       .from("blog_posts")
       .update({ share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt })
       .eq("id", post.id);
-
-    if (error) {
-      console.error("Unable to regenerate share token:", error);
-      return;
-    }
-
+    if (error) { console.error("Unable to regenerate share token:", error); return; }
     setPosts((prev) =>
       prev.map((item) =>
-        item.id === post.id
-          ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt }
-          : item
+        item.id === post.id ? { ...item, share_token: shareToken, share_enabled: true, share_expires_at: shareExpiresAt } : item
       )
     );
-
     const url = `${window.location.origin}/blog/${post.slug}?s=${encodeURIComponent(shareToken)}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedSlug(post.slug);
@@ -148,9 +133,7 @@ const Blog = () => {
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(100);
-
       const dbPosts = data || [];
-      // For the three pillar slugs, always use static post so cover_image and content are always set (no icon placeholders).
       const dbExceptStatic = dbPosts.filter((p) => !STATIC_BLOG_SLUGS.has(p.slug));
       const merged = [...dbExceptStatic, ...STATIC_BLOG_POSTS].sort((a, b) => {
         const dateA = a.published_at ? new Date(a.published_at).getTime() : 0;
@@ -165,9 +148,7 @@ const Blog = () => {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+  useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
@@ -184,66 +165,73 @@ const Blog = () => {
       <ParticleBackground />
       <Navbar />
 
-      <main className="relative z-10 pt-24 pb-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          {/* Hero + back */}
+      <main className="relative z-10 pt-24 pb-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto space-y-12">
+
+          {/* Back link */}
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Portfolio
+          </Link>
+
+          {/* Hero */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="text-center space-y-4"
           >
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Portfolio
-            </Link>
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
-                Insights on <span className="gradient-text">Clean Energy</span>
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Thought leadership on renewable energy engineering, electric mobility infrastructure, energy systems modeling, and climate solutions in Africa.
-              </p>
-            </div>
-            {/* Three pillars */}
-            <div className="grid sm:grid-cols-3 gap-6">
-              {BLOG_PILLARS.map((pillar, i) => (
-                <div
-                  key={i}
-                  className="rounded-2xl border border-border bg-gradient-to-b from-black/5 dark:from-white/5 to-transparent p-6 text-center sm:text-left"
-                >
-                  <div className="inline-flex p-3 rounded-xl bg-primary/10 mb-4">
-                    <pillar.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="font-display font-semibold text-foreground mb-1">{pillar.title}</h3>
-                  <p className="text-sm text-muted-foreground">{pillar.subtitle}</p>
-                </div>
-              ))}
-            </div>
+            <h1 className="text-4xl md:text-6xl font-display font-bold">
+              Insights on <span className="gradient-text">Clean Energy</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Thought leadership on renewable energy engineering, electric mobility infrastructure, energy systems modeling, and climate solutions in Africa.
+            </p>
           </motion.div>
 
-          {/* Search and Filters */}
+          {/* Three pillars */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="grid sm:grid-cols-3 gap-5"
+          >
+            {BLOG_PILLARS.map((pillar, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-gradient-to-b from-black/5 dark:from-white/5 to-transparent p-6 text-center sm:text-left"
+              >
+                <div className="inline-flex p-3 rounded-xl bg-primary/10 mb-4">
+                  <pillar.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-display font-semibold text-foreground mb-1">{pillar.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{pillar.subtitle}</p>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Search + Filters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass-card rounded-2xl p-6 mb-12"
+            className="glass-card rounded-2xl p-5"
           >
             <div className="flex flex-col md:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search articles..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-black/5 dark:bg-white/5 border border-input focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-input focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                 />
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap items-center">
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -275,12 +263,13 @@ const Blog = () => {
             </div>
           </motion.div>
 
+          {/* Admin bar */}
           {isAdmin && (
-            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-primary/30 bg-primary/10 px-5 py-3 text-sm text-primary">
               <span>Blog manager is enabled: create new posts or edit existing ones.</span>
               <Link
                 to="/admin/posts/new"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shrink-0"
               >
                 <Edit className="w-4 h-4" />
                 New Post
@@ -288,31 +277,29 @@ const Blog = () => {
             </div>
           )}
 
-          {/* Blog Posts Grid */}
+          {/* Posts grid */}
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
-                  <div className="h-48 bg-black/10 dark:bg-white/10 rounded-xl mb-4" />
-                  <div className="h-6 bg-black/10 dark:bg-white/10 rounded mb-2" />
-                  <div className="h-4 bg-black/10 dark:bg-white/10 rounded w-3/4" />
+                <div key={i} className="glass-card rounded-2xl overflow-hidden animate-pulse">
+                  <div className="aspect-[4/3] bg-black/10 dark:bg-white/10" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-5 bg-black/10 dark:bg-white/10 rounded w-4/5" />
+                    <div className="h-4 bg-black/10 dark:bg-white/10 rounded w-3/5" />
+                  </div>
                 </div>
               ))}
             </div>
           ) : filteredPosts.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-16"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
               <p className="text-xl text-muted-foreground">No articles found.</p>
             </motion.div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map((post, index) => {
                 const Icon = categoryIcons[post.category] || Leaf;
                 const colorClass = categoryColors[post.category] || "bg-primary/20 text-primary";
-                const hasCover = !!post.cover_image;
+                const hasCover = !!post.cover_image && !failedCoverIds.has(post.id);
                 const isStaticPost = STATIC_BLOG_SLUGS.has(post.slug);
 
                 return (
@@ -320,58 +307,63 @@ const Blog = () => {
                     key={post.id}
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    transition={{ duration: 0.5, delay: index * 0.07 }}
                   >
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="block rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/30 transition-all duration-300 group"
+                      className="block rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/30 transition-all duration-300 group h-full flex flex-col"
                     >
-                      {/* Cover image – centered with consistent aspect ratio */}
-                      <div className="relative overflow-hidden bg-muted/30 flex items-center justify-center aspect-[4/3] w-full">
-                        {hasCover && !failedCoverIds.has(post.id) ? (
+                      {/* Cover image – consistent aspect ratio, never squished */}
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted/20 shrink-0">
+                        {hasCover ? (
                           <img
                             src={post.cover_image!}
-                            alt=""
-                            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                            alt={post.title}
+                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                             decoding="async"
                             onError={() => setFailedCoverIds((prev) => new Set(prev).add(post.id))}
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                            <Icon className="w-20 h-20 text-primary/40 group-hover:text-primary/60 transition-colors" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                            <Icon className="w-16 h-16 text-primary/30 group-hover:text-primary/50 transition-colors" />
                           </div>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-90" />
-                        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                          <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${colorClass}`}>
+                        <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
+                          <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${colorClass} backdrop-blur-sm`}>
                             {post.category.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
                           </span>
                           {post.published_at && (
-                            <span className="text-xs text-white/90 flex items-center gap-1">
+                            <span className="text-xs text-white/90 flex items-center gap-1 shrink-0">
                               <Calendar className="w-3 h-3" />
                               {new Date(post.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="p-5">
-                        <h2 className="text-lg font-display font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+
+                      {/* Card body */}
+                      <div className="p-5 flex-1 flex flex-col gap-3">
+                        <h2 className="text-base font-display font-bold group-hover:text-primary transition-colors line-clamp-2 leading-snug">
                           {post.title}
                         </h2>
-                        <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">{post.excerpt}</p>
+                        <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed flex-1">{post.excerpt}</p>
+
                         {post.tags && post.tags.length > 0 && (
-                          <div className="flex gap-2 mt-4 flex-wrap">
+                          <div className="flex gap-2 flex-wrap">
                             {post.tags.slice(0, 3).map((tag) => (
-                              <span key={tag} className="text-xs text-muted-foreground">
+                              <span key={tag} className="text-xs text-muted-foreground bg-black/5 dark:bg-white/5 px-2 py-0.5 rounded-full">
                                 {tag}
                               </span>
                             ))}
                           </div>
                         )}
-                        <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
+
+                        {/* Footer row */}
+                        <div className="pt-3 border-t border-border flex items-center justify-between gap-2 flex-wrap">
                           <span className="text-xs text-primary font-medium group-hover:underline">Read article</span>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             {isAdmin && !isStaticPost && (
                               <Link
                                 to={`/admin/posts/${post.id}`}
@@ -391,7 +383,7 @@ const Blog = () => {
                                   title="Copy link"
                                 >
                                   {copiedSlug === post.slug ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
-                                  {copiedSlug === post.slug ? "Copied" : "Copy link"}
+                                  {copiedSlug === post.slug ? "Copied" : "Copy"}
                                 </button>
                                 <button
                                   onClick={(e) => regenerateShareLink(e, post)}
@@ -399,7 +391,7 @@ const Blog = () => {
                                   title="Regenerate link"
                                 >
                                   <RefreshCw className="w-3.5 h-3.5" />
-                                  Regenerate
+                                  Refresh
                                 </button>
                               </>
                             )}
@@ -418,16 +410,17 @@ const Blog = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-2xl border border-border bg-card p-8 md:p-10 text-center"
+            className="rounded-2xl border border-border bg-card p-8 md:p-10 text-center space-y-4"
           >
-            <h2 className="text-2xl font-display font-bold mb-3">
+            <h2 className="text-2xl font-display font-bold">
               Stay Updated on <span className="gradient-text">Clean Energy</span>
             </h2>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm">
+            <p className="text-muted-foreground text-sm max-w-md mx-auto">
               Subscribe for insights on renewable energy, electric mobility, and sustainability in East Africa.
             </p>
             <NewsletterForm />
           </motion.div>
+
         </div>
       </main>
 
