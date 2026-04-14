@@ -227,6 +227,45 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          id: string
+          name: string
+          role: string
+          company: string
+          content: string
+          image: string | null
+          rating: number
+          sort_order: number | null
+          published: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          role: string
+          company: string
+          content: string
+          image?: string | null
+          rating?: number
+          sort_order?: number | null
+          published?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          role?: string
+          company?: string
+          content?: string
+          image?: string | null
+          rating?: number
+          sort_order?: number | null
+          published?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

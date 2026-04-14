@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Testimonial {
   id: string;
@@ -12,13 +13,15 @@ interface Testimonial {
   rating: number;
 }
 
-const testimonials: Testimonial[] = [
+// Fallback data — shown until Supabase responds, or if the table is empty.
+const FALLBACK: Testimonial[] = [
   {
     id: "1",
     name: "Dr. Sarah Kamau",
     role: "Director of Sustainability",
     company: "Kenya Power & Lighting",
-    content: "Roy's expertise in renewable energy systems is exceptional. His work on our solar microgrid project exceeded expectations, delivering both technical excellence and sustainable impact for rural communities.",
+    content:
+      "Roy's expertise in renewable energy systems is exceptional. His work on our solar microgrid project exceeded expectations, delivering both technical excellence and sustainable impact for rural communities.",
     rating: 5,
   },
   {
@@ -26,7 +29,8 @@ const testimonials: Testimonial[] = [
     name: "James Mwangi",
     role: "CEO",
     company: "EVChaja Kenya",
-    content: "Working with Roy on EV charging infrastructure has been transformative. His deep understanding of e-mobility and passion for sustainable transport makes him an invaluable partner in building Africa's EV future.",
+    content:
+      "Working with Roy on EV charging infrastructure has been transformative. His deep understanding of e-mobility and passion for sustainable transport makes him an invaluable partner in building Africa's EV future.",
     rating: 5,
   },
   {
@@ -34,7 +38,8 @@ const testimonials: Testimonial[] = [
     name: "Prof. Elizabeth Odhiambo",
     role: "Research Lead",
     company: "JKUAT Energy Institute",
-    content: "Roy's research contributions to solar-powered cold chain solutions have directly impacted smallholder farmers. His innovative approach combines technical rigor with real-world applicability.",
+    content:
+      "Roy's research contributions to solar-powered cold chain solutions have directly impacted smallholder farmers. His innovative approach combines technical rigor with real-world applicability.",
     rating: 5,
   },
   {
@@ -42,7 +47,8 @@ const testimonials: Testimonial[] = [
     name: "David Njoroge",
     role: "Operations Manager",
     company: "Roam Electric",
-    content: "Roy's analytical skills and dedication to sustainable mobility are outstanding. He played a key role in our feasibility studies, identifying optimal locations for EV hub deployment.",
+    content:
+      "Roy's analytical skills and dedication to sustainable mobility are outstanding. He played a key role in our feasibility studies, identifying optimal locations for EV hub deployment.",
     rating: 5,
   },
 ];
@@ -50,14 +56,43 @@ const testimonials: Testimonial[] = [
 export const Testimonials = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    supabase
+      .from("testimonials")
+      .select("id, name, role, company, content, image, rating")
+      .eq("published", true)
+      .order("sort_order", { ascending: true })
+      .then(({ data, error }) => {
+        if (!error && data && data.length > 0) {
+          setTestimonials(
+            data.map((t) => ({
+              id: t.id,
+              name: t.name,
+              role: t.role,
+              company: t.company,
+              content: t.content,
+              image: t.image ?? undefined,
+              rating: t.rating ?? 5,
+            }))
+          );
+        }
+        // On error or empty table, keep FALLBACK (state is already set)
+      });
+  }, []);
+
   const navigate = (direction: "prev" | "next") => {
-    if (direction === "prev") {
-      setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-    } else {
-      setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-    }
+    setCurrentIndex((prev) =>
+      direction === "prev"
+        ? prev === 0
+          ? testimonials.length - 1
+          : prev - 1
+        : prev === testimonials.length - 1
+        ? 0
+        : prev + 1
+    );
   };
 
   return (
@@ -100,8 +135,11 @@ export const Testimonials = () => {
 
             {/* Navigation */}
             <div className="flex justify-between items-start mb-8">
-              <div className="flex items-center gap-1" aria-label={`Rated ${testimonials[currentIndex].rating} out of 5 stars`}>
-                {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
+              <div
+                className="flex items-center gap-1"
+                aria-label={`Rated ${testimonials[currentIndex]?.rating ?? 5} out of 5 stars`}
+              >
+                {Array.from({ length: testimonials[currentIndex]?.rating ?? 5 }).map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-primary text-primary" aria-hidden="true" />
                 ))}
               </div>
@@ -132,30 +170,52 @@ export const Testimonials = () => {
               transition={{ duration: 0.3 }}
             >
               <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-8">
-                "{testimonials[currentIndex].content}"
+                "{testimonials[currentIndex]?.content}"
               </blockquote>
 
               <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-display font-bold text-lg"
-                  aria-hidden="true"
-                >
-                  {testimonials[currentIndex].name.split(" ").map(n => n[0]).join("")}
-                </div>
+                {testimonials[currentIndex]?.image ? (
+                  <img
+                    src={testimonials[currentIndex].image}
+                    alt={testimonials[currentIndex].name}
+                    className="w-14 h-14 rounded-full object-cover"
+                    width={56}
+                    height={56}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div
+                    className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-display font-bold text-lg shrink-0"
+                    aria-hidden="true"
+                  >
+                    {testimonials[currentIndex]?.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </div>
+                )}
                 <div>
-                  <p className="font-display font-semibold text-lg">{testimonials[currentIndex].name}</p>
+                  <p className="font-display font-semibold text-lg">
+                    {testimonials[currentIndex]?.name}
+                  </p>
                   <p className="text-muted-foreground">
-                    {testimonials[currentIndex].role}, {testimonials[currentIndex].company}
+                    {testimonials[currentIndex]?.role},{" "}
+                    {testimonials[currentIndex]?.company}
                   </p>
                 </div>
               </div>
             </motion.div>
 
             {/* Dots indicator */}
-            <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Testimonial navigation">
+            <div
+              className="flex justify-center gap-2 mt-8"
+              role="tablist"
+              aria-label="Testimonial navigation"
+            >
               {testimonials.map((t, index) => (
                 <button
-                  key={index}
+                  key={t.id}
                   role="tab"
                   aria-selected={index === currentIndex}
                   aria-label={`Go to testimonial from ${t.name}`}
@@ -182,13 +242,17 @@ export const Testimonials = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                onClick={() => setCurrentIndex(testimonials.findIndex(t => t.id === testimonial.id))}
+                onClick={() =>
+                  setCurrentIndex(testimonials.findIndex((t) => t.id === testimonial.id))
+                }
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    setCurrentIndex(testimonials.findIndex(t => t.id === testimonial.id));
+                    setCurrentIndex(
+                      testimonials.findIndex((t) => t.id === testimonial.id)
+                    );
                   }
                 }}
                 aria-label={`Read full testimonial from ${testimonial.name}`}
@@ -198,12 +262,27 @@ export const Testimonials = () => {
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/60 to-primary/30 flex items-center justify-center text-white font-medium text-sm"
-                    aria-hidden="true"
-                  >
-                    {testimonial.name.split(" ").map(n => n[0]).join("")}
-                  </div>
+                  {testimonial.image ? (
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div
+                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/60 to-primary/30 flex items-center justify-center text-white font-medium text-sm shrink-0"
+                      aria-hidden="true"
+                    >
+                      {testimonial.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </div>
+                  )}
                   <div>
                     <p className="font-medium text-sm">{testimonial.name}</p>
                     <p className="text-xs text-muted-foreground">{testimonial.company}</p>
