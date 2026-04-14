@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `6a2d630` — feat: add AI Agent & Automation skills section |
+| **Last commit** | `c0a6e2a` — fix: replace generic VA skills with domain-relevant AI agent skills for clean energy engineer |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 09:08 UTC |
+| **Commit date** | 2026-04-14 09:11 UTC |
 | **Branch** | `main` |
-| **Total commits** | 208 |
+| **Total commits** | 211 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 98 |
 | **CSS files** | 1 |
