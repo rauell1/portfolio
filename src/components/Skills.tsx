@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import React from "react";
-import { Sun, Battery, Wind, Zap, Leaf, Droplets } from "lucide-react";
+import { Sun, Battery, Wind, Zap, Leaf, Droplets, Bot, Workflow, Users, TrendingUp, DollarSign, Search } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import { SkillsRadarChart } from "./SkillsRadarChart";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +47,15 @@ const DEFAULT_SKILLS: SkillItem[] = [
   { name: "Project Management", level: 88 },
   { name: "Data Analysis", level: 82 },
   { name: "Community Engagement", level: 95 },
+];
+
+const AI_AGENT_SKILLS: SkillItem[] = [
+  { name: "AI Prompt Engineering", level: 80 },
+  { name: "Workflow Automation (Zapier/Make)", level: 75 },
+  { name: "CRM & Client Relationship Tools", level: 78 },
+  { name: "Digital Marketing & Social Media", level: 72 },
+  { name: "Financial Tracking & Budgeting", level: 76 },
+  { name: "AI-Assisted Research & Synthesis", level: 82 },
 ];
 
 const DEFAULT: SkillsContent = {
@@ -95,6 +104,39 @@ const AnimatedProgressBar = ({ skill, index, isInView }: { skill: SkillItem; ind
     </motion.div>
   );
 };
+
+const agentSkillCards = [
+  {
+    icon: Bot,
+    title: "AI Prompt Engineering",
+    description: "Crafting effective prompts for LLMs to automate research, drafting, and analysis tasks.",
+  },
+  {
+    icon: Workflow,
+    title: "Workflow Automation",
+    description: "Building no-code automations with Zapier and Make to streamline repetitive business processes.",
+  },
+  {
+    icon: Users,
+    title: "CRM & Client Tools",
+    description: "Managing client relationships and pipelines using HubSpot, Notion, and similar CRM platforms.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Digital Marketing",
+    description: "Social media strategy, content scheduling, email campaigns, and performance analytics.",
+  },
+  {
+    icon: DollarSign,
+    title: "Financial Management",
+    description: "Budget tracking, expense reporting, and financial dashboards for projects and clients.",
+  },
+  {
+    icon: Search,
+    title: "AI-Assisted Research",
+    description: "Leveraging AI tools to synthesize information, generate reports, and surface insights quickly.",
+  },
+];
 
 export const Skills = () => {
   const ref = useRef(null);
@@ -374,6 +416,90 @@ export const Skills = () => {
               </p>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* ── AI Agent & Automation Skills ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-16"
+        >
+          {/* Section header */}
+          <div className="flex items-center gap-3 mb-8">
+            <motion.div
+              className="p-2 rounded-xl bg-primary/20 border border-primary/30"
+              animate={{
+                boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Bot className="w-6 h-6 text-primary" />
+            </motion.div>
+            <div>
+              <h3 className="text-2xl font-display font-bold">
+                AI Agent &amp; <span className="gradient-text">Automation Skills</span>
+              </h3>
+              <p className="text-foreground/60 text-sm mt-0.5">Emerging capabilities from ALX AI Upskilling programme</p>
+            </div>
+          </div>
+
+          {/* Progress bars for AI skills */}
+          <motion.div
+            className="glass-card rounded-2xl p-8 mb-8"
+          >
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
+              {AI_AGENT_SKILLS.map((skill, index) => (
+                <AnimatedProgressBar
+                  key={skill.name}
+                  skill={skill}
+                  index={index}
+                  isInView={isInView}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Agent skill cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {agentSkillCards.map((card, index) => (
+              <motion.div
+                key={card.title}
+                className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
+                style={{
+                  background: "linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--primary) / 0.04))",
+                  border: "1px solid hsl(var(--primary) / 0.25)",
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.08 }}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0 0 30px hsl(var(--primary) / 0.25)",
+                }}
+              >
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: "radial-gradient(circle at center, hsl(var(--primary) / 0.15), transparent 70%)",
+                  }}
+                />
+                <div className="relative z-10">
+                  <motion.div
+                    className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit mb-4"
+                    animate={{
+                      boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 16px 4px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                  >
+                    <card.icon className="w-5 h-5 text-primary" />
+                  </motion.div>
+                  <h4 className="text-base font-display font-bold text-primary mb-2">{card.title}</h4>
+                  <p className="text-foreground/75 text-sm leading-relaxed">{card.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
