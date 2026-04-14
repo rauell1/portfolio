@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import React from "react";
-import { Sun, Battery, Wind, Zap, Leaf, Droplets, Bot, Workflow, Users, TrendingUp, DollarSign, Search } from "lucide-react";
+import { Sun, Battery, Wind, Zap, Leaf, Droplets, Bot, FileBarChart2, Globe2, Map, Megaphone, BarChart3 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import { SkillsRadarChart } from "./SkillsRadarChart";
 import { supabase } from "@/integrations/supabase/client";
@@ -49,13 +49,14 @@ const DEFAULT_SKILLS: SkillItem[] = [
   { name: "Community Engagement", level: 95 },
 ];
 
+// AI skills scoped to Roy's clean energy & e-mobility domain
 const AI_AGENT_SKILLS: SkillItem[] = [
-  { name: "AI Prompt Engineering", level: 80 },
-  { name: "Workflow Automation (Zapier/Make)", level: 75 },
-  { name: "CRM & Client Relationship Tools", level: 78 },
-  { name: "Digital Marketing & Social Media", level: 72 },
-  { name: "Financial Tracking & Budgeting", level: 76 },
-  { name: "AI-Assisted Research & Synthesis", level: 82 },
+  { name: "AI-Assisted Feasibility Analysis", level: 82 },
+  { name: "Automated Energy Reporting", level: 78 },
+  { name: "AI Market Intelligence (EV/Solar)", level: 80 },
+  { name: "Geospatial & GIS Data Analysis", level: 75 },
+  { name: "AI-Powered Sales Outreach", level: 76 },
+  { name: "Data-Driven Policy Advocacy", level: 78 },
 ];
 
 const DEFAULT: SkillsContent = {
@@ -107,34 +108,34 @@ const AnimatedProgressBar = ({ skill, index, isInView }: { skill: SkillItem; ind
 
 const agentSkillCards = [
   {
+    icon: FileBarChart2,
+    title: "AI-Assisted Feasibility Analysis",
+    description: "Using LLMs and data tools to accelerate solar PV and EV charging site feasibility studies and investment reports.",
+  },
+  {
+    icon: BarChart3,
+    title: "Automated Energy Reporting",
+    description: "Automating Power BI dashboards and energy audit reports to deliver real-time insights to clients and stakeholders.",
+  },
+  {
+    icon: Globe2,
+    title: "AI Market Intelligence",
+    description: "Leveraging AI to track EV and solar market trends, competitor activity, and investment opportunities across East Africa.",
+  },
+  {
+    icon: Map,
+    title: "Geospatial & GIS Analysis",
+    description: "Applying AI-enhanced GIS tools to identify optimal sites for EV charging hubs and distributed solar installations.",
+  },
+  {
+    icon: Megaphone,
+    title: "AI-Powered Sales Outreach",
+    description: "Using automation and AI to personalise outreach to EPCs, transport operators, and energy distributors at scale.",
+  },
+  {
     icon: Bot,
-    title: "AI Prompt Engineering",
-    description: "Crafting effective prompts for LLMs to automate research, drafting, and analysis tasks.",
-  },
-  {
-    icon: Workflow,
-    title: "Workflow Automation",
-    description: "Building no-code automations with Zapier and Make to streamline repetitive business processes.",
-  },
-  {
-    icon: Users,
-    title: "CRM & Client Tools",
-    description: "Managing client relationships and pipelines using HubSpot, Notion, and similar CRM platforms.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Digital Marketing",
-    description: "Social media strategy, content scheduling, email campaigns, and performance analytics.",
-  },
-  {
-    icon: DollarSign,
-    title: "Financial Management",
-    description: "Budget tracking, expense reporting, and financial dashboards for projects and clients.",
-  },
-  {
-    icon: Search,
-    title: "AI-Assisted Research",
-    description: "Leveraging AI tools to synthesize information, generate reports, and surface insights quickly.",
+    title: "Data-Driven Policy Advocacy",
+    description: "Synthesising regulatory data with AI tools to build compelling evidence for engagement with EPRA, EMAK, and NGOs.",
   },
 ];
 
@@ -210,7 +211,7 @@ export const Skills = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-2 glass-card rounded-2xl p-8 relative overflow-hidden"
           >
-            {/* Decorative animated icons in card */}
+            {/* Decorative animated icon in card */}
             <div className="absolute -top-4 -right-4 opacity-10">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -244,7 +245,7 @@ export const Skills = () => {
           <SkillsRadarChart skills={skills} isInView={isInView} />
         </div>
 
-        {/* Technical Expertise Cards - Featured */}
+        {/* Technical Expertise Cards */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -258,29 +259,18 @@ export const Skills = () => {
               background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
               border: "1px solid hsl(var(--primary) / 0.3)",
             }}
-            whileHover={{ 
-              scale: 1.02, 
-              boxShadow: "0 0 40px hsl(var(--primary) / 0.3)",
-            }}
+            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
-            {/* Animated background glow */}
             <motion.div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)",
-              }}
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
             />
-            
             <div className="absolute -bottom-4 -left-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              >
+              <motion.div animate={{ rotate: -360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }}>
                 <Battery className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
-            
             <div className="relative z-10">
               <motion.div
                 className="flex items-center gap-3 mb-4"
@@ -290,16 +280,12 @@ export const Skills = () => {
               >
                 <motion.div
                   className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ 
-                    boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"]
-                  }}
+                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   <Sun className="w-6 h-6 text-primary" />
                 </motion.div>
-                <h3 className="text-xl font-display font-bold text-primary">
-                  Engineering
-                </h3>
+                <h3 className="text-xl font-display font-bold text-primary">Engineering</h3>
               </motion.div>
               <p className="text-foreground/80 text-sm leading-relaxed">
                 Solar PV system design, off-grid storage, EV charging architecture, and biogas installations.
@@ -314,19 +300,13 @@ export const Skills = () => {
               background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
               border: "1px solid hsl(var(--primary) / 0.3)",
             }}
-            whileHover={{ 
-              scale: 1.02, 
-              boxShadow: "0 0 40px hsl(var(--primary) / 0.3)",
-            }}
+            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
             <motion.div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)",
-              }}
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
             />
-            
             <div className="absolute -top-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
               <motion.div
                 animate={{ scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] }}
@@ -335,7 +315,6 @@ export const Skills = () => {
                 <Wind className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
-            
             <div className="relative z-10">
               <motion.div
                 className="flex items-center gap-3 mb-4"
@@ -345,16 +324,12 @@ export const Skills = () => {
               >
                 <motion.div
                   className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ 
-                    boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"]
-                  }}
+                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
                 >
                   <Battery className="w-6 h-6 text-primary" />
                 </motion.div>
-                <h3 className="text-xl font-display font-bold text-primary">
-                  Business
-                </h3>
+                <h3 className="text-xl font-display font-bold text-primary">Business</h3>
               </motion.div>
               <p className="text-foreground/80 text-sm leading-relaxed">
                 Strategic sales, project finance, stakeholder engagement, and market intelligence.
@@ -369,19 +344,13 @@ export const Skills = () => {
               background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
               border: "1px solid hsl(var(--primary) / 0.3)",
             }}
-            whileHover={{ 
-              scale: 1.02, 
-              boxShadow: "0 0 40px hsl(var(--primary) / 0.3)",
-            }}
+            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
             <motion.div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)",
-              }}
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
             />
-            
             <div className="absolute -bottom-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
               <motion.div
                 animate={{ y: [0, -10, 0] }}
@@ -390,7 +359,6 @@ export const Skills = () => {
                 <Droplets className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
-            
             <div className="relative z-10">
               <motion.div
                 className="flex items-center gap-3 mb-4"
@@ -400,16 +368,12 @@ export const Skills = () => {
               >
                 <motion.div
                   className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ 
-                    boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"]
-                  }}
+                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
                 >
                   <Leaf className="w-6 h-6 text-primary" />
                 </motion.div>
-                <h3 className="text-xl font-display font-bold text-primary">
-                  Analytics
-                </h3>
+                <h3 className="text-xl font-display font-bold text-primary">Analytics</h3>
               </motion.div>
               <p className="text-foreground/80 text-sm leading-relaxed">
                 Power BI dashboards, GIS mapping, feasibility studies, and energy audit reporting.
@@ -438,16 +402,14 @@ export const Skills = () => {
             </motion.div>
             <div>
               <h3 className="text-2xl font-display font-bold">
-                AI Agent &amp; <span className="gradient-text">Automation Skills</span>
+                AI-Augmented <span className="gradient-text">Energy Skills</span>
               </h3>
-              <p className="text-foreground/60 text-sm mt-0.5">Emerging capabilities from ALX AI Upskilling programme</p>
+              <p className="text-foreground/60 text-sm mt-0.5">Applying AI tools to clean energy engineering, EV infrastructure & policy work</p>
             </div>
           </div>
 
           {/* Progress bars for AI skills */}
-          <motion.div
-            className="glass-card rounded-2xl p-8 mb-8"
-          >
+          <motion.div className="glass-card rounded-2xl p-8 mb-8">
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
               {AI_AGENT_SKILLS.map((skill, index) => (
                 <AnimatedProgressBar
@@ -473,16 +435,11 @@ export const Skills = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.08 }}
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 30px hsl(var(--primary) / 0.25)",
-                }}
+                whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsl(var(--primary) / 0.25)" }}
               >
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(circle at center, hsl(var(--primary) / 0.15), transparent 70%)",
-                  }}
+                  style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
                 />
                 <div className="relative z-10">
                   <motion.div
