@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-14T06:12:13.510Z**
+> Last updated: **2026-04-14T06:21:44.922Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -63,6 +63,7 @@
 | File | Purpose |
 |---|---|
 | `src/components/About.tsx` | About section — bio, photo, fun facts, downloadable resume button |
+| `src/components/BlogTeaser.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/components/CaseStudies.tsx` | Home case studies preview — highlight cards linking to full page |
 | `src/components/Contact.tsx` | Contact form — EmailJS integration, reCAPTCHA v3, validation |
 | `src/components/Experience.tsx` | Work experience timeline — roles, companies, dates, bullet points |
