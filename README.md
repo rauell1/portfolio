@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3cd72b0` — refactor: replace embedded Roam Point case study modal with lightweight gallery card + deep-link to Case Studies |
+| **Last commit** | `0c95a61` — ui: improve spacing, image wrapping and editability on CaseStudiesPage and Blog |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 09:49 UTC |
+| **Commit date** | 2026-04-14 10:12 UTC |
 | **Branch** | `main` |
-| **Total commits** | 217 |
+| **Total commits** | 220 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 99 |
 | **CSS files** | 1 |
