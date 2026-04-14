@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `0c95a61` — ui: improve spacing, image wrapping and editability on CaseStudiesPage and Blog |
+| **Last commit** | `a74a507` — feat: migrate testimonials to Supabase with typed schema and SQL seed |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 10:12 UTC |
+| **Commit date** | 2026-04-14 11:05 UTC |
 | **Branch** | `main` |
-| **Total commits** | 220 |
+| **Total commits** | 223 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 99 |
 | **CSS files** | 1 |
