@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-14T07:12:29.336Z**
+> Last updated: **2026-04-14T08:05:44.839Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -234,6 +234,7 @@
 | `supabase/config.toml` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `supabase/functions/send-contact-email/index.ts` | Supabase Edge Function (Deno) |
 | `supabase/functions/send-newsletter-welcome/index.ts` | Supabase Edge Function (Deno) |
+| `supabase/migrations/20240001_testimonials.sql` | Supabase SQL migration |
 | `supabase/migrations/20260127084747_c02e73d2-84de-4407-b016-83d598ee3bd5.sql` | Supabase SQL migration |
 | `supabase/migrations/20260131005236_9c5f7b10-bf56-444f-a7df-a1c635211bb7.sql` | Supabase SQL migration |
 | `supabase/migrations/20260131060952_44fff40e-b922-4bde-b6f8-c8a3d79bec21.sql` | Supabase SQL migration |
