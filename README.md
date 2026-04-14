@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `c0a6e2a` — fix: replace generic VA skills with domain-relevant AI agent skills for clean energy engineer |
+| **Last commit** | `1e18997` — refactor: merge Projects+CaseStudies into tabbed Work section, add BlogTeaser strip, remove homepage duplication |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 09:11 UTC |
+| **Commit date** | 2026-04-14 09:21 UTC |
 | **Branch** | `main` |
-| **Total commits** | 211 |
+| **Total commits** | 214 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 98 |
+| **TypeScript files** | 99 |
 | **CSS files** | 1 |
-| **React components** | 71 |
+| **React components** | 72 |
 | **Pages / views** | 10 |
 
 ## 🤗 Workflow Status
