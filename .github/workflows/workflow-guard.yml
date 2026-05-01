@@ -13,7 +13,7 @@
 # This workflow uses the following pinned GitHub Actions:
 #   - actions/checkout@v4
 #   - oven-sh/setup-bun@v2    (bun-version: latest; for type/build jobs)
-#   - actions/setup-node@v4   (node-version: '20'; dry-run job only)
+#   - actions/setup-node@v6   (node-version: '20'; dry-run job only)
 #
 # Review and update these pins when:
 #   1. You upgrade TypeScript (devDependencies in package.json)
@@ -126,7 +126,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
 
