@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `4daed85` — fix: add @vercel/node dependency for API serverless functions |
+| **Last commit** | `06e6a73` — fix: allow all *.vercel.app preview URLs and roy-okola-otienos-projects subdomains in origin check |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:57 UTC |
+| **Commit date** | 2026-05-02 13:07 UTC |
 | **Branch** | `main` |
-| **Total commits** | 252 |
+| **Total commits** | 255 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
