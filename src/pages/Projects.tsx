@@ -19,6 +19,7 @@ import {
   LayoutDashboard,
   Thermometer,
   Droplets,
+  ImageOff,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -56,6 +57,45 @@ const StatusBadge = ({ status }: { status?: Project["status"] }) => {
   );
 };
 
+/** Project image with graceful fallback gradient */
+const ProjectImage = ({
+  src,
+  alt,
+  gradient,
+  className = "",
+}: {
+  src?: string;
+  alt: string;
+  gradient: string;
+  className?: string;
+}) => {
+  const [errored, setErrored] = useState(false);
+
+  if (!src || errored) {
+    return (
+      <div
+        className={`bg-gradient-to-br ${gradient} flex items-center justify-center ${className}`}
+        aria-label={alt}
+      >
+        <ImageOff className="w-8 h-8 text-white/30" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      width={800}
+      height={400}
+      loading="lazy"
+      decoding="async"
+      onError={() => setErrored(true)}
+      className={`w-full h-full object-cover ${className}`}
+    />
+  );
+};
+
 const ProjectCard = ({
   project,
   index,
@@ -77,27 +117,43 @@ const ProjectCard = ({
         className="glass-card rounded-2xl overflow-hidden h-full flex flex-col cursor-pointer hover:ring-1 hover:ring-primary/30 transition-all duration-300"
         onClick={() => onClick(project)}
       >
-        {/* Gradient header */}
-        <div className={`relative bg-gradient-to-br ${project.gradient} p-6 flex items-start justify-between`}>
-          <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <Icon className="w-5 h-5 text-white" />
+        {/* Project image / gradient banner */}
+        <div className="relative h-44 overflow-hidden flex-shrink-0">
+          <ProjectImage
+            src={project.image}
+            alt={`${project.title} preview`}
+            gradient={project.gradient}
+            className="transition-transform duration-500 group-hover:scale-105"
+          />
+          {/* Gradient overlay so icon + badges stay readable */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+          {/* Icon badge — bottom-left */}
+          <div className={`absolute bottom-3 left-4 w-9 h-9 rounded-xl bg-gradient-to-br ${project.gradient} shadow-lg flex items-center justify-center`}>
+            <Icon className="w-4.5 h-4.5 text-white" />
           </div>
-          <StatusBadge status={project.status} />
+
+          {/* Status badge — top-right */}
+          <div className="absolute top-3 right-3">
+            <StatusBadge status={project.status} />
+          </div>
+
+          {/* Flagship ribbon — top-left */}
           {project.isFlagship && (
-            <span className="absolute bottom-3 left-6 text-[10px] font-semibold uppercase tracking-widest text-white/60">
+            <span className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-widest text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
               Flagship
             </span>
           )}
         </div>
 
         {/* Body */}
-        <div className="flex-1 flex flex-col p-6">
+        <div className="flex-1 flex flex-col p-5">
           <div className="mb-1">
             <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
               {project.category}
             </span>
           </div>
-          <h3 className="text-lg font-display font-bold mb-2 group-hover:text-primary transition-colors">
+          <h3 className="text-base font-display font-bold mb-2 group-hover:text-primary transition-colors leading-snug">
             {project.title}
           </h3>
           <p className="text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3">
@@ -190,39 +246,57 @@ const ProjectModal = ({
           className="relative bg-background border border-border rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Modal gradient header */}
-          <div className={`bg-gradient-to-br ${project.gradient} p-8 rounded-t-2xl`}>
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <Icon className="w-6 h-6 text-white" />
+          {/* Modal image hero */}
+          <div className="relative h-52 overflow-hidden rounded-t-2xl flex-shrink-0">
+            <ProjectImage
+              src={project.image}
+              alt={`${project.title} hero image`}
+              gradient={project.gradient}
+            />
+            {/* Dark overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+
+            {/* Header content over image */}
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div className="flex items-end justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${project.gradient} shadow-lg flex items-center justify-center flex-shrink-0`}>
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-0.5">
+                      {project.category}
+                    </p>
+                    <h2 className="text-xl font-display font-bold text-white leading-tight">{project.title}</h2>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-0.5">
-                    {project.category}
-                  </p>
-                  <h2 className="text-2xl font-display font-bold text-white">{project.title}</h2>
-                </div>
+                <button
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-black/60 transition-colors flex-shrink-0"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4 text-white" />
+                </button>
               </div>
-              <button
-                onClick={onClose}
-                className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors flex-shrink-0 mt-1"
-              >
-                <X className="w-4 h-4 text-white" />
-              </button>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <StatusBadge status={project.status} />
-              {project.isFounder && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white border border-white/25">
-                  Founder
-                </span>
-              )}
+
+              <div className="flex flex-wrap items-center gap-2 mt-3">
+                <StatusBadge status={project.status} />
+                {project.isFounder && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white border border-white/25">
+                    Founder
+                  </span>
+                )}
+                {project.isFlagship && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white border border-white/25">
+                    Flagship
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Modal body */}
-          <div className="p-8 space-y-6">
+          <div className="p-6 space-y-6">
             {/* Role */}
             {project.role && (
               <div className="flex items-center gap-2 text-sm">
@@ -233,7 +307,7 @@ const ProjectModal = ({
 
             {/* Long description */}
             <div>
-              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
+              <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
                 About This Project
               </h4>
               <p className="text-muted-foreground text-sm leading-relaxed">
@@ -244,7 +318,7 @@ const ProjectModal = ({
             {/* Specs */}
             {project.specs && project.specs.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+                <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">
                   Key Details
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
@@ -260,7 +334,7 @@ const ProjectModal = ({
 
             {/* Tags */}
             <div>
-              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+              <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">
                 Technologies & Domains
               </h4>
               <div className="flex flex-wrap gap-2">
