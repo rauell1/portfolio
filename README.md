@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `db45bb7` — refactor: landing Projects section — show path headings + descriptions only, no cards |
+| **Last commit** | `34c83ff` — perf: GPU/blur fixes, frame-sort, memo, mobile timeline, per-section Suspense |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 14:21 UTC |
+| **Commit date** | 2026-05-02 15:42 UTC |
 | **Branch** | `main` |
-| **Total commits** | 283 |
+| **Total commits** | 286 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
