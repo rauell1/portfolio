@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `34c83ff` — perf: GPU/blur fixes, frame-sort, memo, mobile timeline, per-section Suspense |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 15:42 UTC |
+| **Last commit** | `bec2d3a` — chore: replace em/en dashes with regular hyphens in Projects content |
+| **Committed by** | Roy Okola Otieno |
+| **Commit date** | 2026-05-02 20:53 UTC |
 | **Branch** | `main` |
-| **Total commits** | 286 |
+| **Total commits** | 289 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
