@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Linkedin, ArrowUp, Github, Lock } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { isAdminEmail } from "@/lib/config";
+import { Linkedin, ArrowUp, Github } from "lucide-react";
 
 // X (Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
@@ -12,9 +10,6 @@ const XIcon = ({ className }: { className?: string }) => (
 );
 
 export const Footer = () => {
-  const { user } = useAuth();
-  const isAdmin = isAdminEmail(user?.email);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -26,15 +21,7 @@ export const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: "Blog", href: "/blog" },
-    { label: "Case Studies", href: "/case-studies" },
     { label: "Projects", href: "/projects" },
-  ];
-
-  const adminLinks = [
-    { label: "Edit Blog", href: "/admin/posts/new" },
-    { label: "Edit Case Studies", href: "/case-studies#admin-case-studies-manager" },
-    { label: "Edit Projects", href: "/projects" },
   ];
 
   return (
@@ -69,23 +56,9 @@ export const Footer = () => {
                 </li>
               ))}
             </ul>
-            {isAdmin && (
-              <ul className="flex gap-4 flex-wrap mt-2">
-                {adminLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-xs text-primary/90 hover:text-primary transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
 
-          {/* Connect + Admin + Social */}
+          {/* Connect + Social */}
           <div className="flex flex-col items-start md:items-end gap-3">
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
@@ -103,14 +76,6 @@ export const Footer = () => {
                 </motion.a>
               ))}
               <div className="w-px h-4 bg-border" />
-              <Link 
-                to="/admin"
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-primary/20 text-muted-foreground/60 hover:text-primary transition-all duration-300 flex items-center gap-1"
-                aria-label="Admin login"
-                title="Admin login"
-              >
-                <Lock className="w-4 h-4" />
-              </Link>
               <motion.button
                 onClick={scrollToTop}
                 whileHover={{ y: -2 }}

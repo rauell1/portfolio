@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, BookOpen, ShieldCheck, LogOut } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { Menu, X, FileText } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
-import { isAdminEmail } from "@/lib/config";
 
 
 const navItems = [
@@ -20,10 +18,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
-  const { user, signOut } = useAuth();
-  const isAdmin = isAdminEmail(user?.email);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,12 +36,6 @@ export const Navbar = () => {
     const element = document.querySelector(href);
     if (element) smoothScrollTo(element);
     setMobileMenuOpen(false);
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-    setMobileMenuOpen(false);
-    navigate("/");
   };
 
   return (
@@ -84,18 +73,6 @@ export const Navbar = () => {
                   </button>
                 </li>
               ))}
-              {isAdmin && (
-                <li>
-                  <Link
-                    to="/blog"
-                    className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group flex items-center gap-1"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                    <span className="relative z-10">Blog</span>
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-                  </Link>
-                </li>
-              )}
               <li>
                 <Link
                   to="/resume"
@@ -106,37 +83,6 @@ export const Navbar = () => {
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>
-              {isAdmin && (
-                <li>
-                  <Link
-                    to="/admin"
-                    className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group flex items-center gap-1"
-                  >
-                    <ShieldCheck className="w-4 h-4" />
-                    <span className="relative z-10">Admin</span>
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-                  </Link>
-                </li>
-              )}
-              {isAdmin && (
-                <li>
-                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                    Logged in as {user?.email}
-                  </span>
-                </li>
-              )}
-              {isAdmin && (
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group flex items-center gap-1"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span className="relative z-10">Logout</span>
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-                  </button>
-                </li>
-              )}
 
               <li className="ml-2">
                 <ThemeToggle />
@@ -166,13 +112,6 @@ export const Navbar = () => {
               className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
             >
               <div className="px-6 py-4 space-y-2">
-                {isAdmin && (
-                  <div className="px-4 py-2">
-                    <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                      Logged in as {user?.email}
-                    </span>
-                  </div>
-                )}
                 {navItems.map((item) => (
                   <button
                     key={item.href}
@@ -182,16 +121,6 @@ export const Navbar = () => {
                     {item.label}
                   </button>
                 ))}
-                {isAdmin && (
-                  <Link
-                    to="/blog"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                    Blog
-                  </Link>
-                )}
                 <Link
                   to="/resume"
                   onClick={() => setMobileMenuOpen(false)}
@@ -200,25 +129,6 @@ export const Navbar = () => {
                   <FileText className="w-4 h-4" />
                   Resume
                 </Link>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                  >
-                    <ShieldCheck className="w-4 h-4" />
-                    Admin
-                  </Link>
-                )}
-                {isAdmin && (
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 w-full px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                  </button>
-                )}
               </div>
             </motion.div>
           )}

@@ -2,42 +2,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { AuthProvider, useAuth } from "./hooks/useAuth";
-import { isAdminEmail } from "./lib/config";
 import { Component, ReactNode, lazy, Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 
 // Lazy-load non-home pages to reduce initial bundle size
 const Resume = lazy(() => import("./pages/Resume"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ProjectsPage = lazy(() => import("./pages/Projects"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
-const AuthResetPassword = lazy(() => import("./pages/AuthResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LazyToaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
 const LazySonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
-
-const ProtectedAdminPostEditor = () => {
-  const { user } = useAuth();
-  const isAdmin = isAdminEmail(user?.email);
-  if (!isAdmin) {
-    return <AdminLogin />;
-  }
-  return <AdminPostEditor />;
-};
-
-const ProtectedBlogIndex = () => {
-  const { user } = useAuth();
-  const isAdmin = isAdminEmail(user?.email);
-  if (!isAdmin) {
-    return <AdminLogin />;
-  }
-  return <Blog />;
-};
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
@@ -79,33 +53,24 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <AuthProvider>
-          <TooltipProvider>
-            <Suspense fallback={null}>
-              <LazyToaster />
-              <LazySonner />
+        <TooltipProvider>
+          <Suspense fallback={null}>
+            <LazyToaster />
+            <LazySonner />
+          </Suspense>
+          <BrowserRouter>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/resume" element={<Resume />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </Suspense>
-            <BrowserRouter>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/resume" element={<Resume />} />
-                  <Route path="/blog" element={<ProtectedBlogIndex />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/case-studies" element={<CaseStudiesPage />} />
-                  <Route path="/projects" element={<ProjectsPage />} />
-                  <Route path="/admin" element={<AdminLogin />} />
-                  <Route path="/admin/posts/new" element={<ProtectedAdminPostEditor />} />
-                  <Route path="/admin/posts/:id" element={<ProtectedAdminPostEditor />} />
-                  <Route path="/auth/reset-password" element={<AuthResetPassword />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
-            <Analytics />
-          </TooltipProvider>
-        </AuthProvider>
+          </BrowserRouter>
+          <Analytics />
+        </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </ErrorBoundary>
