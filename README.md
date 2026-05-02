@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3667250` — fix: move resend from devDependencies to dependencies so it is available in production |
+| **Last commit** | `e2c6948` — fix: use info@rauell.systems as sender and add inbound webhook handler |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:30 UTC |
+| **Commit date** | 2026-05-02 12:38 UTC |
 | **Branch** | `main` |
-| **Total commits** | 237 |
+| **Total commits** | 240 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
