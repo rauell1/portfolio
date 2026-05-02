@@ -43,7 +43,7 @@ export const portfolioProjects: Project[] = [
     link: "https://safaricharge-website.vercel.app/",
     repo: "https://github.com/rauell1/safaricharge",
     gradient: "from-cyan-500 to-blue-600",
-    image: "https://picsum.photos/seed/safaricharge-ev-solar/800/400",
+    image: "/images/SafariCharge_DailyGraph_2026-01-07.jpg",
     tags: ["Next.js 16", "TypeScript", "Solar", "EV Charging", "Battery Storage", "AI Analytics", "Supabase"],
     isFounder: true,
     isFlagship: true,
@@ -67,7 +67,7 @@ export const portfolioProjects: Project[] = [
     role: "Project Lead - Infrastructure & Partnerships",
     iconName: "Battery",
     gradient: "from-emerald-500 to-teal-600",
-    image: "https://picsum.photos/seed/roam-electric-motorcycle/800/400",
+    image: "/images/roam-charger-1.jpeg",
     tags: ["EV Charging", "Solar PV", "Feasibility Studies", "Site Planning", "Nairobi", "Roam Electric"],
     isFlagship: true,
     status: "in-progress",
@@ -92,7 +92,7 @@ export const portfolioProjects: Project[] = [
     link: "https://roam-energy.vercel.app/",
     repo: "https://github.com/rauell1/roam-energy-page",
     gradient: "from-orange-500 to-yellow-500",
-    image: "https://picsum.photos/seed/solar-panels-kenya/800/400",
+    image: "/images/roam-electric.webp",
     tags: ["Solar", "E-Commerce", "MongoDB", "WhatsApp API", "Resend", "Vercel"],
     status: "live",
     specs: [
@@ -114,7 +114,7 @@ export const portfolioProjects: Project[] = [
     role: "Design Engineer",
     iconName: "Thermometer",
     gradient: "from-lime-500 to-green-600",
-    image: "https://picsum.photos/seed/solar-cooling-farm/800/400",
+    image: "https://images.unsplash.com/photo-1509391366360-1e967a57a82c?q=80&w=800&auto=format&fit=crop",
     tags: ["Solar PV", "Cold Chain", "Post-Harvest", "AgriTech", "Off-Grid"],
     status: "completed",
     specs: [
@@ -135,7 +135,7 @@ export const portfolioProjects: Project[] = [
     role: "Installation Engineer",
     iconName: "Droplets",
     gradient: "from-blue-500 to-cyan-600",
-    image: "https://picsum.photos/seed/borehole-irrigation-africa/800/400",
+    image: "https://images.unsplash.com/photo-1563990112328-1f50e1810fec?q=80&w=800&auto=format&fit=crop",
     tags: ["Solar Pumping", "Irrigation", "Off-Grid", "Climate-Smart Agriculture"],
     status: "completed",
     specs: [
@@ -156,7 +156,7 @@ export const portfolioProjects: Project[] = [
     role: "Project Coordinator",
     iconName: "Leaf",
     gradient: "from-teal-500 to-green-500",
-    image: "https://picsum.photos/seed/biogas-rural-community/800/400",
+    image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=800&auto=format&fit=crop",
     tags: ["Biogas", "Circular Economy", "Rural Development", "Clean Cooking"],
     status: "completed",
   },
@@ -176,7 +176,7 @@ export const portfolioProjects: Project[] = [
     link: "https://greenwave-society.vercel.app/",
     repo: "https://github.com/rauell1/greenwave-society",
     gradient: "from-green-500 to-emerald-600",
-    image: "https://picsum.photos/seed/greenwave-nature-youth/800/400",
+    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop",
     tags: ["Next.js 16", "TypeScript", "Non-Profit", "Prisma", "Rate Limiting", "Zod", "Framer Motion"],
     status: "live",
     specs: [
@@ -199,7 +199,7 @@ export const portfolioProjects: Project[] = [
     iconName: "Users",
     repo: "https://github.com/rauell1/event-registration-page",
     gradient: "from-violet-500 to-purple-600",
-    image: "https://picsum.photos/seed/solar-industry-event/800/400",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
     tags: ["Event Tech", "Google Apps Script", "Real-time", "Email Automation", "Capacity Management"],
     status: "completed",
     specs: [
@@ -224,7 +224,7 @@ export const portfolioProjects: Project[] = [
     iconName: "FileText",
     repo: "https://github.com/rauell1/cv-builder",
     gradient: "from-indigo-500 to-blue-600",
-    image: "https://picsum.photos/seed/ai-resume-builder/800/400",
+    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop",
     tags: ["AI", "Next.js 16", "TypeScript", "OpenAI", "Anthropic", "Gemini", "Zustand", "pdf-lib"],
     status: "live",
     specs: [
@@ -250,7 +250,7 @@ export const portfolioProjects: Project[] = [
     link: "https://dj-kimchi.vercel.app/",
     repo: "https://github.com/rauell1/dj-kimchi",
     gradient: "from-pink-500 to-rose-600",
-    image: "https://picsum.photos/seed/dj-music-event/800/400",
+    image: "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?q=80&w=800&auto=format&fit=crop",
     tags: ["Next.js 16", "TypeScript", "Prisma", "Resend", "Framer Motion", "Mixcloud", "Music"],
     status: "live",
     specs: [
@@ -273,7 +273,7 @@ export const portfolioProjects: Project[] = [
     iconName: "LayoutDashboard",
     repo: "https://github.com/rauell1/rauell-systems-hub",
     gradient: "from-slate-500 to-gray-600",
-    image: "https://picsum.photos/seed/web-dashboard-portfolio/800/400",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
     tags: ["TanStack Start", "React 19", "TypeScript", "Tailwind v4", "SSR", "Radix UI", "Vite 7"],
     status: "in-progress",
     specs: [
