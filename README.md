@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `2df2ed4` — feat(projects-page): add project images to cards & modal, image field to data — landing page untouched |
+| **Last commit** | `527b3fe` — revert: restore landing Projects section to pre-tabs state (Featured Projects, no case study links) |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 14:09 UTC |
+| **Commit date** | 2026-05-02 14:15 UTC |
 | **Branch** | `main` |
-| **Total commits** | 274 |
+| **Total commits** | 277 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
