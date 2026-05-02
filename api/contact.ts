@@ -11,7 +11,6 @@ import {
   sanitizeText,
 } from './_lib/security';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const TO_EMAIL = 'royokola3@gmail.com';
 const FROM_EMAIL = 'info@rauell.systems';
 
@@ -62,6 +61,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('Contact API misconfigured: RESEND_API_KEY is missing');
     return res.status(500).json({ success: false, error: 'Service unavailable' });
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
