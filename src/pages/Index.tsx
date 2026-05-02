@@ -15,8 +15,6 @@ const Projects = lazy(() => import("@/components/Projects").then((m) => ({ defau
 const Experience = lazy(() => import("@/components/Experience").then((m) => ({ default: m.Experience })));
 const Skills = lazy(() => import("@/components/Skills").then((m) => ({ default: m.Skills })));
 const Leadership = lazy(() => import("@/components/Leadership").then((m) => ({ default: m.Leadership })));
-// BlogTeaser replaces the standalone CaseStudies section on the homepage
-const BlogTeaser = lazy(() => import("@/components/BlogTeaser").then((m) => ({ default: m.BlogTeaser })));
 const Contact = lazy(() => import("@/components/Contact").then((m) => ({ default: m.Contact })));
 
 const Index = () => {
@@ -34,7 +32,6 @@ const Index = () => {
           <Experience />
           <Skills />
           <Leadership />
-          <BlogTeaser />
           <Contact />
         </Suspense>
       </main>
