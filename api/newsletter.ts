@@ -12,7 +12,7 @@ import {
 } from './_lib/security';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = 'onboarding@resend.dev'; // Replace with your verified domain once set up
+const FROM_EMAIL = 'info@rauell.systems';
 const OWNER_EMAIL = 'royokola3@gmail.com';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -99,8 +99,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Resend newsletter error:', error);
-
-    // Always return JSON, even on unexpected errors
     return res.status(500).json({ success: false, error: 'Failed to send welcome email.' });
   }
 }
