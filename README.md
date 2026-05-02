@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `cfd1460` — feat: add career path headings to landing Featured Projects section |
+| **Last commit** | `db45bb7` — refactor: landing Projects section — show path headings + descriptions only, no cards |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 14:18 UTC |
+| **Commit date** | 2026-05-02 14:21 UTC |
 | **Branch** | `main` |
-| **Total commits** | 280 |
+| **Total commits** | 283 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
