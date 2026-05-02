@@ -66,6 +66,7 @@ export function isAllowedOrigin(req: VercelRequest): boolean {
   }
 
   const allowList = new Set<string>([
+    'https://royotieno.rauell.systems',
     'https://roy-otieno.vercel.app',
     'http://localhost:8080',
     'http://localhost:5173',
