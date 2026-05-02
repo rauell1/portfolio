@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `114bd23` — fix: exclude /api routes from SPA catch-all rewrite so serverless functions are reachable |
+| **Last commit** | `1e2dd14` — feat: update inbound webhook to use Resend SDK for retrieving full email details |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:46 UTC |
+| **Commit date** | 2026-05-02 12:48 UTC |
 | **Branch** | `main` |
-| **Total commits** | 246 |
+| **Total commits** | 249 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
