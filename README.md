@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `527b3fe` — revert: restore landing Projects section to pre-tabs state (Featured Projects, no case study links) |
+| **Last commit** | `cfd1460` — feat: add career path headings to landing Featured Projects section |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 14:15 UTC |
+| **Commit date** | 2026-05-02 14:18 UTC |
 | **Branch** | `main` |
-| **Total commits** | 277 |
+| **Total commits** | 280 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
