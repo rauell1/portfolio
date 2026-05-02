@@ -1,5 +1,4 @@
 import { useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
 
 interface Particle {
   x: number;
@@ -37,6 +36,8 @@ interface GeometricShape {
 export const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
+  // PERF: pre-sorted reference updated at init time, not every frame
+  const sortedParticlesRef = useRef<Particle[]>([]);
   const shapesRef = useRef<GeometricShape[]>([]);
   const sparksRef = useRef<EnergySpark[]>([]);
   const mouseRef = useRef({ x: -9999, y: -9999 });
@@ -44,7 +45,6 @@ export const ParticleBackground = () => {
   const frameCountRef = useRef(0);
   const lastTimeRef = useRef(0);
 
-  // Detect device capability once at mount
   const isMobileRef = useRef(
     typeof window !== "undefined"
       ? window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
@@ -55,9 +55,6 @@ export const ParticleBackground = () => {
       ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false
   );
-
-  // FIX: detect very low-end devices (≤2 CPU cores or old Android) and
-  // reduce particle count further + skip shadow/glow drawing
   const isLowEndRef = useRef(
     typeof navigator !== "undefined"
       ? (navigator.hardwareConcurrency ?? 4) <= 2
@@ -68,7 +65,6 @@ export const ParticleBackground = () => {
     const particles: Particle[] = [];
     const shapes: GeometricShape[] = [];
 
-    // FIX: tiered particle counts — low-end gets the minimum viable set
     const particleCount = isLowEndRef.current ? 15 : isMobileRef.current ? 28 : 65;
     const weightedTypes: Particle["type"][] = [
       "circle", "circle",
@@ -101,6 +97,10 @@ export const ParticleBackground = () => {
       });
     }
 
+    // PERF: sort by depth ONCE here at init instead of every animation frame.
+    // Depth values don't change at runtime, so the sorted order is stable.
+    particles.sort((a, b) => a.depth - b.depth);
+
     const shapeCount = isLowEndRef.current ? 2 : isMobileRef.current ? 4 : 10;
     const shapeTypes: GeometricShape["type"][] = [
       "hexagon", "triangle", "energy-ring",
@@ -119,11 +119,12 @@ export const ParticleBackground = () => {
     }
 
     particlesRef.current = particles;
+    // Keep sortedParticlesRef pointing at the same (already-sorted) array
+    sortedParticlesRef.current = particles;
     shapesRef.current = shapes;
     sparksRef.current = [];
   }, []);
 
-  // ── draw helpers (unchanged from original) ──────────────────────────────
   const drawHexagon = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number) => {
     ctx.beginPath();
     for (let i = 0; i < 6; i++) {
@@ -385,8 +386,6 @@ export const ParticleBackground = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // FIX: cap to 30 fps on low-end, 60 fps on everything else
-    // This avoids burning CPU/GPU at 120 fps on ProMotion displays
     const targetInterval = isLowEndRef.current ? 1000 / 30 : 1000 / 60;
     const elapsed = timestamp - lastTimeRef.current;
     if (elapsed < targetInterval) {
@@ -401,10 +400,8 @@ export const ParticleBackground = () => {
 
     ctx.clearRect(0, 0, width, height);
 
-    // FIX: skip shadows on low-end devices — shadowBlur is expensive
     const useShadow = !isLowEndRef.current;
 
-    // Draw geometric shapes
     shapesRef.current.forEach((shape) => {
       ctx.save();
       ctx.translate(shape.x, shape.y);
@@ -428,10 +425,9 @@ export const ParticleBackground = () => {
       shape.rotation += shape.rotationSpeed;
     });
 
-    // Sort particles by depth
-    const sortedParticles = [...particlesRef.current].sort((a, b) => a.depth - b.depth);
+    // PERF: use pre-sorted ref — no per-frame sort allocation
+    const sortedParticles = sortedParticlesRef.current;
 
-    // Update particle physics
     particlesRef.current.forEach((particle, i) => {
       const dx = mouseRef.current.x - particle.x;
       const dy = mouseRef.current.y - particle.y;
@@ -467,7 +463,6 @@ export const ParticleBackground = () => {
       if (particle.y > height) particle.y = 0;
     });
 
-    // Draw particles
     sortedParticles.forEach((particle) => {
       ctx.save();
       ctx.strokeStyle = `hsla(197, 68%, 60%, ${particle.opacity})`;
@@ -491,7 +486,6 @@ export const ParticleBackground = () => {
       ctx.restore();
     });
 
-    // Draw connections — FIX: skip on low-end to save draw calls
     if (!isLowEndRef.current) {
       particlesRef.current.forEach((particle, i) => {
         particlesRef.current.slice(i + 1).forEach((other, j) => {
@@ -541,7 +535,6 @@ export const ParticleBackground = () => {
     if (!canvas) return;
     if (reducedMotionRef.current) return;
 
-    // FIX: use devicePixelRatio capped at 2 — retina at 3× wastes GPU on mobile
     const dpr = Math.min(window.devicePixelRatio ?? 1, 2);
 
     const handleResize = () => {
@@ -564,7 +557,6 @@ export const ParticleBackground = () => {
 
     handleResize();
 
-    // FIX: debounce resize to avoid thrashing canvas on rapid window size changes
     let resizeTimer: ReturnType<typeof setTimeout>;
     const debouncedResize = () => {
       clearTimeout(resizeTimer);
@@ -582,7 +574,6 @@ export const ParticleBackground = () => {
     };
   }, [initParticles, animate]);
 
-  // FIX: aria-hidden so screen readers skip the decorative canvas
   return (
     <>
       <canvas
@@ -593,28 +584,23 @@ export const ParticleBackground = () => {
       />
       <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
-        {/* FIX: pulse-glow divs are purely decorative; skip on low-end via data attr */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/3 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
       </div>
-      {/* Framer Motion floating decorations — desktop only to save mobile resources */}
+      {/* Pure-CSS floating decorations — replaces Framer Motion to eliminate the
+          second animation system running alongside the canvas rAF loop.
+          CSS animations run on the compositor thread with zero JS overhead. */}
       <div className="hidden md:block fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <motion.div
-          className="absolute top-20 right-20 w-24 h-24 border border-primary/15"
+        <div
+          className="absolute top-20 right-20 w-24 h-24 border border-primary/15 particle-hex"
           style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-          animate={{ rotate: 360, x: [0, 60, -30, 0], y: [0, -40, 30, 0] }}
-          transition={{ rotate: { duration: 35, repeat: Infinity, ease: "linear" }, x: { duration: 18, repeat: Infinity, ease: "easeInOut" }, y: { duration: 14, repeat: Infinity, ease: "easeInOut" } }}
         />
-        <motion.div
-          className="absolute bottom-40 left-20 w-20 h-20 border border-primary/10"
+        <div
+          className="absolute bottom-40 left-20 w-20 h-20 border border-primary/10 particle-tri"
           style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}
-          animate={{ rotate: -360, x: [0, -50, 40, 0], y: [0, 45, -20, 0] }}
-          transition={{ rotate: { duration: 30, repeat: Infinity, ease: "linear" }, x: { duration: 22, repeat: Infinity, ease: "easeInOut" }, y: { duration: 16, repeat: Infinity, ease: "easeInOut" } }}
         />
-        <motion.div
-          className="absolute top-1/2 left-1/3 w-14 h-14 rounded-full border border-primary/12"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.12, 0.25, 0.12], x: [0, 70, -40, 0], y: [0, -50, 30, 0] }}
-          transition={{ scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }, opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" }, x: { duration: 20, repeat: Infinity, ease: "easeInOut" }, y: { duration: 15, repeat: Infinity, ease: "easeInOut" } }}
+        <div
+          className="absolute top-1/2 left-1/3 w-14 h-14 rounded-full border border-primary/12 particle-circle"
         />
       </div>
     </>

@@ -140,8 +140,10 @@ export const Experience = () => {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-transparent md:-translate-x-1/2" />
+          {/* FIX: timeline line uses left-2 (not left-0) so it stays inside the
+              container on screens narrower than 375px and doesn't cause horizontal
+              overflow. On md+ it snaps to the center as before. */}
+          <div className="absolute left-2 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-transparent md:-translate-x-1/2" />
 
           {experiences.map((exp, index) => (
             <motion.div
@@ -153,21 +155,22 @@ export const Experience = () => {
                 index % 2 === 0 ? "md:pr-[calc(50%+2rem)]" : "md:pl-[calc(50%+2rem)]"
               }`}
             >
-              {/* Timeline dot */}
-              <div className={`absolute left-0 md:left-1/2 top-0 w-4 h-4 rounded-full ${
+              {/* Timeline dot — left-2 on mobile matches the line position */}
+              <div className={`absolute left-2 md:left-1/2 top-0 w-4 h-4 rounded-full ${
                 exp.current ? "bg-primary animate-pulse-glow" : "bg-primary/50"
-              } border-4 border-background md:-translate-x-1/2 z-10`} />
+              } border-4 border-background md:-translate-x-1/2 -translate-x-1/2 z-10`} />
 
-              {/* Content card */}
-              <div className={`ml-8 md:ml-0 glass-card rounded-2xl p-6 card-hover ${
+              {/* Content card — min-w-0 prevents content from stretching the card
+                  beyond the viewport on narrow screens */}
+              <div className={`ml-10 md:ml-0 min-w-0 glass-card rounded-2xl p-6 card-hover ${
                 exp.isFounder ? "ring-2 ring-primary/50 bg-gradient-to-br from-primary/5 to-transparent shadow-[0_0_25px_-5px_hsl(var(--primary)/0.4)] animate-pulse-glow" : ""
               }`}>
-                {/* Header */}
+                {/* Header — flex-wrap ensures period/location wraps on 320px screens */}
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       {exp.isFounder && exp.externalUrl ? (
-                        <a 
+                        <a
                           href={exp.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -193,14 +196,16 @@ export const Experience = () => {
                     </div>
                     <p className="text-primary font-medium">{exp.role}</p>
                   </div>
-                  <div className="text-right">
+                  {/* FIX: text-left on mobile so period/location doesn't overflow
+                      when the card is narrow. text-right restored on sm+. */}
+                  <div className="text-left sm:text-right shrink-0">
                     <div className="flex items-center gap-1 text-sm text-muted-foreground mb-1">
-                      <Calendar className="w-4 h-4" />
-                      {exp.period}
+                      <Calendar className="w-4 h-4 shrink-0" />
+                      <span>{exp.period}</span>
                     </div>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <MapPin className="w-4 h-4" />
-                      {exp.location}
+                      <MapPin className="w-4 h-4 shrink-0" />
+                      <span>{exp.location}</span>
                     </div>
                   </div>
                 </div>
@@ -209,7 +214,7 @@ export const Experience = () => {
                 <ul className="space-y-2">
                   {exp.description.map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <ChevronRight className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}

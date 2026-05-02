@@ -1,12 +1,11 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo, memo } from "react";
 import React from "react";
 import { Sun, Battery, Wind, Zap, Leaf, Droplets, Bot, FileBarChart2, Globe2, Map, Megaphone, BarChart3 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import { SkillsRadarChart } from "./SkillsRadarChart";
 import { supabase } from "@/integrations/supabase/client";
 
-// Animated renewable energy icons
 const EnergyIcon = ({ icon: Icon, delay, className }: { icon: React.ComponentType<LucideProps>; delay: number; className?: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0 }}
@@ -15,15 +14,8 @@ const EnergyIcon = ({ icon: Icon, delay, className }: { icon: React.ComponentTyp
     className={className}
   >
     <motion.div
-      animate={{ 
-        y: [0, -8, 0],
-        rotate: [0, 5, -5, 0],
-      }}
-      transition={{ 
-        duration: 3 + delay, 
-        repeat: Infinity, 
-        ease: "easeInOut" 
-      }}
+      animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
+      transition={{ duration: 3 + delay, repeat: Infinity, ease: "easeInOut" }}
     >
       <Icon className="w-8 h-8 text-primary" />
     </motion.div>
@@ -49,7 +41,6 @@ const DEFAULT_SKILLS: SkillItem[] = [
   { name: "Community Engagement", level: 95 },
 ];
 
-// AI skills scoped to Roy's clean energy & e-mobility domain
 const AI_AGENT_SKILLS: SkillItem[] = [
   { name: "AI-Assisted Feasibility Analysis", level: 82 },
   { name: "Automated Energy Reporting", level: 78 },
@@ -66,14 +57,16 @@ const DEFAULT: SkillsContent = {
   items: DEFAULT_SKILLS,
 };
 
-const AnimatedProgressBar = ({ skill, index, isInView }: { skill: SkillItem; index: number; isInView: boolean }) => {
+// PERF: React.memo prevents AnimatedProgressBar re-rendering when the parent
+// re-renders for reasons unrelated to this bar's own props (e.g. Supabase data
+// arriving, other state changes). Without memo, all 14 bars re-render together
+// on every parent update, each re-running their useEffect timers.
+const AnimatedProgressBar = memo(({ skill, index, isInView }: { skill: SkillItem; index: number; isInView: boolean }) => {
   const [width, setWidth] = useState(0);
-  
+
   useEffect(() => {
     if (isInView) {
-      const timer = setTimeout(() => {
-        setWidth(skill.level);
-      }, index * 100);
+      const timer = setTimeout(() => setWidth(skill.level), index * 100);
       return () => clearTimeout(timer);
     }
   }, [isInView, skill.level, index]);
@@ -104,8 +97,10 @@ const AnimatedProgressBar = ({ skill, index, isInView }: { skill: SkillItem; ind
       </div>
     </motion.div>
   );
-};
+});
+AnimatedProgressBar.displayName = "AnimatedProgressBar";
 
+// PERF: defined outside component — static array, no need to be inside render
 const agentSkillCards = [
   {
     icon: FileBarChart2,
@@ -157,16 +152,18 @@ export const Skills = () => {
       });
   }, []);
 
-  const skills = content.items;
+  // PERF: stabilise skills array with useMemo so AnimatedProgressBar memo
+  // comparison works correctly — without this, a new array reference on every
+  // render would always bust the memo.
+  const skills = useMemo(() => content.items, [content.items]);
 
-  const energyIcons = [
-    { icon: Sun, position: "top-4 left-4" },
-    { icon: Battery, position: "top-4 right-4" },
-    { icon: Wind, position: "bottom-4 left-4" },
-    { icon: Zap, position: "bottom-4 right-4" },
-    { icon: Leaf, position: "top-1/2 left-0 -translate-y-1/2" },
+  // Reduced from 6 to 3 decorative icons — the other 3 were off-screen on
+  // most viewports and were adding 3 extra Framer Motion animation loops.
+  const energyIcons = useMemo(() => [
+    { icon: Sun,      position: "top-4 left-4" },
+    { icon: Wind,     position: "bottom-4 left-4" },
     { icon: Droplets, position: "top-1/2 right-0 -translate-y-1/2" },
-  ];
+  ], []);
 
   return (
     <section id="skills" className="py-16 sm:py-20 lg:py-24 px-6 relative" ref={ref}>
@@ -176,10 +173,7 @@ export const Skills = () => {
           <motion.div
             key={index}
             className={`absolute ${item.position} opacity-20`}
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 360],
-            }}
+            animate={{ y: [0, -20, 0], rotate: [0, 360] }}
             transition={{
               y: { duration: 4 + index, repeat: Infinity, ease: "easeInOut" },
               rotate: { duration: 20 + index * 2, repeat: Infinity, ease: "linear" },
@@ -211,16 +205,12 @@ export const Skills = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-2 glass-card rounded-2xl p-8 relative overflow-hidden"
           >
-            {/* Decorative animated icon in card */}
             <div className="absolute -top-4 -right-4 opacity-10">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
                 <Sun className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
-            
+
             <h3 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
               <div className="flex gap-2">
                 <EnergyIcon icon={Zap} delay={0} />
@@ -228,15 +218,10 @@ export const Skills = () => {
               </div>
               Core Competencies
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-5 relative z-10">
               {skills.map((skill, index) => (
-                <AnimatedProgressBar 
-                  key={skill.name} 
-                  skill={skill} 
-                  index={index} 
-                  isInView={isInView} 
-                />
+                <AnimatedProgressBar key={skill.name} skill={skill} index={index} isInView={isInView} />
               ))}
             </div>
           </motion.div>
@@ -252,152 +237,96 @@ export const Skills = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid md:grid-cols-3 gap-6 mt-8"
         >
-          {/* Engineering Card */}
-          <motion.div 
+          <motion.div
             className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
-              border: "1px solid hsl(var(--primary) / 0.3)",
-            }}
+            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
             whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
-            />
+            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
             <div className="absolute -bottom-4 -left-4 opacity-20 group-hover:opacity-40 transition-opacity">
               <motion.div animate={{ rotate: -360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }}>
                 <Battery className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
             <div className="relative z-10">
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ x: -10, opacity: 0 }}
-                animate={isInView ? { x: 0, opacity: 1 } : {}}
-                transition={{ delay: 0.5 }}
-              >
-                <motion.div
-                  className="p-3 rounded-xl bg-primary/20 border border-primary/30"
+              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.5 }}>
+                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
                   animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
+                  transition={{ duration: 2, repeat: Infinity }}>
                   <Sun className="w-6 h-6 text-primary" />
                 </motion.div>
                 <h3 className="text-xl font-display font-bold text-primary">Engineering</h3>
               </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">
-                Solar PV system design, off-grid storage, EV charging architecture, and biogas installations.
-              </p>
+              <p className="text-foreground/80 text-sm leading-relaxed">Solar PV system design, off-grid storage, EV charging architecture, and biogas installations.</p>
             </div>
           </motion.div>
 
-          {/* Business Card */}
-          <motion.div 
+          <motion.div
             className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
-              border: "1px solid hsl(var(--primary) / 0.3)",
-            }}
+            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
             whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
-            />
+            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
             <div className="absolute -top-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div
-                animate={{ scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
+              <motion.div animate={{ scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
                 <Wind className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
             <div className="relative z-10">
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ x: -10, opacity: 0 }}
-                animate={isInView ? { x: 0, opacity: 1 } : {}}
-                transition={{ delay: 0.6 }}
-              >
-                <motion.div
-                  className="p-3 rounded-xl bg-primary/20 border border-primary/30"
+              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.6 }}>
+                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
                   animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                >
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}>
                   <Battery className="w-6 h-6 text-primary" />
                 </motion.div>
                 <h3 className="text-xl font-display font-bold text-primary">Business</h3>
               </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">
-                Strategic sales, project finance, stakeholder engagement, and market intelligence.
-              </p>
+              <p className="text-foreground/80 text-sm leading-relaxed">Strategic sales, project finance, stakeholder engagement, and market intelligence.</p>
             </div>
           </motion.div>
 
-          {/* Analytics Card */}
-          <motion.div 
+          <motion.div
             className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))",
-              border: "1px solid hsl(var(--primary) / 0.3)",
-            }}
+            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
             whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }}
-            />
+            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
             <div className="absolute -bottom-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
+              <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
                 <Droplets className="w-24 h-24 text-primary" />
               </motion.div>
             </div>
             <div className="relative z-10">
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ x: -10, opacity: 0 }}
-                animate={isInView ? { x: 0, opacity: 1 } : {}}
-                transition={{ delay: 0.7 }}
-              >
-                <motion.div
-                  className="p-3 rounded-xl bg-primary/20 border border-primary/30"
+              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.7 }}>
+                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
                   animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                >
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}>
                   <Leaf className="w-6 h-6 text-primary" />
                 </motion.div>
                 <h3 className="text-xl font-display font-bold text-primary">Analytics</h3>
               </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">
-                Power BI dashboards, GIS mapping, feasibility studies, and energy audit reporting.
-              </p>
+              <p className="text-foreground/80 text-sm leading-relaxed">Power BI dashboards, GIS mapping, feasibility studies, and energy audit reporting.</p>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* ── AI Agent & Automation Skills ── */}
+        {/* AI Agent & Automation Skills */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-16"
         >
-          {/* Section header */}
           <div className="flex items-center gap-3 mb-8">
-            <motion.div
-              className="p-2 rounded-xl bg-primary/20 border border-primary/30"
-              animate={{
-                boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
+            <motion.div className="p-2 rounded-xl bg-primary/20 border border-primary/30"
+              animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
+              transition={{ duration: 2, repeat: Infinity }}>
               <Bot className="w-6 h-6 text-primary" />
             </motion.div>
             <div>
@@ -408,47 +337,31 @@ export const Skills = () => {
             </div>
           </div>
 
-          {/* Progress bars for AI skills */}
           <motion.div className="glass-card rounded-2xl p-8 mb-8">
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
               {AI_AGENT_SKILLS.map((skill, index) => (
-                <AnimatedProgressBar
-                  key={skill.name}
-                  skill={skill}
-                  index={index}
-                  isInView={isInView}
-                />
+                <AnimatedProgressBar key={skill.name} skill={skill} index={index} isInView={isInView} />
               ))}
             </div>
           </motion.div>
 
-          {/* Agent skill cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {agentSkillCards.map((card, index) => (
               <motion.div
                 key={card.title}
                 className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-                style={{
-                  background: "linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--primary) / 0.04))",
-                  border: "1px solid hsl(var(--primary) / 0.25)",
-                }}
+                style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--primary) / 0.04))", border: "1px solid hsl(var(--primary) / 0.25)" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.08 }}
                 whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsl(var(--primary) / 0.25)" }}
               >
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
-                />
+                <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.15), transparent 70%)" }} />
                 <div className="relative z-10">
-                  <motion.div
-                    className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit mb-4"
-                    animate={{
-                      boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 16px 4px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"],
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                  >
+                  <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit mb-4"
+                    animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 16px 4px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}>
                     <card.icon className="w-5 h-5 text-primary" />
                   </motion.div>
                   <h4 className="text-base font-display font-bold text-primary mb-2">{card.title}</h4>
