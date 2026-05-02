@@ -1,10 +1,13 @@
+import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { applyCommonSecurityHeaders } from '../_lib/security';
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 /**
  * Resend inbound email webhook handler.
- * Receives forwarded inbound emails from Resend when someone replies
- * to a newsletter or contact email sent via info@rauell.systems.
+ * Resend POSTs a notification when an email arrives at info@rauell.systems.
+ * We then use the Resend SDK to fetch the full email details.
  *
  * Configure this URL in Resend dashboard:
  * https://resend.com/inbound → https://royotieno.rauell.systems/api/webhooks/inbound
@@ -12,35 +15,55 @@ import { applyCommonSecurityHeaders } from '../_lib/security';
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   applyCommonSecurityHeaders(res);
 
-  // Resend sends a POST with JSON payload
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Acknowledge Resend immediately — must respond 2xx within a few seconds
+  res.status(200).json({ received: true });
+
   try {
     const payload = req.body;
+    const emailId: string | undefined = payload?.email_id ?? payload?.id;
 
-    // Log inbound email details for debugging
-    console.log('Inbound email received:', JSON.stringify({
-      from: payload?.from,
-      to: payload?.to,
-      subject: payload?.subject,
+    if (!emailId) {
+      console.warn('Inbound webhook: no email_id in payload', JSON.stringify(payload));
+      return;
+    }
+
+    // Fetch full email details via Resend SDK
+    const { data: email, error } = await resend.emails.receiving.get(emailId);
+
+    if (error || !email) {
+      console.error('Inbound webhook: failed to retrieve email', emailId, error);
+      return;
+    }
+
+    console.log('Inbound email retrieved:', JSON.stringify({
+      id: email.id,
+      from: email.from,
+      to: email.to,
+      subject: email.subject,
       receivedAt: new Date().toISOString(),
     }));
 
-    const subject: string = payload?.subject ?? '';
-    const fromAddress: string = payload?.from ?? '';
+    const subject: string = email.subject ?? '';
+    const fromAddress: string =
+      Array.isArray(email.from) ? email.from[0] : (email.from ?? '');
 
     // Handle unsubscribe requests
     if (subject.toLowerCase().includes('unsubscribe')) {
       console.log(`Unsubscribe request from: ${fromAddress}`);
-      // TODO: integrate with your subscriber list/Supabase to remove the email
+      // TODO: query Supabase to remove fromAddress from your subscribers table
     }
 
-    // Acknowledge receipt to Resend (must return 2xx quickly)
-    return res.status(200).json({ received: true });
-  } catch (error) {
-    console.error('Inbound webhook error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    // Optionally fetch attachments if present
+    if ((email as any).attachments?.length) {
+      const { data: attachments } = await resend.attachments.receiving.list({ emailId });
+      console.log(`Inbound email has ${attachments?.length ?? 0} attachment(s)`);
+    }
+
+  } catch (err) {
+    console.error('Inbound webhook processing error:', err);
   }
 }
