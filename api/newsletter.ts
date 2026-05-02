@@ -11,8 +11,8 @@ import {
   sanitizeText,
 } from './_lib/security';
 
-const FROM_EMAIL = 'info@rauell.systems';
-const OWNER_EMAIL = 'royokola3@gmail.com';
+const FROM_EMAIL = process.env.NEWSLETTER_FROM_EMAIL ?? 'info@rauell.systems';
+const OWNER_EMAIL = process.env.NEWSLETTER_OWNER_EMAIL ?? 'royokola3@gmail.com';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -53,6 +53,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!process.env.RESEND_API_KEY) {
       console.error('Newsletter API misconfigured: RESEND_API_KEY is missing');
+      return res.status(500).json({ success: false, error: 'Service unavailable' });
+    }
+
+    if (!FROM_EMAIL.includes('@') || !OWNER_EMAIL.includes('@')) {
+      console.error('Newsletter API misconfigured: FROM/OWNER email missing or invalid');
       return res.status(500).json({ success: false, error: 'Service unavailable' });
     }
 
