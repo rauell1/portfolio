@@ -128,17 +128,17 @@ const ProjectCard = ({
           {/* Gradient overlay so icon + badges stay readable */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-          {/* Icon badge — bottom-left */}
+          {/* Icon badge - bottom-left */}
           <div className={`absolute bottom-3 left-4 w-9 h-9 rounded-xl bg-gradient-to-br ${project.gradient} shadow-lg flex items-center justify-center`}>
             <Icon className="w-4.5 h-4.5 text-white" />
           </div>
 
-          {/* Status badge — top-right */}
+          {/* Status badge - top-right */}
           <div className="absolute top-3 right-3">
             <StatusBadge status={project.status} />
           </div>
 
-          {/* Flagship ribbon — top-left */}
+          {/* Flagship ribbon - top-left */}
           {project.isFlagship && (
             <span className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-widest text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
               Flagship

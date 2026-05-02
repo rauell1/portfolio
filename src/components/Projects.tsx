@@ -17,7 +17,7 @@ const PATHS: Path[] = [
   {
     label: "Clean Energy & E-Mobility",
     description:
-      "Designing and deploying solar microgrids, EV charging infrastructure, and off-grid energy systems across East Africa — from feasibility to live pilot sites.",
+      "Designing and deploying solar microgrids, EV charging infrastructure, and off-grid energy systems across East Africa - from feasibility to live pilot sites.",
     accent: "text-cyan-400",
     bg: "from-cyan-500/10 to-cyan-500/0",
     icon: Zap,
@@ -35,7 +35,7 @@ const PATHS: Path[] = [
   {
     label: "AI & Productivity Tools",
     description:
-      "Shipping AI-powered tools that make complex workflows — CV writing, job targeting, document generation — faster and more intelligent for everyday users.",
+      "Shipping AI-powered tools that make complex workflows - CV writing, job targeting, document generation - faster and more intelligent for everyday users.",
     accent: "text-indigo-400",
     bg: "from-indigo-500/10 to-indigo-500/0",
     icon: Brain,
@@ -44,7 +44,7 @@ const PATHS: Path[] = [
   {
     label: "Digital Products & Web",
     description:
-      "Full-stack web platforms — from artist booking sites to SSR portfolio hubs — built with modern frameworks and deployed to production.",
+      "Full-stack web platforms - from artist booking sites to SSR portfolio hubs - built with modern frameworks and deployed to production.",
     accent: "text-pink-400",
     bg: "from-pink-500/10 to-pink-500/0",
     icon: Monitor,
