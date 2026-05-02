@@ -13,7 +13,7 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const TO_EMAIL = 'royokola3@gmail.com';
-const FROM_EMAIL = 'onboarding@resend.dev'; // Use your verified domain here once set up
+const FROM_EMAIL = 'info@rauell.systems';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   applyCommonSecurityHeaders(res);
@@ -88,7 +88,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           <h3 style="color:#374151;margin-bottom:12px">Message</h3>
           <p style="color:#374151;line-height:1.7;white-space:pre-wrap">${safeMessage}</p>
           <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0">
-          <p style="color:#9ca3af;font-size:12px">Sent via roy-otieno.vercel.app</p>
+          <p style="color:#9ca3af;font-size:12px">Sent via royotieno.rauell.systems</p>
         </div>
       `,
     });
@@ -111,7 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           </blockquote>
           <p style="color:#374151;line-height:1.7">Best regards,<br><strong>Roy Otieno</strong><br>Energy &amp; Mobility Systems Engineer</p>
           <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0">
-          <p style="color:#9ca3af;font-size:12px">You're receiving this because you submitted a message via <a href="https://roy-otieno.vercel.app" style="color:#01696f">roy-otieno.vercel.app</a></p>
+          <p style="color:#9ca3af;font-size:12px">You're receiving this because you submitted a message via <a href="https://royotieno.rauell.systems" style="color:#01696f">royotieno.rauell.systems</a></p>
         </div>
       `,
     });
