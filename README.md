@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3a8e80b` — Merge pull request #29 from rauell1/codex/fix-email-sending-issue |
+| **Last commit** | `974fc85` — fix: inline security helpers into api handlers to resolve ERR_MODULE_NOT_FOUND on Vercel Node runtime |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 13:21 UTC |
+| **Commit date** | 2026-05-02 13:44 UTC |
 | **Branch** | `main` |
-| **Total commits** | 265 |
+| **Total commits** | 268 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
