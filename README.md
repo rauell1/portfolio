@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `b0db903` — fix: use info@rauell.systems as FROM_EMAIL in contact handler |
+| **Last commit** | `114bd23` — fix: exclude /api routes from SPA catch-all rewrite so serverless functions are reachable |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:42 UTC |
+| **Commit date** | 2026-05-02 12:46 UTC |
 | **Branch** | `main` |
-| **Total commits** | 243 |
+| **Total commits** | 246 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
