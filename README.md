@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `06e6a73` — fix: allow all *.vercel.app preview URLs and roy-okola-otienos-projects subdomains in origin check |
+| **Last commit** | `23d6c7e` — Merge pull request #28 from rauell1/copilot/fix-contact-form-json-error |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 13:07 UTC |
+| **Commit date** | 2026-05-02 13:15 UTC |
 | **Branch** | `main` |
-| **Total commits** | 255 |
+| **Total commits** | 260 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
