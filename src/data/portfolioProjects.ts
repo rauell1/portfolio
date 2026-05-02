@@ -114,7 +114,7 @@ export const portfolioProjects: Project[] = [
     role: "Design Engineer",
     iconName: "Thermometer",
     gradient: "from-lime-500 to-green-600",
-    image: "https://images.unsplash.com/photo-1509391366360-1e967a57a82c?q=80&w=800&auto=format&fit=crop",
+    image: "/images/solar-cooling-ai.jpg",
     tags: ["Solar PV", "Cold Chain", "Post-Harvest", "AgriTech", "Off-Grid"],
     status: "completed",
     specs: [
@@ -135,7 +135,7 @@ export const portfolioProjects: Project[] = [
     role: "Installation Engineer",
     iconName: "Droplets",
     gradient: "from-blue-500 to-cyan-600",
-    image: "https://images.unsplash.com/photo-1563990112328-1f50e1810fec?q=80&w=800&auto=format&fit=crop",
+    image: "/images/borehole-irrigation-ai.jpg",
     tags: ["Solar Pumping", "Irrigation", "Off-Grid", "Climate-Smart Agriculture"],
     status: "completed",
     specs: [
@@ -250,7 +250,7 @@ export const portfolioProjects: Project[] = [
     link: "https://dj-kimchi.vercel.app/",
     repo: "https://github.com/rauell1/dj-kimchi",
     gradient: "from-pink-500 to-rose-600",
-    image: "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?q=80&w=800&auto=format&fit=crop",
+    image: "/images/dj-kimchi-screenshot.jpg",
     tags: ["Next.js 16", "TypeScript", "Prisma", "Resend", "Framer Motion", "Mixcloud", "Music"],
     status: "live",
     specs: [
