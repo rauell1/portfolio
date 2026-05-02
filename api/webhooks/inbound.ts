@@ -2,8 +2,6 @@ import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { applyCommonSecurityHeaders } from '../_lib/security';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 /**
  * Resend inbound email webhook handler.
  * Resend POSTs a notification when an email arrives at info@rauell.systems.
@@ -14,6 +12,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   applyCommonSecurityHeaders(res);
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error('Inbound webhook misconfigured: RESEND_API_KEY is missing');
+    return res.status(500).json({ error: 'Service unavailable' });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -58,7 +63,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Optionally fetch attachments if present
-    if ((email as any).attachments?.length) {
+    const emailWithAttachments = email as { attachments?: unknown[] };
+    if (emailWithAttachments.attachments?.length) {
       const { data: attachments } = await resend.attachments.receiving.list({ emailId });
       console.log(`Inbound email has ${attachments?.length ?? 0} attachment(s)`);
     }

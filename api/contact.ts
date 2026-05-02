@@ -11,8 +11,8 @@ import {
   sanitizeText,
 } from './_lib/security';
 
-const TO_EMAIL = 'royokola3@gmail.com';
-const FROM_EMAIL = 'info@rauell.systems';
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? 'royokola3@gmail.com';
+const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? 'info@rauell.systems';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   applyCommonSecurityHeaders(res);
@@ -59,6 +59,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (!process.env.RESEND_API_KEY) {
     console.error('Contact API misconfigured: RESEND_API_KEY is missing');
+    return res.status(500).json({ success: false, error: 'Service unavailable' });
+  }
+
+  if (!FROM_EMAIL.includes('@') || !TO_EMAIL.includes('@')) {
+    console.error('Contact API misconfigured: FROM/TO email missing or invalid');
     return res.status(500).json({ success: false, error: 'Service unavailable' });
   }
 
