@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `fe2e055` — chore: harden newsletter handler to always return JSON and update URLs |
+| **Last commit** | `3667250` — fix: move resend from devDependencies to dependencies so it is available in production |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:26 UTC |
+| **Commit date** | 2026-05-02 12:30 UTC |
 | **Branch** | `main` |
-| **Total commits** | 234 |
+| **Total commits** | 237 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
