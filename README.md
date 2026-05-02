@@ -130,16 +130,16 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `a74a507` — feat: migrate testimonials to Supabase with typed schema and SQL seed |
+| **Last commit** | `f72c9d8` — Merge pull request #27 from rauell1/copilot/remove-blog-case-studies-features |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-04-14 11:05 UTC |
+| **Commit date** | 2026-05-02 12:18 UTC |
 | **Branch** | `main` |
-| **Total commits** | 223 |
+| **Total commits** | 228 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 99 |
+| **TypeScript files** | 84 |
 | **CSS files** | 1 |
-| **React components** | 72 |
-| **Pages / views** | 10 |
+| **React components** | 64 |
+| **Pages / views** | 4 |
 
 ## 🤗 Workflow Status
 
