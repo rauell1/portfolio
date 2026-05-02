@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `1e2dd14` — feat: update inbound webhook to use Resend SDK for retrieving full email details |
+| **Last commit** | `4daed85` — fix: add @vercel/node dependency for API serverless functions |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:48 UTC |
+| **Commit date** | 2026-05-02 12:57 UTC |
 | **Branch** | `main` |
-| **Total commits** | 249 |
+| **Total commits** | 252 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
