@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `f72c9d8` — Merge pull request #27 from rauell1/copilot/remove-blog-case-studies-features |
+| **Last commit** | `3c4d14d` — fix: add royotieno.rauell.systems to CORS allowlist |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-02 12:18 UTC |
+| **Commit date** | 2026-05-02 12:23 UTC |
 | **Branch** | `main` |
-| **Total commits** | 228 |
+| **Total commits** | 231 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
