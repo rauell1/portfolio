@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-04-14T08:05:44.839Z**
+> Last updated: **2026-05-02T09:18:56.277Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -45,12 +45,6 @@
 
 | File | Purpose |
 |---|---|
-| `src/pages/AdminLogin.tsx` | Admin auth gate — Supabase email/password login |
-| `src/pages/AdminPostEditor.tsx` | Blog post CRUD editor — RichTextEditor, image upload, publish |
-| `src/pages/AuthResetPassword.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
-| `src/pages/Blog.tsx` | Blog listing — fetches posts from Supabase, search + tag filter |
-| `src/pages/BlogPost.tsx` | Individual blog post view — MDX/HTML rendering, TOC |
-| `src/pages/CaseStudiesPage.tsx` | Detailed case study pages with tabs, metrics, timeline |
 | `src/pages/Index.tsx` | Home page — assembles all section components |
 | `src/pages/NotFound.tsx` | 404 fallback page |
 | `src/pages/Projects.tsx` | Full projects listing page with filters and modals |
@@ -63,8 +57,6 @@
 | File | Purpose |
 |---|---|
 | `src/components/About.tsx` | About section — bio, photo, fun facts, downloadable resume button |
-| `src/components/BlogTeaser.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
-| `src/components/CaseStudies.tsx` | Home case studies preview — highlight cards linking to full page |
 | `src/components/Contact.tsx` | Contact form — EmailJS integration, reCAPTCHA v3, validation |
 | `src/components/Experience.tsx` | Work experience timeline — roles, companies, dates, bullet points |
 | `src/components/Footer.tsx` | Site footer — copyright, social links, quick nav |
@@ -72,25 +64,14 @@
 | `src/components/Leadership.tsx` | Leadership & community section — volunteer roles, initiatives |
 | `src/components/NavLink.tsx` | Smooth-scroll anchor link primitive used inside Navbar.tsx |
 | `src/components/Navbar.tsx` | Responsive sticky navbar — desktop links, mobile hamburger, scroll spy |
-| `src/components/NewsletterForm.tsx` | Email newsletter signup — EmailJS or Supabase Edge Function |
 | `src/components/ParticleBackground.tsx` | Canvas-based animated particle network used in Hero background |
 | `src/components/ProgressBar.tsx` | Scroll progress indicator bar fixed to top of viewport |
 | `src/components/Projects.tsx` | Home projects preview — card grid with 3 featured projects |
-| `src/components/RichTextEditor.tsx` | Tiptap-based WYSIWYG editor used in AdminPostEditor |
 | `src/components/Skills.tsx` | Skills section — categorised tech stack with proficiency indicators |
 | `src/components/SkillsRadarChart.tsx` | Recharts radar chart visualising skill levels by category |
 | `src/components/Testimonials.tsx` | Testimonials carousel — quotes, avatars, roles (Supabase-sourced) |
 | `src/components/ThemeProvider.tsx` | Context provider — light/dark/system theme state |
 | `src/components/ThemeToggle.tsx` | Sun/moon icon button — toggles ThemeProvider theme |
-
-### 📁 src/components/admin/
-
-| File | Purpose |
-|---|---|
-| `src/components/admin/CaseStudiesManager.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
-| `src/components/admin/DatabaseProjectsManager.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
-| `src/components/admin/HomepageContentManager.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
-| `src/components/admin/ProjectsManager.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 
 ### 📁 src/components/ui/ — shadcn/ui Primitives
 
@@ -156,7 +137,6 @@
 |---|---|
 | `src/hooks/use-mobile.tsx` | Breakpoint hook — returns isMobile boolean |
 | `src/hooks/use-toast.ts` | Toast state manager (shadcn/ui pattern) |
-| `src/hooks/useAuth.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 
 ---
 
