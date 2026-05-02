@@ -61,15 +61,19 @@ export function escapeHtml(input: string): string {
 
 export function isAllowedOrigin(req: VercelRequest): boolean {
   const origin = req.headers.origin;
+
+  // No origin header = same-origin or server-to-server — allow
   if (!origin) {
     return true;
   }
 
+  // Explicit production + local allowlist
   const allowList = new Set<string>([
     'https://royotieno.rauell.systems',
     'https://roy-otieno.vercel.app',
     'http://localhost:8080',
     'http://localhost:5173',
+    'http://localhost:3000',
   ]);
 
   if (process.env.SITE_URL) {
@@ -80,7 +84,28 @@ export function isAllowedOrigin(req: VercelRequest): boolean {
     allowList.add(`https://${process.env.VERCEL_URL.trim()}`);
   }
 
-  return allowList.has(origin);
+  if (allowList.has(origin)) {
+    return true;
+  }
+
+  // Allow all Vercel preview deployments for this project
+  // Covers: roy-otieno-*.vercel.app and roy-otieno-*-roy-okola-otienos-projects.vercel.app
+  try {
+    const url = new URL(origin);
+    if (
+      url.protocol === 'https:' &&
+      (
+        /^roy-otieno(-[a-z0-9]+)*\.vercel\.app$/.test(url.hostname) ||
+        /^roy-otieno-[a-z0-9]+-roy-okola-otienos-projects\.vercel\.app$/.test(url.hostname)
+      )
+    ) {
+      return true;
+    }
+  } catch {
+    // Invalid origin URL — deny
+  }
+
+  return false;
 }
 
 export function applyCors(req: VercelRequest, res: VercelResponse) {
