@@ -67,7 +67,7 @@ export const portfolioProjects: Project[] = [
     role: "Project Lead - Infrastructure & Partnerships",
     iconName: "Battery",
     gradient: "from-emerald-500 to-teal-600",
-    image: "/images/roam-charger-1.jpeg",
+    image: "/images/roam-point-ai.jpg",
     tags: ["EV Charging", "Solar PV", "Feasibility Studies", "Site Planning", "Nairobi", "Roam Electric"],
     isFlagship: true,
     status: "in-progress",
