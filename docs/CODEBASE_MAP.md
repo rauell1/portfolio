@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-02T18:36:27.347Z**
+> Last updated: **2026-05-07T09:20:51.001Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
