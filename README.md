@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `9fd613d` — Merge branch 'main' of https://github.com/rauell1/portfolio |
-| **Committed by** | Roy Okola Otieno |
-| **Commit date** | 2026-05-02 21:35 UTC |
+| **Last commit** | `40ff6a8` — fix: correct SPA rewrite and relax CSP to unblock subdomain 403 |
+| **Committed by** | Roy Otieno | Energy & Mobility Systems |
+| **Commit date** | 2026-05-07 12:20 UTC |
 | **Branch** | `main` |
-| **Total commits** | 303 |
+| **Total commits** | 306 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 84 |
 | **CSS files** | 1 |
