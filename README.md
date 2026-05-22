@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `9ff9200` — feat: hide blog & case studies from navigation and add subtle admin login |
+| **Last commit** | `5d90f95` — security: implement webhook signature verification, active unsubscribe database logic, draft sharing database fix, and client-side env deprecation |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-23 01:18 UTC |
+| **Commit date** | 2026-05-23 01:31 UTC |
 | **Branch** | `main` |
-| **Total commits** | 322 |
+| **Total commits** | 325 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 101 |
 | **CSS files** | 1 |
