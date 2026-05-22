@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `b757f25` — feat: justified text + em-dash cleanup across all public pages |
+| **Last commit** | `71a2ff4` — feat: server-side admin auth gate via /api/admin-auth |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-23 00:30 UTC |
+| **Commit date** | 2026-05-23 00:37 UTC |
 | **Branch** | `main` |
-| **Total commits** | 313 |
+| **Total commits** | 316 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 94 |
 | **CSS files** | 1 |
