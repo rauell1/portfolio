@@ -1,19 +1,13 @@
 /**
- * Application configuration constants derived from environment variables.
- * Set these in your .env file (see .env.example).
+ * Application-wide configuration helpers.
+ *
+ * Admin access is enforced server-side (api/admin-auth.ts + Supabase RLS).
+ * No admin email appears in this file or in any browser bundle.
  */
 
-/** The email address that has admin access to the CMS. */
-const HARD_CODED_ADMIN_EMAIL = "royokola3@gmail.com";
-export const ADMIN_EMAIL =
-  ((import.meta.env.VITE_ADMIN_EMAIL as string | undefined)?.trim().toLowerCase() ||
-    HARD_CODED_ADMIN_EMAIL);
-
-/**
- * Returns true if the given user email matches the configured admin email.
- * Falls back to the hardcoded owner email if VITE_ADMIN_EMAIL is not configured.
- */
-export const isAdminEmail = (email: string | null | undefined): boolean => {
-  if (!email) return false;
-  return email.trim().toLowerCase() === ADMIN_EMAIL;
+/** Returns true if the Supabase session belongs to an authenticated admin. */
+export const isAdminSession = (email: string | null | undefined): boolean => {
+  // The real gate is: (a) the server refused to issue the magic link, or
+  // (b) Supabase RLS blocks the query.  This helper is used for UI only.
+  return typeof email === "string" && email.length > 0;
 };

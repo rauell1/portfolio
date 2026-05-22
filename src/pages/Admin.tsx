@@ -48,21 +48,19 @@ export default function AdminPage() {
 
   async function handleSendMagicLink(e: React.FormEvent) {
     e.preventDefault();
-    if (!supabase) {
-      toast({ title: "Supabase not configured", variant: "destructive" });
-      return;
-    }
     setSending(true);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.href },
+      const res = await fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
-      if (error) throw error;
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error ?? "Request failed");
       setSent(true);
-      toast({ title: "Magic link sent", description: "Check your email for a magic link." });
+      toast({ title: "Check your email", description: "A sign-in link has been sent if an account exists." });
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to send magic link";
+      const msg = err instanceof Error ? err.message : "Unable to process request";
       toast({ title: "Error", description: msg, variant: "destructive" });
     } finally {
       setSending(false);
@@ -93,7 +91,7 @@ export default function AdminPage() {
           <CardContent>
             {sent ? (
               <p className="text-center text-muted-foreground text-justify">
-                Check your email for a magic link to sign in to the admin dashboard.
+                A sign-in link has been sent. Check your inbox and click the link to continue.
               </p>
             ) : (
               <form onSubmit={handleSendMagicLink} className="space-y-4">
