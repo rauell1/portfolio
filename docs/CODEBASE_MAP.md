@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-07T09:20:51.001Z**
+> Last updated: **2026-05-22T21:14:55.900Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -136,6 +136,7 @@
 | File | Purpose |
 |---|---|
 | `src/hooks/use-mobile.tsx` | Breakpoint hook — returns isMobile boolean |
+| `src/hooks/use-projects.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/hooks/use-toast.ts` | Toast state manager (shadcn/ui pattern) |
 
 ---
