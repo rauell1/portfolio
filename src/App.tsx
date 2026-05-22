@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 // Lazy-load non-home pages to reduce initial bundle size
 const Resume = lazy(() => import("./pages/Resume"));
 const ProjectsPage = lazy(() => import("./pages/Projects"));
+const AdminPage = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LazyToaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
 const LazySonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
@@ -64,6 +65,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/resume" element={<Resume />} />
                 <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
