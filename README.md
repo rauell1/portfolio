@@ -130,13 +130,13 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `40ff6a8` — fix: correct SPA rewrite and relax CSP to unblock subdomain 403 |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-05-07 12:20 UTC |
+| **Last commit** | `8454b50` — feat: integrate Supabase — live projects from DB with static fallback |
+| **Committed by** | Roy Okola |
+| **Commit date** | 2026-05-23 00:14 UTC |
 | **Branch** | `main` |
-| **Total commits** | 306 |
+| **Total commits** | 309 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 84 |
+| **TypeScript files** | 85 |
 | **CSS files** | 1 |
 | **React components** | 64 |
 | **Pages / views** | 4 |
