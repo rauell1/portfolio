@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-22T21:30:28.547Z**
+> Last updated: **2026-05-22T21:37:43.264Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -221,6 +221,7 @@
 | File | Purpose |
 |---|---|
 | `api/_lib/security.ts` | Vercel Serverless Function |
+| `api/admin-auth.ts` | Vercel Serverless Function |
 | `api/contact.ts` | Vercel Serverless Function |
 | `api/newsletter.ts` | Vercel Serverless Function |
 | `api/webhooks/inbound.ts` | Vercel Serverless Function |
