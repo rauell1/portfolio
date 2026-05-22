@@ -387,3 +387,34 @@
   .btn-glow:hover  { transform: none; box-shadow: 0 0 20px hsla(197, 68%, 44%, 0.4); will-change: auto; }
   .card-hover:hover { transform: none; box-shadow: none; will-change: auto; }
 }
+
+/* ============================================================
+   Blog / article prose typography
+   ============================================================ */
+.prose-custom h1,
+.prose-custom h2,
+.prose-custom h3 {
+  @apply font-display font-bold text-foreground;
+}
+.prose-custom h1 { @apply text-3xl mt-10 mb-4; }
+.prose-custom h2 { @apply text-2xl mt-10 mb-4; }
+.prose-custom h3 { @apply text-lg mt-8 mb-3; }
+.prose-custom p  { @apply text-muted-foreground leading-relaxed mb-4 text-justify; hyphens: auto; }
+.prose-custom ul { @apply list-disc list-outside pl-5 my-4 space-y-1; }
+.prose-custom ol { @apply list-decimal list-outside pl-5 my-4 space-y-1; }
+.prose-custom li { @apply text-muted-foreground leading-relaxed; }
+.prose-custom a  { @apply text-primary underline underline-offset-2 hover:text-primary/80; }
+.prose-custom hr { @apply border-border my-8; }
+.prose-custom blockquote {
+  @apply border-l-2 border-primary/40 pl-4 italic text-muted-foreground my-6;
+}
+.prose-custom img  { @apply rounded-xl w-full my-6 object-cover; }
+.prose-custom figure { @apply my-8; }
+.prose-custom figcaption { @apply text-center text-xs text-muted-foreground mt-2; }
+.prose-custom code {
+  @apply bg-muted/60 text-primary text-sm px-1.5 py-0.5 rounded font-mono;
+}
+.prose-custom pre {
+  @apply bg-muted/60 rounded-xl p-4 overflow-x-auto my-6;
+}
+.prose-custom pre code { @apply bg-transparent p-0; }

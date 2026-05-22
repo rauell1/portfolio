@@ -7,12 +7,16 @@ import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 
 // Lazy-load non-home pages to reduce initial bundle size
-const Resume = lazy(() => import("./pages/Resume"));
-const ProjectsPage = lazy(() => import("./pages/Projects"));
-const AdminPage = lazy(() => import("./pages/Admin"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const LazyToaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
-const LazySonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+const Resume        = lazy(() => import("./pages/Resume"));
+const ProjectsPage  = lazy(() => import("./pages/Projects"));
+const BlogPage      = lazy(() => import("./pages/Blog"));
+const BlogPostPage  = lazy(() => import("./pages/BlogPost"));
+const CaseStudiesPage = lazy(() => import("./pages/CaseStudies"));
+const CaseStudyPage   = lazy(() => import("./pages/CaseStudy"));
+const AdminPage     = lazy(() => import("./pages/Admin"));
+const NotFound      = lazy(() => import("./pages/NotFound"));
+const LazyToaster   = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+const LazySonner    = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
@@ -62,12 +66,16 @@ const App = () => (
           <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
               <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/resume" element={<Resume />} />
-                <Route path="/projects" element={<ProjectsPage />} />
-                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/"                    element={<Index />} />
+                <Route path="/resume"              element={<Resume />} />
+                <Route path="/projects"            element={<ProjectsPage />} />
+                <Route path="/blog"                element={<BlogPage />} />
+                <Route path="/blog/:slug"          element={<BlogPostPage />} />
+                <Route path="/case-studies"        element={<CaseStudiesPage />} />
+                <Route path="/case-studies/:slug"  element={<CaseStudyPage />} />
+                <Route path="/admin"               element={<AdminPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
+                <Route path="*"                    element={<NotFound />} />
               </Routes>
             </Suspense>
           </BrowserRouter>
