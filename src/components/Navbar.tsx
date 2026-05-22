@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, BookOpen, BarChart3 } from "lucide-react";
+import { Menu, X, FileText, BookOpen, BarChart3, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
@@ -15,8 +15,6 @@ const hashNavItems = [
 
 const routeNavItems = [
   { to: "/projects",     label: "Projects",      icon: null },
-  { to: "/blog",         label: "Blog",          icon: BookOpen },
-  { to: "/case-studies", label: "Case Studies",  icon: BarChart3 },
 ];
 
 export const Navbar = () => {
@@ -112,6 +110,18 @@ export const Navbar = () => {
               </li>
 
               <li className="ml-2">
+                <Link
+                  to="/admin"
+                  className={`p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/40 transition-colors flex items-center justify-center ${
+                    isActiveRoute("/admin") ? "text-primary bg-primary/8" : ""
+                  }`}
+                  aria-label="Admin Dashboard"
+                  title="Admin Dashboard"
+                >
+                  <Lock className="w-4 h-4" />
+                </Link>
+              </li>
+              <li className="ml-1">
                 <ThemeToggle />
               </li>
             </ul>
@@ -145,6 +155,17 @@ export const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
+              <Link
+                to="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/40 transition-colors flex items-center justify-center ${
+                  isActiveRoute("/admin") ? "text-primary bg-primary/8" : ""
+                }`}
+                aria-label="Admin Dashboard"
+                title="Admin Dashboard"
+              >
+                <Lock className="w-4 h-4" />
+              </Link>
               <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

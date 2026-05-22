@@ -22,14 +22,13 @@ export const Footer = () => {
       heading: "Work",
       links: [
         { label: "Projects",      href: "/projects" },
-        { label: "Case Studies",  href: "/case-studies" },
-        { label: "Blog",          href: "/blog" },
       ],
     },
     {
       heading: "Info",
       links: [
         { label: "Resume", href: "/resume" },
+        { label: "Admin Login", href: "/admin" },
       ],
     },
   ];
