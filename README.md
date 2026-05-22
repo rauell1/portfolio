@@ -130,16 +130,16 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `8454b50` — feat: integrate Supabase — live projects from DB with static fallback |
+| **Last commit** | `b757f25` — feat: justified text + em-dash cleanup across all public pages |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-23 00:14 UTC |
+| **Commit date** | 2026-05-23 00:30 UTC |
 | **Branch** | `main` |
-| **Total commits** | 309 |
+| **Total commits** | 313 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 85 |
+| **TypeScript files** | 94 |
 | **CSS files** | 1 |
-| **React components** | 64 |
-| **Pages / views** | 4 |
+| **React components** | 72 |
+| **Pages / views** | 5 |
 
 ## 🤗 Workflow Status
 
