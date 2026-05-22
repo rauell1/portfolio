@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-22T21:37:43.264Z**
+> Last updated: **2026-05-22T22:01:38.421Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -46,6 +46,10 @@
 | File | Purpose |
 |---|---|
 | `src/pages/Admin.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/pages/Blog.tsx` | Blog listing — fetches posts from Supabase, search + tag filter |
+| `src/pages/BlogPost.tsx` | Individual blog post view — MDX/HTML rendering, TOC |
+| `src/pages/CaseStudies.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/pages/CaseStudy.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/pages/Index.tsx` | Home page — assembles all section components |
 | `src/pages/NotFound.tsx` | 404 fallback page |
 | `src/pages/Projects.tsx` | Full projects listing page with filters and modals |
@@ -149,6 +153,8 @@
 
 | File | Purpose |
 |---|---|
+| `src/hooks/use-blog-posts.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/hooks/use-case-studies.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/hooks/use-mobile.tsx` | Breakpoint hook — returns isMobile boolean |
 | `src/hooks/use-projects.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/hooks/use-toast.ts` | Toast state manager (shadcn/ui pattern) |
@@ -160,6 +166,7 @@
 | File | Purpose |
 |---|---|
 | `src/lib/config.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/lib/renderMarkdown.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/smoothScroll.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/utils.ts` | cn() helper — merges Tailwind classes with clsx + tailwind-merge |
 
