@@ -68,7 +68,7 @@ export const About = () => {
               {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
             </h2>
             {content.paragraphs.map((p, i) => (
-              <p key={i} className="text-lg text-muted-foreground leading-relaxed mb-6">
+              <p key={i} className="text-lg text-muted-foreground leading-relaxed mb-6 text-justify hyphens-auto">
                 {p}
               </p>
             ))}

@@ -213,7 +213,7 @@ export const Experience = () => {
                 {/* Description */}
                 <ul className="space-y-2">
                   {exp.description.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground text-justify hyphens-auto">
                       <ChevronRight className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                       <span>{item}</span>
                     </li>

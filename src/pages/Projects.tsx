@@ -157,7 +157,7 @@ const ProjectCard = ({
           <h3 className="text-base font-display font-bold mb-2 group-hover:text-primary transition-colors leading-snug">
             {project.title}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3">
+          <p className="text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3 text-justify hyphens-auto">
             {project.description}
           </p>
 
@@ -311,7 +311,7 @@ const ProjectModal = ({
               <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
                 About This Project
               </h4>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed text-justify hyphens-auto">
                 {project.longDescription}
               </p>
             </div>
@@ -427,7 +427,7 @@ const Projects = () => {
               Project{" "}
               <span className="gradient-text">Portfolio</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify hyphens-auto">
               A curated collection of software, infrastructure, and systems work spanning clean energy, environmental impact, AI tools, and digital products.
             </p>
           </motion.div>

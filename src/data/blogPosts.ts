@@ -150,7 +150,7 @@ Electric mobility is gaining momentum across Africa as cities seek cleaner trans
 
 For electric vehicles to operate effectively, drivers must have access to convenient and reliable charging stations. This is true for cars and buses, and equally for the electric motorcycles and tuk-tuks that dominate urban mobility in many African cities. Without adequate charging infrastructure, EV adoption can be slowed by concerns such as limited driving range, uncertainty about charging availability, and the time required to recharge. Charging networks must therefore be designed to support growing EV fleets while ensuring accessibility (location and hours), reliability (uptime and power quality), and affordability (pricing that supports both operators and users). In practice, this means a mix of fast charging for en-route top-ups and slower or overnight charging at homes, depots, and workplaces.
 
-![Roam electric motorcycles — a key light EV driving demand for distributed charging in African cities](${IN_ARTICLE_IMAGES.evPractice})
+![Roam electric motorcycles, a key light EV driving demand for distributed charging in African cities](${IN_ARTICLE_IMAGES.evPractice})
 
 ## Charging Infrastructure Models
 
@@ -160,17 +160,17 @@ Public Charging Stations are installed in high-traffic locations such as shoppin
 
 Fleet Charging refers to dedicated infrastructure for commercial fleets: buses, delivery vehicles, or ride-hailing motorcycles. These installations are often depot-based, with scheduling and power management optimized for fleet operations. Fleet charging can be a stepping stone to public networks as operators open capacity to third parties.
 
-![BasiGo electric bus fleet — depot-based charging optimised for commercial operations in Nairobi](${IN_ARTICLE_IMAGES.evFleet})
+![BasiGo electric bus fleet, depot-based charging optimised for commercial operations in Nairobi](${IN_ARTICLE_IMAGES.evFleet})
 
 Distributed Charging Networks consist of smaller charging points deployed across cities to ensure that riders are never far from a charge. This model is particularly effective for electric motorcycles and other light EVs that have smaller batteries and shorter ranges. Distributed networks can be built through partnerships with shops, fuel stations, and property owners, spreading cost and increasing coverage.
 
-![Roam motorbike and bus — light and heavy electric vehicles both depend on well-distributed charging](${IN_ARTICLE_IMAGES.evDistributed})
+![Roam motorbike and bus, showing light and heavy electric vehicles that both depend on well-distributed charging](${IN_ARTICLE_IMAGES.evDistributed})
 
 ## Infrastructure Design Considerations
 
 Designing charging infrastructure requires careful analysis of several factors. Electricity availability and capacity at the site determine whether a connection is feasible and what power level can be offered. Mobility demand patterns (where and when riders need to charge) inform location choice and the mix of fast versus slow chargers. Urban planning constraints (land use, permits, aesthetics) affect where hardware can be installed and how it is configured. Safety requirements (electrical standards, fire protection, user safety) must be met to protect users and equipment and to satisfy regulators and insurers.
 
-![Roam charging station — purpose-built hardware designed for reliability and ease of use](${IN_ARTICLE_IMAGES.evDesign})
+![Roam charging station, purpose-built hardware designed for reliability and ease of use](${IN_ARTICLE_IMAGES.evDesign})
 
 Advanced charging systems often include connectivity features that allow operators to monitor performance remotely, manage access and payments, and perform diagnostics. This reduces the cost of operations and improves reliability. Software and data also enable dynamic pricing, demand management, and integration with renewable generation or grid services.
 
@@ -182,13 +182,13 @@ Integrating renewable energy with charging infrastructure can reduce operational
 
 This combination of renewable energy and electric mobility represents an important step toward sustainable transportation systems. It also aligns with the priorities of many development and climate finance institutions, which are looking to support integrated solutions that advance both clean energy and clean mobility.
 
-![BasiGo leading the charge — integrating clean energy with electric bus operations across East Africa](${IN_ARTICLE_IMAGES.evRenewable})
+![BasiGo leading the charge, integrating clean energy with electric bus operations across East Africa](${IN_ARTICLE_IMAGES.evRenewable})
 
 ## Conclusion
 
 As electric mobility expands across Africa, the development of reliable charging infrastructure will be essential. Investments in charging networks today will help shape the future of transportation systems across the continent. The right mix of public, fleet, and distributed charging, combined with robust design and, where possible, renewable energy integration, can accelerate the transition to electric mobility while creating value for operators, users, and communities.
 
-![Roam charging infrastructure — building the network that will power tomorrow's electric mobility](${IN_ARTICLE_IMAGES.evConclusion})`,
+![Roam charging infrastructure, building the network that will power electric mobility](${IN_ARTICLE_IMAGES.evConclusion})`,
     cover_image: PLACEHOLDER_IMAGES.evCharging,
     category: "ev-mobility",
     tags: ["electric-vehicles", "charging", "infrastructure", "mobility"],

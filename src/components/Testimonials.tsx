@@ -258,7 +258,7 @@ export const Testimonials = () => {
                 aria-label={`Read full testimonial from ${testimonial.name}`}
                 className="glass-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3 text-justify hyphens-auto">
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center gap-3">

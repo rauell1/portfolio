@@ -93,7 +93,7 @@ export const Leadership = () => {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
             {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-justify hyphens-auto">
             {content.description}
           </p>
         </motion.div>

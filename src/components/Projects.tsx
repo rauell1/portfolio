@@ -99,7 +99,7 @@ export const Projects = () => {
               </div>
 
               {/* Description */}
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5 text-justify hyphens-auto">
                 {path.description}
               </p>
 
