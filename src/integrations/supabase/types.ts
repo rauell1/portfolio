@@ -10,106 +10,10 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
-      page_sections: {
-        Row: {
-          id: string
-          page: string
-          section: string
-          content: Json
-          sort_order: number | null
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          page?: string
-          section: string
-          content?: Json
-          sort_order?: number | null
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          page?: string
-          section?: string
-          content?: Json
-          sort_order?: number | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      case_studies: {
-        Row: {
-          id: string
-          slug: string
-          title: string
-          subtitle: string | null
-          category: string
-          location: string | null
-          date: string | null
-          role: string | null
-          partner: string | null
-          image: string | null
-          pdf_download: string | null
-          is_flagship: boolean
-          published: boolean
-          sections: Json
-          metrics: Json
-          gradient: string
-          icon_name: string
-          sort_order: number | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          slug: string
-          title: string
-          subtitle?: string | null
-          category?: string
-          location?: string | null
-          date?: string | null
-          role?: string | null
-          partner?: string | null
-          image?: string | null
-          pdf_download?: string | null
-          is_flagship?: boolean
-          published?: boolean
-          sections?: Json
-          metrics?: Json
-          gradient?: string
-          icon_name?: string
-          sort_order?: number | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          slug?: string
-          title?: string
-          subtitle?: string | null
-          category?: string
-          location?: string | null
-          date?: string | null
-          role?: string | null
-          partner?: string | null
-          image?: string | null
-          pdf_download?: string | null
-          is_flagship?: boolean
-          published?: boolean
-          sections?: Json
-          metrics?: Json
-          gradient?: string
-          icon_name?: string
-          sort_order?: number | null
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       blog_posts: {
         Row: {
           category: string
@@ -164,6 +68,75 @@ export type Database = {
         }
         Relationships: []
       }
+      case_studies: {
+        Row: {
+          category: string
+          created_at: string
+          date: string | null
+          gradient: string
+          icon_name: string
+          id: string
+          image: string | null
+          is_flagship: boolean
+          location: string | null
+          metrics: Json
+          partner: string | null
+          pdf_download: string | null
+          published: boolean
+          role: string | null
+          sections: Json
+          slug: string
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          date?: string | null
+          gradient?: string
+          icon_name?: string
+          id?: string
+          image?: string | null
+          is_flagship?: boolean
+          location?: string | null
+          metrics?: Json
+          partner?: string | null
+          pdf_download?: string | null
+          published?: boolean
+          role?: string | null
+          sections?: Json
+          slug: string
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          date?: string | null
+          gradient?: string
+          icon_name?: string
+          id?: string
+          image?: string | null
+          is_flagship?: boolean
+          location?: string | null
+          metrics?: Json
+          partner?: string | null
+          pdf_download?: string | null
+          published?: boolean
+          role?: string | null
+          sections?: Json
+          slug?: string
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           confirmed: boolean
@@ -185,43 +158,109 @@ export type Database = {
         }
         Relationships: []
       }
+      page_sections: {
+        Row: {
+          content: Json
+          id: string
+          page: string
+          section: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          id?: string
+          page?: string
+          section: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          id?: string
+          page?: string
+          section?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
+          category: string | null
           completed_at: string | null
           created_at: string
           description: string | null
+          gradient: string
+          icon_name: string
           id: string
+          image: string | null
           images: string[] | null
+          is_flagship: boolean
+          is_founder: boolean
+          link: string | null
           location: string | null
+          long_description: string | null
           project_type: string
+          repo: string | null
+          role: string | null
+          sector: string | null
           slug: string | null
+          specs: Json | null
           status: string
+          tags: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
+          category?: string | null
           completed_at?: string | null
           created_at?: string
           description?: string | null
+          gradient?: string
+          icon_name?: string
           id?: string
+          image?: string | null
           images?: string[] | null
+          is_flagship?: boolean
+          is_founder?: boolean
+          link?: string | null
           location?: string | null
+          long_description?: string | null
           project_type?: string
+          repo?: string | null
+          role?: string | null
+          sector?: string | null
           slug?: string | null
+          specs?: Json | null
           status?: string
+          tags?: string[] | null
           title: string
           updated_at?: string
         }
         Update: {
+          category?: string | null
           completed_at?: string | null
           created_at?: string
           description?: string | null
+          gradient?: string
+          icon_name?: string
           id?: string
+          image?: string | null
           images?: string[] | null
+          is_flagship?: boolean
+          is_founder?: boolean
+          link?: string | null
           location?: string | null
+          long_description?: string | null
           project_type?: string
+          repo?: string | null
+          role?: string | null
+          sector?: string | null
           slug?: string | null
+          specs?: Json | null
           status?: string
+          tags?: string[] | null
           title?: string
           updated_at?: string
         }
@@ -229,40 +268,40 @@ export type Database = {
       }
       testimonials: {
         Row: {
-          id: string
-          name: string
-          role: string
           company: string
           content: string
-          image: string | null
-          rating: number
-          sort_order: number | null
-          published: boolean
           created_at: string
+          id: string
+          image: string | null
+          name: string
+          published: boolean
+          rating: number
+          role: string
+          sort_order: number | null
         }
         Insert: {
-          id?: string
-          name: string
-          role: string
           company: string
           content: string
-          image?: string | null
-          rating?: number
-          sort_order?: number | null
-          published?: boolean
           created_at?: string
+          id?: string
+          image?: string | null
+          name: string
+          published?: boolean
+          rating?: number
+          role: string
+          sort_order?: number | null
         }
         Update: {
-          id?: string
-          name?: string
-          role?: string
           company?: string
           content?: string
-          image?: string | null
-          rating?: number
-          sort_order?: number | null
-          published?: boolean
           created_at?: string
+          id?: string
+          image?: string | null
+          name?: string
+          published?: boolean
+          rating?: number
+          role?: string
+          sort_order?: number | null
         }
         Relationships: []
       }
@@ -272,24 +311,21 @@ export type Database = {
     }
     Functions: {
       get_shared_blog_post: {
-        Args: {
-          p_slug: string
-          p_token: string
-        }
+        Args: { p_slug: string; p_token: string }
         Returns: {
-          id: string
-          title: string
-          slug: string
-          excerpt: string | null
-          content: string
-          cover_image: string | null
           category: string
-          tags: string[] | null
-          published_at: string | null
+          content: string
+          cover_image: string
           created_at: string
-          share_token: string | null
+          excerpt: string
+          id: string
+          published_at: string
           share_enabled: boolean
-          share_expires_at: string | null
+          share_expires_at: string
+          share_token: string
+          slug: string
+          tags: string[]
+          title: string
         }[]
       }
     }
@@ -327,13 +363,13 @@ export type Tables<
     : never
   : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
         DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
+  ? (DefaultSchema["Tables"] &
+      DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
     : never
+  : never
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
@@ -353,12 +389,12 @@ export type TablesInsert<
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
     : never
+  : never
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
@@ -378,12 +414,12 @@ export type TablesUpdate<
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
     : never
+  : never
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
@@ -399,8 +435,8 @@ export type Enums<
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+  ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+  : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
@@ -416,8 +452,8 @@ export type CompositeTypes<
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+  ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  : never
 
 export const Constants = {
   public: {

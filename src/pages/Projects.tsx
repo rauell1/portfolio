@@ -24,7 +24,8 @@ import {
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { portfolioProjects, sectors, type Project } from "@/data/portfolioProjects";
+import { type Project } from "@/data/portfolioProjects";
+import { useProjects } from "@/hooks/use-projects";
 
 const iconMap: Record<string, React.ElementType> = {
   Zap,
@@ -384,18 +385,19 @@ const ProjectModal = ({
 const Projects = () => {
   const [activeSector, setActiveSector] = useState("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { projects, sectors, loading } = useProjects();
 
   const filtered =
     activeSector === "all"
-      ? portfolioProjects
-      : portfolioProjects.filter((p) => p.sector === activeSector);
+      ? projects
+      : projects.filter((p) => p.sector === activeSector);
 
   const sectorCounts = sectors.map((s) => ({
     ...s,
     count:
       s.value === "all"
-        ? portfolioProjects.length
-        : portfolioProjects.filter((p) => p.sector === s.value).length,
+        ? projects.length
+        : projects.filter((p) => p.sector === s.value).length,
   }));
 
   return (
@@ -460,24 +462,35 @@ const Projects = () => {
           </motion.div>
 
           {/* Grid */}
-          <motion.div
-            key={activeSector}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filtered.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
-                onClick={setSelectedProject}
-              />
-            ))}
-          </motion.div>
+          {loading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl bg-muted/40 border border-border/40 h-80 animate-pulse"
+                />
+              ))}
+            </div>
+          ) : (
+            <motion.div
+              key={activeSector}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {filtered.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  onClick={setSelectedProject}
+                />
+              ))}
+            </motion.div>
+          )}
 
-          {filtered.length === 0 && (
+          {!loading && filtered.length === 0 && (
             <div className="text-center py-20 text-muted-foreground">
               No projects in this category yet.
             </div>
