@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-22T21:14:55.900Z**
+> Last updated: **2026-05-22T21:30:28.547Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -45,6 +45,7 @@
 
 | File | Purpose |
 |---|---|
+| `src/pages/Admin.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/pages/Index.tsx` | Home page — assembles all section components |
 | `src/pages/NotFound.tsx` | 404 fallback page |
 | `src/pages/Projects.tsx` | Full projects listing page with filters and modals |
@@ -72,6 +73,19 @@
 | `src/components/Testimonials.tsx` | Testimonials carousel — quotes, avatars, roles (Supabase-sourced) |
 | `src/components/ThemeProvider.tsx` | Context provider — light/dark/system theme state |
 | `src/components/ThemeToggle.tsx` | Sun/moon icon button — toggles ThemeProvider theme |
+
+### 📁 src/components/admin/
+
+| File | Purpose |
+|---|---|
+| `src/components/admin/AdminLayout.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminBlogPosts.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminCaseStudies.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminNewsletter.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminOverview.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminPageSections.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminProjects.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/components/admin/sections/AdminSync.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 
 ### 📁 src/components/ui/ — shadcn/ui Primitives
 
