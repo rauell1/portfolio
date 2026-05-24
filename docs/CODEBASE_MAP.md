@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-22T22:31:59.386Z**
+> Last updated: **2026-05-24T19:22:15.469Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -68,6 +68,7 @@
 | `src/components/Experience.tsx` | Work experience timeline — roles, companies, dates, bullet points |
 | `src/components/Footer.tsx` | Site footer — copyright, social links, quick nav |
 | `src/components/Hero.tsx` | Landing hero — animated headline, CTA buttons, social links |
+| `src/components/ImpactVisualizer.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/components/Leadership.tsx` | Leadership & community section — volunteer roles, initiatives |
 | `src/components/NavLink.tsx` | Smooth-scroll anchor link primitive used inside Navbar.tsx |
 | `src/components/Navbar.tsx` | Responsive sticky navbar — desktop links, mobile hamburger, scroll spy |
@@ -99,6 +100,7 @@
 
 | File | Purpose |
 |---|---|
+| `src/components/ui/SpotlightCard.tsx` | shadcn/ui primitive |
 | `src/components/ui/accordion.tsx` | Collapsible accordion |
 | `src/components/ui/alert-dialog.tsx` | Modal confirmation dialog |
 | `src/components/ui/alert.tsx` | Inline alert / banner |
