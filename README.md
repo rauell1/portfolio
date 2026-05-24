@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `5d90f95` — security: implement webhook signature verification, active unsubscribe database logic, draft sharing database fix, and client-side env deprecation |
+| **Last commit** | `5d4cf7a` — design: visual aesthetics overhaul with clean-tech teal & emerald theme, spotlight cursor-tracing cards, dot-grid backgrounds, and interactive clean-tech impact visualizer |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-23 01:31 UTC |
+| **Commit date** | 2026-05-24 22:21 UTC |
 | **Branch** | `main` |
-| **Total commits** | 325 |
+| **Total commits** | 328 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 101 |
+| **TypeScript files** | 103 |
 | **CSS files** | 1 |
-| **React components** | 72 |
+| **React components** | 74 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status
