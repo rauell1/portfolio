@@ -57,93 +57,72 @@ export const About = () => {
   return (
     <section id="about" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left side - Text content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
-            </h2>
-            {content.paragraphs.map((p, i) => (
-              <p key={i} className="text-lg text-muted-foreground leading-relaxed mb-6 text-justify hyphens-auto">
-                {p}
-              </p>
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Biography Bento Card (Col span 7) */}
+          <div className="lg:col-span-7 flex">
+            <SpotlightCard className="glass-card rounded-3xl p-8 border border-white/10 dark:border-white/5 w-full flex flex-col justify-center">
+              <span className="text-primary font-mono-custom tracking-[0.2em] text-xs uppercase mb-3 block">{content.tagline}</span>
+              <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 leading-tight">
+                {content.heading} <span className="gradient-text font-editorial italic font-normal">{content.heading_highlight}</span>
+              </h2>
+              {content.paragraphs.map((p, i) => (
+                <p key={i} className="text-base text-muted-foreground leading-relaxed mb-4 text-justify hyphens-auto">
+                  {p}
+                </p>
+              ))}
+            </SpotlightCard>
+          </div>
 
-            {/* Highlights grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {content.highlights.map((item, index) => {
-                const Icon = iconMap[item.icon] || Zap;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  >
-                    <SpotlightCard className="glass-card rounded-xl p-4 group border border-white/10 dark:border-white/5 h-full">
-                      <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                      <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
-                      <p className="text-sm font-medium">{item.value}</p>
-                    </SpotlightCard>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
+          {/* Tall Profile Headshot Bento Card (Col span 5) */}
+          <div className="lg:col-span-5 flex">
+            <SpotlightCard 
+              className="glass-card rounded-3xl p-6 border border-white/10 dark:border-white/5 w-full flex flex-col justify-between overflow-hidden relative min-h-[380px] group cursor-pointer"
+              glowColor="rgba(20, 184, 166, 0.15)"
+            >
+              {/* Dark overlay bottom */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
 
-          {/* Right side - Professional headshot */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Decorative rings */}
-              <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-glow" />
-              <div className="absolute inset-4 rounded-full border border-primary/15" />
-              <div className="absolute inset-8 rounded-full border border-primary/10" />
-              
-              {/* Headshot */}
-              <div className="absolute inset-12 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl">
+              {/* Headshot image with Grayscale-to-Color hover transition */}
+              <div className="absolute inset-0 overflow-hidden rounded-3xl">
                 <img 
                   src="/images/og-image.png"
                   alt="Roy Otieno - Clean Energy Engineer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale contrast-125 brightness-90 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700 ease-out"
                   loading="eager"
                   decoding="async"
                 />
               </div>
 
-              {/* Orbiting elements — hidden on mobile to avoid overflow and reduce GPU load */}
-              <motion.div
-                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: "center 200px" }}
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary" />
-                </div>
-              </motion.div>
+              {/* Floating Orbiting elements */}
+              <div className="relative z-20 mt-auto">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md border border-white/10 text-white shadow-lg uppercase tracking-widest font-mono-custom">
+                  <Leaf className="w-3.5 h-3.5 text-primary" />
+                  Systems Engineer
+                </span>
+              </div>
+            </SpotlightCard>
+          </div>
 
-              <motion.div
-                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: "center 200px" }}
-              >
-                <div className="w-10 h-10 rounded-full bg-primary/15 border border-primary/20 flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-primary" />
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+          {/* 4 Modular Highlight Bento Cards (Span 3 each) */}
+          {content.highlights.map((item, index) => {
+            const Icon = iconMap[item.icon] || Zap;
+            return (
+              <div key={item.title} className="md:col-span-1 lg:col-span-3 flex">
+                <SpotlightCard 
+                  className="glass-card rounded-3xl p-6 border border-white/10 dark:border-white/5 w-full flex flex-col justify-between h-full group cursor-pointer"
+                  glowColor="rgba(16, 185, 129, 0.1)"
+                >
+                  <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/25 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono-custom mb-1.5">{item.title}</p>
+                    <p className="text-base font-bold text-foreground leading-snug">{item.value}</p>
+                  </div>
+                </SpotlightCard>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

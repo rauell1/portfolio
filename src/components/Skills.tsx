@@ -199,32 +199,29 @@ export const Skills = () => {
 
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Skills Progress Bars */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-2 glass-card rounded-2xl p-8 relative overflow-hidden"
-          >
-            <div className="absolute -top-4 -right-4 opacity-10">
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
-                <Sun className="w-24 h-24 text-primary" />
-              </motion.div>
-            </div>
-
-            <h3 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
-              <div className="flex gap-2">
-                <EnergyIcon icon={Zap} delay={0} />
-                <EnergyIcon icon={Leaf} delay={0.2} />
+          <div className="lg:col-span-2 flex h-full">
+            <SpotlightCard className="glass-card rounded-3xl p-8 border border-white/10 dark:border-white/5 w-full relative overflow-hidden h-full">
+              <div className="absolute -top-4 -right-4 opacity-10">
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                  <Sun className="w-24 h-24 text-primary" />
+                </motion.div>
               </div>
-              Core Competencies
-            </h3>
 
-            <div className="grid md:grid-cols-2 gap-x-8 gap-y-5 relative z-10">
-              {skills.map((skill, index) => (
-                <AnimatedProgressBar key={skill.name} skill={skill} index={index} isInView={isInView} />
-              ))}
-            </div>
-          </motion.div>
+              <h3 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
+                <div className="flex gap-2">
+                  <EnergyIcon icon={Zap} delay={0} />
+                  <EnergyIcon icon={Leaf} delay={0.2} />
+                </div>
+                Core Competencies
+              </h3>
+
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-5 relative z-10">
+                {skills.map((skill, index) => (
+                  <AnimatedProgressBar key={skill.name} skill={skill} index={index} isInView={isInView} />
+                ))}
+              </div>
+            </SpotlightCard>
+          </div>
 
           {/* Radar Chart */}
           <SkillsRadarChart skills={skills} isInView={isInView} />
@@ -232,88 +229,55 @@ export const Skills = () => {
 
         {/* Technical Expertise Cards */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid md:grid-cols-3 gap-6 mt-8"
         >
-          <motion.div
-            className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
-            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
-            transition={{ duration: 0.3 }}
+          <SpotlightCard 
+            className="glass-card rounded-3xl p-6 border border-white/10 dark:border-white/5 flex flex-col justify-between group cursor-pointer"
+            glowColor="rgba(20, 184, 166, 0.12)"
           >
-            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
-            <div className="absolute -bottom-4 -left-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div animate={{ rotate: -360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }}>
-                <Battery className="w-24 h-24 text-primary" />
-              </motion.div>
-            </div>
             <div className="relative z-10">
-              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.5 }}>
-                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit">
                   <Sun className="w-6 h-6 text-primary" />
-                </motion.div>
+                </div>
                 <h3 className="text-xl font-display font-bold text-primary">Engineering</h3>
-              </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">Solar PV system design, off-grid storage, EV charging architecture, and biogas installations.</p>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">Solar PV system design, off-grid storage, EV charging architecture, and biogas installations.</p>
             </div>
-          </motion.div>
+          </SpotlightCard>
 
-          <motion.div
-            className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
-            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
-            transition={{ duration: 0.3 }}
+          <SpotlightCard 
+            className="glass-card rounded-3xl p-6 border border-white/10 dark:border-white/5 flex flex-col justify-between group cursor-pointer"
+            glowColor="rgba(16, 185, 129, 0.12)"
           >
-            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
-            <div className="absolute -top-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div animate={{ scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
-                <Wind className="w-24 h-24 text-primary" />
-              </motion.div>
-            </div>
             <div className="relative z-10">
-              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.6 }}>
-                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit">
                   <Battery className="w-6 h-6 text-primary" />
-                </motion.div>
+                </div>
                 <h3 className="text-xl font-display font-bold text-primary">Business</h3>
-              </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">Strategic sales, project finance, stakeholder engagement, and market intelligence.</p>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">Strategic sales, project finance, stakeholder engagement, and market intelligence.</p>
             </div>
-          </motion.div>
+          </SpotlightCard>
 
-          <motion.div
-            className="relative rounded-2xl p-6 overflow-hidden group cursor-pointer"
-            style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))", border: "1px solid hsl(var(--primary) / 0.3)" }}
-            whileHover={{ scale: 1.02, boxShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
-            transition={{ duration: 0.3 }}
+          <SpotlightCard 
+            className="glass-card rounded-3xl p-6 border border-white/10 dark:border-white/5 flex flex-col justify-between group cursor-pointer"
+            glowColor="rgba(99, 102, 241, 0.12)"
           >
-            <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(circle at center, hsl(var(--primary) / 0.2), transparent 70%)" }} />
-            <div className="absolute -bottom-4 -right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-                <Droplets className="w-24 h-24 text-primary" />
-              </motion.div>
-            </div>
             <div className="relative z-10">
-              <motion.div className="flex items-center gap-3 mb-4" initial={{ x: -10, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : {}} transition={{ delay: 0.7 }}>
-                <motion.div className="p-3 rounded-xl bg-primary/20 border border-primary/30"
-                  animate={{ boxShadow: ["0 0 0 0 hsl(var(--primary) / 0.4)", "0 0 20px 5px hsl(var(--primary) / 0)", "0 0 0 0 hsl(var(--primary) / 0.4)"] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 rounded-xl bg-primary/20 border border-primary/30 w-fit">
                   <Leaf className="w-6 h-6 text-primary" />
-                </motion.div>
+                </div>
                 <h3 className="text-xl font-display font-bold text-primary">Analytics</h3>
-              </motion.div>
-              <p className="text-foreground/80 text-sm leading-relaxed">Power BI dashboards, GIS mapping, feasibility studies, and energy audit reporting.</p>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">Power BI dashboards, GIS mapping, feasibility studies, and energy audit reporting.</p>
             </div>
-          </motion.div>
+          </SpotlightCard>
         </motion.div>
 
         {/* AI Agent & Automation Skills */}

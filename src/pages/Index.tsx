@@ -1,7 +1,10 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
+import { IntroLoader } from "@/components/ui/IntroLoader";
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { motion } from "framer-motion";
 
 const ParticleBackground = lazy(() =>
   import("@/components/ParticleBackground").then((m) => ({ default: m.ParticleBackground }))
@@ -22,46 +25,71 @@ const Contact    = lazy(() => import("@/components/Contact").then((m) => ({ defa
 const SectionSkeleton = () => <div className="h-24 w-full" aria-hidden="true" />;
 
 const Index = () => {
+  const [introFinished, setIntroFinished] = useState(false);
+
+  useEffect(() => {
+    if (!introFinished) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [introFinished]);
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      {/* ParticleBackground is purely decorative — its own Suspense so it
-          never blocks any section from rendering */}
-      <Suspense fallback={null}>
-        <ParticleBackground />
-      </Suspense>
+    <>
+      <CustomCursor />
+      <IntroLoader onFinished={() => setIntroFinished(true)} />
 
-      <Navbar />
-      <Hero />
+      {introFinished && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="min-h-screen overflow-x-hidden bg-background text-foreground"
+        >
+          {/* ParticleBackground is purely decorative — its own Suspense so it
+              never blocks any section from rendering */}
+          <Suspense fallback={null}>
+            <ParticleBackground />
+          </Suspense>
 
-      <main className="relative z-10">
-        <Suspense fallback={<SectionSkeleton />}>
-          <ImpactVisualizer />
-        </Suspense>
-        {/* Each section has its own Suspense boundary so sections render
-            independently as their JS chunks arrive over the network.
-            Without this, one slow chunk would hold up all sections below it. */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <About />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Experience />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Leadership />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Contact />
-        </Suspense>
-      </main>
+          <Navbar />
+          <Hero />
 
-      <Footer />
-    </div>
+          <main className="relative z-10">
+            <Suspense fallback={<SectionSkeleton />}>
+              <ImpactVisualizer />
+            </Suspense>
+            {/* Each section has its own Suspense boundary so sections render
+                independently as their JS chunks arrive over the network.
+                Without this, one slow chunk would hold up all sections below it. */}
+            <Suspense fallback={<SectionSkeleton />}>
+              <About />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Projects />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Experience />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Skills />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Leadership />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Contact />
+            </Suspense>
+          </main>
+
+          <Footer />
+        </motion.div>
+      )}
+    </>
   );
 };
 
