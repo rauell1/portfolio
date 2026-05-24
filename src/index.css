@@ -18,16 +18,16 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 197 68% 44%;
+    --primary: 165 80% 42%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 197 68% 30%;
+    --secondary: 142 70% 32%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 197 68% 44%;
+    --accent: 165 80% 42%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -35,25 +35,25 @@
 
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 197 68% 44%;
+    --ring: 165 80% 42%;
 
     --radius: 0.75rem;
 
-    --electric-blue: 197 68% 44%;
-    --electric-blue-glow: 197 100% 60%;
+    --electric-blue: 165 80% 42%;
+    --electric-blue-glow: 142 70% 55%;
     --dark: 0 0% 3%;
     --dark-card: 0 0% 8%;
     --dark-elevated: 0 0% 12%;
 
-    --gradient-blue: linear-gradient(135deg, hsl(197 68% 44%) 0%, hsl(197 100% 60%) 100%);
+    --gradient-blue: linear-gradient(135deg, hsl(165 80% 42%) 0%, hsl(142 70% 45%) 100%);
     --gradient-dark: linear-gradient(180deg, hsl(0 0% 3%) 0%, hsl(0 0% 6%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsla(197, 68%, 44%, 0.15) 0%, transparent 70%);
+    --gradient-glow: radial-gradient(ellipse at center, hsla(165, 80%, 42%, 0.15) 0%, transparent 70%);
 
     --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 40px hsla(197, 68%, 44%, 0.4);
-    --shadow-glow-strong: 0 0 60px hsla(197, 68%, 44%, 0.6);
+    --shadow-glow: 0 0 40px hsla(165, 80%, 42%, 0.4);
+    --shadow-glow-strong: 0 0 60px hsla(165, 80%, 42%, 0.6);
   }
 
   .light,
@@ -67,27 +67,27 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    --primary: 197 68% 38%;
+    --primary: 165 85% 32%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 197 30% 90%;
-    --secondary-foreground: 197 68% 30%;
+    --secondary: 142 60% 92%;
+    --secondary-foreground: 165 85% 32%;
 
     --muted: 0 0% 94%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 197 50% 92%;
-    --accent-foreground: 197 68% 30%;
+    --accent: 142 50% 92%;
+    --accent-foreground: 165 85% 32%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 88%;
     --input: 0 0% 88%;
-    --ring: 197 68% 44%;
+    --ring: 165 85% 32%;
 
-    --electric-blue: 197 68% 38%;
-    --electric-blue-glow: 197 100% 50%;
+    --electric-blue: 165 85% 32%;
+    --electric-blue-glow: 142 70% 45%;
     --dark: 0 0% 98%;
     --dark-card: 0 0% 100%;
     --dark-elevated: 0 0% 96%;
@@ -95,8 +95,8 @@
     --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 40px hsla(197, 68%, 44%, 0.2);
-    --shadow-glow-strong: 0 0 60px hsla(197, 68%, 44%, 0.3);
+    --shadow-glow: 0 0 40px hsla(165, 85%, 32%, 0.2);
+    --shadow-glow-strong: 0 0 60px hsla(165, 85%, 32%, 0.3);
   }
 }
 
@@ -178,7 +178,7 @@
 
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(197 68% 44%) 0%, hsl(197 100% 70%) 100%);
+    background-image: linear-gradient(135deg, hsl(165 80% 42%) 0%, hsl(142 70% 55%) 100%);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
     padding-bottom: 0.05em;
@@ -186,7 +186,19 @@
 
   .light .gradient-text,
   [data-theme="light"] .gradient-text {
-    background-image: linear-gradient(135deg, hsl(197 68% 35%) 0%, hsl(197 100% 45%) 100%);
+    background-image: linear-gradient(135deg, hsl(165 85% 32%) 0%, hsl(142 70% 40%) 100%);
+  }
+
+  /* Premium dot-grid background */
+  .dot-grid {
+    background-image: radial-gradient(hsl(var(--primary) / 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 30%, transparent 100%);
+  }
+
+  .light .dot-grid {
+    background-image: radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px);
   }
 
   .gradient-border {

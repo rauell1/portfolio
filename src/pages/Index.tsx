@@ -6,6 +6,9 @@ import { lazy, Suspense } from "react";
 const ParticleBackground = lazy(() =>
   import("@/components/ParticleBackground").then((m) => ({ default: m.ParticleBackground }))
 );
+const ImpactVisualizer = lazy(() =>
+  import("@/components/ImpactVisualizer").then((m) => ({ default: m.ImpactVisualizer }))
+);
 const About      = lazy(() => import("@/components/About").then((m) => ({ default: m.About })));
 const Projects   = lazy(() => import("@/components/Projects").then((m) => ({ default: m.Projects })));
 const Experience = lazy(() => import("@/components/Experience").then((m) => ({ default: m.Experience })));
@@ -31,6 +34,9 @@ const Index = () => {
       <Hero />
 
       <main className="relative z-10">
+        <Suspense fallback={<SectionSkeleton />}>
+          <ImpactVisualizer />
+        </Suspense>
         {/* Each section has its own Suspense boundary so sections render
             independently as their JS chunks arrive over the network.
             Without this, one slow chunk would hold up all sections below it. */}

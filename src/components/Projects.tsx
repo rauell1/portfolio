@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { ArrowRight, Zap, Leaf, Brain, Monitor } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
+import { SpotlightCard } from "./ui/SpotlightCard";
 
 interface Path {
   label: string;
@@ -83,37 +84,52 @@ export const Projects = () => {
               initial={{ opacity: 0, y: 32 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: i * 0.1 }}
-              className={`relative glass-card rounded-2xl p-7 overflow-hidden bg-gradient-to-br ${path.bg}`}
+              className="h-full"
             >
-              {/* Icon */}
-              <div className="mb-4">
-                <path.icon className={`w-7 h-7 ${path.accent}`} />
-              </div>
+              <SpotlightCard
+                className="relative glass-card rounded-2xl p-7 overflow-hidden h-full flex flex-col justify-between border border-white/10 dark:border-white/5"
+                glowColor={
+                  path.label.includes("Energy")
+                    ? "rgba(20, 184, 166, 0.12)" // Teal glow for Clean Tech
+                    : path.label.includes("Impact")
+                    ? "rgba(16, 185, 129, 0.12)" // Emerald/Green glow
+                    : path.label.includes("AI")
+                    ? "rgba(99, 102, 241, 0.12)" // Indigo glow for AI
+                    : "rgba(236, 72, 153, 0.12)" // Pink glow for Web
+                }
+              >
+                <div>
+                  {/* Icon */}
+                  <div className="mb-4">
+                    <path.icon className={`w-7 h-7 ${path.accent}`} />
+                  </div>
 
-              {/* Heading + rule */}
-              <div className="flex items-center gap-3 mb-3">
-                <h3 className={`text-sm font-bold uppercase tracking-widest ${path.accent}`}>
-                  {path.label}
-                </h3>
-                <div className="flex-1 h-px bg-border" />
-              </div>
+                  {/* Heading + rule */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <h3 className={`text-sm font-bold uppercase tracking-widest ${path.accent}`}>
+                      {path.label}
+                    </h3>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
 
-              {/* Description */}
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5 text-justify hyphens-auto">
-                {path.description}
-              </p>
+                  {/* Description */}
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 text-justify hyphens-auto">
+                    {path.description}
+                  </p>
+                </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {path.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
+                  {path.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 text-muted-foreground font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>

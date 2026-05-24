@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { MapPin, GraduationCap, Zap, Leaf } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { SpotlightCard } from "./ui/SpotlightCard";
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   MapPin,
@@ -83,11 +84,12 @@ export const About = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                    className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-colors"
                   >
-                    <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                    <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
-                    <p className="text-sm font-medium">{item.value}</p>
+                    <SpotlightCard className="glass-card rounded-xl p-4 group border border-white/10 dark:border-white/5 h-full">
+                      <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                      <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
+                      <p className="text-sm font-medium">{item.value}</p>
+                    </SpotlightCard>
                   </motion.div>
                 );
               })}
