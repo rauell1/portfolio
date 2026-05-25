@@ -16,6 +16,9 @@ export const SkillsRadarChart = ({ skills, isInView }: SkillsRadarChartProps) =>
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
   useEffect(() => {
+    // Synchronize animation state size immediately to prevent index boundary mismatches
+    setAnimatedLevels(skills.map(() => 0));
+
     if (isInView) {
       const timer = setTimeout(() => {
         setAnimatedLevels(skills.map((s) => s.level));
