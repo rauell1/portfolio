@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3112a3d` — feat: add premium looping background video to hero section |
+| **Last commit** | `4521682` — feat: move background video to intro loader and revert hero changes |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:00 UTC |
+| **Commit date** | 2026-05-25 22:05 UTC |
 | **Branch** | `main` |
-| **Total commits** | 337 |
+| **Total commits** | 340 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
