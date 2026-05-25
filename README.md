@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `66a52fe` — design(brand): clean and simplify placeholder SVG by removing the tagline text |
+| **Last commit** | `f8b9478` — feat(nav): auto-hide blog and case studies from header and footer navigation by default |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 21:40 UTC |
+| **Commit date** | 2026-05-25 21:46 UTC |
 | **Branch** | `main` |
-| **Total commits** | 328 |
+| **Total commits** | 331 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 101 |
 | **CSS files** | 1 |
