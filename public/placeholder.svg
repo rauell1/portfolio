@@ -30,6 +30,4 @@
   <!-- Stylized Initials "RO" -->
   <text x="600" y="347" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="80" fill="#ffffff" text-anchor="middle" letter-spacing="-3">RO</text>
   
-  <!-- Sleek tagline at the bottom -->
-  <text x="600" y="470" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-weight="600" font-size="16" fill="#78716c" text-anchor="middle" letter-spacing="4" uppercase="true">CLEAN ENERGY &amp; E-MOBILITY INFRASTRUCTURE</text>
 </svg>
