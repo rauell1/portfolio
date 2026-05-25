@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `4df2d66` — design(brand): replace generic placeholders and favicons with premium RO clean-tech brand identity |
+| **Last commit** | `fcb9a35` — design(brand): restore original RO SOLUTIONS CLEAN TECH logo in About headshot |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 21:21 UTC |
+| **Commit date** | 2026-05-25 21:31 UTC |
 | **Branch** | `main` |
-| **Total commits** | 322 |
+| **Total commits** | 325 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 101 |
 | **CSS files** | 1 |
