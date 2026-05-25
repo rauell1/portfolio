@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `9259300` — fix: synchronize skills radar chart animation levels array size immediately to prevent potential dynamic data rendering mismatches |
+| **Last commit** | `d029b90` — feat: add sweeping laser scanner line and active percent glow pulses to the intro loader screen |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:26 UTC |
+| **Commit date** | 2026-05-25 22:32 UTC |
 | **Branch** | `main` |
-| **Total commits** | 343 |
+| **Total commits** | 346 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
