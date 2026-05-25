@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `f8b9478` — feat(nav): auto-hide blog and case studies from header and footer navigation by default |
+| **Last commit** | `7bbb039` — feat: premium Awwwards-inspired editorial overhaul with bento layouts & physics slider |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 21:46 UTC |
+| **Commit date** | 2026-05-25 21:55 UTC |
 | **Branch** | `main` |
-| **Total commits** | 331 |
+| **Total commits** | 334 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 101 |
+| **TypeScript files** | 103 |
 | **CSS files** | 1 |
-| **React components** | 72 |
+| **React components** | 74 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status
