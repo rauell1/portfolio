@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `d029b90` — feat: add sweeping laser scanner line and active percent glow pulses to the intro loader screen |
+| **Last commit** | `3cc6fc0` — feat: streamline skills section to eliminate visual clutter and consolidate energy & AI competencies |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:32 UTC |
+| **Commit date** | 2026-05-25 22:40 UTC |
 | **Branch** | `main` |
-| **Total commits** | 346 |
+| **Total commits** | 349 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
