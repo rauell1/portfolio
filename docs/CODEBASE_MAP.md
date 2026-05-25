@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-05-25T18:46:40.144Z**
+> Last updated: **2026-05-25T18:56:29.850Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -97,6 +97,8 @@
 
 | File | Purpose |
 |---|---|
+| `src/components/ui/CustomCursor.tsx` | shadcn/ui primitive |
+| `src/components/ui/IntroLoader.tsx` | shadcn/ui primitive |
 | `src/components/ui/accordion.tsx` | Collapsible accordion |
 | `src/components/ui/alert-dialog.tsx` | Modal confirmation dialog |
 | `src/components/ui/alert.tsx` | Inline alert / banner |
