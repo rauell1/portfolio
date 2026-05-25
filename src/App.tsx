@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Component, ReactNode, lazy, Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { CustomCursor } from "./components/ui/CustomCursor";
 import Index from "./pages/Index";
 
 // Lazy-load non-home pages to reduce initial bundle size
@@ -59,6 +60,7 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <TooltipProvider>
+          <CustomCursor />
           <Suspense fallback={null}>
             <LazyToaster />
             <LazySonner />

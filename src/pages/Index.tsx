@@ -1,7 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
+import { IntroLoader } from "@/components/ui/IntroLoader";
 
 const ParticleBackground = lazy(() =>
   import("@/components/ParticleBackground").then((m) => ({ default: m.ParticleBackground }))
@@ -19,8 +20,12 @@ const Contact    = lazy(() => import("@/components/Contact").then((m) => ({ defa
 const SectionSkeleton = () => <div className="h-24 w-full" aria-hidden="true" />;
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      {loading && <IntroLoader onComplete={() => setLoading(false)} />}
+
       {/* ParticleBackground is purely decorative — its own Suspense so it
           never blocks any section from rendering */}
       <Suspense fallback={null}>
