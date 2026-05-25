@@ -89,11 +89,14 @@ export const Leadership = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
+          <span className="text-primary font-mono-custom text-xs uppercase tracking-widest mb-4 block">// {content.tagline}</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium tracking-tight mb-4">
+            {content.heading}{" "}
+            <span className="font-editorial italic font-semibold text-primary">
+              {content.heading_highlight}
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-justify hyphens-auto">
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto font-sans leading-relaxed">
             {content.description}
           </p>
         </motion.div>
@@ -128,14 +131,14 @@ export const Leadership = () => {
                   
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3 className="font-display font-bold text-lg group-hover:text-primary transition-colors">
+                      <h3 className="font-display font-medium text-base sm:text-lg group-hover:text-primary transition-colors">
                         {item.title}
                       </h3>
-                      <span className="text-xs text-muted-foreground bg-black/5 dark:bg-white/5 px-2 py-1 rounded-full whitespace-nowrap">
+                      <span className="font-mono-custom text-[10px] tracking-wider text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full whitespace-nowrap">
                         {item.year}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm">{item.subtitle}</p>
+                    <p className="text-muted-foreground text-xs">{item.subtitle}</p>
                   </div>
                 </div>
                 
