@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `fcb9a35` — design(brand): restore original RO SOLUTIONS CLEAN TECH logo in About headshot |
+| **Last commit** | `66a52fe` — design(brand): clean and simplify placeholder SVG by removing the tagline text |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 21:31 UTC |
+| **Commit date** | 2026-05-25 21:40 UTC |
 | **Branch** | `main` |
-| **Total commits** | 325 |
+| **Total commits** | 328 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 101 |
 | **CSS files** | 1 |
