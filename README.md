@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `4521682` — feat: move background video to intro loader and revert hero changes |
+| **Last commit** | `9259300` — fix: synchronize skills radar chart animation levels array size immediately to prevent potential dynamic data rendering mismatches |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:05 UTC |
+| **Commit date** | 2026-05-25 22:26 UTC |
 | **Branch** | `main` |
-| **Total commits** | 340 |
+| **Total commits** | 343 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
