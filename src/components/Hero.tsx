@@ -63,31 +63,11 @@ export const Hero = () => {
       };
 
   return (
+    // FIX: use <section> with role label for correct landmark semantics
     <section
       aria-label="Introduction"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Premium Looping Background Video */}
-      {!prefersReducedMotion && (
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover opacity-25 scale-105"
-            src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-green-and-blue-light-particles-43187-large.mp4"
-          />
-          {/* Subtle blurred backdrop and double-vignette dark overlays for supreme text contrast */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black" />
-          <div 
-            className="absolute inset-0" 
-            style={{ backgroundImage: "radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%)" }}
-          />
-        </div>
-      )}
-
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         {/* Availability badge */}

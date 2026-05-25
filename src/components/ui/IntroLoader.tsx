@@ -59,6 +59,21 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
           }}
           className="fixed inset-0 z-[9999] flex flex-col justify-between bg-black text-white p-8 sm:p-12"
         >
+          {/* Active Energy Loop Video to demonstrate active synchronization */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover opacity-[0.16] scale-105"
+              src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-green-and-blue-light-particles-43187-large.mp4"
+            />
+            {/* Overlay to ensure maximum legibility for synchronizer data */}
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black" />
+          </div>
+
           {/* Futuristic grid overlay background */}
           <div 
             className="absolute inset-0 opacity-[0.03] pointer-events-none"
