@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3cc6fc0` — feat: streamline skills section to eliminate visual clutter and consolidate energy & AI competencies |
+| **Last commit** | `18e9a8a` — style: unify headings and year badges across experience, leadership, and contact sections with the editorial typography system |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:40 UTC |
+| **Commit date** | 2026-05-25 22:47 UTC |
 | **Branch** | `main` |
-| **Total commits** | 349 |
+| **Total commits** | 352 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
