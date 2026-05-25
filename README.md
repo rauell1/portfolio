@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `7bbb039` — feat: premium Awwwards-inspired editorial overhaul with bento layouts & physics slider |
+| **Last commit** | `3112a3d` — feat: add premium looping background video to hero section |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 21:55 UTC |
+| **Commit date** | 2026-05-25 22:00 UTC |
 | **Branch** | `main` |
-| **Total commits** | 334 |
+| **Total commits** | 337 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
