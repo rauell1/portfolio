@@ -74,6 +74,14 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black" />
           </div>
 
+          {/* Glowing high-tech laser scan line */}
+          <motion.div
+            initial={{ y: "-10%" }}
+            animate={{ y: "110%" }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-40 blur-[0.5px] pointer-events-none z-10"
+          />
+
           {/* Futuristic grid overlay background */}
           <div 
             className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -124,20 +132,31 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
           {/* Progress Indicator Footer */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
             {/* Action Label */}
-            <div className="space-y-1.5 sm:max-w-xs">
-              <div className="h-1 w-24 bg-primary/20 rounded-full overflow-hidden">
+            <div className="space-y-2 sm:max-w-xs">
+              <div className="h-[5px] w-32 bg-primary/10 rounded-full overflow-hidden border border-primary/20 relative">
                 <motion.div 
-                  className="h-full bg-primary"
-                  style={{ width: `${progress}%` }}
+                  className="h-full bg-gradient-to-r from-primary/60 to-primary rounded-full"
+                  style={{ 
+                    width: `${progress}%`,
+                    boxShadow: "0 0 10px rgba(16, 185, 129, 0.6)"
+                  }}
                 />
               </div>
-              <p className="font-mono-custom text-[10px] text-muted-foreground/60 tracking-wider">
+              <p className="font-mono-custom text-[10px] text-muted-foreground/60 tracking-wider flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
                 SYNCHRONIZING ENERGY GRID...
               </p>
             </div>
 
-            {/* Percentage Count */}
-            <div className="font-display font-light text-6xl sm:text-8xl md:text-9xl leading-none tracking-tighter select-none tabular-nums text-primary/10 stroke-primary/30" style={{ WebkitTextStroke: "1px rgba(16, 185, 129, 0.2)" }}>
+            {/* Percentage Count (grows brighter and glows when hitting 100%) */}
+            <div 
+              className="font-display font-light text-6xl sm:text-8xl md:text-9xl leading-none tracking-tighter select-none tabular-nums transition-all duration-500" 
+              style={{ 
+                WebkitTextStroke: "1px rgba(16, 185, 129, 0.25)",
+                color: `rgba(16, 185, 129, ${0.03 + (progress / 100) * 0.12})`,
+                textShadow: progress === 100 ? "0 0 35px rgba(16, 185, 129, 0.35)" : "none"
+              }}
+            >
               {progress.toString().padStart(3, "0")}
             </div>
           </div>
