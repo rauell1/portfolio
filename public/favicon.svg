@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" width="100%" height="100%">
+  <defs>
+    <!-- Modern emerald to clean-tech blue gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" /> <!-- Emerald 500 -->
+      <stop offset="100%" stop-color="#0284c7" /> <!-- Sky 600 -->
+    </linearGradient>
+  </defs>
+  
+  <!-- Base circular gradient background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" />
+  
+  <!-- Stylized Initials "RO" with modern sans-serif typography -->
+  <text x="256" y="325" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="210" fill="#ffffff" text-anchor="middle" letter-spacing="-8">RO</text>
+  
+  <!-- Minimalist energy flow indicator -->
+  <path d="M220 120 L270 120 L240 190 L300 190 L200 320 L230 210 L180 210 Z" fill="#ffffff" opacity="0.2" />
+</svg>
