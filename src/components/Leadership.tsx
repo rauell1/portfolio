@@ -63,7 +63,7 @@ export const Leadership = () => {
   }, []);
 
   return (
-    <section id="leadership" className="py-16 sm:py-20 lg:py-24 px-6 relative" ref={ref}>
+    <section id="leadership" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -158,7 +158,7 @@ export const Leadership = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-3 gap-4 mt-12"
+          className="grid grid-cols-3 gap-3 mt-12"
         >
           {[
             { value: "50+", label: "Workshops Delivered" },
@@ -168,17 +168,17 @@ export const Leadership = () => {
             <motion.div
               key={stat.label}
               whileHover={{ scale: 1.05 }}
-              className="glass-card rounded-xl p-6 text-center"
+              className="glass-card rounded-xl p-4 sm:p-6 text-center"
             >
               <motion.span
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                className="text-3xl md:text-4xl font-display font-bold gradient-text"
+                className="text-xl sm:text-3xl md:text-4xl font-display font-bold gradient-text"
               >
                 {stat.value}
               </motion.span>
-              <p className="text-muted-foreground text-sm mt-2">{stat.label}</p>
+              <p className="text-muted-foreground text-xs sm:text-sm mt-1 sm:mt-2">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>
