@@ -37,10 +37,9 @@ const DEFAULT: LeadershipContent = {
   heading_highlight: "Engagement",
   description: "Committed to driving positive change through community engagement, policy advocacy, and knowledge sharing.",
   items: [
-    { title: "Africa Fellowship for Young Energy Leaders", subtitle: "Cohort 5 - General Track & Solar PV Engineering", year: "2025", icon: "Award" },
-    { title: "World Youth Parliament for Water", subtitle: "Global Member advocating for water sustainability", year: "2024-2027", icon: "Globe" },
-    { title: "Community Trainer", subtitle: "Solar irrigation & circular economy workshops", year: "Ongoing", icon: "Users" },
-    { title: "Student Leader - JKUAT", subtitle: "Engineering Outreach & Peer-Learning Coordinator", year: "2018-2023", icon: "GraduationCap" },
+    { title: "Africa Fellowship for Young Energy Leaders", subtitle: "High-level multidisciplinary programme advancing clean-energy innovation and the African energy-transition agenda; includes policy engagement and cross-country peer exchange.", year: "2025–2026", icon: "Award" },
+    { title: "Kenya Youth Parliament for Water", subtitle: "International advocacy on climate-resilient urban water systems and sustainable governance.", year: "2024–Present", icon: "Globe" },
+    { title: "Community Trainer", subtitle: "Workshops on solar irrigation, renewable energy, and circular-economy practices for rural farmers.", year: "Ongoing", icon: "Users" },
   ],
 };
 
