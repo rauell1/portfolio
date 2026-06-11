@@ -147,13 +147,10 @@ export const About = () => {
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                 className="glass-card rounded-2xl p-6 border-white/[0.08] relative overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col justify-between min-h-[140px]"
               >
-                <div className="flex justify-between items-start">
+                <div className="flex items-start">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
                     <Icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <span className="font-mono-custom text-[9px] text-muted-foreground/30 group-hover:text-primary/30 transition-colors">
-                    0{index + 1} // DATA
-                  </span>
                 </div>
                 
                 <div className="mt-6">

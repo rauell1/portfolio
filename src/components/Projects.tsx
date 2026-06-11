@@ -132,13 +132,10 @@ export const Projects = () => {
               >
                 <div>
                   {/* Icon & Specs */}
-                  <div className="flex justify-between items-start mb-6">
+                  <div className="flex items-start mb-6">
                     <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
                       <path.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <span className="font-mono-custom text-[8px] tracking-wider text-muted-foreground/30 uppercase">
-                      CAT_CODE_0{i + 1}
-                    </span>
                   </div>
 
                   {/* Heading & Accent Bar */}
