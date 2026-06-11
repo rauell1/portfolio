@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `69795d3` — fix: restore Blog/Case Studies nav, consistent section spacing, mobile stats fix |
+| **Last commit** | `d6e2df5` — remove decorative filler labels (CAT_CODE_0X and 01 // DATA) |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-12 00:35 UTC |
+| **Commit date** | 2026-06-12 00:46 UTC |
 | **Branch** | `main` |
-| **Total commits** | 355 |
+| **Total commits** | 358 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
