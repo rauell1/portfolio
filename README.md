@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `d6e2df5` — remove decorative filler labels (CAT_CODE_0X and 01 // DATA) |
+| **Last commit** | `83b7056` — update experience and leadership to match latest CV |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-12 00:46 UTC |
+| **Commit date** | 2026-06-12 00:51 UTC |
 | **Branch** | `main` |
-| **Total commits** | 358 |
+| **Total commits** | 361 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 103 |
 | **CSS files** | 1 |
