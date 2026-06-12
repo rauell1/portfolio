@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `92722c5` — chore(seo): add Google Search Console verification file |
-| **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-12 18:42 UTC |
+| **Last commit** | `fa8ea12` — fix: update canonical and OG URLs to royotieno.rauell.systems |
+| **Committed by** | Roy Otieno | Energy & Mobility Systems |
+| **Commit date** | 2026-06-12 18:49 UTC |
 | **Branch** | `main` |
-| **Total commits** | 367 |
+| **Total commits** | 370 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 105 |
 | **CSS files** | 1 |
