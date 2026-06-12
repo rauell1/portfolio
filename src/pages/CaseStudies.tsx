@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { PAGE_SEO } from "@/lib/seo";
 import { useCaseStudies, type CaseStudy } from "@/hooks/use-case-studies";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -223,6 +225,7 @@ export default function CaseStudiesPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO {...PAGE_SEO.caseStudies} />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { PAGE_SEO } from "@/lib/seo";
 import { useBlogPosts, type BlogPost } from "@/hooks/use-blog-posts";
 import { readingTime } from "@/lib/renderMarkdown";
 
@@ -210,6 +212,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO {...PAGE_SEO.blog} />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

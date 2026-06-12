@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO } from "@/components/SEO";
+import { PAGE_SEO } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -80,6 +82,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
+        <SEO {...PAGE_SEO.admin} />
         <div className="app-spinner" />
       </div>
     );
@@ -89,6 +92,7 @@ export default function AdminPage() {
   if (!session) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <SEO {...PAGE_SEO.admin} />
         {/* ambient glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />

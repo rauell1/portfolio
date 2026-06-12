@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { SITE_URL } from "@/lib/seo";
 import { useCaseStudies, type CaseStudy } from "@/hooks/use-case-studies";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -62,6 +64,17 @@ export default function CaseStudyPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {study ? (
+        <SEO
+          title={`${study.title} | Roy Okola Otieno`}
+          description={study.subtitle ?? `Detailed case study: ${study.title} — clean energy and e-mobility deployment across East Africa.`}
+          canonical={`${SITE_URL}/case-studies/${study.slug}`}
+          ogImage={study.image ?? undefined}
+          keywords={`${study.category}, clean energy case study Africa, EV deployment Kenya, ${study.location ?? ""}`}
+        />
+      ) : (
+        <SEO title="Case Study | Roy Okola Otieno" description="Detailed clean energy and e-mobility case study." />
+      )}
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">
