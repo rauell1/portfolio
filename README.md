@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `83b7056` — update experience and leadership to match latest CV |
+| **Last commit** | `0e9973a` — feat(seo): add per-page meta tags, structured data, sitemap, robots |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-12 00:51 UTC |
+| **Commit date** | 2026-06-12 18:35 UTC |
 | **Branch** | `main` |
-| **Total commits** | 361 |
+| **Total commits** | 364 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 103 |
+| **TypeScript files** | 105 |
 | **CSS files** | 1 |
-| **React components** | 74 |
+| **React components** | 75 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status
