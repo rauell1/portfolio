@@ -85,6 +85,10 @@
       "destination": "/robots.txt"
     },
     {
+      "source": "/googlee69e3a7319b06c7f.html",
+      "destination": "/googlee69e3a7319b06c7f.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
