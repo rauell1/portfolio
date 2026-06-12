@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-06-11T21:51:27.702Z**
+> Last updated: **2026-06-12T15:42:34.575Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -72,6 +72,7 @@
 | `src/components/ParticleBackground.tsx` | Canvas-based animated particle network used in Hero background |
 | `src/components/ProgressBar.tsx` | Scroll progress indicator bar fixed to top of viewport |
 | `src/components/Projects.tsx` | Home projects preview — card grid with 3 featured projects |
+| `src/components/SEO.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/components/Skills.tsx` | Skills section — categorised tech stack with proficiency indicators |
 | `src/components/SkillsRadarChart.tsx` | Recharts radar chart visualising skill levels by category |
 | `src/components/Testimonials.tsx` | Testimonials carousel — quotes, avatars, roles (Supabase-sourced) |
@@ -169,6 +170,7 @@
 |---|---|
 | `src/lib/config.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/renderMarkdown.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/lib/seo.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/smoothScroll.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/utils.ts` | cn() helper — merges Tailwind classes with clsx + tailwind-merge |
 
@@ -202,6 +204,7 @@
 | `public/favicon.ico` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/favicon.png` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/favicon.svg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `public/googlee69e3a7319b06c7f.html` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus1.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/SafariCharge_DailyGraph_2026-01-07.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
