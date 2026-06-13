@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `fa8ea12` — fix: update canonical and OG URLs to royotieno.rauell.systems |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-06-12 18:49 UTC |
+| **Last commit** | `6aa1339` — chore(seo): add Bing Webmaster Tools verification meta tag |
+| **Committed by** | Roy Okola |
+| **Commit date** | 2026-06-13 11:15 UTC |
 | **Branch** | `main` |
-| **Total commits** | 370 |
+| **Total commits** | 373 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 105 |
 | **CSS files** | 1 |
