@@ -95,9 +95,12 @@ export const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">Get in Touch</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Let's <span className="gradient-text">Connect</span>
+          <span className="text-primary font-mono-custom text-xs uppercase tracking-widest mb-4 block">// Get in Touch</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium tracking-tight mb-4">
+            Let's{" "}
+            <span className="font-editorial italic font-semibold text-primary">
+              Connect
+            </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Have a project in mind or want to discuss sustainable energy solutions? I'd love to hear from you.

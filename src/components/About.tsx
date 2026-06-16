@@ -55,93 +55,118 @@ export const About = () => {
 
   return (
     <section id="about" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left side - Text content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
-            </h2>
-            {content.paragraphs.map((p, i) => (
-              <p key={i} className="text-lg text-muted-foreground leading-relaxed mb-6 text-justify hyphens-auto">
-                {p}
-              </p>
-            ))}
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-glow opacity-30 blur-[120px] pointer-events-none" />
 
-            {/* Highlights grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {content.highlights.map((item, index) => {
-                const Icon = iconMap[item.icon] || Zap;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                    className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-colors"
-                  >
-                    <Icon className="w-5 h-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                    <p className="text-xs text-muted-foreground mb-1">{item.title}</p>
-                    <p className="text-sm font-medium">{item.value}</p>
-                  </motion.div>
-                );
-              })}
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Biography / Editorial Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="md:col-span-2 glass-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500"
+          >
+            {/* Soft background grid overlay */}
+            <div 
+              className="absolute inset-0 opacity-[0.01] pointer-events-none group-hover:opacity-[0.02] transition-opacity duration-500"
+              style={{
+                backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
+                backgroundSize: "20px 20px"
+              }}
+            />
+            
+            <div>
+              <span className="text-primary font-mono-custom text-xs uppercase tracking-widest mb-4 block">
+                // {content.tagline}
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium tracking-tight mb-8 leading-tight">
+                {content.heading}{" "}
+                <span className="font-editorial italic font-semibold text-primary">
+                  {content.heading_highlight}
+                </span>
+              </h2>
+              <div className="space-y-6 text-muted-foreground/90 text-sm sm:text-base leading-relaxed max-w-2xl text-justify hyphens-auto">
+                {content.paragraphs.map((p, i) => (
+                  <p key={i} className="font-sans">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+            
+            <div className="mt-8 flex items-center gap-3 text-xs font-mono-custom text-muted-foreground/50 border-t border-white/[0.05] pt-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              ACTIVE PROJECT: SAFARICHARGE DEPLOYMENT
             </div>
           </motion.div>
 
-          {/* Right side - Professional headshot */}
+          {/* Card 2: The Energy Sphere (Image & Orbiter Profile) */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="md:col-span-1 glass-card rounded-3xl p-8 flex flex-col items-center justify-center border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500 min-h-[300px]"
           >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Decorative rings */}
-              <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-glow" />
-              <div className="absolute inset-4 rounded-full border border-primary/15" />
-              <div className="absolute inset-8 rounded-full border border-primary/10" />
+            <div className="absolute inset-0 bg-gradient-glow opacity-30 pointer-events-none" />
+            
+            <div className="relative w-44 h-44 sm:w-48 sm:h-48 flex items-center justify-center">
+              {/* Dynamic spinning orbit paths */}
+              <div className="absolute inset-0 rounded-full border border-dashed border-primary/20 animate-spin" style={{ animationDuration: '40s' }} />
+              <div className="absolute inset-2 rounded-full border border-dotted border-primary/10 animate-spin" style={{ animationDuration: '60s', animationDirection: 'reverse' }} />
               
-              {/* Headshot */}
-              <div className="absolute inset-12 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl">
+              {/* Outer pulsing ring */}
+              <div className="absolute inset-4 rounded-full border border-primary/30 animate-pulse-glow" />
+              
+              {/* Profile Image container (keeps clean legacy circular frame) */}
+              <div className="absolute inset-8 rounded-full overflow-hidden border-2 border-primary/40 shadow-2xl bg-black">
                 <img 
                   src="/images/og-image.png"
-                  alt="Roy Otieno - Clean Energy Engineer"
-                  className="w-full h-full object-cover"
+                  alt="Roy Okola Otieno - Clean Energy & E-Mobility"
+                  className="w-full h-full object-cover scale-105 group-hover:scale-115 transition-transform duration-700"
                   loading="eager"
                   decoding="async"
                 />
               </div>
-
-              {/* Orbiting elements — hidden on mobile to avoid overflow and reduce GPU load */}
-              <motion.div
-                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: "center 200px" }}
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: "center 200px" }}
-              >
-                <div className="w-10 h-10 rounded-full bg-primary/15 border border-primary/20 flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-primary" />
-                </div>
-              </motion.div>
+            </div>
+            
+            <div className="mt-6 text-center">
+              <h3 className="font-display font-medium text-lg">Roy Okola Otieno</h3>
+              <p className="font-mono-custom text-[10px] text-primary tracking-widest uppercase mt-1">FOUNDER &amp; LEAD ENGINEER</p>
             </div>
           </motion.div>
+
+          {/* Cards 3-6: Highlight Grid Items */}
+          {content.highlights.map((item, index) => {
+            const Icon = iconMap[item.icon] || Zap;
+            return (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                className="glass-card rounded-2xl p-6 border-white/[0.08] relative overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col justify-between min-h-[140px]"
+              >
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
+                    <Icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <span className="font-mono-custom text-[9px] text-muted-foreground/30 group-hover:text-primary/30 transition-colors">
+                    0{index + 1} // DATA
+                  </span>
+                </div>
+                
+                <div className="mt-6">
+                  <p className="font-mono-custom text-[10px] text-muted-foreground/60 uppercase tracking-wider mb-1">
+                    {item.title}
+                  </p>
+                  <p className="font-display font-medium text-base sm:text-lg tracking-tight group-hover:text-primary transition-colors">
+                    {item.value}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -132,9 +132,12 @@ export const Experience = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">{content.tagline}</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            {content.heading} <span className="gradient-text">{content.heading_highlight}</span>
+          <span className="text-primary font-mono-custom text-xs uppercase tracking-widest mb-4 block">// {content.tagline}</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium tracking-tight mb-4">
+            {content.heading}{" "}
+            <span className="font-editorial italic font-semibold text-primary">
+              {content.heading_highlight}
+            </span>
           </h2>
         </motion.div>
 
@@ -174,37 +177,37 @@ export const Experience = () => {
                           href={exp.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xl font-display font-bold hover:text-primary transition-colors inline-flex items-center gap-2 group"
+                          className="text-lg font-display font-bold hover:text-primary transition-colors inline-flex items-center gap-2 group"
                         >
                           {exp.company}
                           <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                       ) : (
-                        <h3 className="text-xl font-display font-bold">{exp.company}</h3>
+                        <h3 className="text-lg font-display font-bold">{exp.company}</h3>
                       )}
                       {exp.isFounder && (
-                        <span className="px-2 py-0.5 text-xs font-medium bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1 shadow-[0_0_12px_-2px_rgba(245,158,11,0.5)] animate-pulse">
+                        <span className="px-2 py-0.5 text-[10px] font-mono-custom bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1 shadow-[0_0_12px_-2px_rgba(245,158,11,0.5)] animate-pulse">
                           <Award className="w-3 h-3" />
                           Founder
                         </span>
                       )}
                       {exp.current && !exp.isFounder && (
-                        <span className="px-2 py-0.5 text-xs font-medium bg-primary/20 text-primary rounded-full">
+                        <span className="px-2 py-0.5 text-[10px] font-mono-custom bg-primary/20 text-primary rounded-full">
                           Current
                         </span>
                       )}
                     </div>
-                    <p className="text-primary font-medium">{exp.role}</p>
+                    <p className="text-primary font-medium text-sm">{exp.role}</p>
                   </div>
                   {/* FIX: text-left on mobile so period/location doesn't overflow
                       when the card is narrow. text-right restored on sm+. */}
                   <div className="text-left sm:text-right shrink-0">
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground mb-1">
-                      <Calendar className="w-4 h-4 shrink-0" />
+                    <div className="flex items-center gap-1 text-[11px] font-mono-custom text-muted-foreground mb-1">
+                      <Calendar className="w-3.5 h-3.5 shrink-0" />
                       <span>{exp.period}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <MapPin className="w-4 h-4 shrink-0" />
+                    <div className="flex items-center gap-1 text-[11px] font-mono-custom text-muted-foreground">
+                      <MapPin className="w-3.5 h-3.5 shrink-0" />
                       <span>{exp.location}</span>
                     </div>
                   </div>

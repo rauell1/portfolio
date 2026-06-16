@@ -132,13 +132,13 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
     touch-action: pan-y;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
     font-weight: 700;
     overflow-wrap: break-word;
     word-break: break-word;
@@ -418,3 +418,13 @@
   @apply bg-muted/60 rounded-xl p-4 overflow-x-auto my-6;
 }
 .prose-custom pre code { @apply bg-transparent p-0; }
+
+@layer utilities {
+  .font-editorial {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  .font-mono-custom {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+

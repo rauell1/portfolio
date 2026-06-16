@@ -1,7 +1,11 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
+<<<<<<< HEAD
 > Last updated: **2026-05-22T22:31:59.386Z**
+=======
+> Last updated: **2026-05-25T19:47:51.614Z**
+>>>>>>> fd4d58f98e9de9dd3c5c3125f8f137b9f3c5e21a
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -99,6 +103,8 @@
 
 | File | Purpose |
 |---|---|
+| `src/components/ui/CustomCursor.tsx` | shadcn/ui primitive |
+| `src/components/ui/IntroLoader.tsx` | shadcn/ui primitive |
 | `src/components/ui/accordion.tsx` | Collapsible accordion |
 | `src/components/ui/alert-dialog.tsx` | Modal confirmation dialog |
 | `src/components/ui/alert.tsx` | Inline alert / banner |
@@ -200,6 +206,8 @@
 | `public/Roam_Point_Partnership_Opportunity.pdf` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/Roy_Otieno_CV.pdf` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/favicon.ico` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `public/favicon.png` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `public/favicon.svg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus1.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/SafariCharge_DailyGraph_2026-01-07.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
