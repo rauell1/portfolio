@@ -6,6 +6,7 @@ import {
   Calendar, ChevronRight, Cpu, Leaf, BarChart3, Settings
 } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
+import { SEO } from "@/components/SEO";
 
 const experiences = [
   {
@@ -178,6 +179,7 @@ const leadership = [
 const ResumePage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO page="resume" />
       <ParticleBackground />
       
       {/* Header */}

@@ -435,7 +435,7 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO {...PAGE_SEO.projects} />
+      <SEO page="projects" />
       <Navbar />
 
       <main className="pt-24 pb-20 px-6">

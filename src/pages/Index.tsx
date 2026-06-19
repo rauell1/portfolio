@@ -55,7 +55,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <SEO {...PAGE_SEO.home} />
+      <SEO page="home" />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(PERSON_SCHEMA)}</script>
       </Helmet>

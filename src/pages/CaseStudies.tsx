@@ -225,7 +225,7 @@ export default function CaseStudiesPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO {...PAGE_SEO.caseStudies} />
+      <SEO page="case-studies" />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

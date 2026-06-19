@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -29,6 +30,9 @@ export default function AdminPageSections() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<PageSection | null>(null);
   const [jsonText, setJsonText] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
+  const [seoKeywords, setSeoKeywords] = useState("");
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
@@ -55,7 +59,14 @@ export default function AdminPageSections() {
 
   function openEdit(s: PageSection) {
     setEditing(s);
-    setJsonText(JSON.stringify(s.content, null, 2));
+    if (s.section === "seo") {
+      const content = (s.content || {}) as Record<string, unknown>;
+      setSeoTitle((content.title as string) || "");
+      setSeoDescription((content.description as string) || "");
+      setSeoKeywords((content.keywords as string) || "");
+    } else {
+      setJsonText(JSON.stringify(s.content, null, 2));
+    }
   }
 
   function formatJson() {
@@ -72,12 +83,20 @@ export default function AdminPageSections() {
     setSaving(true);
     try {
       let parsed: Json;
-      try {
-        parsed = JSON.parse(jsonText) as Json;
-      } catch {
-        toast({ title: "Invalid JSON", description: "Fix the JSON before saving.", variant: "destructive" });
-        setSaving(false);
-        return;
+      if (editing.section === "seo") {
+        parsed = {
+          title: seoTitle.trim(),
+          description: seoDescription.trim(),
+          keywords: seoKeywords.trim(),
+        } as unknown as Json;
+      } else {
+        try {
+          parsed = JSON.parse(jsonText) as Json;
+        } catch {
+          toast({ title: "Invalid JSON", description: "Fix the JSON before saving.", variant: "destructive" });
+          setSaving(false);
+          return;
+        }
       }
       const { error } = await supabase
         .from("page_sections")
@@ -155,18 +174,51 @@ export default function AdminPageSections() {
             <SheetTitle className="capitalize">Edit - {editing?.section}</SheetTitle>
           </SheetHeader>
           <div className="space-y-4 py-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-medium">Content (JSON)</label>
-              <Button size="sm" variant="ghost" className="text-xs h-6 px-2" onClick={formatJson}>
-                Format JSON
-              </Button>
-            </div>
-            <Textarea
-              rows={20}
-              value={jsonText}
-              onChange={(e) => setJsonText(e.target.value)}
-              className="font-mono text-xs"
-            />
+            {editing?.section === "seo" ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-medium">Page Title</label>
+                  <Input
+                    value={seoTitle}
+                    onChange={(e) => setSeoTitle(e.target.value)}
+                    placeholder="Enter page title"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-medium">Page Description</label>
+                  <Textarea
+                    rows={5}
+                    value={seoDescription}
+                    onChange={(e) => setSeoDescription(e.target.value)}
+                    placeholder="Enter page description"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-medium">Keywords (comma-separated)</label>
+                  <Textarea
+                    rows={4}
+                    value={seoKeywords}
+                    onChange={(e) => setSeoKeywords(e.target.value)}
+                    placeholder="Enter page keywords"
+                  />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium">Content (JSON)</label>
+                  <Button size="sm" variant="ghost" className="text-xs h-6 px-2" onClick={formatJson}>
+                    Format JSON
+                  </Button>
+                </div>
+                <Textarea
+                  rows={20}
+                  value={jsonText}
+                  onChange={(e) => setJsonText(e.target.value)}
+                  className="font-mono text-xs"
+                />
+              </>
+            )}
             {editing && (
               <p className="text-xs text-muted-foreground flex items-center gap-1">
                 <Clock className="h-3 w-3" />
