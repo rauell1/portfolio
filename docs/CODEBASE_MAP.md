@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-06-13T08:15:51.879Z**
+> Last updated: **2026-06-19T21:45:56.211Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -259,6 +259,7 @@
 | `supabase/migrations/20260317000000_page_sections_and_project_status.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414000000_schema_and_rls_hardening.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414010000_blog_share_access_controls.sql` | Supabase SQL migration |
+| `supabase/migrations/20260620000000_seed_seo_page_sections.sql` | Supabase SQL migration |
 
 ---
 
