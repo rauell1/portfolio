@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `cbbefd1` — feat: hero social links + CV download, testimonials, WhatsApp, legibility fixes |
+| **Last commit** | `3ed9c54` — update: leadership section content + remove stats row |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:21 UTC |
+| **Commit date** | 2026-06-24 14:27 UTC |
 | **Branch** | `main` |
-| **Total commits** | 385 |
+| **Total commits** | 388 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
