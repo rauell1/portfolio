@@ -86,7 +86,7 @@ export const About = () => {
                   {content.heading_highlight}
                 </span>
               </h2>
-              <div className="space-y-6 text-muted-foreground/90 text-sm sm:text-base leading-relaxed max-w-2xl text-justify hyphens-auto">
+              <div className="space-y-6 text-muted-foreground/90 text-sm sm:text-base leading-relaxed max-w-2xl text-justify">
                 {content.paragraphs.map((p, i) => (
                   <p key={i} className="font-sans">
                     {p}

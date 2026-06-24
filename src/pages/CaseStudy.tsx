@@ -67,7 +67,7 @@ export default function CaseStudyPage() {
       {study ? (
         <SEO
           title={`${study.title} | Roy Okola Otieno`}
-          description={study.subtitle ?? `Detailed case study: ${study.title} — clean energy and e-mobility deployment across East Africa.`}
+          description={study.subtitle ?? `Detailed case study: ${study.title}, clean energy and e-mobility deployment across East Africa.`}
           canonical={`${SITE_URL}/case-studies/${study.slug}`}
           ogImage={study.image ?? undefined}
           keywords={`${study.category}, clean energy case study Africa, EV deployment Kenya, ${study.location ?? ""}`}
@@ -130,7 +130,7 @@ export default function CaseStudyPage() {
                         {study.title}
                       </h1>
                       {study.subtitle && (
-                        <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl text-justify hyphens-auto">
+                        <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl text-justify">
                           {study.subtitle}
                         </p>
                       )}
@@ -202,7 +202,7 @@ export default function CaseStudyPage() {
                         <h2 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
                           {section.heading}
                         </h2>
-                        <p className="text-muted-foreground leading-relaxed text-justify hyphens-auto">
+                        <p className="text-muted-foreground leading-relaxed text-justify">
                           {section.body}
                         </p>
                         {section.image && (

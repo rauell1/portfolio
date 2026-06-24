@@ -61,7 +61,7 @@ const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => 
           {study.title}
         </h3>
         {study.subtitle && (
-          <p className="text-white/70 text-sm leading-relaxed mb-6 leading-relaxed">
+          <p className="text-white/70 text-sm leading-relaxed mb-6 text-justify">
             {study.subtitle}
           </p>
         )}
@@ -133,7 +133,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           {study.title}
         </h3>
         {study.subtitle && (
-          <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2 text-justify">
             {study.subtitle}
           </p>
         )}
@@ -252,7 +252,7 @@ export default function CaseStudiesPage() {
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Case <span className="gradient-text">Studies</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify">
               Documented outcomes from real-world deployments in clean energy, e-mobility, and sustainable agriculture across East Africa.
             </p>
           </motion.div>

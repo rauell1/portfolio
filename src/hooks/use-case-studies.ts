@@ -130,11 +130,11 @@ const STATIC_CASE_STUDIES: CaseStudy[] = [
     sections: [
       {
         heading: "Challenge",
-        body: "Smallholder farmers in the Rift Valley lose an estimated 30–50% of horticultural produce to post-harvest spoilage due to the lack of affordable, reliable cold storage. Grid electricity is either unavailable or too expensive for off-peak refrigeration operation.",
+        body: "Smallholder farmers in the Rift Valley lose an estimated 30 to 50% of horticultural produce to post-harvest spoilage due to the lack of affordable, reliable cold storage. Grid electricity is either unavailable or too expensive for off-peak refrigeration operation.",
       },
       {
         heading: "Solution",
-        body: "Designed a solar-powered cold room system combining a 3 kWp photovoltaic array, lithium battery bank, and efficient DC-powered refrigeration compressor. The system operates autonomously and maintains 4–8°C storage temperature for up to 72 hours without solar generation.",
+        body: "Designed a solar-powered cold room system combining a 3 kWp photovoltaic array, lithium battery bank, and efficient DC-powered refrigeration compressor. The system operates autonomously and maintains 4 to 8 degrees Celsius storage temperature for up to 72 hours without solar generation.",
       },
       {
         heading: "Impact",

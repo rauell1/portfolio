@@ -108,7 +108,7 @@ export const Contact = () => {
               Connect
             </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-justify">
             Have a project in mind or want to discuss sustainable energy solutions? I'd love to hear from you.
           </p>
         </motion.div>

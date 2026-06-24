@@ -17,7 +17,7 @@ const PATHS: Path[] = [
   {
     label: "Clean Energy & E-Mobility",
     description:
-      "Designing and deploying solar microgrids, EV charging infrastructure, and off-grid energy systems across East Africa — from feasibility to live pilot sites.",
+      "Designing and deploying solar microgrids, EV charging infrastructure, and off-grid energy systems across East Africa, from feasibility to live pilot sites.",
     accent: "from-cyan-500 to-blue-500",
     iconBg: "bg-cyan-500/15 border-cyan-500/25 text-cyan-400",
     icon: Zap,
@@ -35,7 +35,7 @@ const PATHS: Path[] = [
   {
     label: "AI & Productivity Tools",
     description:
-      "Shipping AI-powered tools that make complex workflows — CV writing, job targeting, document generation — faster and more intelligent for everyday users.",
+      "Shipping AI-powered tools that make complex workflows faster and more intelligent: CV writing, job targeting, and document generation for everyday users.",
     accent: "from-indigo-500 to-purple-500",
     iconBg: "bg-indigo-500/15 border-indigo-500/25 text-indigo-400",
     icon: Brain,
@@ -44,7 +44,7 @@ const PATHS: Path[] = [
   {
     label: "Digital Products & Web",
     description:
-      "Full-stack web platforms — from artist booking sites to SSR portfolio hubs — built with modern frameworks and deployed to production.",
+      "Full-stack web platforms built with modern frameworks and deployed to production, from artist booking sites to SSR portfolio hubs.",
     accent: "from-pink-500 to-rose-500",
     iconBg: "bg-pink-500/15 border-pink-500/25 text-pink-400",
     icon: Monitor,
@@ -114,7 +114,7 @@ export const Projects = () => {
               Projects &amp; Focus
             </span>
           </h2>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-justify">
             Innovative solutions powering Africa's sustainable future through clean energy and e-mobility.
           </p>
         </motion.div>
@@ -179,7 +179,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                <p className="text-muted-foreground text-sm leading-relaxed flex-1 text-justify">
                   {path.description}
                 </p>
 

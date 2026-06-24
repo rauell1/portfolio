@@ -26,7 +26,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Programme Lead",
     organisation: "Africa Fellowship for Young Energy Leaders",
     quote:
-      "One of our standout fellows — Roy brought both technical rigour and a clear vision for Africa's clean energy transition. His policy engagement and peer contributions elevated the entire cohort.",
+      "One of our standout fellows. Roy brought both technical rigour and a clear vision for Africa's clean energy transition. His policy engagement and peer contributions elevated the entire cohort.",
     initials: "AW",
     accent: "from-emerald-500 to-teal-500",
   },
@@ -35,7 +35,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Head of Projects",
     organisation: "HomeBiogas Kenya",
     quote:
-      "Roy designed and installed biogas systems for multiple households across Western Kenya — always on time, always on spec. His ability to train local installers added lasting value beyond the project itself.",
+      "Roy designed and installed biogas systems for multiple households across Western Kenya, always on time and on spec. His ability to train local installers added lasting value beyond the project itself.",
     initials: "PO",
     accent: "from-orange-500 to-amber-500",
   },
@@ -61,7 +61,7 @@ export const Testimonials = () => {
               Colleagues Say
             </span>
           </h2>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-justify">
             Perspectives from professionals I've worked alongside across clean energy, e-mobility, and community programmes.
           </p>
         </motion.div>
@@ -80,7 +80,7 @@ export const Testimonials = () => {
                 <Quote className="w-4 h-4 text-white" />
               </div>
 
-              <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1 text-justify">
                 "{t.quote}"
               </p>
 

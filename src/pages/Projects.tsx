@@ -125,7 +125,7 @@ const FlagshipCard = ({ project, onClick }: { project: Project; onClick: (p: Pro
         <h3 className="text-xl font-display font-bold mt-1 mb-2 group-hover:text-primary transition-colors leading-snug">
           {project.title}
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2 text-justify">
           {project.description}
         </p>
 
@@ -214,7 +214,7 @@ const ProjectCard = ({
           <h3 className="text-sm font-display font-bold mb-1.5 group-hover:text-primary transition-colors leading-snug">
             {project.title}
           </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">
+          <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3 text-justify">
             {project.description}
           </p>
 
@@ -332,7 +332,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
             <div>
               <h4 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">About This Project</h4>
-              <p className="text-muted-foreground text-sm leading-relaxed">{project.longDescription}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed text-justify">{project.longDescription}</p>
             </div>
 
             {project.specs && project.specs.length > 0 && (
@@ -460,7 +460,7 @@ const Projects = () => {
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Project <span className="gradient-text">Portfolio</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify">
               A curated collection of software, infrastructure, and systems work spanning clean energy, environmental impact, AI tools, and digital products.
             </p>
           </motion.div>

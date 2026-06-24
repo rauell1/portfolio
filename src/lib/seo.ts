@@ -23,7 +23,7 @@ export const PAGE_SEO = {
     type: "profile" as const,
   },
   projects: {
-    title: "Projects | Roy Okola Otieno — Solar PV & EV Charging Portfolio",
+    title: "Projects | Roy Okola Otieno: Solar PV & EV Charging Portfolio",
     description:
       "Explore Roy Otieno's portfolio of clean energy and e-mobility projects: solar microgrids, EV charging hubs, AI-powered engineering tools, and sustainable digital platforms across East Africa.",
     canonical: `${SITE_URL}/projects`,
@@ -32,7 +32,7 @@ export const PAGE_SEO = {
     type: "website" as const,
   },
   blog: {
-    title: "Blog | Roy Okola Otieno — Clean Energy & E-Mobility Insights",
+    title: "Blog | Roy Okola Otieno: Clean Energy & E-Mobility Insights",
     description:
       "Articles on clean energy, EV charging infrastructure, solar PV system design, and sustainable development across East Africa by Roy Okola Otieno.",
     canonical: `${SITE_URL}/blog`,
@@ -41,7 +41,7 @@ export const PAGE_SEO = {
     type: "website" as const,
   },
   caseStudies: {
-    title: "Case Studies | Roy Okola Otieno — Clean Energy Impact Work",
+    title: "Case Studies | Roy Okola Otieno: Clean Energy Impact Work",
     description:
       "Documented outcomes and verified impact data from real-world deployments in clean energy, e-mobility, and sustainable agriculture across East Africa.",
     canonical: `${SITE_URL}/case-studies`,
@@ -50,9 +50,9 @@ export const PAGE_SEO = {
     type: "website" as const,
   },
   resume: {
-    title: "Resume | Roy Okola Otieno — Technical Operations & Clean Energy Engineer",
+    title: "Resume | Roy Okola Otieno: Technical Operations & Clean Energy Engineer",
     description:
-      "Professional resume of Roy Okola Otieno — Technical Operations and Sales Engineer at Roam Electric Ltd, EV infrastructure specialist, and MBA candidate at University of East London.",
+      "Professional resume of Roy Okola Otieno. Technical Operations and Sales Engineer at Roam Electric Ltd, EV infrastructure specialist, and MBA candidate at University of East London.",
     canonical: `${SITE_URL}/resume`,
     keywords:
       "Roy Okola Otieno CV, technical operations engineer Kenya, clean energy engineer resume, EV infrastructure consultant Africa",

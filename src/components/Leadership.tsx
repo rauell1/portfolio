@@ -97,7 +97,7 @@ export const Leadership = () => {
               {content.heading_highlight}
             </span>
           </h2>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto font-sans leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto font-sans leading-relaxed text-justify">
             {content.description}
           </p>
         </motion.div>
@@ -142,7 +142,7 @@ export const Leadership = () => {
                   )}
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed text-justify">
                     {item.subtitle}
                   </p>
                 </div>

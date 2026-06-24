@@ -20,7 +20,7 @@ const DEFAULT: HeroContent = {
   name: "Roy Otieno",
   title: "Clean Energy Engineer & E-Mobility Specialist",
   description:
-    "Technical Operations Engineer at Roam Electric — 25+ active energy sites across Nairobi & Kiambu, KES 3M+ in solar systems deployed, and EV charging infrastructure spanning East Africa.",
+    "Technical Operations Engineer at Roam Electric. 25+ active energy sites across Nairobi and Kiambu, KES 3M+ in solar systems deployed, and EV charging infrastructure spanning East Africa.",
   cta_primary: "View My Work",
   cta_secondary: "Let's Connect",
   stats: [
@@ -129,7 +129,7 @@ export const Hero = () => {
         <motion.p
           {...fadeUp}
           transition={{ ...fadeUp.transition, delay: prefersReducedMotion ? 0 : 0.45 }}
-          className="text-base md:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-6"
+          className="text-base md:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-6 text-justify"
         >
           {content.description}
         </motion.p>
