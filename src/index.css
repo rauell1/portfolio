@@ -163,18 +163,7 @@
     @apply bg-white/70 border-black/10;
   }
 
-  /* PERF: backdrop-blur-md (12px) instead of backdrop-blur-xl (24px).
-     backdrop-filter forces a GPU compositing layer per element.
-     Smaller blur radius = half the compositing cost, imperceptible visually at card sizes.
-     Reserve backdrop-blur-xl for full-screen overlays/modals only. */
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;
-  }
 
-  .light .glass-card,
-  [data-theme="light"] .glass-card {
-    @apply bg-white border-black/10 shadow-md;
-  }
 
   .gradient-text {
     @apply bg-clip-text text-transparent;

@@ -98,7 +98,7 @@ export default function AdminPage() {
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
         </div>
 
-        <Card className="relative w-full max-w-sm glass-card border-border/60 shadow-2xl">
+        <Card className="relative w-full max-w-sm bg-card border-border/60 shadow-2xl">
           <CardHeader className="text-center pb-2">
             {/* lock icon */}
             <div className="mx-auto mb-4 w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">

@@ -151,7 +151,7 @@ export default function AdminSync() {
   return (
     <div className="space-y-6">
       {/* Database status */}
-      <Card className="glass-card">
+      <Card className="bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm flex items-center gap-2">
             <Database className="h-4 w-4 text-primary" />
@@ -204,7 +204,7 @@ export default function AdminSync() {
       </Card>
 
       {/* Static vs DB comparison */}
-      <Card className="glass-card">
+      <Card className="bg-card">
         <CardHeader>
           <CardTitle className="text-sm">Static vs. Database - Projects</CardTitle>
         </CardHeader>

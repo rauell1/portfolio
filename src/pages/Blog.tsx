@@ -105,7 +105,7 @@ const PostCard = ({ post, index }: { post: BlogPost; index: number }) => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.07 }}
-      className="group flex flex-col h-full rounded-2xl overflow-hidden glass-card border border-border/60 hover:border-primary/30 cursor-pointer transition-all duration-300"
+      className="group flex flex-col h-full rounded-2xl overflow-hidden bg-card border border-border/60 hover:border-primary/30 cursor-pointer transition-all duration-300"
       onClick={() => navigate(`/blog/${post.slug}`)}
     >
       {/* Cover thumbnail */}
@@ -174,7 +174,7 @@ const PostCard = ({ post, index }: { post: BlogPost; index: number }) => {
 
 /* ── Skeleton ─────────────────────────────────────────────────────────── */
 const CardSkeleton = () => (
-  <div className="rounded-2xl overflow-hidden glass-card border border-border/60 animate-pulse">
+  <div className="rounded-2xl overflow-hidden bg-card border border-border/60 animate-pulse">
     <div className="h-44 bg-muted/50" />
     <div className="p-5 space-y-3">
       <div className="h-3 w-20 bg-muted/60 rounded" />
@@ -285,7 +285,7 @@ export default function BlogPage() {
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="md:col-span-2 lg:col-span-3">
-                <div className="rounded-3xl glass-card border border-border/60 animate-pulse h-64" />
+                <div className="rounded-3xl bg-card border border-border/60 animate-pulse h-64" />
               </div>
               {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}
             </div>

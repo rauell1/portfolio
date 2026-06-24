@@ -167,7 +167,7 @@ export default function AdminOverview() {
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {cards.map((card) => (
-          <Card key={card.label} className={`glass-card bg-gradient-to-br ${card.gradient}`}>
+          <Card key={card.label} className={`bg-card bg-gradient-to-br ${card.gradient}`}>
             <CardContent className="p-4 flex flex-col gap-2">
               <div className={`${card.color}`}>{card.icon}</div>
               <p className="text-2xl font-bold">{card.value}</p>
@@ -177,7 +177,7 @@ export default function AdminOverview() {
         ))}
       </div>
 
-      <Card className="glass-card">
+      <Card className="bg-card">
         <CardHeader>
           <CardTitle className="text-sm flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />

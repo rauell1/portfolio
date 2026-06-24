@@ -41,9 +41,9 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center font-display font-bold text-sm text-white">
-                RO
+            <Link to="/" className="inline-flex items-center gap-2.5 mb-4 group">
+              <div className="w-9 h-9 rounded-xl border border-primary/40 bg-transparent flex items-center justify-center font-display font-bold text-sm transition-all duration-300 group-hover:border-primary/80 group-hover:shadow-glow">
+                <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">RO</span>
               </div>
               <span className="font-display font-semibold text-sm">Roy Otieno</span>
             </Link>

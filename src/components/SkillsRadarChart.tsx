@@ -64,7 +64,7 @@ export const SkillsRadarChart = ({ skills, isInView }: SkillsRadarChartProps) =>
       initial={{ opacity: 0, scale: 0.8 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.8, delay: 0.3 }}
-      className="glass-card rounded-2xl p-6"
+      className="bg-card rounded-2xl p-6"
     >
       <h3 className="text-lg font-display font-bold mb-4 text-center text-primary">
         Skill Overview

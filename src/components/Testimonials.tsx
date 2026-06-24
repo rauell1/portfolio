@@ -127,7 +127,7 @@ export const Testimonials = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative"
         >
-          <div className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+          <div className="bg-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
             {/* Quote icon */}
             <div className="absolute top-6 right-6 opacity-10" aria-hidden="true">
               <Quote className="w-24 h-24 text-primary" />
@@ -256,7 +256,7 @@ export const Testimonials = () => {
                   }
                 }}
                 aria-label={`Read full testimonial from ${testimonial.name}`}
-                className="glass-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                className="bg-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
                 <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3 text-justify hyphens-auto">
                   "{testimonial.content}"

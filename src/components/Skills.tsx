@@ -158,7 +158,7 @@ export const Skills = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-2 glass-card rounded-3xl p-8 sm:p-10 border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500 flex flex-col justify-between"
+            className="lg:col-span-2 bg-card rounded-3xl p-8 sm:p-10 border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500 flex flex-col justify-between"
           >
             <div>
               <h3 className="text-xl font-display font-medium mb-8 flex items-center gap-3">
@@ -198,7 +198,7 @@ export const Skills = () => {
             return (
               <motion.div
                 key={card.title}
-                className="glass-card rounded-2xl p-6 border-white/[0.08] overflow-hidden group cursor-pointer relative hover:border-primary/20 transition-all duration-300 min-h-[220px] flex flex-col justify-between"
+                className="bg-card rounded-2xl p-6 border-white/[0.08] overflow-hidden group cursor-pointer relative hover:border-primary/20 transition-all duration-300 min-h-[220px] flex flex-col justify-between"
                 whileHover={{ y: -4 }}
               >
                 <div className="flex justify-between items-start mb-6">

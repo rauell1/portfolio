@@ -106,7 +106,7 @@ export default function AdminNewsletter({ showSubscribersTab = false }: AdminNew
 
   const CompositionPanel = () => (
     <div className="space-y-6">
-      <Card className="glass-card">
+      <Card className="bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm flex items-center gap-2">
             <Mail className="h-4 w-4 text-primary" />
@@ -131,7 +131,7 @@ export default function AdminNewsletter({ showSubscribersTab = false }: AdminNew
         </CardContent>
       </Card>
 
-      <Card className="glass-card">
+      <Card className="bg-card">
         <CardHeader>
           <CardTitle className="text-sm">Compose Draft</CardTitle>
         </CardHeader>

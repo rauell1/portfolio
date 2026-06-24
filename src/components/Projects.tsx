@@ -128,7 +128,7 @@ export const Projects = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={`w-[290px] sm:w-[380px] shrink-0 relative glass-card rounded-3xl p-8 border-white/[0.08] overflow-hidden bg-gradient-to-br ${path.bg} flex flex-col justify-between min-h-[300px] hover:border-primary/20 transition-all duration-300`}
+                className={`w-[290px] sm:w-[380px] shrink-0 relative bg-card rounded-3xl p-8 border-white/[0.08] overflow-hidden bg-gradient-to-br ${path.bg} flex flex-col justify-between min-h-[300px] hover:border-primary/20 transition-all duration-300`}
               >
                 <div>
                   {/* Icon & Specs */}

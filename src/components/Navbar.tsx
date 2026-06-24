@@ -54,8 +54,8 @@ export const Navbar = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="group flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center font-display font-bold text-base text-white group-hover:shadow-glow transition-shadow duration-300">
-                RO
+              <div className="w-9 h-9 rounded-xl border border-primary/40 bg-transparent flex items-center justify-center font-display font-bold text-base transition-all duration-300 group-hover:border-primary/80 group-hover:shadow-glow">
+                <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">RO</span>
               </div>
               <span className="hidden sm:block font-display font-semibold text-base">
                 Roy <span className="text-primary">Otieno</span>

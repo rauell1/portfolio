@@ -115,7 +115,7 @@ export const Contact = () => {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <div className="glass-card rounded-2xl p-8">
+            <div className="bg-card rounded-2xl p-8">
               <h3 className="text-2xl font-display font-bold mb-6">Contact Information</h3>
 
               <div className="space-y-4">
@@ -168,7 +168,7 @@ export const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="glass-card rounded-2xl p-8 space-y-6"
+            className="bg-card rounded-2xl p-8 space-y-6"
           >
             <div className="grid md:grid-cols-2 gap-6">
               <div>

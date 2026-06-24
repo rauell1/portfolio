@@ -215,7 +215,7 @@ export default function BlogPostPage() {
                       <Link
                         key={p.id}
                         to={`/blog/${p.slug}`}
-                        className="group rounded-xl glass-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
+                        className="group rounded-xl bg-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
                       >
                         <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
                           {p.category}

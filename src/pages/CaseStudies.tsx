@@ -112,7 +112,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="group flex flex-col h-full rounded-2xl glass-card border border-border/60 hover:border-primary/30 cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
+      className="group flex flex-col h-full rounded-2xl bg-card border border-border/60 hover:border-primary/30 cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
       onClick={() => navigate(`/case-studies/${study.slug}`)}
     >
       {/* Gradient header */}
@@ -180,7 +180,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
 
 /* ── Skeleton ─────────────────────────────────────────────────────── */
 const CardSkeleton = () => (
-  <div className="rounded-2xl glass-card border border-border/60 animate-pulse overflow-hidden">
+  <div className="rounded-2xl bg-card border border-border/60 animate-pulse overflow-hidden">
     <div className="h-2 bg-muted/60" />
     <div className="p-5 space-y-3">
       <div className="flex justify-between">
@@ -270,7 +270,7 @@ export default function CaseStudiesPage() {
                 { label: "Partner Orgs", value: totalPartners, icon: Briefcase },
                 { label: "Metrics Tracked", value: totalMetrics.length, icon: Award },
               ].map((s) => (
-                <div key={s.label} className="glass-card rounded-2xl p-4 text-center border border-border/60">
+                <div key={s.label} className="bg-card rounded-2xl p-4 text-center border border-border/60">
                   <s.icon className="w-5 h-5 text-primary mx-auto mb-2 opacity-70" />
                   <p className="text-2xl font-display font-bold gradient-text">{s.value}</p>
                   <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
@@ -305,7 +305,7 @@ export default function CaseStudiesPage() {
           {loading ? (
             <div className="space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="md:col-span-2 rounded-3xl glass-card border border-border/60 animate-pulse h-64" />
+                <div className="md:col-span-2 rounded-3xl bg-card border border-border/60 animate-pulse h-64" />
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}

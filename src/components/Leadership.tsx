@@ -112,7 +112,7 @@ export const Leadership = () => {
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 whileHover={{ scale: 1.02, y: -5 }}
-                className={`glass-card rounded-2xl p-6 border-l-4 ${borderColor} relative overflow-hidden group`}
+                className={`bg-card rounded-2xl p-6 border-l-4 ${borderColor} relative overflow-hidden group`}
               >
                 {/* Gradient background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -167,7 +167,7 @@ export const Leadership = () => {
             <motion.div
               key={stat.label}
               whileHover={{ scale: 1.05 }}
-              className="glass-card rounded-xl p-4 sm:p-6 text-center"
+              className="bg-card rounded-xl p-4 sm:p-6 text-center"
             >
               <motion.span
                 initial={{ opacity: 0, scale: 0.5 }}

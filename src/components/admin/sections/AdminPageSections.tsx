@@ -122,7 +122,7 @@ export default function AdminPageSections() {
             ? Object.keys(s.content as Record<string, unknown>).slice(0, 4)
             : [];
           return (
-            <Card key={s.id} className="glass-card">
+            <Card key={s.id} className="bg-card">
               <CardHeader className="flex flex-row items-start justify-between pb-2">
                 <div>
                   <CardTitle className="text-sm capitalize">{s.section}</CardTitle>

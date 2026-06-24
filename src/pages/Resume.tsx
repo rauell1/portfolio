@@ -211,8 +211,8 @@ const ResumePage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center font-display font-bold text-3xl text-white mx-auto mb-6">
-              RO
+            <div className="w-24 h-24 rounded-full border-2 border-primary/40 bg-transparent flex items-center justify-center font-display font-bold text-3xl mx-auto mb-6">
+              <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">RO</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Roy <span className="gradient-text">Otieno</span>
@@ -248,7 +248,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-primary" />
@@ -269,7 +269,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <GraduationCap className="w-6 h-6 text-primary" />
@@ -301,7 +301,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <Briefcase className="w-6 h-6 text-primary" />
@@ -340,7 +340,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-primary" />
@@ -361,7 +361,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <Users className="w-6 h-6 text-primary" />
@@ -387,7 +387,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="glass-card rounded-2xl p-8 mb-8"
+            className="bg-card rounded-2xl p-8 mb-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <Award className="w-6 h-6 text-primary" />
@@ -426,7 +426,7 @@ const ResumePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="glass-card rounded-2xl p-8"
+            className="bg-card rounded-2xl p-8"
           >
             <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
               <Award className="w-6 h-6 text-primary" />

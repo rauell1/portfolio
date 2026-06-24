@@ -172,7 +172,7 @@ export default function CaseStudyPage() {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.35, delay: 0.2 + i * 0.06 }}
-                          className="glass-card rounded-2xl p-4 border border-border/60 text-center"
+                          className="bg-card rounded-2xl p-4 border border-border/60 text-center"
                         >
                           <p className="text-2xl md:text-3xl font-display font-bold gradient-text leading-none mb-1">
                             {m.value}
@@ -258,7 +258,7 @@ export default function CaseStudyPage() {
                           <Link
                             key={s.id}
                             to={`/case-studies/${s.slug}`}
-                            className="group rounded-xl glass-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
+                            className="group rounded-xl bg-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
                           >
                             <div className="flex items-center gap-2 mb-2">
                               <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${s.gradient} flex items-center justify-center flex-shrink-0`}>

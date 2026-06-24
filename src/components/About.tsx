@@ -65,7 +65,7 @@ export const About = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="md:col-span-2 glass-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500"
+            className="md:col-span-2 bg-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500"
           >
             {/* Soft background grid overlay */}
             <div 
@@ -106,7 +106,7 @@ export const About = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="md:col-span-1 glass-card rounded-3xl p-8 flex flex-col items-center justify-center border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500 min-h-[300px]"
+            className="md:col-span-1 bg-card rounded-3xl p-8 flex flex-col items-center justify-center border-white/[0.08] relative overflow-hidden group hover:border-primary/20 transition-all duration-500 min-h-[300px]"
           >
             <div className="absolute inset-0 bg-gradient-glow opacity-30 pointer-events-none" />
             
@@ -145,7 +145,7 @@ export const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className="glass-card rounded-2xl p-6 border-white/[0.08] relative overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col justify-between min-h-[140px]"
+                className="bg-card rounded-2xl p-6 border-white/[0.08] relative overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col justify-between min-h-[140px]"
               >
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">

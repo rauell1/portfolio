@@ -141,7 +141,7 @@ export const Experience = () => {
 
               {/* Content card — min-w-0 prevents content from stretching the card
                   beyond the viewport on narrow screens */}
-              <div className={`ml-10 md:ml-0 min-w-0 glass-card rounded-2xl p-6 card-hover ${
+              <div className={`ml-10 md:ml-0 min-w-0 bg-card rounded-2xl p-6 card-hover ${
                 exp.isFounder ? "ring-2 ring-primary/50 bg-gradient-to-br from-primary/5 to-transparent shadow-[0_0_25px_-5px_hsl(var(--primary)/0.4)] animate-pulse-glow" : ""
               }`}>
                 {/* Header — flex-wrap ensures period/location wraps on 320px screens */}
