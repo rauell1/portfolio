@@ -32,21 +32,21 @@ const DEFAULT: LeadershipContent = {
     {
       title: "Africa Fellowship for Young Energy Leaders",
       role: "Fellow",
-      subtitle: "High-level multidisciplinary programme advancing clean-energy innovation and the African energy-transition agenda — includes policy engagement, cross-country peer exchange, and strategic leadership development.",
-      year: "2025–2026",
+      subtitle: "Selected for this pan-African clean energy leadership programme (Oct 2025–Mar 2026). Key outcome: deepened the solar simulation modules at the core of SafaRecharge — applying cross-country peer insights and policy frameworks directly to the project's technical design.",
+      year: "Oct 2025–Mar 2026",
       icon: "Award",
     },
     {
       title: "Kenya Youth Parliament for Water",
       role: "Events Coordinator",
-      subtitle: "Child of World Youth Parliament for Water. Coordinating advocacy events and campaigns on climate-resilient urban water systems, sustainable governance, and youth-led water policy reform since April 2026.",
+      subtitle: "Kenyan chapter of the World Youth Parliament for Water. Coordinating and building up water advocacy groups across Kenya — organising campaigns on climate-resilient water systems, sustainable governance, and youth-led water policy reform.",
       year: "Apr 2026–Present",
       icon: "Globe",
     },
     {
       title: "Greenwave Society",
       role: "Head of Design",
-      subtitle: "Leading design strategy and visual communication for environmental campaigns — merging creative direction with sustainability messaging at a senior leadership level.",
+      subtitle: "Integrating the Society's environmental mission into every visual design element — translating community values into cohesive branding, campaign materials, and creative direction that amplifies the organisation's sustainability message.",
       year: "2026–Present",
       icon: "Leaf",
     },
@@ -168,33 +168,7 @@ export const Leadership = () => {
           })}
         </div>
 
-        {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-3 gap-3 mt-10"
-        >
-          {[
-            { value: "50+",  label: "Workshops Delivered" },
-            { value: "150+", label: "Lives Impacted" },
-            { value: "5+",   label: "Countries Reached" },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.7 + index * 0.08 }}
-              whileHover={{ scale: 1.04 }}
-              className="bg-card rounded-xl p-4 sm:p-6 text-center border border-border/60"
-            >
-              <span className="text-xl sm:text-3xl md:text-4xl font-display font-bold gradient-text">
-                {stat.value}
-              </span>
-              <p className="text-muted-foreground text-xs sm:text-sm mt-1 sm:mt-2">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+
       </div>
     </section>
   );
