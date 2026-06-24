@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-06-24T12:46:56.712Z**
+> Last updated: **2026-06-24T13:23:00.660Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -10,6 +10,7 @@
 
 | File | Purpose |
 |---|---|
+| `.cursorrules` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `.env.example` | Env var template — Supabase URL/key, EmailJS keys, reCAPTCHA |
 | `.gitignore` | Ignores node_modules, dist, .env, build artifacts, auto-generated files |
 | `README.md` | Project overview, setup instructions, deployment guide |
@@ -18,6 +19,8 @@
 | `index.html` | SPA entry point — meta tags, OG tags, JSON-LD structured data, font preloads |
 | `package.json` | Dependencies + bun scripts (dev, build, lint, preview) |
 | `postcss.config.js` | PostCSS — Tailwind + Autoprefixer |
+| `rules.md` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `supabase_sync.sql` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `tailwind.config.ts` | Tailwind v3 theme — custom colors, animations, shadcn-ui preset |
 | `tsconfig.app.json` | App TS config — strict mode, path aliases, React JSX transform |
 | `tsconfig.json` | Root TS config — references tsconfig.app.json + tsconfig.node.json |
@@ -261,6 +264,7 @@
 | `supabase/migrations/20260317000000_page_sections_and_project_status.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414000000_schema_and_rls_hardening.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414010000_blog_share_access_controls.sql` | Supabase SQL migration |
+| `supabase/migrations/20260523000000_fix_blog_share_access.sql` | Supabase SQL migration |
 | `supabase/migrations/20260620000000_seed_seo_page_sections.sql` | Supabase SQL migration |
 
 ---
