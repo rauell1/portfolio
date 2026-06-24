@@ -57,9 +57,11 @@ export const Navbar = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="group flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center font-display font-bold text-base text-white group-hover:shadow-glow transition-shadow duration-300">
-                RO
-              </div>
+              <img
+                src="/favicon.svg"
+                alt="Roy Otieno"
+                className="w-9 h-9 rounded-xl object-cover group-hover:shadow-glow transition-shadow duration-300"
+              />
               <span className="hidden sm:block font-display font-semibold text-base">
                 Roy <span className="text-primary">Otieno</span>
               </span>

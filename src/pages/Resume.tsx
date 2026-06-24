@@ -213,9 +213,11 @@ const ResumePage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center font-display font-bold text-3xl text-white mx-auto mb-6">
-              RO
-            </div>
+            <img
+              src="/favicon.svg"
+              alt="Roy Otieno"
+              className="w-24 h-24 rounded-full object-cover mx-auto mb-6"
+            />
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Roy <span className="gradient-text">Otieno</span>
             </h1>
