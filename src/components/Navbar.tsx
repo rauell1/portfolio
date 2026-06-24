@@ -15,6 +15,8 @@ const hashNavItems = [
 
 const routeNavItems = [
   { to: "/projects",     label: "Projects",      icon: null },
+  { to: "/blog",         label: "Blog",          icon: BookOpen },
+  { to: "/case-studies", label: "Case Studies",  icon: BarChart3 },
 ];
 
 export const Navbar = () => {

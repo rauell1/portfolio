@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, Tag, Share2, BookOpen } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
+import { SITE_URL } from "@/lib/seo";
 import { useBlogPosts } from "@/hooks/use-blog-posts";
 import { renderMarkdown, readingTime } from "@/lib/renderMarkdown";
 
@@ -49,8 +52,48 @@ export default function BlogPostPage() {
     }
   }
 
+  const articleSchema = post
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        description: post.excerpt ?? "",
+        image: post.cover_image ?? undefined,
+        url: `${SITE_URL}/blog/${post.slug}`,
+        datePublished: post.published_at ?? undefined,
+        author: {
+          "@type": "Person",
+          name: "Roy Okola Otieno",
+          url: SITE_URL,
+        },
+        publisher: {
+          "@type": "Person",
+          name: "Roy Okola Otieno",
+          url: SITE_URL,
+        },
+      }
+    : null;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {post ? (
+        <>
+          <SEO
+            title={`${post.title} | Roy Okola Otieno`}
+            description={post.excerpt ?? post.content.slice(0, 155)}
+            canonical={`${SITE_URL}/blog/${post.slug}`}
+            ogImage={post.cover_image ?? undefined}
+            type="article"
+          />
+          {articleSchema && (
+            <Helmet>
+              <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+            </Helmet>
+          )}
+        </>
+      ) : (
+        <SEO title="Blog Post | Roy Okola Otieno" description="Read articles on clean energy and e-mobility." />
+      )}
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

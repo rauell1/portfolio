@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://roy-otieno.vercel.app/sitemap.xml
+# Block private and API routes
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://royotieno.rauell.systems/sitemap.xml

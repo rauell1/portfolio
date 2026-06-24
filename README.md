@@ -130,27 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-<<<<<<< HEAD
-| **Last commit** | `5d90f95` — security: implement webhook signature verification, active unsubscribe database logic, draft sharing database fix, and client-side env deprecation |
+| **Last commit** | `6aa1339` — chore(seo): add Bing Webmaster Tools verification meta tag |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-23 01:31 UTC |
+| **Commit date** | 2026-06-13 11:15 UTC |
 | **Branch** | `main` |
-| **Total commits** | 325 |
+| **Total commits** | 373 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 101 |
+| **TypeScript files** | 105 |
 | **CSS files** | 1 |
-| **React components** | 72 |
-=======
-| **Last commit** | `18e9a8a` — style: unify headings and year badges across experience, leadership, and contact sections with the editorial typography system |
-| **Committed by** | Roy Okola |
-| **Commit date** | 2026-05-25 22:47 UTC |
-| **Branch** | `main` |
-| **Total commits** | 352 |
-| **Package version** | `0.0.0` |
-| **TypeScript files** | 103 |
-| **CSS files** | 1 |
-| **React components** | 74 |
->>>>>>> fd4d58f98e9de9dd3c5c3125f8f137b9f3c5e21a
+| **React components** | 75 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status

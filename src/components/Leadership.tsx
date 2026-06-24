@@ -37,10 +37,9 @@ const DEFAULT: LeadershipContent = {
   heading_highlight: "Engagement",
   description: "Committed to driving positive change through community engagement, policy advocacy, and knowledge sharing.",
   items: [
-    { title: "Africa Fellowship for Young Energy Leaders", subtitle: "Cohort 5 - General Track & Solar PV Engineering", year: "2025", icon: "Award" },
-    { title: "World Youth Parliament for Water", subtitle: "Global Member advocating for water sustainability", year: "2024-2027", icon: "Globe" },
-    { title: "Community Trainer", subtitle: "Solar irrigation & circular economy workshops", year: "Ongoing", icon: "Users" },
-    { title: "Student Leader - JKUAT", subtitle: "Engineering Outreach & Peer-Learning Coordinator", year: "2018-2023", icon: "GraduationCap" },
+    { title: "Africa Fellowship for Young Energy Leaders", subtitle: "High-level multidisciplinary programme advancing clean-energy innovation and the African energy-transition agenda; includes policy engagement and cross-country peer exchange.", year: "2025–2026", icon: "Award" },
+    { title: "Kenya Youth Parliament for Water", subtitle: "International advocacy on climate-resilient urban water systems and sustainable governance.", year: "2024–Present", icon: "Globe" },
+    { title: "Community Trainer", subtitle: "Workshops on solar irrigation, renewable energy, and circular-economy practices for rural farmers.", year: "Ongoing", icon: "Users" },
   ],
 };
 
@@ -63,7 +62,7 @@ export const Leadership = () => {
   }, []);
 
   return (
-    <section id="leadership" className="py-16 sm:py-20 lg:py-24 px-6 relative" ref={ref}>
+    <section id="leadership" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -158,7 +157,7 @@ export const Leadership = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-3 gap-4 mt-12"
+          className="grid grid-cols-3 gap-3 mt-12"
         >
           {[
             { value: "50+", label: "Workshops Delivered" },
@@ -168,17 +167,17 @@ export const Leadership = () => {
             <motion.div
               key={stat.label}
               whileHover={{ scale: 1.05 }}
-              className="glass-card rounded-xl p-6 text-center"
+              className="glass-card rounded-xl p-4 sm:p-6 text-center"
             >
               <motion.span
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                className="text-3xl md:text-4xl font-display font-bold gradient-text"
+                className="text-xl sm:text-3xl md:text-4xl font-display font-bold gradient-text"
               >
                 {stat.value}
               </motion.span>
-              <p className="text-muted-foreground text-sm mt-2">{stat.label}</p>
+              <p className="text-muted-foreground text-xs sm:text-sm mt-1 sm:mt-2">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>

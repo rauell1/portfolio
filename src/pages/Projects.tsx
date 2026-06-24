@@ -26,6 +26,8 @@ import {
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { PAGE_SEO } from "@/lib/seo";
 import { type Project } from "@/data/portfolioProjects";
 import { useProjects } from "@/hooks/use-projects";
 
@@ -433,6 +435,7 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO {...PAGE_SEO.projects} />
       <Navbar />
 
       <main className="pt-24 pb-20 px-6">

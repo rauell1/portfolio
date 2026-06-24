@@ -1,11 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-<<<<<<< HEAD
-> Last updated: **2026-05-22T22:31:59.386Z**
-=======
-> Last updated: **2026-05-25T19:47:51.614Z**
->>>>>>> fd4d58f98e9de9dd3c5c3125f8f137b9f3c5e21a
+> Last updated: **2026-06-13T08:15:51.879Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -14,7 +10,6 @@
 
 | File | Purpose |
 |---|---|
-| `.cursorrules` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `.env.example` | Env var template — Supabase URL/key, EmailJS keys, reCAPTCHA |
 | `.gitignore` | Ignores node_modules, dist, .env, build artifacts, auto-generated files |
 | `README.md` | Project overview, setup instructions, deployment guide |
@@ -23,7 +18,6 @@
 | `index.html` | SPA entry point — meta tags, OG tags, JSON-LD structured data, font preloads |
 | `package.json` | Dependencies + bun scripts (dev, build, lint, preview) |
 | `postcss.config.js` | PostCSS — Tailwind + Autoprefixer |
-| `rules.md` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `tailwind.config.ts` | Tailwind v3 theme — custom colors, animations, shadcn-ui preset |
 | `tsconfig.app.json` | App TS config — strict mode, path aliases, React JSX transform |
 | `tsconfig.json` | Root TS config — references tsconfig.app.json + tsconfig.node.json |
@@ -78,6 +72,7 @@
 | `src/components/ParticleBackground.tsx` | Canvas-based animated particle network used in Hero background |
 | `src/components/ProgressBar.tsx` | Scroll progress indicator bar fixed to top of viewport |
 | `src/components/Projects.tsx` | Home projects preview — card grid with 3 featured projects |
+| `src/components/SEO.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/components/Skills.tsx` | Skills section — categorised tech stack with proficiency indicators |
 | `src/components/SkillsRadarChart.tsx` | Recharts radar chart visualising skill levels by category |
 | `src/components/Testimonials.tsx` | Testimonials carousel — quotes, avatars, roles (Supabase-sourced) |
@@ -175,6 +170,7 @@
 |---|---|
 | `src/lib/config.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/renderMarkdown.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/lib/seo.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/smoothScroll.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/lib/utils.ts` | cn() helper — merges Tailwind classes with clsx + tailwind-merge |
 
@@ -208,6 +204,7 @@
 | `public/favicon.ico` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/favicon.png` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/favicon.svg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `public/googlee69e3a7319b06c7f.html` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/Roam Motorbike x Roam Bus1.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/SafariCharge_DailyGraph_2026-01-07.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
@@ -262,7 +259,6 @@
 | `supabase/migrations/20260317000000_page_sections_and_project_status.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414000000_schema_and_rls_hardening.sql` | Supabase SQL migration |
 | `supabase/migrations/20260414010000_blog_share_access_controls.sql` | Supabase SQL migration |
-| `supabase/migrations/20260523000000_fix_blog_share_access.sql` | Supabase SQL migration |
 
 ---
 
