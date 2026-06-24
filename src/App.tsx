@@ -1,23 +1,23 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Component, ReactNode, lazy, Suspense } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { CustomCursor } from "./components/ui/CustomCursor";
 import Index from "./pages/Index";
 
-// Lazy-load non-home pages to reduce initial bundle size
-const Resume        = lazy(() => import("./pages/Resume"));
-const ProjectsPage  = lazy(() => import("./pages/Projects"));
-const BlogPage      = lazy(() => import("./pages/Blog"));
-const BlogPostPage  = lazy(() => import("./pages/BlogPost"));
+const Resume          = lazy(() => import("./pages/Resume"));
+const ProjectsPage    = lazy(() => import("./pages/Projects"));
+const BlogPage        = lazy(() => import("./pages/Blog"));
+const BlogPostPage    = lazy(() => import("./pages/BlogPost"));
 const CaseStudiesPage = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPage   = lazy(() => import("./pages/CaseStudy"));
-const AdminPage     = lazy(() => import("./pages/Admin"));
-const NotFound      = lazy(() => import("./pages/NotFound"));
-const LazyToaster   = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
-const LazySonner    = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+const AdminPage       = lazy(() => import("./pages/Admin"));
+const NotFound        = lazy(() => import("./pages/NotFound"));
+const LazyToaster     = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+const LazySonner      = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
@@ -55,6 +55,38 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   }
 }
 
+const PageTransition = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -6 }}
+    transition={{ duration: 0.22, ease: "easeOut" }}
+  >
+    <Outlet />
+  </motion.div>
+);
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route element={<PageTransition />}>
+          <Route path="/"                    element={<Index />} />
+          <Route path="/resume"              element={<Resume />} />
+          <Route path="/projects"            element={<ProjectsPage />} />
+          <Route path="/blog"                element={<BlogPage />} />
+          <Route path="/blog/:slug"          element={<BlogPostPage />} />
+          <Route path="/case-studies"        element={<Navigate to="/" replace />} />
+          <Route path="/case-studies/:slug"  element={<Navigate to="/" replace />} />
+          <Route path="/admin"               element={<AdminPage />} />
+          <Route path="*"                    element={<NotFound />} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
@@ -67,18 +99,7 @@ const App = () => (
           </Suspense>
           <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/"                    element={<Index />} />
-                <Route path="/resume"              element={<Resume />} />
-                <Route path="/projects"            element={<ProjectsPage />} />
-                <Route path="/blog"                element={<BlogPage />} />
-                <Route path="/blog/:slug"          element={<BlogPostPage />} />
-                <Route path="/case-studies"        element={<CaseStudiesPage />} />
-                <Route path="/case-studies/:slug"  element={<CaseStudyPage />} />
-                <Route path="/admin"               element={<AdminPage />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*"                    element={<NotFound />} />
-              </Routes>
+              <AnimatedRoutes />
             </Suspense>
           </BrowserRouter>
           <Analytics />

@@ -32,6 +32,9 @@ const iconMap: Record<string, React.ElementType> = {
   Zap, Battery, Leaf, Globe, Thermometer, Droplets, Users, Award, LayoutDashboard, FileText,
 };
 
+const formatDate = (date: string | null | undefined) =>
+  date ? date.replace(/-/g, " to ") : null;
+
 const Skeleton = () => (
   <div className="max-w-4xl mx-auto animate-pulse space-y-6 mt-10">
     <div className="h-64 bg-muted/40 rounded-3xl" />
@@ -67,7 +70,7 @@ export default function CaseStudyPage() {
       {study ? (
         <SEO
           title={`${study.title} | Roy Okola Otieno`}
-          description={study.subtitle ?? `Detailed case study: ${study.title} — clean energy and e-mobility deployment across East Africa.`}
+          description={study.subtitle ?? `Detailed case study: ${study.title}, clean energy and e-mobility deployment across East Africa.`}
           canonical={`${SITE_URL}/case-studies/${study.slug}`}
           ogImage={study.image ?? undefined}
           keywords={`${study.category}, clean energy case study Africa, EV deployment Kenya, ${study.location ?? ""}`}
@@ -130,7 +133,7 @@ export default function CaseStudyPage() {
                         {study.title}
                       </h1>
                       {study.subtitle && (
-                        <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl text-justify hyphens-auto">
+                        <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl text-justify">
                           {study.subtitle}
                         </p>
                       )}
@@ -149,7 +152,7 @@ export default function CaseStudyPage() {
                       <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" />{study.location}</span>
                     )}
                     {study.date && (
-                      <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{study.date}</span>
+                      <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{formatDate(study.date)}</span>
                     )}
                   </div>
                 </div>
@@ -202,7 +205,7 @@ export default function CaseStudyPage() {
                         <h2 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
                           {section.heading}
                         </h2>
-                        <p className="text-muted-foreground leading-relaxed text-justify hyphens-auto">
+                        <p className="text-muted-foreground leading-relaxed text-justify">
                           {section.body}
                         </p>
                         {section.image && (

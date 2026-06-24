@@ -38,7 +38,7 @@ const DEFAULT_ITEMS: Experience[] = [
   {
     company: "EVChaja",
     role: "EV Infrastructure Engineer and Consultant",
-    location: "Remote — Nairobi",
+    location: "Remote, Nairobi",
     period: "Jan 2025 - Jun 2025",
     description: [
       "Led technical scoping and infrastructure analysis for 3 investment-ready EV charging projects, synthesising field data, grid assessments, and hardware specifications into engineering reports for decision-makers.",
@@ -192,7 +192,7 @@ export const Experience = () => {
                 {/* Description */}
                 <ul className="space-y-2">
                   {exp.description.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground text-justify hyphens-auto">
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground text-justify">
                       <ChevronRight className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                       <span>{item}</span>
                     </li>

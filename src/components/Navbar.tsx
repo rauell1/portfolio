@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, BookOpen, BarChart3, Lock } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const hashNavItems = [
   { href: "#about",      label: "About" },
@@ -13,10 +14,10 @@ const hashNavItems = [
   { href: "#contact",    label: "Contact" },
 ];
 
+const SECTION_IDS = hashNavItems.map((i) => i.href.replace("#", ""));
+
 const routeNavItems = [
-  { to: "/projects",     label: "Projects",      icon: null },
-  { to: "/blog",         label: "Blog",          icon: BookOpen },
-  { to: "/case-studies", label: "Case Studies",  icon: BarChart3 },
+  { to: "/projects", label: "Projects", icon: null },
 ];
 
 export const Navbar = () => {
@@ -24,6 +25,7 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location  = useLocation();
   const isHome    = location.pathname === "/";
+  const activeSection = useActiveSection(isHome ? SECTION_IDS : []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -54,9 +56,11 @@ export const Navbar = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="group flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl border border-primary/40 bg-transparent flex items-center justify-center font-display font-bold text-base transition-all duration-300 group-hover:border-primary/80 group-hover:shadow-glow">
-                <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">RO</span>
-              </div>
+              <img
+                src="/favicon.svg"
+                alt="Roy Otieno"
+                className="w-9 h-9 rounded-xl object-cover group-hover:shadow-glow transition-shadow duration-300"
+              />
               <span className="hidden sm:block font-display font-semibold text-base">
                 Roy <span className="text-primary">Otieno</span>
               </span>
@@ -65,17 +69,24 @@ export const Navbar = () => {
             {/* Desktop Navigation */}
             <ul className="hidden lg:flex items-center gap-0.5">
               {/* Hash links — only render on home */}
-              {isHome && hashNavItems.map((item) => (
-                <li key={item.href}>
-                  <button
-                    onClick={() => scrollToSection(item.href)}
-                    className="relative px-3.5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 group"
-                  >
-                    <span className="relative z-10">{item.label}</span>
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-3/4 transition-all duration-300 rounded-full" />
-                  </button>
-                </li>
-              ))}
+              {isHome && hashNavItems.map((item) => {
+                const isActive = activeSection === item.href.replace("#", "");
+                return (
+                  <li key={item.href}>
+                    <button
+                      onClick={() => scrollToSection(item.href)}
+                      className={`relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 group rounded-lg ${
+                        isActive
+                          ? "text-primary bg-primary/8"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                      }`}
+                    >
+                      <span className="relative z-10">{item.label}</span>
+                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary transition-all duration-300 rounded-full ${isActive ? "w-3/4" : "w-0 group-hover:w-3/4"}`} />
+                    </button>
+                  </li>
+                );
+              })}
 
               {/* Divider when on home */}
               {isHome && <li className="w-px h-4 bg-border/60 mx-1" aria-hidden="true" />}
@@ -112,18 +123,6 @@ export const Navbar = () => {
               </li>
 
               <li className="ml-2">
-                <Link
-                  to="/admin"
-                  className={`p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/40 transition-colors flex items-center justify-center ${
-                    isActiveRoute("/admin") ? "text-primary bg-primary/8" : ""
-                  }`}
-                  aria-label="Admin Dashboard"
-                  title="Admin Dashboard"
-                >
-                  <Lock className="w-4 h-4" />
-                </Link>
-              </li>
-              <li className="ml-1">
                 <ThemeToggle />
               </li>
             </ul>
@@ -157,17 +156,6 @@ export const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
-              <Link
-                to="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/40 transition-colors flex items-center justify-center ${
-                  isActiveRoute("/admin") ? "text-primary bg-primary/8" : ""
-                }`}
-                aria-label="Admin Dashboard"
-                title="Admin Dashboard"
-              >
-                <Lock className="w-4 h-4" />
-              </Link>
               <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -192,15 +180,22 @@ export const Navbar = () => {
               <nav className="px-6 py-5 space-y-1">
                 {/* Hash links (home page sections) */}
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 px-3 pb-1">Sections</p>
-                {hashNavItems.map((item) => (
-                  <button
-                    key={item.href}
-                    onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 rounded-lg transition-colors"
-                  >
-                    {item.label}
-                  </button>
-                ))}
+                {hashNavItems.map((item) => {
+                  const isActive = activeSection === item.href.replace("#", "");
+                  return (
+                    <button
+                      key={item.href}
+                      onClick={() => scrollToSection(item.href)}
+                      className={`block w-full text-left px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                        isActive
+                          ? "text-primary bg-primary/8 font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
 
                 <div className="h-px bg-border/60 my-3" />
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 px-3 pb-1">Pages</p>

@@ -18,7 +18,8 @@ type AdminSection =
   | "case-studies"
   | "newsletter"
   | "page-sections"
-  | "subscribers";
+  | "subscribers"
+  | "media";
 
 export default function AdminPage() {
   const [session, setSession] = useState<Session | null>(null);

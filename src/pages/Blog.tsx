@@ -212,7 +212,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO {...PAGE_SEO.blog} />
+      <SEO page="blog" />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

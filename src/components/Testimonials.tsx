@@ -1,295 +1,100 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useRef } from "react";
+import { Quote } from "lucide-react";
 
 interface Testimonial {
-  id: string;
   name: string;
   role: string;
-  company: string;
-  content: string;
-  image?: string;
-  rating: number;
+  organisation: string;
+  quote: string;
+  initials: string;
+  accent: string;
 }
 
-// Fallback data — shown until Supabase responds, or if the table is empty.
-const FALLBACK: Testimonial[] = [
+const TESTIMONIALS: Testimonial[] = [
   {
-    id: "1",
-    name: "Dr. Sarah Kamau",
-    role: "Director of Sustainability",
-    company: "Kenya Power & Lighting",
-    content:
-      "Roy's expertise in renewable energy systems is exceptional. His work on our solar microgrid project exceeded expectations, delivering both technical excellence and sustainable impact for rural communities.",
-    rating: 5,
+    name: "Samuel Kariuki",
+    role: "Field Operations Manager",
+    organisation: "Roam Electric",
+    quote:
+      "Roy's technical depth is matched by his ability to communicate complex energy systems to clients and field teams. His site commissionings have been consistently smooth across all our Nairobi deployments.",
+    initials: "SK",
+    accent: "from-cyan-500 to-blue-500",
   },
   {
-    id: "2",
-    name: "James Mwangi",
-    role: "CEO",
-    company: "EVChaja Kenya",
-    content:
-      "Working with Roy on EV charging infrastructure has been transformative. His deep understanding of e-mobility and passion for sustainable transport makes him an invaluable partner in building Africa's EV future.",
-    rating: 5,
+    name: "Amina Wangari",
+    role: "Programme Lead",
+    organisation: "Africa Fellowship for Young Energy Leaders",
+    quote:
+      "One of our standout fellows. Roy brought both technical rigour and a clear vision for Africa's clean energy transition. His policy engagement and peer contributions elevated the entire cohort.",
+    initials: "AW",
+    accent: "from-emerald-500 to-teal-500",
   },
   {
-    id: "3",
-    name: "Prof. Elizabeth Odhiambo",
-    role: "Research Lead",
-    company: "JKUAT Energy Institute",
-    content:
-      "Roy's research contributions to solar-powered cold chain solutions have directly impacted smallholder farmers. His innovative approach combines technical rigor with real-world applicability.",
-    rating: 5,
-  },
-  {
-    id: "4",
-    name: "David Njoroge",
-    role: "Operations Manager",
-    company: "Roam Electric",
-    content:
-      "Roy's analytical skills and dedication to sustainable mobility are outstanding. He played a key role in our feasibility studies, identifying optimal locations for EV hub deployment.",
-    rating: 5,
+    name: "Peter Odhiambo",
+    role: "Head of Projects",
+    organisation: "HomeBiogas Kenya",
+    quote:
+      "Roy designed and installed biogas systems for multiple households across Western Kenya, always on time and on spec. His ability to train local installers added lasting value beyond the project itself.",
+    initials: "PO",
+    accent: "from-orange-500 to-amber-500",
   },
 ];
 
 export const Testimonials = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    supabase
-      .from("testimonials")
-      .select("id, name, role, company, content, image, rating")
-      .eq("published", true)
-      .order("sort_order", { ascending: true })
-      .then(({ data, error }) => {
-        if (!error && data && data.length > 0) {
-          setTestimonials(
-            data.map((t) => ({
-              id: t.id,
-              name: t.name,
-              role: t.role,
-              company: t.company,
-              content: t.content,
-              image: t.image ?? undefined,
-              rating: t.rating ?? 5,
-            }))
-          );
-        }
-        // On error or empty table, keep FALLBACK (state is already set)
-      });
-  }, []);
-
-  const navigate = (direction: "prev" | "next") => {
-    setCurrentIndex((prev) =>
-      direction === "prev"
-        ? prev === 0
-          ? testimonials.length - 1
-          : prev - 1
-        : prev === testimonials.length - 1
-        ? 0
-        : prev + 1
-    );
-  };
 
   return (
-    <section id="testimonials" className="py-32 px-6 relative" ref={ref}>
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header */}
+    <section id="testimonials" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-4 block">Testimonials</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            What People <span className="gradient-text">Say</span>
+          <span className="text-primary font-mono-custom text-xs uppercase tracking-widest mb-4 block">// Peer Recognition</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium tracking-tight mb-4">
+            What{" "}
+            <span className="font-editorial italic font-semibold text-primary">
+              Colleagues Say
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Trusted by industry leaders and partners in the renewable energy and e-mobility sectors.
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-justify">
+            Perspectives from professionals I've worked alongside across clean energy, e-mobility, and community programmes.
           </p>
         </motion.div>
 
-        {/* Featured Testimonial */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative"
-        >
-          <div className="bg-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
-            {/* Quote icon */}
-            <div className="absolute top-6 right-6 opacity-10" aria-hidden="true">
-              <Quote className="w-24 h-24 text-primary" />
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-between items-start mb-8">
-              <div
-                className="flex items-center gap-1"
-                aria-label={`Rated ${testimonials[currentIndex]?.rating ?? 5} out of 5 stars`}
-              >
-                {Array.from({ length: testimonials[currentIndex]?.rating ?? 5 }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-primary text-primary" aria-hidden="true" />
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => navigate("prev")}
-                  aria-label="Previous testimonial"
-                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-                </button>
-                <button
-                  onClick={() => navigate("next")}
-                  aria-label="Next testimonial"
-                  className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-border transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-
-            {/* Content */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {TESTIMONIALS.map((t, index) => (
             <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              key={t.name}
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: index * 0.12 }}
+              whileHover={{ y: -4 }}
+              className="relative bg-card rounded-2xl border border-border/60 p-6 flex flex-col gap-4 hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >
-              <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-8">
-                "{testimonials[currentIndex]?.content}"
-              </blockquote>
+              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${t.accent} flex items-center justify-center flex-shrink-0`}>
+                <Quote className="w-4 h-4 text-white" />
+              </div>
 
-              <div className="flex items-center gap-4">
-                {testimonials[currentIndex]?.image ? (
-                  <img
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
-                    className="w-14 h-14 rounded-full object-cover"
-                    width={56}
-                    height={56}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <div
-                    className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-display font-bold text-lg shrink-0"
-                    aria-hidden="true"
-                  >
-                    {testimonials[currentIndex]?.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </div>
-                )}
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1 text-justify">
+                "{t.quote}"
+              </p>
+
+              <div className="flex items-center gap-3 pt-3 border-t border-border/50">
+                <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${t.accent} flex items-center justify-center flex-shrink-0`}>
+                  <span className="text-[11px] font-bold text-white">{t.initials}</span>
+                </div>
                 <div>
-                  <p className="font-display font-semibold text-lg">
-                    {testimonials[currentIndex]?.name}
-                  </p>
-                  <p className="text-muted-foreground">
-                    {testimonials[currentIndex]?.role},{" "}
-                    {testimonials[currentIndex]?.company}
-                  </p>
+                  <p className="text-sm font-semibold text-foreground leading-none mb-0.5">{t.name}</p>
+                  <p className="text-[11px] text-muted-foreground">{t.role} · {t.organisation}</p>
                 </div>
               </div>
             </motion.div>
-
-            {/* Dots indicator */}
-            <div
-              className="flex justify-center gap-2 mt-8"
-              role="tablist"
-              aria-label="Testimonial navigation"
-            >
-              {testimonials.map((t, index) => (
-                <button
-                  key={t.id}
-                  role="tab"
-                  aria-selected={index === currentIndex}
-                  aria-label={`Go to testimonial from ${t.name}`}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentIndex
-                      ? "bg-primary w-6"
-                      : "w-2 bg-black/10 dark:bg-white/20 hover:bg-black/20 dark:hover:bg-white/40"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Mini testimonials grid */}
-        <div className="grid md:grid-cols-2 gap-6 mt-8">
-          {testimonials
-            .filter((_, i) => i !== currentIndex)
-            .slice(0, 2)
-            .map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                onClick={() =>
-                  setCurrentIndex(testimonials.findIndex((t) => t.id === testimonial.id))
-                }
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setCurrentIndex(
-                      testimonials.findIndex((t) => t.id === testimonial.id)
-                    );
-                  }
-                }}
-                aria-label={`Read full testimonial from ${testimonial.name}`}
-                className="bg-card rounded-xl p-6 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-              >
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3 text-justify hyphens-auto">
-                  "{testimonial.content}"
-                </p>
-                <div className="flex items-center gap-3">
-                  {testimonial.image ? (
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-10 h-10 rounded-full object-cover"
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div
-                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/60 to-primary/30 flex items-center justify-center text-white font-medium text-sm shrink-0"
-                      aria-hidden="true"
-                    >
-                      {testimonial.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </div>
-                  )}
-                  <div>
-                    <p className="font-medium text-sm">{testimonial.name}</p>
-                    <p className="text-xs text-muted-foreground">{testimonial.company}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          ))}
         </div>
       </div>
     </section>

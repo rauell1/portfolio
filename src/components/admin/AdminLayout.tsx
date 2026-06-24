@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   LogOut,
+  Image,
 } from "lucide-react";
 import AdminOverview from "./sections/AdminOverview";
 import AdminSync from "./sections/AdminSync";
@@ -21,6 +22,7 @@ import AdminBlogPosts from "./sections/AdminBlogPosts";
 import AdminCaseStudies from "./sections/AdminCaseStudies";
 import AdminNewsletter from "./sections/AdminNewsletter";
 import AdminPageSections from "./sections/AdminPageSections";
+import AdminMedia from "./sections/AdminMedia";
 
 type AdminSection =
   | "overview"
@@ -30,7 +32,8 @@ type AdminSection =
   | "case-studies"
   | "newsletter"
   | "page-sections"
-  | "subscribers";
+  | "subscribers"
+  | "media";
 
 interface AdminLayoutProps {
   activeSection: AdminSection;
@@ -48,6 +51,7 @@ const navItems: { id: AdminSection; label: string; icon: React.ReactNode }[] = [
   { id: "newsletter", label: "Newsletter", icon: <Mail className="h-4 w-4" /> },
   { id: "page-sections", label: "Page Sections", icon: <Layers className="h-4 w-4" /> },
   { id: "subscribers", label: "Subscribers", icon: <Users className="h-4 w-4" /> },
+  { id: "media", label: "Media Library", icon: <Image className="h-4 w-4" /> },
 ];
 
 function SectionContent({ section }: { section: AdminSection }) {
@@ -68,6 +72,8 @@ function SectionContent({ section }: { section: AdminSection }) {
       return <AdminNewsletter showSubscribersTab />;
     case "page-sections":
       return <AdminPageSections />;
+    case "media":
+      return <AdminMedia />;
     default:
       return null;
   }

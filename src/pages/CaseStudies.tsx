@@ -29,6 +29,9 @@ const iconMap: Record<string, React.ElementType> = {
   Zap, Battery, Leaf, Globe, Thermometer, Droplets, Users, Award, LayoutDashboard, FileText,
 };
 
+const formatDate = (date: string | null | undefined) =>
+  date ? date.replace(/-/g, " to ") : null;
+
 /* ── Flagship card (top row, larger) ──────────────────────────────────── */
 const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => {
   const navigate = useNavigate();
@@ -61,7 +64,7 @@ const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => 
           {study.title}
         </h3>
         {study.subtitle && (
-          <p className="text-white/70 text-sm leading-relaxed mb-6 text-justify hyphens-auto">
+          <p className="text-white/70 text-sm leading-relaxed mb-6 text-justify">
             {study.subtitle}
           </p>
         )}
@@ -75,7 +78,7 @@ const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => 
             <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />{study.partner}</span>
           )}
           {study.date && (
-            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{study.date}</span>
+            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{formatDate(study.date)}</span>
           )}
         </div>
 
@@ -133,7 +136,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           {study.title}
         </h3>
         {study.subtitle && (
-          <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2 text-justify hyphens-auto">
+          <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2 text-justify">
             {study.subtitle}
           </p>
         )}
@@ -147,7 +150,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           )}
           {study.date && (
             <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
-              <Calendar className="w-2.5 h-2.5" />{study.date}
+              <Calendar className="w-2.5 h-2.5" />{formatDate(study.date)}
             </span>
           )}
         </div>
@@ -221,11 +224,11 @@ export default function CaseStudiesPage() {
   // Summary stats
   const totalMetrics = studies.flatMap((s) => s.metrics);
   const totalStudies = studies.length;
-  const totalPartners = new Set(studies.map((s) => s.partner).filter(Boolean)).size;
+  const totalFocusAreas = new Set(studies.map((s) => s.category)).size;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO {...PAGE_SEO.caseStudies} />
+      <SEO page="case-studies" />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">
@@ -252,7 +255,7 @@ export default function CaseStudiesPage() {
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Case <span className="gradient-text">Studies</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify hyphens-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify">
               Documented outcomes from real-world deployments in clean energy, e-mobility, and sustainable agriculture across East Africa.
             </p>
           </motion.div>
@@ -267,7 +270,7 @@ export default function CaseStudiesPage() {
             >
               {[
                 { label: "Case Studies", value: totalStudies, icon: BarChart3 },
-                { label: "Partner Orgs", value: totalPartners, icon: Briefcase },
+                { label: "Focus Areas", value: totalFocusAreas, icon: Globe },
                 { label: "Metrics Tracked", value: totalMetrics.length, icon: Award },
               ].map((s) => (
                 <div key={s.label} className="bg-card rounded-2xl p-4 text-center border border-border/60">
@@ -305,7 +308,7 @@ export default function CaseStudiesPage() {
           {loading ? (
             <div className="space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="md:col-span-2 rounded-3xl bg-card border border-border/60 animate-pulse h-64" />
+                <div className="md:col-span-2 rounded-3xl bg-muted/40 border border-border/60 animate-pulse h-64" />
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}

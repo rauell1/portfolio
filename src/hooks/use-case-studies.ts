@@ -44,10 +44,10 @@ const STATIC_CASE_STUDIES: CaseStudy[] = [
     role: "Founder & Lead Engineer",
     partner: "Nairobi Mall Operators",
     location: "Nairobi, Kenya",
-    date: "2024",
+    date: "2024 to Present",
     gradient: "from-cyan-500 to-blue-600",
     icon_name: "Zap",
-    image: "/images/SafariCharge_DailyGraph_2026-01-07.jpg",
+    image: "/images/roam-charger-1.jpeg",
     is_flagship: true,
     metrics: [
       { label: "Sites Piloted", value: "2", unit: "locations" },
@@ -77,13 +77,13 @@ const STATIC_CASE_STUDIES: CaseStudy[] = [
     title: "Roam POINT Charging Hubs",
     subtitle: "Nationwide EV Charging Network Feasibility and Deployment",
     category: "E-Mobility",
-    role: "E-Mobility Systems Analyst",
+    role: "Project Lead, Infrastructure & Partnerships",
     partner: "Roam Electric",
     location: "Nairobi & Mombasa, Kenya",
-    date: "2023",
+    date: "2023 to Present",
     gradient: "from-emerald-500 to-teal-600",
     icon_name: "Battery",
-    image: null,
+    image: "/images/roam-charger-4.jpeg",
     is_flagship: true,
     metrics: [
       { label: "Hub Sites Assessed", value: "20+", unit: "locations" },
@@ -119,7 +119,7 @@ const STATIC_CASE_STUDIES: CaseStudy[] = [
     date: "2023",
     gradient: "from-blue-500 to-indigo-600",
     icon_name: "Thermometer",
-    image: null,
+    image: "/images/solar-cooling-ai.jpg",
     is_flagship: false,
     metrics: [
       { label: "Post-Harvest Loss", value: "45", unit: "% reduction" },
@@ -130,11 +130,11 @@ const STATIC_CASE_STUDIES: CaseStudy[] = [
     sections: [
       {
         heading: "Challenge",
-        body: "Smallholder farmers in the Rift Valley lose an estimated 30–50% of horticultural produce to post-harvest spoilage due to the lack of affordable, reliable cold storage. Grid electricity is either unavailable or too expensive for off-peak refrigeration operation.",
+        body: "Smallholder farmers in the Rift Valley lose an estimated 30 to 50% of horticultural produce to post-harvest spoilage due to the lack of affordable, reliable cold storage. Grid electricity is either unavailable or too expensive for off-peak refrigeration operation.",
       },
       {
         heading: "Solution",
-        body: "Designed a solar-powered cold room system combining a 3 kWp photovoltaic array, lithium battery bank, and efficient DC-powered refrigeration compressor. The system operates autonomously and maintains 4–8°C storage temperature for up to 72 hours without solar generation.",
+        body: "Designed a solar-powered cold room system combining a 3 kWp photovoltaic array, lithium battery bank, and efficient DC-powered refrigeration compressor. The system operates autonomously and maintains 4 to 8 degrees Celsius storage temperature for up to 72 hours without solar generation.",
       },
       {
         heading: "Impact",

@@ -212,7 +212,7 @@ export const Skills = () => {
                 
                 <div>
                   <h3 className="text-base sm:text-lg font-display font-medium mb-2 group-hover:text-primary transition-colors">{card.title}</h3>
-                  <p className="text-muted-foreground text-xs leading-relaxed font-sans">{card.description}</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed font-sans text-justify">{card.description}</p>
                 </div>
               </motion.div>
             );

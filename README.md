@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `6aa1339` — chore(seo): add Bing Webmaster Tools verification meta tag |
+| **Last commit** | `14e3615` — Disable case studies page for all users |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-13 11:15 UTC |
+| **Commit date** | 2026-06-24 15:46 UTC |
 | **Branch** | `main` |
-| **Total commits** | 373 |
+| **Total commits** | 412 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 105 |
+| **TypeScript files** | 107 |
 | **CSS files** | 1 |
-| **React components** | 75 |
+| **React components** | 76 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status
