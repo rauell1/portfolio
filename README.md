@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `fb8309f` — feat: overhaul /projects page visuals and UX |
+| **Last commit** | `424256e` — feat: replace RO text placeholders with actual SVG logo sitewide |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 15:13 UTC |
+| **Commit date** | 2026-06-24 15:22 UTC |
 | **Branch** | `main` |
-| **Total commits** | 403 |
+| **Total commits** | 406 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
