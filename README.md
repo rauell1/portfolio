@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `424256e` — feat: replace RO text placeholders with actual SVG logo sitewide |
+| **Last commit** | `3a22f7f` — Polish case studies page: dates, legibility, and stats |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 15:22 UTC |
+| **Commit date** | 2026-06-24 15:38 UTC |
 | **Branch** | `main` |
-| **Total commits** | 406 |
+| **Total commits** | 409 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
