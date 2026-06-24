@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `07b7677` — refactor: replace drag slider with scroll-snap + arrow nav + dot indicators |
+| **Last commit** | `3bf1efc` — fix: remove all em/en dashes sitewide + add text-justify without hyphens |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:48 UTC |
+| **Commit date** | 2026-06-24 14:55 UTC |
 | **Branch** | `main` |
-| **Total commits** | 397 |
+| **Total commits** | 400 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
