@@ -14,8 +14,9 @@ const About      = lazy(() => import("@/components/About").then((m) => ({ defaul
 const Projects   = lazy(() => import("@/components/Projects").then((m) => ({ default: m.Projects })));
 const Experience = lazy(() => import("@/components/Experience").then((m) => ({ default: m.Experience })));
 const Skills     = lazy(() => import("@/components/Skills").then((m) => ({ default: m.Skills })));
-const Leadership = lazy(() => import("@/components/Leadership").then((m) => ({ default: m.Leadership })));
-const Contact    = lazy(() => import("@/components/Contact").then((m) => ({ default: m.Contact })));
+const Leadership    = lazy(() => import("@/components/Leadership").then((m) => ({ default: m.Leadership })));
+const Testimonials  = lazy(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })));
+const Contact       = lazy(() => import("@/components/Contact").then((m) => ({ default: m.Contact })));
 
 const SectionSkeleton = () => <div className="h-24 w-full" aria-hidden="true" />;
 
@@ -81,6 +82,9 @@ const Index = () => (
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <Leadership />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Testimonials />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <Contact />

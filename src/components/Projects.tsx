@@ -128,12 +128,12 @@ export const Projects = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={`w-[290px] sm:w-[380px] shrink-0 relative glass-card rounded-3xl p-8 border-white/[0.08] overflow-hidden bg-gradient-to-br ${path.bg} flex flex-col justify-between min-h-[300px] hover:border-primary/20 transition-all duration-300`}
+                className={`w-[290px] sm:w-[380px] shrink-0 relative bg-card rounded-3xl p-8 border border-border/60 overflow-hidden bg-gradient-to-br ${path.bg} flex flex-col justify-between min-h-[300px] hover:border-primary/30 hover:shadow-lg transition-all duration-300`}
               >
                 <div>
                   {/* Icon & Specs */}
                   <div className="flex items-start mb-6">
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
+                    <div className="p-3 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center">
                       <path.icon className="w-5 h-5 text-primary" />
                     </div>
                   </div>
@@ -147,7 +147,7 @@ export const Projects = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-[13px] sm:text-sm leading-relaxed mb-6 font-sans text-justify hyphens-auto">
+                  <p className="text-muted-foreground text-[13px] sm:text-sm leading-relaxed mb-6 font-sans">
                     {path.description}
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export const Projects = () => {
                   {path.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono-custom tracking-tight px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.05] text-muted-foreground"
+                      className="text-[10px] font-mono-custom tracking-tight px-2.5 py-1 rounded-full bg-primary/8 border border-primary/12 text-primary/70"
                     >
                       {tag}
                     </span>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText, BookOpen, BarChart3 } from "lucide-react";
+import { Menu, X, FileText, BarChart3 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { smoothScrollTo } from "@/lib/smoothScroll";
@@ -18,7 +18,6 @@ const SECTION_IDS = hashNavItems.map((i) => i.href.replace("#", ""));
 
 const routeNavItems = [
   { to: "/projects",     label: "Projects",      icon: null },
-  { to: "/blog",         label: "Blog",          icon: BookOpen },
   { to: "/case-studies", label: "Case Studies",  icon: BarChart3 },
 ];
 

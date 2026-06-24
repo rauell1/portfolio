@@ -125,7 +125,7 @@ const FlagshipCard = ({ project, onClick }: { project: Project; onClick: (p: Pro
         <h3 className="text-xl font-display font-bold mt-1 mb-2 group-hover:text-primary transition-colors leading-snug">
           {project.title}
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2 text-justify hyphens-auto">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
           {project.description}
         </p>
 
@@ -184,7 +184,7 @@ const ProjectCard = ({
       className="group flex flex-col h-full"
     >
       <div
-        className="glass-card rounded-2xl overflow-hidden h-full flex flex-col cursor-pointer hover:border-primary/30 hover:shadow-lg transition-all duration-300 border border-border/60"
+        className="bg-card rounded-2xl overflow-hidden h-full flex flex-col cursor-pointer hover:border-primary/30 hover:shadow-lg transition-all duration-300 border border-border/60"
         onClick={() => onClick(project)}
       >
         {/* Image */}
@@ -214,7 +214,7 @@ const ProjectCard = ({
           <h3 className="text-sm font-display font-bold mb-1.5 group-hover:text-primary transition-colors leading-snug">
             {project.title}
           </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3 text-justify hyphens-auto">
+          <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">
             {project.description}
           </p>
 
@@ -332,7 +332,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
             <div>
               <h4 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">About This Project</h4>
-              <p className="text-muted-foreground text-sm leading-relaxed text-justify hyphens-auto">{project.longDescription}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{project.longDescription}</p>
             </div>
 
             {project.specs && project.specs.length > 0 && (
@@ -393,7 +393,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
 /* ── Skeleton ─────────────────────────────────────────────────────── */
 const CardSkeleton = () => (
-  <div className="rounded-2xl glass-card border border-border/60 overflow-hidden animate-pulse">
+  <div className="rounded-2xl bg-card border border-border/60 overflow-hidden animate-pulse">
     <div className="h-40 bg-muted/50" />
     <div className="p-4 space-y-2">
       <div className="h-3 w-16 bg-muted/50 rounded" />
@@ -460,7 +460,7 @@ const Projects = () => {
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Project <span className="gradient-text">Portfolio</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify hyphens-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
               A curated collection of software, infrastructure, and systems work spanning clean energy, environmental impact, AI tools, and digital products.
             </p>
           </motion.div>

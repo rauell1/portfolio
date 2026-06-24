@@ -1,28 +1,20 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { Globe, Users, GraduationCap, Award, Heart, Sparkles } from "lucide-react";
+import { Globe, Users, Award, Leaf, Sparkles, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
-  Globe, Users, GraduationCap, Award,
+  Globe, Users, Award, Leaf,
 };
 
-const colorMap: string[] = [
-  "from-yellow-500/20 to-orange-500/20",
-  "from-blue-500/20 to-cyan-500/20",
-  "from-green-500/20 to-emerald-500/20",
-  "from-purple-500/20 to-pink-500/20",
-  "from-rose-500/20 to-red-500/20",
-];
-const borderMap: string[] = [
-  "border-yellow-500/30",
-  "border-blue-500/30",
-  "border-green-500/30",
-  "border-purple-500/30",
-  "border-rose-500/30",
+const accentMap = [
+  { gradient: "from-yellow-500 to-orange-500", soft: "from-yellow-500/10 to-orange-500/10", border: "border-yellow-500/25", ring: "ring-yellow-500/20" },
+  { gradient: "from-blue-500 to-cyan-500",     soft: "from-blue-500/10 to-cyan-500/10",     border: "border-blue-500/25",   ring: "ring-blue-500/20"   },
+  { gradient: "from-emerald-500 to-green-500", soft: "from-emerald-500/10 to-green-500/10", border: "border-emerald-500/25", ring: "ring-emerald-500/20" },
+  { gradient: "from-purple-500 to-pink-500",   soft: "from-purple-500/10 to-pink-500/10",   border: "border-purple-500/25", ring: "ring-purple-500/20"  },
 ];
 
-interface LeaderItem { title: string; subtitle: string; year: string; icon: string }
+interface LeaderItem { title: string; role?: string; subtitle: string; year: string; icon: string }
 interface LeadershipContent {
   tagline: string;
   heading: string;
@@ -35,11 +27,36 @@ const DEFAULT: LeadershipContent = {
   tagline: "Making an Impact",
   heading: "Leadership &",
   heading_highlight: "Engagement",
-  description: "Committed to driving positive change through community engagement, policy advocacy, and knowledge sharing.",
+  description: "Committed to driving positive change through community engagement, policy advocacy, and creative leadership.",
   items: [
-    { title: "Africa Fellowship for Young Energy Leaders", subtitle: "High-level multidisciplinary programme advancing clean-energy innovation and the African energy-transition agenda; includes policy engagement and cross-country peer exchange.", year: "2025–2026", icon: "Award" },
-    { title: "Kenya Youth Parliament for Water", subtitle: "International advocacy on climate-resilient urban water systems and sustainable governance.", year: "2024–Present", icon: "Globe" },
-    { title: "Community Trainer", subtitle: "Workshops on solar irrigation, renewable energy, and circular-economy practices for rural farmers.", year: "Ongoing", icon: "Users" },
+    {
+      title: "Africa Fellowship for Young Energy Leaders",
+      role: "Fellow",
+      subtitle: "High-level multidisciplinary programme advancing clean-energy innovation and the African energy-transition agenda — includes policy engagement, cross-country peer exchange, and strategic leadership development.",
+      year: "2025–2026",
+      icon: "Award",
+    },
+    {
+      title: "Kenya Youth Parliament for Water",
+      role: "Events Coordinator",
+      subtitle: "Child of World Youth Parliament for Water. Coordinating advocacy events and campaigns on climate-resilient urban water systems, sustainable governance, and youth-led water policy reform since April 2026.",
+      year: "Apr 2026–Present",
+      icon: "Globe",
+    },
+    {
+      title: "Greenwave Society",
+      role: "Head of Design",
+      subtitle: "Leading design strategy and visual communication for environmental campaigns — merging creative direction with sustainability messaging at a senior leadership level.",
+      year: "2026–Present",
+      icon: "Leaf",
+    },
+    {
+      title: "Community Trainer",
+      role: "Workshop Facilitator",
+      subtitle: "Delivering hands-on workshops on solar irrigation, renewable energy systems, and circular-economy practices for rural farming communities across Kenya.",
+      year: "Ongoing",
+      icon: "Users",
+    },
   ],
 };
 
@@ -63,19 +80,18 @@ export const Leadership = () => {
 
   return (
     <section id="leadership" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
-      {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="absolute top-20 right-10 opacity-10"
+          className="absolute top-20 right-10 opacity-[0.06]"
         >
           <Sparkles className="w-32 h-32 text-primary" />
         </motion.div>
         <motion.div
           animate={{ rotate: -360 }}
           transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-20 left-10 opacity-10"
+          className="absolute bottom-20 left-10 opacity-[0.06]"
         >
           <Heart className="w-24 h-24 text-primary" />
         </motion.div>
@@ -100,53 +116,53 @@ export const Leadership = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5">
           {content.items.map((item, index) => {
             const Icon = iconMap[item.icon] || Award;
-            const color = colorMap[index % colorMap.length];
-            const borderColor = borderMap[index % borderMap.length];
+            const accent = accentMap[index % accentMap.length];
             return (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                initial={{ opacity: 0, y: 24, scale: 0.97 }}
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className={`glass-card rounded-2xl p-6 border-l-4 ${borderColor} relative overflow-hidden group`}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
+                className={`relative rounded-2xl border ${accent.border} bg-card overflow-hidden group hover:shadow-lg transition-all duration-300`}
               >
-                {/* Gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
-                <div className="relative z-10 flex gap-4">
-                  <motion.div 
-                    className="flex-shrink-0"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className={`p-4 rounded-xl bg-gradient-to-br ${color} border ${borderColor}`}>
-                      <Icon className="w-6 h-6 text-foreground" />
+                {/* Top accent bar */}
+                <div className={`h-1 w-full bg-gradient-to-r ${accent.gradient}`} />
+
+                <div className="p-6">
+                  {/* Header row */}
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${accent.soft} border ${accent.border} flex-shrink-0 group-hover:scale-105 transition-transform duration-300`}>
+                      <Icon className="w-5 h-5 text-foreground" />
                     </div>
-                  </motion.div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3 className="font-display font-medium text-base sm:text-lg group-hover:text-primary transition-colors">
-                        {item.title}
-                      </h3>
-                      <span className="font-mono-custom text-[10px] tracking-wider text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full whitespace-nowrap">
-                        {item.year}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground text-xs">{item.subtitle}</p>
+                    <span className="font-mono-custom text-[10px] tracking-wider text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full whitespace-nowrap self-start">
+                      {item.year}
+                    </span>
                   </div>
+
+                  {/* Organisation */}
+                  <h3 className="font-display font-semibold text-base sm:text-lg mb-1.5 group-hover:text-primary transition-colors leading-snug">
+                    {item.title}
+                  </h3>
+
+                  {/* Role chip */}
+                  {item.role && (
+                    <span className={`inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-md bg-gradient-to-r ${accent.soft} border ${accent.border} mb-3`}>
+                      {item.role}
+                    </span>
+                  )}
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.subtitle}
+                  </p>
                 </div>
-                
-                {/* Animated corner accent */}
-                <motion.div
-                  className="absolute -bottom-2 -right-2 w-16 h-16 rounded-full bg-primary/10"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
-                />
+
+                {/* Subtle glow on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${accent.soft} opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none`} />
               </motion.div>
             );
           })}
@@ -156,27 +172,25 @@ export const Leadership = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-3 gap-3 mt-12"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="grid grid-cols-3 gap-3 mt-10"
         >
           {[
-            { value: "50+", label: "Workshops Delivered" },
-            { value: "1000+", label: "Lives Impacted" },
-            { value: "5+", label: "Countries Reached" },
+            { value: "50+",  label: "Workshops Delivered" },
+            { value: "150+", label: "Lives Impacted" },
+            { value: "5+",   label: "Countries Reached" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
-              whileHover={{ scale: 1.05 }}
-              className="glass-card rounded-xl p-4 sm:p-6 text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.7 + index * 0.08 }}
+              whileHover={{ scale: 1.04 }}
+              className="bg-card rounded-xl p-4 sm:p-6 text-center border border-border/60"
             >
-              <motion.span
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                className="text-xl sm:text-3xl md:text-4xl font-display font-bold gradient-text"
-              >
+              <span className="text-xl sm:text-3xl md:text-4xl font-display font-bold gradient-text">
                 {stat.value}
-              </motion.span>
+              </span>
               <p className="text-muted-foreground text-xs sm:text-sm mt-1 sm:mt-2">{stat.label}</p>
             </motion.div>
           ))}

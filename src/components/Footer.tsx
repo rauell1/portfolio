@@ -23,7 +23,6 @@ export const Footer = () => {
       links: [
         { label: "Projects",      href: "/projects" },
         { label: "Case Studies",  href: "/case-studies" },
-        { label: "Blog",          href: "/blog" },
       ],
     },
     {
