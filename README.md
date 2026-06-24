@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `14e3615` — Disable case studies page for all users |
+| **Last commit** | `b6e11e9` — style: remove solid background from favicon.svg logo to make it fully transparent with gradient text |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 15:46 UTC |
+| **Commit date** | 2026-06-24 16:22 UTC |
 | **Branch** | `main` |
-| **Total commits** | 412 |
+| **Total commits** | 425 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
