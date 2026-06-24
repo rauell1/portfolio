@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3a22f7f` — Polish case studies page: dates, legibility, and stats |
+| **Last commit** | `14e3615` — Disable case studies page for all users |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 15:38 UTC |
+| **Commit date** | 2026-06-24 15:46 UTC |
 | **Branch** | `main` |
-| **Total commits** | 409 |
+| **Total commits** | 412 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
