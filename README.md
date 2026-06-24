@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `24e9fb0` — fix: remove stale Supabase override from Leadership component |
+| **Last commit** | `5363eb5` — fix: SafariCharge spelling, remove all en/em dashes from Leadership content |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:41 UTC |
+| **Commit date** | 2026-06-24 14:44 UTC |
 | **Branch** | `main` |
-| **Total commits** | 391 |
+| **Total commits** | 394 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
