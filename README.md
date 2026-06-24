@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3bf1efc` — fix: remove all em/en dashes sitewide + add text-justify without hyphens |
+| **Last commit** | `fb8309f` — feat: overhaul /projects page visuals and UX |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:55 UTC |
+| **Commit date** | 2026-06-24 15:13 UTC |
 | **Branch** | `main` |
-| **Total commits** | 400 |
+| **Total commits** | 403 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
