@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { Globe, Users, Award, Leaf, Sparkles, Heart } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   Globe, Users, Award, Leaf,
@@ -63,20 +62,7 @@ const DEFAULT: LeadershipContent = {
 export const Leadership = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [content, setContent] = useState<LeadershipContent>(DEFAULT);
-
-  useEffect(() => {
-    if (!supabase) return;
-    supabase
-      .from("page_sections")
-      .select("content")
-      .eq("page", "home")
-      .eq("section", "leadership")
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data?.content) setContent(data.content as LeadershipContent);
-      });
-  }, []);
+  const content = DEFAULT;
 
   return (
     <section id="leadership" className="py-16 sm:py-24 lg:py-32 px-6 relative" ref={ref}>
