@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `5363eb5` — fix: SafariCharge spelling, remove all en/em dashes from Leadership content |
+| **Last commit** | `07b7677` — refactor: replace drag slider with scroll-snap + arrow nav + dot indicators |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:44 UTC |
+| **Commit date** | 2026-06-24 14:48 UTC |
 | **Branch** | `main` |
-| **Total commits** | 394 |
+| **Total commits** | 397 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
