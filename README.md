@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `e451c29` — fix(media): explicit image format support — HEIC, AVIF, SVG, TIFF, BMP |
+| **Last commit** | `cbbefd1` — feat: hero social links + CV download, testimonials, WhatsApp, legibility fixes |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 13:44 UTC |
+| **Commit date** | 2026-06-24 14:21 UTC |
 | **Branch** | `main` |
-| **Total commits** | 382 |
+| **Total commits** | 385 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
