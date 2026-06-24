@@ -21,8 +21,7 @@ export const Footer = () => {
     {
       heading: "Work",
       links: [
-        { label: "Projects",      href: "/projects" },
-        { label: "Case Studies",  href: "/case-studies" },
+        { label: "Projects", href: "/projects" },
       ],
     },
     {

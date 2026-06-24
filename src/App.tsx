@@ -1,6 +1,6 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Component, ReactNode, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -77,8 +77,8 @@ function AnimatedRoutes() {
           <Route path="/projects"            element={<ProjectsPage />} />
           <Route path="/blog"                element={<BlogPage />} />
           <Route path="/blog/:slug"          element={<BlogPostPage />} />
-          <Route path="/case-studies"        element={<CaseStudiesPage />} />
-          <Route path="/case-studies/:slug"  element={<CaseStudyPage />} />
+          <Route path="/case-studies"        element={<Navigate to="/" replace />} />
+          <Route path="/case-studies/:slug"  element={<Navigate to="/" replace />} />
           <Route path="/admin"               element={<AdminPage />} />
           <Route path="*"                    element={<NotFound />} />
         </Route>
