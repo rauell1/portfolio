@@ -29,6 +29,9 @@ const iconMap: Record<string, React.ElementType> = {
   Zap, Battery, Leaf, Globe, Thermometer, Droplets, Users, Award, LayoutDashboard, FileText,
 };
 
+const formatDate = (date: string | null | undefined) =>
+  date ? date.replace(/-/g, " to ") : null;
+
 /* ── Flagship card (top row, larger) ──────────────────────────────────── */
 const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => {
   const navigate = useNavigate();
@@ -75,7 +78,7 @@ const FlagshipCard = ({ study, index }: { study: CaseStudy; index: number }) => 
             <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />{study.partner}</span>
           )}
           {study.date && (
-            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{study.date}</span>
+            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{formatDate(study.date)}</span>
           )}
         </div>
 
@@ -147,7 +150,7 @@ const StudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           )}
           {study.date && (
             <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
-              <Calendar className="w-2.5 h-2.5" />{study.date}
+              <Calendar className="w-2.5 h-2.5" />{formatDate(study.date)}
             </span>
           )}
         </div>
@@ -221,7 +224,7 @@ export default function CaseStudiesPage() {
   // Summary stats
   const totalMetrics = studies.flatMap((s) => s.metrics);
   const totalStudies = studies.length;
-  const totalPartners = new Set(studies.map((s) => s.partner).filter(Boolean)).size;
+  const totalFocusAreas = new Set(studies.map((s) => s.category)).size;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -267,7 +270,7 @@ export default function CaseStudiesPage() {
             >
               {[
                 { label: "Case Studies", value: totalStudies, icon: BarChart3 },
-                { label: "Partner Orgs", value: totalPartners, icon: Briefcase },
+                { label: "Focus Areas", value: totalFocusAreas, icon: Globe },
                 { label: "Metrics Tracked", value: totalMetrics.length, icon: Award },
               ].map((s) => (
                 <div key={s.label} className="bg-card rounded-2xl p-4 text-center border border-border/60">
@@ -305,7 +308,7 @@ export default function CaseStudiesPage() {
           {loading ? (
             <div className="space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="md:col-span-2 rounded-3xl glass-card border border-border/60 animate-pulse h-64" />
+                <div className="md:col-span-2 rounded-3xl bg-muted/40 border border-border/60 animate-pulse h-64" />
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}

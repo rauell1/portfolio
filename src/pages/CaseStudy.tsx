@@ -32,6 +32,9 @@ const iconMap: Record<string, React.ElementType> = {
   Zap, Battery, Leaf, Globe, Thermometer, Droplets, Users, Award, LayoutDashboard, FileText,
 };
 
+const formatDate = (date: string | null | undefined) =>
+  date ? date.replace(/-/g, " to ") : null;
+
 const Skeleton = () => (
   <div className="max-w-4xl mx-auto animate-pulse space-y-6 mt-10">
     <div className="h-64 bg-muted/40 rounded-3xl" />
@@ -149,7 +152,7 @@ export default function CaseStudyPage() {
                       <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" />{study.location}</span>
                     )}
                     {study.date && (
-                      <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{study.date}</span>
+                      <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{formatDate(study.date)}</span>
                     )}
                   </div>
                 </div>
@@ -172,7 +175,7 @@ export default function CaseStudyPage() {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.35, delay: 0.2 + i * 0.06 }}
-                          className="glass-card rounded-2xl p-4 border border-border/60 text-center"
+                          className="bg-card rounded-2xl p-4 border border-border/60 text-center"
                         >
                           <p className="text-2xl md:text-3xl font-display font-bold gradient-text leading-none mb-1">
                             {m.value}
@@ -258,7 +261,7 @@ export default function CaseStudyPage() {
                           <Link
                             key={s.id}
                             to={`/case-studies/${s.slug}`}
-                            className="group rounded-xl glass-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
+                            className="group rounded-xl bg-card border border-border/60 hover:border-primary/30 p-4 transition-all duration-200"
                           >
                             <div className="flex items-center gap-2 mb-2">
                               <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${s.gradient} flex items-center justify-center flex-shrink-0`}>
