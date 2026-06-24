@@ -130,15 +130,15 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3177e67` — feat: implement database-driven SEO management system |
+| **Last commit** | `a3d8171` — feat(ui): remove intro loader, add route transitions, scroll-spy, Cloudinary media admin |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-20 00:45 UTC |
+| **Commit date** | 2026-06-24 13:29 UTC |
 | **Branch** | `main` |
-| **Total commits** | 376 |
+| **Total commits** | 379 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 105 |
+| **TypeScript files** | 107 |
 | **CSS files** | 1 |
-| **React components** | 75 |
+| **React components** | 76 |
 | **Pages / views** | 9 |
 
 ## 🤗 Workflow Status
