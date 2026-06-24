@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
-import { lazy, Suspense, useState } from "react";
-import { IntroLoader } from "@/components/ui/IntroLoader";
+import { lazy, Suspense } from "react";
+import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { PAGE_SEO, SITE_URL } from "@/lib/seo";
@@ -17,9 +17,6 @@ const Skills     = lazy(() => import("@/components/Skills").then((m) => ({ defau
 const Leadership = lazy(() => import("@/components/Leadership").then((m) => ({ default: m.Leadership })));
 const Contact    = lazy(() => import("@/components/Contact").then((m) => ({ default: m.Contact })));
 
-// Minimal height-placeholder shown while a section chunk loads.
-// Keeps the layout stable (no CLS) and gives the user a visual cue
-// that content is on its way without a full-page spinner.
 const SectionSkeleton = () => <div className="h-24 w-full" aria-hidden="true" />;
 
 const PERSON_SCHEMA = {
@@ -50,53 +47,48 @@ const PERSON_SCHEMA = {
   ],
 };
 
-const Index = () => {
-  const [loading, setLoading] = useState(true);
+const Index = () => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.35, ease: "easeOut" }}
+    className="min-h-screen overflow-x-hidden bg-background text-foreground"
+  >
+    <SEO {...PAGE_SEO.home} />
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(PERSON_SCHEMA)}</script>
+    </Helmet>
 
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <SEO page="home" />
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(PERSON_SCHEMA)}</script>
-      </Helmet>
-      {loading && <IntroLoader onComplete={() => setLoading(false)} />}
+    <Suspense fallback={null}>
+      <ParticleBackground />
+    </Suspense>
 
-      {/* ParticleBackground is purely decorative — its own Suspense so it
-          never blocks any section from rendering */}
-      <Suspense fallback={null}>
-        <ParticleBackground />
+    <Navbar />
+    <Hero />
+
+    <main className="relative z-10">
+      <Suspense fallback={<SectionSkeleton />}>
+        <About />
       </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Projects />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Experience />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Skills />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Leadership />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Contact />
+      </Suspense>
+    </main>
 
-      <Navbar />
-      <Hero />
-
-      <main className="relative z-10">
-        {/* Each section has its own Suspense boundary so sections render
-            independently as their JS chunks arrive over the network.
-            Without this, one slow chunk would hold up all sections below it. */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <About />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Experience />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Leadership />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <Contact />
-        </Suspense>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+    <Footer />
+  </motion.div>
+);
 
 export default Index;

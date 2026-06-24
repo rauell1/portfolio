@@ -232,7 +232,14 @@ export const Contact = () => {
                 } focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors resize-none`}
                 placeholder="Tell me about your project..."
               />
-              {fieldErrors.message && <p className="text-red-500 text-sm mt-1">{fieldErrors.message}</p>}
+              <div className="flex items-center justify-between mt-1">
+                {fieldErrors.message
+                  ? <p className="text-red-500 text-sm">{fieldErrors.message}</p>
+                  : <span />}
+                <p className={`text-xs tabular-nums ${formData.message.length > 4800 ? "text-red-400" : "text-muted-foreground/50"}`}>
+                  {formData.message.length}/5000
+                </p>
+              </div>
             </div>
 
             {submitStatus === "success" && (

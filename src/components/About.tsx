@@ -97,7 +97,7 @@ export const About = () => {
             
             <div className="mt-8 flex items-center gap-3 text-xs font-mono-custom text-muted-foreground/50 border-t border-white/[0.05] pt-6">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              ACTIVE PROJECT: SAFARICHARGE DEPLOYMENT
+              ACTIVE: ROAM ELECTRIC · EV CHARGING OPERATIONS
             </div>
           </motion.div>
 
@@ -132,7 +132,7 @@ export const About = () => {
             
             <div className="mt-6 text-center">
               <h3 className="font-display font-medium text-lg">Roy Okola Otieno</h3>
-              <p className="font-mono-custom text-[10px] text-primary tracking-widest uppercase mt-1">FOUNDER &amp; LEAD ENGINEER</p>
+              <p className="font-mono-custom text-[10px] text-primary tracking-widest uppercase mt-1">TECHNICAL OPERATIONS ENGINEER</p>
             </div>
           </motion.div>
 
