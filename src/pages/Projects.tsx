@@ -19,7 +19,6 @@ import {
   LayoutDashboard,
   Thermometer,
   Droplets,
-  ImageOff,
   Search,
   Star,
 } from "lucide-react";
@@ -62,8 +61,19 @@ const ProjectImage = ({
   const [errored, setErrored] = useState(false);
   if (!src || errored) {
     return (
-      <div className={`bg-gradient-to-br ${gradient} flex items-center justify-center ${className}`} aria-label={alt}>
-        <ImageOff className="w-8 h-8 text-white/30" />
+      <div
+        className={`bg-gradient-to-br ${gradient} relative overflow-hidden ${className}`}
+        aria-label={alt}
+      >
+        <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-white/20 blur-3xl" />
+        <div className="absolute -bottom-4 -left-4 w-28 h-28 rounded-full bg-white/15 blur-2xl" />
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)",
+            backgroundSize: "22px 22px",
+          }}
+        />
       </div>
     );
   }
@@ -121,7 +131,14 @@ const FlagshipCard = ({ project, onClick }: { project: Project; onClick: (p: Pro
 
       {/* Body */}
       <div className="p-6">
-        <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{project.category}</span>
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{project.category}</span>
+          {project.role && (
+            <span className="text-[10px] font-medium text-primary/80 bg-primary/8 border border-primary/15 px-2 py-0.5 rounded-full shrink-0">
+              {project.role}
+            </span>
+          )}
+        </div>
         <h3 className="text-xl font-display font-bold mt-1 mb-2 group-hover:text-primary transition-colors leading-snug">
           {project.title}
         </h3>
@@ -463,6 +480,21 @@ const Projects = () => {
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed text-justify">
               A curated collection of software, infrastructure, and systems work spanning clean energy, environmental impact, AI tools, and digital products.
             </p>
+
+            {/* Stats strip */}
+            <div className="flex flex-wrap gap-6 mt-6 pt-6 border-t border-border/50">
+              {[
+                { label: "Projects", value: "11" },
+                { label: "Domains", value: "4" },
+                { label: "Live Products", value: "5" },
+                { label: "Countries", value: "1+" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <p className="text-2xl font-display font-bold gradient-text leading-none">{s.value}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{s.label}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Controls */}

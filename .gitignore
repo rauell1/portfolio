@@ -55,3 +55,6 @@ CODEBASE_MAP.md
 
 # npm lockfile — this project uses Bun
 package-lock.json
+.vercel
+.env*.local
+.env*

@@ -8,6 +8,11 @@ type DbProject = Tables<"projects">;
 
 /** Map a Supabase projects row → the shared Project interface */
 function mapDbProject(row: DbProject): Project {
+  // portfolioProjects.ts is the authoritative source for images — prefer it over stale DB values
+  const staticMatch = portfolioProjects.find(
+    (p) => p.id === (row.slug ?? row.id)
+  );
+
   return {
     id: row.slug ?? row.id,
     title: row.title,
@@ -27,7 +32,7 @@ function mapDbProject(row: DbProject): Project {
     specs: Array.isArray(row.specs)
       ? (row.specs as { label: string; value: string }[])
       : undefined,
-    image: row.image ?? undefined,
+    image: staticMatch?.image ?? row.image ?? undefined,
   };
 }
 
