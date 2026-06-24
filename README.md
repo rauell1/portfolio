@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `3ed9c54` — update: leadership section content + remove stats row |
+| **Last commit** | `24e9fb0` — fix: remove stale Supabase override from Leadership component |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 14:27 UTC |
+| **Commit date** | 2026-06-24 14:41 UTC |
 | **Branch** | `main` |
-| **Total commits** | 388 |
+| **Total commits** | 391 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
