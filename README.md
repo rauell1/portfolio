@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `a3d8171` — feat(ui): remove intro loader, add route transitions, scroll-spy, Cloudinary media admin |
+| **Last commit** | `e451c29` — fix(media): explicit image format support — HEIC, AVIF, SVG, TIFF, BMP |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 13:29 UTC |
+| **Commit date** | 2026-06-24 13:44 UTC |
 | **Branch** | `main` |
-| **Total commits** | 379 |
+| **Total commits** | 382 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
