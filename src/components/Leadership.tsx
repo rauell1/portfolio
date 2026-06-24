@@ -31,22 +31,22 @@ const DEFAULT: LeadershipContent = {
     {
       title: "Africa Fellowship for Young Energy Leaders",
       role: "Fellow",
-      subtitle: "Selected for this pan-African clean energy leadership programme (Oct 2025–Mar 2026). Key outcome: deepened the solar simulation modules at the core of SafaRecharge — applying cross-country peer insights and policy frameworks directly to the project's technical design.",
-      year: "Oct 2025–Mar 2026",
+      subtitle: "Selected for this pan-African clean energy leadership programme (Oct 2025 to Mar 2026). Key outcome: deepened the solar simulation modules at the core of SafariCharge, applying cross-country peer insights and policy frameworks directly to the project's technical design.",
+      year: "Oct 2025 to Mar 2026",
       icon: "Award",
     },
     {
       title: "Kenya Youth Parliament for Water",
       role: "Events Coordinator",
-      subtitle: "Kenyan chapter of the World Youth Parliament for Water. Coordinating and building up water advocacy groups across Kenya — organising campaigns on climate-resilient water systems, sustainable governance, and youth-led water policy reform.",
-      year: "Apr 2026–Present",
+      subtitle: "Kenyan chapter of the World Youth Parliament for Water. Coordinating and building up water advocacy groups across Kenya, organising campaigns on climate-resilient water systems, sustainable governance, and youth-led water policy reform.",
+      year: "Apr 2026 to Present",
       icon: "Globe",
     },
     {
       title: "Greenwave Society",
       role: "Head of Design",
-      subtitle: "Integrating the Society's environmental mission into every visual design element — translating community values into cohesive branding, campaign materials, and creative direction that amplifies the organisation's sustainability message.",
-      year: "2026–Present",
+      subtitle: "Integrating the Society's environmental mission into every visual design element, translating community values into cohesive branding, campaign materials, and creative direction that amplifies the organisation's sustainability message.",
+      year: "2026 to Present",
       icon: "Leaf",
     },
     {
