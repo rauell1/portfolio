@@ -6,12 +6,9 @@
     </linearGradient>
   </defs>
 
-  <!-- Full gradient fill — no transparent area, no black corners -->
-  <rect x="0" y="0" width="512" height="512" fill="url(#bgGrad)" />
+  <!-- Stylised "RO" initials in gradient -->
+  <text x="256" y="325" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="210" fill="url(#bgGrad)" text-anchor="middle" letter-spacing="-8">RO</text>
 
-  <!-- Stylised "RO" initials -->
-  <text x="256" y="325" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="210" fill="#ffffff" text-anchor="middle" letter-spacing="-8">RO</text>
-
-  <!-- Minimalist energy/lightning accent -->
-  <path d="M220 120 L270 120 L240 190 L300 190 L200 320 L230 210 L180 210 Z" fill="#ffffff" opacity="0.18" />
+  <!-- Minimalist energy/lightning accent in gradient -->
+  <path d="M220 120 L270 120 L240 190 L300 190 L200 320 L230 210 L180 210 Z" fill="url(#bgGrad)" opacity="0.22" />
 </svg>
