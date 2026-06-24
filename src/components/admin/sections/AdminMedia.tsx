@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { Upload, Copy, Trash2, ImageIcon, Check, X, Loader2, ExternalLink } from "lucide-react";
+import { Upload, Copy, ImageIcon, Check, X, Loader2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -34,8 +34,16 @@ export default function AdminMedia() {
 
   const uploadFile = useCallback(async (file: File) => {
     if (!configured) return;
-    if (!file.type.startsWith("image/")) {
-      toast({ title: "Images only", description: "Please upload image files.", variant: "destructive" });
+    const ACCEPTED_TYPES = [
+      "image/jpeg", "image/jpg", "image/png", "image/webp",
+      "image/gif", "image/svg+xml", "image/avif", "image/heic",
+      "image/heif", "image/tiff", "image/bmp",
+    ];
+    const isImage = file.type.startsWith("image/") || ACCEPTED_TYPES.includes(file.type)
+      || /\.(heic|heif)$/i.test(file.name);
+
+    if (!isImage) {
+      toast({ title: "Unsupported format", description: `${file.name} is not a supported image format.`, variant: "destructive" });
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
@@ -137,7 +145,7 @@ export default function AdminMedia() {
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/svg+xml,image/avif,image/heic,image/heif,image/tiff,image/bmp,.heic,.heif,.jpg,.jpeg,.png,.webp,.gif,.svg,.avif,.tiff,.bmp"
           multiple
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
@@ -163,7 +171,7 @@ export default function AdminMedia() {
           <div className="flex flex-col items-center gap-3">
             <Upload className="w-8 h-8 text-muted-foreground/40" />
             <p className="text-sm font-medium">Drop images here or click to upload</p>
-            <p className="text-xs text-muted-foreground">PNG, JPG, WebP, GIF · Max 10 MB</p>
+            <p className="text-xs text-muted-foreground">JPG, PNG, WebP, GIF, SVG, AVIF, HEIC, TIFF · Max 10 MB</p>
           </div>
         )}
       </div>
