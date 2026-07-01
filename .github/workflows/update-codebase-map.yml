@@ -8,7 +8,7 @@
 #
 # ── DEPENDENCY ADVISORY ──────────────────────────────────────────────────
 # This workflow uses the following pinned GitHub Actions:
-#   - actions/checkout@v4
+#   - actions/checkout@v7
 #   - actions/setup-node@v4  (node-version: '20')
 #
 # The generate script uses Node (not Bun) because it's a lightweight
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
