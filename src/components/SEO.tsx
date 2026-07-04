@@ -5,6 +5,15 @@ import { supabase } from "@/integrations/supabase/client";
 
 type SEOProps = Partial<PageSEO> & {
   page?: "home" | "projects" | "blog" | "case-studies" | "resume";
+  /**
+   * JSON-LD structured data.
+   * - Single object → injected as-is (must include `@context`).
+   * - Array of objects → wrapped into a single `@graph` block.
+   *   Each item may include or omit `@context`; it is stripped before merging.
+   *
+   * Reference: docs/json-ld-structured-data.md
+   */
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 };
 
 const DB_PAGE_TO_SEO_KEY = {
@@ -24,6 +33,7 @@ export const SEO = ({
   type = "website",
   noIndex = false,
   page,
+  structuredData,
 }: SEOProps) => {
   // If a page is specified, fetch its static default as starting state
   const seoKey = page ? DB_PAGE_TO_SEO_KEY[page] : null;
@@ -80,6 +90,24 @@ export const SEO = ({
   const activeType = type ?? fallback?.type ?? "website";
   const activeNoIndex = noIndex ?? fallback?.noIndex ?? false;
 
+  // Build the JSON-LD string from structuredData prop.
+  // Array → single @graph block; single object → used as-is.
+  // Note: JSON.stringify on hardcoded/developer-controlled schema objects only — no user input.
+  const ldJson = structuredData
+    ? JSON.stringify(
+        Array.isArray(structuredData)
+          ? {
+              "@context": "https://schema.org",
+              "@graph": structuredData.map((item) => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { "@context": _ctx, ...rest } = item;
+                return rest;
+              }),
+            }
+          : structuredData
+      )
+    : null;
+
   return (
     <Helmet>
       {activeTitle && <title>{activeTitle}</title>}
@@ -104,7 +132,12 @@ export const SEO = ({
       {activeOgImage && <meta name="twitter:image" content={activeOgImage} />}
       <meta name="twitter:site" content="@rauell_" />
       <meta name="twitter:creator" content="@rauell_" />
+
+      {/* JSON-LD Structured Data */}
+      {/* eslint-disable-next-line -- safe: static JSON.stringify of hardcoded schema objects */}
+      {ldJson && (
+        <script type="application/ld+json">{ldJson}</script>
+      )}
     </Helmet>
   );
 };
-
