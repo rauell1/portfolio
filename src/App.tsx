@@ -2,7 +2,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { Component, ReactNode, lazy, Suspense } from "react";
+import { Component, ReactNode, lazy, Suspense, useEffect } from "react";
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+const GA4_ID = "G-T56D7G5L8X";
 import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { CustomCursor } from "./components/ui/CustomCursor";
@@ -68,6 +76,11 @@ const PageTransition = () => (
 
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useEffect(() => {
+    window.gtag?.("config", GA4_ID, { page_location: window.location.href });
+  }, [location.pathname]);
+
   return (
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
