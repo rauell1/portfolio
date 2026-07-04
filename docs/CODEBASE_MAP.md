@@ -1,7 +1,7 @@
 # 🗺️ Codebase Map — Roy Otieno Portfolio
 
 > **Auto-generated** on every push to `main` by `.github/workflows/update-codebase-map.yml`
-> Last updated: **2026-07-04T09:28:36.494Z**
+> Last updated: **2026-07-04T11:36:44.600Z**
 > Repo: [rauell1/portfolio](https://github.com/rauell1/portfolio)
 
 ---
@@ -37,6 +37,9 @@
 | `src/App.tsx` | Router root — React Router v6 routes, <ThemeProvider>, lazy page imports |
 | `src/index.css` | Global styles — CSS variables, Tailwind layers, Satoshi font import, custom animations |
 | `src/main.tsx` | React DOM root — wraps <App /> with <StrictMode> |
+| `src/prerender/render.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/prerender/routes.tsx` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `src/prerender/staticRoutes.json` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/utils/supabase/client.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/utils/supabase/middleware.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `src/utils/supabase/server.ts` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
@@ -230,6 +233,7 @@
 | `public/images/roam-motorbike-x-roam-bus.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/roam-point-ai.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/images/solar-cooling-ai.jpg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
+| `public/llms.txt` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/placeholder.svg` | _(no description yet — add to DESCRIPTIONS map in .github/scripts/generate-codebase-map.mjs)_ |
 | `public/robots.txt` | Search engine crawl rules — sitemap pointer |
 | `public/sitemap.xml` | XML sitemap for all routes + section anchors |
