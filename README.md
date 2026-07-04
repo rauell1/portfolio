@@ -130,13 +130,13 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `47d4544` — docs: add JSON-LD structured data guide for React+Vite and Next.js |
+| **Last commit** | `77cd24e` — feat(seo): add JSON-LD structured data schemas for ProfilePage, Person, WebSite, and WebPage |
 | **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-07-04 12:24 UTC |
+| **Commit date** | 2026-07-04 12:28 UTC |
 | **Branch** | `main` |
-| **Total commits** | 428 |
+| **Total commits** | 431 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 107 |
+| **TypeScript files** | 108 |
 | **CSS files** | 1 |
 | **React components** | 76 |
 | **Pages / views** | 9 |
