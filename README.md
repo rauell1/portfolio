@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `ec4427e` — feat(seo): add build-time prerendering for Google crawlability |
+| **Last commit** | `c864614` — feat(seo): robots.txt improvements, GA4-ready CSP, full robots meta directives |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-07-04 14:16 UTC |
+| **Commit date** | 2026-07-04 14:36 UTC |
 | **Branch** | `main` |
-| **Total commits** | 434 |
+| **Total commits** | 436 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 110 |
 | **CSS files** | 1 |
