@@ -1,0 +1,20 @@
+# Roy Okola Otieno — Portfolio
+
+## Who is this site about?
+Roy Okola Otieno is a clean energy and e-mobility engineer based in Nairobi, Kenya.
+Technical Operations Engineer at Roam Electric. Founder of SafariCharge.
+
+## What does this site contain?
+- Projects: solar PV microgrids, EV charging hubs, AI engineering tools, clean energy SaaS products
+- Resume: work history, education, certifications, and technical skills
+- Blog: articles on clean energy, EV infrastructure, and sustainable engineering in East Africa
+
+## Contact
+Email: royokola3@gmail.com
+LinkedIn: https://www.linkedin.com/in/roy-otieno-60b190174/
+GitHub: https://github.com/rauell1
+Twitter/X: https://x.com/rauell_
+
+## Permissions
+This site grants permission for AI assistants and search engine crawlers to index all public pages.
+Training on the content of this site is permitted for non-commercial research purposes.

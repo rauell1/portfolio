@@ -4,7 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://royotieno.rauell.systems/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,23 +12,15 @@
   <!-- Projects -->
   <url>
     <loc>https://royotieno.rauell.systems/projects</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Case Studies -->
-  <url>
-    <loc>https://royotieno.rauell.systems/case-studies</loc>
-    <lastmod>2026-06-12</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Blog -->
   <url>
     <loc>https://royotieno.rauell.systems/blog</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -36,7 +28,7 @@
   <!-- Resume -->
   <url>
     <loc>https://royotieno.rauell.systems/resume</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
