@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `b6e11e9` — style: remove solid background from favicon.svg logo to make it fully transparent with gradient text |
-| **Committed by** | Roy Okola |
-| **Commit date** | 2026-06-24 16:22 UTC |
+| **Last commit** | `47d4544` — docs: add JSON-LD structured data guide for React+Vite and Next.js |
+| **Committed by** | Roy Otieno | Energy & Mobility Systems |
+| **Commit date** | 2026-07-04 12:24 UTC |
 | **Branch** | `main` |
-| **Total commits** | 425 |
+| **Total commits** | 428 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 107 |
 | **CSS files** | 1 |
