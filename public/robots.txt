@@ -1,8 +1,31 @@
 User-agent: *
 Allow: /
 
-# Block private and API routes
+# Block private, API, and build-artifact paths
 Disallow: /admin
+Disallow: /admin/
 Disallow: /api/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.json$
+Disallow: /*.ts$
+Disallow: /*.tsx$
+
+# Explicit AI crawler permissions
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://royotieno.rauell.systems/sitemap.xml

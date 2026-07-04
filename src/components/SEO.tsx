@@ -114,7 +114,7 @@ export const SEO = ({
       {activeDescription && <meta name="description" content={activeDescription} />}
       {activeKeywords && <meta name="keywords" content={activeKeywords} />}
       {activeCanonical && <link rel="canonical" href={activeCanonical} />}
-      <meta name="robots" content={activeNoIndex ? "noindex, nofollow" : "index, follow"} />
+      <meta name="robots" content={activeNoIndex ? "noindex, nofollow" : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"} />
 
       {/* OpenGraph */}
       {activeTitle && <meta property="og:title" content={activeTitle} />}
