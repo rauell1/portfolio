@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `c864614` — feat(seo): robots.txt improvements, GA4-ready CSP, full robots meta directives |
+| **Last commit** | `9154c60` — feat(analytics): add Google Analytics 4 (G-T56D7G5L8X) |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-07-04 14:36 UTC |
+| **Commit date** | 2026-07-04 14:49 UTC |
 | **Branch** | `main` |
-| **Total commits** | 436 |
+| **Total commits** | 439 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 110 |
 | **CSS files** | 1 |
