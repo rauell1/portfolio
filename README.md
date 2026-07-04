@@ -130,13 +130,13 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `77cd24e` — feat(seo): add JSON-LD structured data schemas for ProfilePage, Person, WebSite, and WebPage |
-| **Committed by** | Roy Otieno | Energy & Mobility Systems |
-| **Commit date** | 2026-07-04 12:28 UTC |
+| **Last commit** | `ec4427e` — feat(seo): add build-time prerendering for Google crawlability |
+| **Committed by** | Roy Okola |
+| **Commit date** | 2026-07-04 14:16 UTC |
 | **Branch** | `main` |
-| **Total commits** | 431 |
+| **Total commits** | 434 |
 | **Package version** | `0.0.0` |
-| **TypeScript files** | 108 |
+| **TypeScript files** | 110 |
 | **CSS files** | 1 |
 | **React components** | 76 |
 | **Pages / views** | 9 |
