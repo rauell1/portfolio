@@ -10,56 +10,49 @@ import { SEO } from "@/components/SEO";
 
 const experiences = [
   {
-    company: "Roam Electric Ltd",
-    role: "Junior Sales Consultant",
-    location: "Nairobi, Kenya",
+    company: "Roam Electric Limited",
+    role: "Technical Operations & Sales Engineer",
+    location: "Nairobi, Kenya · Hybrid",
     period: "Jun 2025 - Present",
     achievements: [
-      "Increased sales pipeline opportunities by 25% through targeted promotion of solar equipment and EV charging hubs across Nairobi and Kiambu counties",
-      "Generated over KES 10 million in monthly sales by cultivating strong relationships with EPCs, transport operators, and energy distributors",
+      "Conduct multi-site technical assessments and feasibility studies for EV charging and solar hybrid system deployments across Nairobi and Kiambu — coordinating field technicians, clients, and internal engineering teams end-to-end.",
+      "Monitor energy system performance across a 25%+ expanded portfolio of active EV and solar sites; identify and escalate technical faults to maintain uptime targets.",
+      "Size and quote solar hybrid systems using Deye inverters, Solis string inverters, and Jinko solar panels — proposals include MPPT voltage verification and battery bank sizing.",
+      "Deliver 10+ product and technical trainings to commercial and fleet clients on EV hardware, charging systems, and energy storage components.",
+      "Support EV charging network expansion across Kenya including a 7-station rollout with Be Energy Limited — managing site assessments, partner coordination, and commercial tenancy negotiations.",
+    ],
+  },
+  {
+    company: "rauell.systems",
+    role: "Founder & Full-Stack Engineer",
+    location: "Nairobi, Kenya · Remote",
+    period: "Jan 2024 - Present",
+    achievements: [
+      "SafariCharge: Solar monitoring and financial simulation dashboard for the Kenyan market (React, Next.js, Vercel).",
+      "finance.rauell.systems: Personal finance tracker with M-Pesa SMS automation pipeline (MacroDroid + Supabase + Node.js) — fully deployed and in production.",
+      "WASH Governance Platform (kypw.org): Reporting and coordination tool for Kenya Youth Parliament for Water (Next.js, Supabase, PostgreSQL).",
+      "Roam Electric Charging Points Tracker: Real-time EV charging infrastructure visibility platform for Kenya (Next.js 16, Neon PostgreSQL, NextAuth).",
     ],
   },
   {
     company: "EVChaja",
-    role: "Business Strategy & Operations Consultant",
-    location: "Remote - Nairobi",
-    period: "Jan 2025 - Jun 2025",
+    role: "Infrastructure Engineer",
+    location: "Nairobi, Kenya · Hybrid",
+    period: "Apr 2025 - Jun 2025",
     achievements: [
-      "Delivered market intelligence reports that shaped EV charging hub expansion, contributing to 3 investment-ready projects",
-      "Engaged with regulators and NGOs (EPRA, EMAK) to influence policy discussions, securing compliance for proposed projects",
-      "Facilitated stakeholder consultations that attracted KES 50M+ in potential investment toward EV infrastructure",
+      "Led technical scoping and infrastructure analysis for 3 investment-ready EV charging projects — engineering reports supported stakeholder consultations that attracted KES 50M+ in potential investment.",
+      "Engaged EPRA and EMAK on regulatory compliance and technical risk mapping across charging hardware, power electronics, battery management systems (BMS), and fleet-based energy models.",
     ],
   },
   {
     company: "Frisco Engineering Limited",
     role: "Technical Sales Engineer Intern",
-    location: "Nairobi, Kenya",
+    location: "Utawala, Kenya · On-site",
     period: "Feb 2024 - Jul 2024",
     achievements: [
-      "Designed and sized 10+ solar PV backup systems worth KES 3M+, closing multiple agricultural and residential sales",
-      "Conducted 15+ energy audits and feasibility studies, providing clients with evidence-based investment decisions",
-      "Facilitated training workshops with a 95% client satisfaction rate, strengthening adoption of renewable energy systems",
-    ],
-  },
-  {
-    company: "HomeBiogas Kenya",
-    role: "Technical Sales Engineer Intern",
-    location: "Nairobi, Kenya",
-    period: "Jan 2023 - Feb 2024",
-    achievements: [
-      "Supported the installation of 10+ household biogas systems, reducing reliance on biomass and LPG fuels",
-      "Led community engagement sessions that cut system failures by 30% through effective after-sales training",
-      "Expanded reach by building 5+ local partnerships, accelerating market adoption of biogas in peri-urban communities",
-    ],
-  },
-  {
-    company: "Farmers Choice Limited",
-    role: "Production Intern",
-    location: "Nairobi, Kenya",
-    period: "Dec 2021 - Mar 2022",
-    achievements: [
-      "Conducted energy and water efficiency audits, identifying opportunities for 10% reduction in resource use",
-      "Developed sustainability reports highlighting waste reduction and energy efficiency initiatives",
+      "Designed and delivered 10+ solar PV and backup power systems (KES 3M+ total project value) — conducting 15+ energy audits and site feasibility assessments for agricultural and commercial clients.",
+      "Used PVsyst and PV*SOL for solar system modelling; prepared SLDs, BOMs, and technical proposals for off-grid and grid-tied systems.",
+      "Managed system commissioning, client handover, and after-sales technical support — achieving 95% customer satisfaction through structured issue tracking and resolution.",
     ],
   },
 ];
@@ -90,89 +83,91 @@ const education = [
 
 const trainingCategories = [
   {
-    title: "Energy Systems and Electric Mobility",
+    title: "Electric Mobility",
     icon: Cpu,
     items: [
-      "Electric Mobility Technical Training",
-      "Electric Two and Three Wheelers Training",
-      "Battery Technology Training (Siemens, Basic and Advanced)",
-      "Exploring the World of Electric Mobility",
-      "Exploring the World of Electric Buses",
+      "Battery Technology Training – Advanced (Siemens Stiftung / pManifold, Oct 2025)",
+      "Battery Technology Training – Basic (Siemens Stiftung / pManifold, Sep 2025)",
+      "Elum Certified Installer – ePowerControl ES/MC Series (Elum Energy, Dec 2025)",
+      "Electric Mobility Technical Training (Advanced Mobility Centre / Kenya Power, Jan 2025)",
+      "Electric Mobility: Key Concepts & Strategies (TUMI / PEM Motion, Nov 2025)",
+      "Electric Two- and Three-Wheelers: Steering the Mobility Revolution (TUMI, Jun 2024)",
+      "Exploring the World of Electric Buses (TUMI / PEM Motion, Jun 2024)",
     ],
   },
   {
-    title: "Renewable Energy and Solar Systems",
+    title: "Solar & Renewable Energy",
     icon: Leaf,
     items: [
-      "Solar PV Engineering Training (AFYEL)",
-      "Solar Training Certificate",
-      "Ebara Pumps Fundamentals and Technical Seminar",
+      "Africa Fellowship – Solar PV Engineering Track, Cohort 5 (AFYEL, Jan 2026)",
+      "Solar Systems Design, Sizing & Commissioning (T2) (Solar Training Kenya, Feb 2025)",
     ],
   },
   {
-    title: "Environmental, Management, Climate and ESG",
-    icon: Settings,
-    items: [
-      "Environmental, Social and Governance Certificate",
-      "Becoming a Climate Champion",
-      "Green Skills for a Green Future Bootcamp",
-      "Environmental Conservation Institute Certificate",
-    ],
-  },
-  {
-    title: "Data, Analytics and Geospatial Tools",
+    title: "Data & Sustainable Mobility",
     icon: BarChart3,
     items: [
-      "Data Fundamentals for Sustainable Mobility",
-      "Data Analytics Job Simulation",
-      "Power BI for energy data analysis",
-      "GIS for Conservation (Modules 1 and 2, Beginner and Intermediate)",
+      "Data Fundamentals for Sustainable Mobility (TUMI / GIZ / Cities Forum, 2025)",
     ],
   },
 ];
 
 const skills = {
-  technical: [
-    "Renewable energy systems",
-    "EV infrastructure",
-    "Energy audits",
-    "Feasibility analysis",
-    "Sustainability data analysis",
-    "Power BI",
-    "GIS fundamentals",
+  energy: [
+    "Solar PV Design",
+    "Solar Hybrid Sizing",
+    "EV Charging Infrastructure",
+    "MPPT",
+    "Battery Storage",
+    "PVsyst",
+    "PV*SOL",
+    "HOMER",
+    "Deye · Solis · Jinko Solar",
   ],
-  analytical: [
-    "Systems thinking",
-    "Stakeholder engagement",
-    "Regulatory analysis",
-    "Project coordination",
+  operations: [
+    "Multi-Site Operations",
+    "Technical Feasibility Studies",
+    "KPI Reporting",
+    "Fault Escalation",
+    "Site Commissioning",
+    "EPRA/EMAK Regulatory Compliance",
   ],
-  communication: [
-    "Technical reporting",
-    "Client and stakeholder training",
-    "Interdisciplinary collaboration",
+  sales: [
+    "B2B Key Account Management",
+    "Technical Proposals",
+    "CRM",
+    "Stakeholder Mapping",
+    "Client Training",
+    "Lead Conversion",
+  ],
+  engineering: [
+    "Full-Stack Development",
+    "Next.js",
+    "React",
+    "Node.js",
+    "Supabase",
+    "PostgreSQL",
+    "Vercel",
+    "REST APIs",
+    "M-Pesa Integration",
   ],
 };
 
 const leadership = [
   {
-    title: "Africa Fellowship for Young Energy Leaders",
-    subtitle: "Cohort 5 (General Track and Solar PV Engineering Track)",
-    period: "2025 - Present",
+    title: "Africa Fellow, Young Energy Leaders — Cohort 5",
+    subtitle: "Multidisciplinary fellowship advancing clean-energy innovation and the African energy transition; Solar PV Engineering Track completed Jan 2026.",
+    period: "2025 - 2026 (Completed)",
   },
   {
-    title: "Member, World Youth Parliament for Water",
-    period: "2024 - 2027",
+    title: "Event Coordinator & Member, Kenya Youth Parliament for Water (KYPW)",
+    subtitle: "Lead webinars, policy dialogues, and field outreach for the national chapter. Coordinated Menstrual Hygiene Day 2026 at Lang'ata Women's Prison, featured in Citizen Digital.",
+    period: "2024 - Present",
   },
   {
     title: "Community Trainer",
-    subtitle: "Delivering workshops on renewable energy adoption, solar irrigation, and circular economy practices",
+    subtitle: "Workshops on solar irrigation, renewable energy, and circular-economy practices for rural farmers.",
     period: "Ongoing",
-  },
-  {
-    title: "Student Leader, JKUAT",
-    subtitle: "Coordinating peer-learning and engineering outreach initiatives",
-    period: "During Studies",
   },
 ];
 
@@ -259,12 +254,11 @@ const ResumePage = () => {
               Profile
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              A renewable-energy and e-mobility specialist with operational experience spanning distributed energy infrastructure, 
-              EV-charging technology, and battery-swap system deployment in East Africa. Brings strengths in technical operations, 
-              system-uptime management, feasibility analysis, and cross-functional coordination with contractors, utilities, and 
-              regulatory agencies. Skilled at leading teams, generating performance insights, and delivering practical, real-world 
-              solutions that enhance infrastructure reliability and customer experience, with a growing interest in energy-storage 
-              systems, resource efficiency, and sustainable technology cycles.
+              Technical Operations &amp; Sales Engineer with 3+ years driving Kenya's solar PV and EV charging sectors — leading
+              multi-site feasibility studies, B2B key account sales, EPRA/EMAK regulatory engagement, and technical training for
+              Roam Electric's growing portfolio. Independent full-stack engineer at rauell.systems, shipping live products across
+              energy, finance, and WASH sectors. Africa Fellow, Young Energy Leaders Cohort 5 (Completed 2026). MBA candidate,
+              University of East London.
             </p>
           </motion.section>
 
@@ -437,36 +431,23 @@ const ResumePage = () => {
               Skills
             </h2>
             <div className="space-y-6">
-              <div>
-                <h3 className="font-bold text-primary mb-3">Technical</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.technical.map((skill, index) => (
-                    <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                      {skill}
-                    </span>
-                  ))}
+              {[
+                { label: "Energy & EV", key: "energy" as const },
+                { label: "Technical Ops", key: "operations" as const },
+                { label: "Sales & BD", key: "sales" as const },
+                { label: "Engineering", key: "engineering" as const },
+              ].map(({ label, key }) => (
+                <div key={key}>
+                  <h3 className="font-bold text-primary mb-3">{label}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {skills[key].map((skill, index) => (
+                      <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="font-bold text-primary mb-3">Analytical & Organisational</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.analytical.map((skill, index) => (
-                    <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h3 className="font-bold text-primary mb-3">Communication</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.communication.map((skill, index) => (
-                    <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </motion.section>
         </div>
