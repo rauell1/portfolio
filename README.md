@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `9154c60` — feat(analytics): add Google Analytics 4 (G-T56D7G5L8X) |
+| **Last commit** | `4c89b6d` — chore: update CV (July 2026) |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-07-04 14:49 UTC |
+| **Commit date** | 2026-07-04 15:47 UTC |
 | **Branch** | `main` |
-| **Total commits** | 439 |
+| **Total commits** | 442 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 110 |
 | **CSS files** | 1 |
