@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `27e9d58` — polish projects page layout |
+| **Last commit** | `15dd615` — feat: hide projects page and update navigation routes |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-07-24 07:18 UTC |
+| **Commit date** | 2026-07-24 07:27 UTC |
 | **Branch** | `main` |
-| **Total commits** | 448 |
+| **Total commits** | 451 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 110 |
 | **CSS files** | 1 |
