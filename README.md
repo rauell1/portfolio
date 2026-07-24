@@ -130,11 +130,11 @@ Personal portfolio — content and code copyright Roy Okola Otieno.
 
 | Field | Value |
 |---|---|
-| **Last commit** | `51eafec` — feat(resume): sync web resume page with updated CV (July 2026) |
+| **Last commit** | `27e9d58` — polish projects page layout |
 | **Committed by** | Roy Okola |
-| **Commit date** | 2026-07-04 15:54 UTC |
+| **Commit date** | 2026-07-24 07:18 UTC |
 | **Branch** | `main` |
-| **Total commits** | 445 |
+| **Total commits** | 448 |
 | **Package version** | `0.0.0` |
 | **TypeScript files** | 110 |
 | **CSS files** | 1 |
