@@ -5,8 +5,8 @@ import { ArrowLeft, Calendar, Clock, Tag, Share2, BookOpen } from "lucide-react"
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 import { SITE_URL } from "@/lib/seo";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { useBlogPosts } from "@/hooks/use-blog-posts";
 import { renderMarkdown, readingTime } from "@/lib/renderMarkdown";
 
@@ -53,44 +53,40 @@ export default function BlogPostPage() {
   }
 
   const articleSchema = post
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Article",
+    ? buildArticleSchema({
         headline: post.title,
-        description: post.excerpt ?? "",
+        description: post.excerpt ?? post.content.slice(0, 155) ?? '',
+        slug: `/blog/${post.slug}`,
+        datePublished: post.published_at ?? post.created_at,
+        dateModified: post.updated_at ?? post.published_at ?? post.created_at,
         image: post.cover_image ?? undefined,
-        url: `${SITE_URL}/blog/${post.slug}`,
-        datePublished: post.published_at ?? undefined,
-        author: {
-          "@type": "Person",
-          name: "Roy Okola Otieno",
-          url: SITE_URL,
-        },
-        publisher: {
-          "@type": "Person",
-          name: "Roy Okola Otieno",
-          url: SITE_URL,
-        },
-      }
+        type: 'BlogPosting',
+      })
+    : null;
+
+  const breadcrumbSchema = post
+    ? buildBreadcrumbSchema([
+        { name: 'Home', path: '' },
+        { name: 'Blog', path: '/blog' },
+        { name: post.title },
+      ])
     : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {post ? (
-        <>
-          <SEO
-            title={`${post.title} | Roy Okola Otieno`}
-            description={post.excerpt ?? post.content.slice(0, 155)}
-            canonical={`${SITE_URL}/blog/${post.slug}`}
-            ogImage={post.cover_image ?? undefined}
-            type="article"
-          />
-          {articleSchema && (
-            <Helmet>
-              <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-            </Helmet>
-          )}
-        </>
+        <SEO
+          title={`${post.title} | Roy Okola Otieno`}
+          description={post.excerpt ?? post.content.slice(0, 155)}
+          canonical={`${SITE_URL}/blog/${post.slug}`}
+          ogImage={post.cover_image ?? undefined}
+          type="article"
+          structuredData={
+            articleSchema && breadcrumbSchema
+              ? [articleSchema, breadcrumbSchema]
+              : undefined
+          }
+        />
       ) : (
         <SEO title="Blog Post | Roy Okola Otieno" description="Read articles on clean energy and e-mobility." />
       )}

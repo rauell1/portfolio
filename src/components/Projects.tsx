@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowRight, Zap, Leaf, Brain, Monitor, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Zap, Leaf, Brain, Monitor, ChevronLeft, ChevronRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface Path {
@@ -215,20 +214,6 @@ export const Projects = () => {
           ))}
         </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-10"
-        >
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-xs font-mono-custom uppercase tracking-widest hover:bg-primary/90 btn-glow transition-all duration-300"
-          >
-            Explore Projects Spec Sheet <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
       </div>
     </section>
   );

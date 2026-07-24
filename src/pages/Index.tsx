@@ -3,9 +3,9 @@ import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { PAGE_SEO, SITE_URL } from "@/lib/seo";
+import { PAGE_SEO } from "@/lib/seo";
+import { profilePageSchema, websiteSchema } from "@/lib/structured-data";
 
 const ParticleBackground = lazy(() =>
   import("@/components/ParticleBackground").then((m) => ({ default: m.ParticleBackground }))
@@ -20,33 +20,7 @@ const Contact       = lazy(() => import("@/components/Contact").then((m) => ({ d
 
 const SectionSkeleton = () => <div className="h-24 w-full" aria-hidden="true" />;
 
-const PERSON_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Roy Okola Otieno",
-  url: SITE_URL,
-  image: `${SITE_URL}/images/og-image.jpg`,
-  jobTitle: "Technical Operations and Sales Engineer",
-  description: "Clean energy and e-mobility engineer with 3+ years of experience in solar PV, EV charging infrastructure, and technical feasibility studies across East Africa.",
-  email: "royokola3@gmail.com",
-  telephone: "+254726683835",
-  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-  sameAs: [
-    "https://www.linkedin.com/in/roy-otieno-60b190174/",
-    "https://x.com/rauell_",
-    "https://github.com/rauell1",
-  ],
-  worksFor: { "@type": "Organization", name: "Roam Electric Ltd", url: "https://www.roamelectric.com" },
-  alumniOf: [
-    { "@type": "CollegeOrUniversity", name: "Jomo Kenyatta University of Agriculture and Technology" },
-    { "@type": "CollegeOrUniversity", name: "University of East London" },
-  ],
-  knowsAbout: [
-    "Solar PV System Design", "EV Charging Infrastructure", "Energy Audits",
-    "Technical Feasibility Studies", "E-Mobility", "Renewable Energy",
-    "Off-Grid Systems", "Battery Management Systems",
-  ],
-};
+
 
 const Index = () => (
   <motion.div
@@ -55,10 +29,7 @@ const Index = () => (
     transition={{ duration: 0.35, ease: "easeOut" }}
     className="min-h-screen overflow-x-hidden bg-background text-foreground"
   >
-    <SEO {...PAGE_SEO.home} />
-    <Helmet>
-      <script type="application/ld+json">{JSON.stringify(PERSON_SCHEMA)}</script>
-    </Helmet>
+    <SEO {...PAGE_SEO.home} structuredData={[profilePageSchema, websiteSchema]} />
 
     <Suspense fallback={null}>
       <ParticleBackground />

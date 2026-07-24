@@ -19,12 +19,6 @@ export const Footer = () => {
 
   const linkGroups = [
     {
-      heading: "Work",
-      links: [
-        { label: "Projects", href: "/projects" },
-      ],
-    },
-    {
       heading: "Info",
       links: [
         { label: "Resume", href: "/resume" },

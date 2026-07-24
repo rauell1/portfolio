@@ -87,7 +87,7 @@ function AnimatedRoutes() {
         <Route element={<PageTransition />}>
           <Route path="/"                    element={<Index />} />
           <Route path="/resume"              element={<Resume />} />
-          <Route path="/projects"            element={<ProjectsPage />} />
+          <Route path="/projects"            element={<Navigate to="/" replace />} />
           <Route path="/blog"                element={<BlogPage />} />
           <Route path="/blog/:slug"          element={<BlogPostPage />} />
           <Route path="/case-studies"        element={<Navigate to="/" replace />} />

@@ -16,9 +16,7 @@ const hashNavItems = [
 
 const SECTION_IDS = hashNavItems.map((i) => i.href.replace("#", ""));
 
-const routeNavItems = [
-  { to: "/projects", label: "Projects", icon: null },
-];
+const routeNavItems: { to: string; label: string; icon: null }[] = [];
 
 export const Navbar = () => {
   const [scrolled, setScrolled]         = useState(false);

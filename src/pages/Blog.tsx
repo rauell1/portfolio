@@ -14,6 +14,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo";
+import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { useBlogPosts, type BlogPost } from "@/hooks/use-blog-posts";
 import { readingTime } from "@/lib/renderMarkdown";
 
@@ -191,6 +192,17 @@ export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
 
+  const p = PAGE_SEO.blog;
+  const webPageSchema = buildWebPageSchema({
+    name: p.title,
+    description: p.description,
+    url: p.canonical,
+  });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '' },
+    { name: 'Blog' },
+  ]);
+
   const categories = useMemo(() => allCategories(posts), [posts]);
 
   const filtered = useMemo(() => {
@@ -212,7 +224,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO page="blog" />
+      <SEO page="blog" structuredData={[webPageSchema, breadcrumbSchema]} />
       <Navbar />
 
       <main className="pt-24 pb-24 px-6">

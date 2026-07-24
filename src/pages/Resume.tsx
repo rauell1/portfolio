@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { SEO } from "@/components/SEO";
+import { PAGE_SEO } from "@/lib/seo";
+import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 
 const experiences = [
   {
@@ -172,9 +174,20 @@ const leadership = [
 ];
 
 const ResumePage = () => {
+  const p = PAGE_SEO.resume;
+  const webPageSchema = buildWebPageSchema({
+    name: p.title,
+    description: p.description,
+    url: p.canonical,
+  });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '' },
+    { name: 'Resume' },
+  ]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO page="resume" />
+      <SEO page="resume" structuredData={[webPageSchema, breadcrumbSchema]} />
       <ParticleBackground />
       
       {/* Header */}
