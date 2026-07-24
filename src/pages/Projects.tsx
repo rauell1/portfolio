@@ -30,6 +30,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo";
+import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { type Project } from "@/data/portfolioProjects";
 import { useProjects } from "@/hooks/use-projects";
 
@@ -160,14 +161,14 @@ const SpotlightFlagshipCard = ({ project, onClick }: { project: Project; onClick
       className="group relative md:col-span-2 rounded-3xl overflow-hidden cursor-pointer border border-border/60 hover:border-primary/45 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-card hover:scale-[1.005]"
       onClick={() => onClick(project)}
     >
-      <div className="flex flex-col md:flex-row min-h-[400px]">
+      <div className="flex flex-col md:grid md:grid-cols-2">
         {/* Left half: Image */}
-        <div className="relative w-full md:w-1/2 aspect-video md:aspect-auto overflow-hidden min-h-[250px] md:min-h-auto">
+        <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[460px] overflow-hidden bg-muted">
           <ProjectImage
             src={project.image}
             alt={`${project.title} spotlight`}
             gradient={project.gradient}
-            className="transition-transform duration-700 group-hover:scale-105 h-full w-full object-cover"
+            className="absolute inset-0 transition-transform duration-700 group-hover:scale-105 object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
 
@@ -186,7 +187,7 @@ const SpotlightFlagshipCard = ({ project, onClick }: { project: Project; onClick
         </div>
 
         {/* Right half: Content */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
+        <div className="p-6 md:p-8 lg:p-10 flex min-w-0 flex-col justify-between">
           <div>
             <span className="text-xs text-primary font-bold uppercase tracking-wider">{project.category}</span>
             <h3 className="text-2xl md:text-3xl font-display font-bold mt-2 mb-3 group-hover:text-primary transition-colors leading-tight">
@@ -223,7 +224,7 @@ const SpotlightFlagshipCard = ({ project, onClick }: { project: Project; onClick
             </div>
 
             {/* Footer with CTA links */}
-            <div className="flex items-center gap-4 pt-4 border-t border-border/50">
+            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-border/50">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -717,6 +718,17 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const { projects, sectors, loading } = useProjects();
 
+  const p = PAGE_SEO.projects;
+  const webPageSchema = buildWebPageSchema({
+    name: p.title,
+    description: p.description,
+    url: p.canonical,
+  });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', path: '' },
+    { name: 'Projects' },
+  ]);
+
   const sectorCounts = sectors.map((s) => ({
     ...s,
     count: s.value === "all" ? projects.length : projects.filter((p) => p.sector === s.value).length,
@@ -741,11 +753,11 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO page="projects" />
+      <SEO page="projects" structuredData={[webPageSchema, breadcrumbSchema]} />
       <Navbar />
 
       {/* Overhauled Immersive Page Header */}
-      <header className="pt-28 pb-16 bg-gradient-to-b from-slate-950 via-slate-900 to-background border-b border-border/40 px-6">
+      <header className="pt-28 pb-12 bg-gradient-to-b from-slate-950 via-slate-900 to-background border-b border-border/40 px-6">
         <div className="max-w-6xl mx-auto">
           {/* Back Pill Breadcrumb */}
           <Link
@@ -770,33 +782,19 @@ const Projects = () => {
               A curated collection of software, infrastructure, and systems work spanning clean energy, environmental impact, AI tools, and digital products.
             </p>
 
-            {/* Stats strip */}
-            <div className="flex flex-wrap gap-6 mt-6 pt-6 border-t border-border/50">
-              {[
-                { label: "Projects", value: "11" },
-                { label: "Domains", value: "4" },
-                { label: "Live Products", value: "5" },
-                { label: "Countries", value: "1+" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <p className="text-2xl font-display font-bold gradient-text leading-none">{s.value}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{s.label}</p>
-                </div>
-              ))}
-            </div>
           </motion.div>
 
           {/* Animated Counter Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mt-8 pt-7 border-t border-border/50">
             {[
-              { label: "Projects", value: 11, suffix: "" },
-              { label: "Domains", value: 4, suffix: "" },
-              { label: "Live", value: 5, suffix: "" },
+              { label: "Projects", value: projects.length, suffix: "" },
+              { label: "Domains", value: Math.max(sectors.length - 1, 0), suffix: "" },
+              { label: "Live", value: projects.filter((project) => project.status === "live").length, suffix: "" },
               { label: "Countries", value: 1, suffix: "+" },
             ].map((stat, i) => (
               <div
-                key={i}
-                className="bg-card border border-border/50 rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-primary/5 hover:border-primary/20 transition-all"
+                key={stat.label}
+                className="bg-card/80 border border-border/50 rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm backdrop-blur-sm hover:shadow-primary/5 hover:border-primary/20 transition-all"
               >
                 <span className="text-3xl font-bold bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">
                   <Counter value={stat.value} suffix={stat.suffix} />
@@ -809,16 +807,11 @@ const Projects = () => {
           {/* Domain Breakdown Status Bar */}
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8 pt-6 border-t border-border/40 text-xs text-muted-foreground">
             <span className="font-semibold uppercase tracking-wider text-[10px]">Breakdown:</span>
-            {[
-              { label: "Clean Energy", count: 6, dot: "bg-amber-400" },
-              { label: "Environmental", count: 2, dot: "bg-emerald-400" },
-              { label: "AI Tools", count: 1, dot: "bg-indigo-400" },
-              { label: "Digital Products", count: 2, dot: "bg-pink-400" },
-            ].map((d, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${d.dot} animate-pulse`} />
+            {sectorCounts.filter((sector) => sector.value !== "all").map((sector, index) => (
+              <div key={sector.value} className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${["bg-amber-400", "bg-emerald-400", "bg-indigo-400", "bg-pink-400"][index] ?? "bg-primary"}`} />
                 <span>
-                  {d.label} <strong className="text-foreground">{d.count}</strong>
+                  {sector.label} <strong className="text-foreground">{sector.count}</strong>
                 </span>
               </div>
             ))}
